@@ -1,0 +1,15 @@
+{
+  "name": "minimap",
+  "main": "./lib/minimap",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A preview of the full source code.",
+  "activationEvents": ["minimap:toggle"],
+  "repository": "https://github.com/fundon/minimap",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}
