@@ -4,10 +4,18 @@ module.exports =
   minimapView: null
 
   activate: (state) ->
-    @minimapView = new MinimapView(state.minimapViewState)
+    atom.workspaceView.command 'minimap:toggle', =>
+      @createView().toggle(@stats)
 
   deactivate: ->
     @minimapView.destroy()
+    @minimapView = null
+    @stats = null
 
   serialize: ->
     minimapViewState: @minimapView.serialize()
+
+  createView: ->
+    unless @minimapView
+      @minimapView = new MinimapView()
+    @minimapView

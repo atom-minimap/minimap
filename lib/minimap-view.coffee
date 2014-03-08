@@ -26,4 +26,9 @@ class MinimapView extends View
       clone = itemViews.clone()
       this.css('top', top + 'px')
       this.html(clone)
+      scrollView = itemViews.scrollView
+      width = scrollView.width();
+      height = scrollView[0].scrollHeight
+      scrollTop = scrollView.scrollTop()
+
       atom.workspaceView.getActivePaneView().append(this)
