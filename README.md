@@ -4,6 +4,6 @@
 
 ### Todo list:
 
-* Mointor TabPage change [new, close, move, active]
-* Monitor Editor change [scroll, resize, edit]
-* Monitor Window change [resize]
+* Mointor TabPage state [new, close, move, active]
+* Monitor Editor state [scroll, resize, edit]
+* Monitor Window state [resize]
