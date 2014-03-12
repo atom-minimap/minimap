@@ -8,5 +8,5 @@
 * ~~Mointor TabPage/File tree state [new, close, move, active]~~
 * Monitor Editor state [scroll, resize, edit]
 * Monitor Window state [resize]
-* Minimap attach some events[mouse, scroll]
+* Minimap adds some events[mouse, scroll]
 * Constom Minimap style
