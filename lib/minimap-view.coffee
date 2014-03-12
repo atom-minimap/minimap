@@ -1,34 +1,102 @@
-{View} = require 'atom'
+{$, View} = require 'atom'
+
+MinimapEditorView = require './minimap-editor-view'
 
 module.exports =
 class MinimapView extends View
+  @CONFIGS = {
+  }
+
   @content: ->
-    @div class: 'minimap overlay from-top', =>
-      @div "The Minimap package is Alive! It's ALIVE!", class: "message"
+    @div class: 'minimap', =>
+      @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
-  initialize: (serializeState) ->
-    atom.workspaceView.command "minimap:toggle", => @toggle()
+  initialize: ->
+    atom.workspaceView.minimap = this
 
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
+    @subscribe atom.workspaceView, 'pane-container:active-pane-item-changed', =>
+      console.log('Pane changed')
+      @update()
 
-  # Tear down any state and detach
+    @subscribe atom.workspaceView, 'cursor:moved', =>
+      @update()
+
+  attach: ->
+
   destroy: ->
+    atom.workspaceView.minimap = null
+    @remove()
     @detach()
 
-  toggle: ->
-    console.log "MinimapView was toggled!"
-    if @hasParent()
-      @detach()
-    else
-      itemViews = atom.workspaceView.getActiveView()
-      top = itemViews.offset().top
-      clone = itemViews.clone()
-      this.css('top', top + 'px')
-      this.html(clone)
-      scrollView = itemViews.scrollView
-      width = scrollView.width();
-      height = scrollView[0].scrollHeight
-      scrollTop = scrollView.scrollTop()
+  update: ->
+    @getActivePane()
+    @getActiveEditor()
+    @updateMinimapView()
 
-      atom.workspaceView.getActivePaneView().append(this)
+  getActivePane: ->
+    unless @pane
+      @pane = atom.workspaceView.getActivePane()
+
+  getActiveEditor: ->
+    @editor = atom.workspaceView.getActivePaneItem()
+    if !@editor
+      return
+    @editorView = atom.workspaceView.getActiveView()
+    @scrollView = @editorView.find('.scroll-view')
+
+  storeActiveBuffer: ->
+    @buffer = @editor?.getBuffer?()
+
+  getActiveBuffer: ->
+    @buffer
+
+  updateMinimapView: ->
+    unless @pane.find('.minimap').length
+      @miniEditorView = new MinimapEditorView()
+      @miniOverlayer.before(@miniEditorView)
+      @pane.append(this)
+
+    if !@editor
+      this.addClass('hide')
+      return
+    if this.hasClass('hide')
+      this.removeClass('hide')
+
+
+    top = @editorView.offset().top
+    this.css('top', top + 'px')
+
+    @reset()
+
+    @miniEditorView.update(@editor.getText(), @editor.displayBuffer.screenLines)
+
+    editorRect = @scrollView[0].getBoundingClientRect()
+    linesRect = @scrollView.find('.lines')[0].getBoundingClientRect()
+    miniRect = @miniEditorView.getClientRect()
+
+    width = Math.max(150, miniRect.width)
+
+    if linesRect.height < editorRect.height
+      scaleX = 0.2
+      width = 150 / scaleX
+    else
+      scaleX = 150 / miniRect.width
+
+    scaleY = scaleX
+    scaleStr = 'scale(' + scaleX + ', ' + scaleY + ')'
+    this.css({
+      width: width,
+      '-webkit-transform': scaleStr,
+      'transform': scaleStr
+    })
+
+  reset: ->
+    scaleX = 1
+    scaleY = scaleX
+    scaleStr = 'scale(' + scaleX + ', ' + scaleY + ')'
+
+    this.css({
+      width: 150,
+      '-webkit-transform': scaleStr,
+      'transform': scaleStr
+    })

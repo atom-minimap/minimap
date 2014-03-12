@@ -3,19 +3,21 @@ MinimapView = require './minimap-view'
 module.exports =
   minimapView: null
 
-  activate: (state) ->
+  activate: ->
     atom.workspaceView.command 'minimap:toggle', =>
-      @createView().toggle(@stats)
+      @toggle()
 
   deactivate: ->
     @minimapView.destroy()
     @minimapView = null
-    @stats = null
 
-  serialize: ->
-    minimapViewState: @minimapView.serialize()
+  toggle: ->
+    if @minimapView
+      @deactivate()
+    else
+      @open()
 
-  createView: ->
+  open: ->
     unless @minimapView
       @minimapView = new MinimapView()
-    @minimapView
+    @minimapView.update()
