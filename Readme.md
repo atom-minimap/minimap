@@ -10,3 +10,4 @@
 * Monitor Window state [resize]
 * Minimap adds some events[mouse, scroll]
 * Constom Minimap style
+* Some behaviour more like Sublime Text minimap
