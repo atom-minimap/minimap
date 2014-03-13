@@ -1,3 +1,8 @@
+0.0.3 / 2014-03-14
+==================
+
+  * fix #2, minimap is appearing on the right when opening settings tab
+  * fix #3, opening settings tab breaks when minimap is use
 
 0.0.2 / 2014-03-13
 ==================
