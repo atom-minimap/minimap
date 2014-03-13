@@ -15,7 +15,6 @@ class MinimapView extends View
     atom.workspaceView.minimap = this
 
     @subscribe atom.workspaceView, 'pane-container:active-pane-item-changed', =>
-      console.log('Pane changed')
       @update()
 
     @subscribe atom.workspaceView, 'cursor:moved', =>
@@ -38,10 +37,13 @@ class MinimapView extends View
       @pane = atom.workspaceView.getActivePane()
 
   getActiveEditor: ->
-    @editor = atom.workspaceView.getActivePaneItem()
-    if !@editor
-      return
     @editorView = atom.workspaceView.getActiveView()
+    # Ignore `Settings Tab` or `Tabs` are empty.
+    if !@editorView || @editorView.hasClass('settings-view')
+      @editor = null
+      @scrollView = null
+      return
+    @editor = @editorView.getEditor()
     @scrollView = @editorView.find('.scroll-view')
 
   storeActiveBuffer: ->
@@ -61,7 +63,6 @@ class MinimapView extends View
       return
     if this.hasClass('hide')
       this.removeClass('hide')
-
 
     top = @editorView.offset().top
     this.css('top', top + 'px')
