@@ -83,7 +83,8 @@ class MinimapView extends View
     else
       scaleX = 150 / miniRect.width
 
-    scaleY = scaleX
+    scaleX = scaleX / 2
+    scaleY = scaleX * 0.66
     scaleStr = 'scale(' + scaleX + ', ' + scaleY + ')'
     this.css({
       width: width,
