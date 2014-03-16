@@ -1,5 +1,6 @@
 # Minimap package
-> A preview of the full source code, likes Sublime Text minimap.
+
+A preview of the full source code, likes Sublime Text minimap.
 
 ![](https://github.com/fundon/atom-minimap/blob/master/resources/minimap-dark.png?raw=true)
 
