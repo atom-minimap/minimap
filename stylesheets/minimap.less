@@ -4,6 +4,14 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
+@font-face {
+  font-family: 'Redacted';
+  font-weight: normal;
+  font-style: normal;
+  src: url(atom://minimap/resources/redacted-regular.woff) format('woff');
+  unicode-range: U+21-FF;
+}
+
 .minimap {
   position: fixed;
   left: inherit;
@@ -14,6 +22,11 @@
   height: 100%;
   -webkit-transform: scale(1) translate(0, 0);
   -webkit-transform-origin: right top;
+
+  .editor {
+    font-family: Redacted;
+    letter-spacing: -1px;
+  }
 
   .minimap-editor {
     width: 100%;

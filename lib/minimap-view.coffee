@@ -117,7 +117,8 @@ class MinimapView extends View
     #@scaleX = .3
     #@scaleY = .3
     # --- test
-    @scaleY = @scaleX
+    @scaleX = @scaleX / 2
+    @scaleY = @scaleX * 0.66
     scaleStr = 'scale(' + @scaleX + ', ' + @scaleY + ')'
     translateStr = 'translate(' + x + 'px, ' + y + 'px)'
     this.css({
