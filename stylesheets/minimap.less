@@ -9,10 +9,10 @@
   left: inherit;
   right: 0;
   box-sizing: border-box;
-  opacity: 0.8;
+  opacity: .8;
   width: 150px;
   height: 100%;
-  -webkit-transform: scale(1);
+  -webkit-transform: scale(1) translate(0, 0);
   -webkit-transform-origin: right top;
 
   .minimap-editor {
@@ -21,13 +21,20 @@
   }
 
   .minimap-overlayer {
+    visibility: hidden;
     width: 100%;
+    position: absolute;
+    background-color: #888;
+    opacity: .5;
   }
 
-  /*
-  .editor {
+  &:hover .minimap-overlayer {
+    visibility: visible;
+  }
+
+  .minimap-editor {
     .scroll-view {
+      top: 0;
     }
   }
-  */
 }
