@@ -77,7 +77,12 @@ class MinimapView extends View
 
     # update minimap-editor
     setImmediate =>
-      @miniEditorView.update(@editor.displayBuffer.screenLines)
+      # FIXME Due to racing conditions during the `destroyed`
+      # event dispatch the editor can be null, until a better
+      # solution is implemented it will prevent the delayed
+      # code from raising an error.
+      if @editor?
+        @miniEditorView.update(@editor.displayBuffer.screenLines)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
