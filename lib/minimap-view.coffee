@@ -1,39 +1,53 @@
-{$, View} = require 'atom'
+{View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
 
+CONFIGS = require './config'
+
+minTop = 0
+maxTop = 0
+
+scaleX = 1
+scaleY = 1
+
 module.exports =
 class MinimapView extends View
-  @CONFIGS = {
-  }
-
-  @minTop: 0
-  @maxTop: 0
-
   @content: ->
     @div class: 'minimap', =>
       @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
+  configs: {}
+
   initialize: ->
     atom.workspaceView.minimap = this
 
+    @attach()
+
+    this.on('mousewheel', @mousewheel.bind(this))
+
     @subscribe atom.workspaceView, 'pane-container:active-pane-item-changed', =>
-      @update()
+      @updateActiveStatus()
 
-    @subscribe atom.workspaceView, 'cursor:moved', =>
-      @update()
+    #@subscribe atom.workspaceView, 'cursor:moved', =>
+    #  @update()
 
-    this.off('mousewheel')
-    this.on('mousewheel', @mousewheelFn.bind(this))
 
   attach: ->
+    themeProp = 'minimap.theme'
+    this.subscribe atom.config.observe themeProp, callNow: true, =>
+      this.configs.theme = atom.config.get(themeProp) || CONFIGS.theme
+      this.updateTheme()
 
   destroy: ->
     atom.workspaceView.minimap = null
     @remove()
     @detach()
 
-  update: ->
+  # Update Styles
+  updateTheme: ->
+    this.attr('data-theme', this.configs.theme)
+
+  updateActiveStatus: ->
     @getActivePane()
     @getActiveEditor()
     @updateMinimapView()
@@ -45,22 +59,18 @@ class MinimapView extends View
   getActiveEditor: ->
     @editorView = atom.workspaceView.getActiveView()
     # Ignore `Settings Tab` or `Tabs` are empty.
-    if !@editorView || @editorView.hasClass('settings-view')
-      @editor = null
-      @scrollView = null
-      return
+    if !@editorView || !@editorView.hasClass('editor')
+      return @editor = @scrollView = null
     @editor = @editorView.getEditor()
     @scrollView = @editorView.find('.scroll-view')
+    @scrollViewLines = @scrollView.find('.lines')
 
-  storeActiveBuffer: ->
-    @buffer = @editor?.getBuffer?()
 
-  getActiveBuffer: ->
-    @buffer
-
+  # wtf? Long long function!
   updateMinimapView: ->
     unless @pane.find('.minimap').length
       @miniEditorView = new MinimapEditorView()
+      @miniScrollView = @miniEditorView.find('.scroll-view')
       @miniOverlayer.before(@miniEditorView)
       @pane.append(this)
 
@@ -70,119 +80,72 @@ class MinimapView extends View
     if this.hasClass('hide')
       this.removeClass('hide')
 
+    # update minimap-editor
+    @miniEditorView.update(@editor.displayBuffer.screenLines)
+
+    # offset minimap
+    this.offset({ 'top': @editorView.offset().top })
+
+    # current editor bind scrollTop event
     @editor.off('scroll-top-changed.editor')
-    @editor.on('scroll-top-changed.editor', @scroll.bind(this))
+    @editor.on('scroll-top-changed.editor', @scrollTop.bind(this))
 
-    top = @editorView.offset().top
-    this.css('top', top + 'px')
-
+    # reset minimap layer size
     @reset()
 
-    @miniEditorView.update(@editor.getText(), @editor.displayBuffer.screenLines)
+    # get rects
+    @editorViewRect = @getEditorViewClientRect()
+    @scrollViewRect = @getScrollViewClientRect()
+    @miniScrollViewRect = @miniEditorView.getClientRect()
 
-    @editorRect = @scrollView[0].getBoundingClientRect()
-    linesRect = @scrollView.find('.lines')[0].getBoundingClientRect()
-    miniRect = @miniEditorView.getClientRect()
+    # reset minimap-editor
+    maxTop = @miniEditorView.height()
+    @miniScrollView.css({ top: 0 })
 
-    @minTop = 0
-    @maxTop = @miniEditorView.height()
+    # reset minimap-overlayer
+    @miniOverlayer.css({ height: @editorViewRect.height, top: 0 })
 
-    @miniEditorView.find('.scroll-view').css({
-      top: 0
-    })
+    scaleX = .2
+    scaleY = scaleX * .8
+    width = 125 / scaleX
+    x = y = 0
+    @transform(width, [scaleX, scaleY], [x, y])
+    #if @scrollViewRect.height < @editorViewRect.height #else
 
-    # height of editor
-    a = @editorRect.height / miniRect.height
-    # 180 height
-    @miniOverlayer.css({
-      height: miniRect.height * a,
-      top: 0
-    })
+    @scrollTop(@editorView.scrollTop())
 
-    height = miniRect.height
-    width = Math.max(150, miniRect.width)
 
-    if linesRect.height < @editorRect.height
-      @scaleX = 0.2
-      width = 150 / @scaleX
+  reset: ->
+    scaleX = scaleY = 1
+    @transform(125, [scaleX, scaleY], [0, 0])
+
+  getEditorViewClientRect: ->
+    @scrollView[0].getBoundingClientRect()
+
+  getScrollViewClientRect: ->
+    @scrollViewLines[0].getBoundingClientRect()
+
+  mousewheel: (e) ->
+    delta = e.originalEvent.wheelDeltaY
+    if delta
+      @editorView.scrollTop(@editorView.scrollTop() - delta)
+
+  scrollTop: (top) ->
+    h = @miniEditorView.height() * scaleY
+    if h > @scrollView.height()
+      miniOverLayerHeight = @miniOverlayer.height()
+      n = top / (@scrollViewLines.outerHeight() - @editorView.height())
+      @miniScrollView.css({ top: -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n })
+      @miniOverlayer.css({ top: n * (miniOverLayerHeight / scaleY - miniOverLayerHeight) })
     else
-      @scaleX = 150 / miniRect.width
+      @miniOverlayer.css({ top: top })
 
-    @scaleX = Math.max(@scaleX, 0.1)
-
-    x = width - 150 / @scaleX
-    y = 0
-
-    # --- test
-    #@scaleX = .3
-    #@scaleY = .3
-    # --- test
-    @scaleX = @scaleX / 2
-    @scaleY = @scaleX * 0.66
-    scaleStr = 'scale(' + @scaleX + ', ' + @scaleY + ')'
-    translateStr = 'translate(' + x + 'px, ' + y + 'px)'
+  transform: (width, scale, xy) ->
+    scaleStr = 'scale(' + scale.join(',') + ')'
+    translateStr = 'translate(' + xy.join(',') + 'px)'
     this.css({
       width: width,
       '-webkit-transform': scaleStr + ' ' + translateStr,
       'transform': scaleStr + ' ' + translateStr
     })
 
-    @scroll(@editorView.scrollTop())
-
-  reset: ->
-    scaleX = 1
-    scaleY = scaleX
-    scaleStr = 'scale(' + scaleX + ', ' + scaleY + ')'
-    translateStr = 'translate(0, 0)'
-
-    this.css({
-      width: 150,
-      '-webkit-transform': scaleStr + ' ' + translateStr,
-      'transform': scaleStr + ' ' + translateStr
-    })
-
-  mousewheelFn: (e) ->
-    delta = e.originalEvent.wheelDeltaY
-    if delta
-      @editorView.scrollTop(@editorView.scrollTop() - delta)
-
-      #h = @miniEditorView.height() * @scaleX
-
-      #if h > @scrollView.height()
-      #  t = parseInt(@miniEditorView.find('.scroll-view').css('top'))
-      #  t += delta
-      #  t = Math.min(t, 0)
-      #  #t = Math.max(Math.min(t, @maxTop - @miniOverlayer.height()), @minTop)
-      #  @miniEditorView.find('.scroll-view').css({
-      #    top: t
-      #  })
-      #  #n = parseInt(@miniOverlayer.css('top'))
-      #  #n -= delta
-      #  #n = Math.max(Math.min(n, t + ), @minTop)
-      #  @miniOverlayer.css({
-      #    top: n
-      #  })
-      #else
-      #  t = parseInt(@miniOverlayer.css('top'))
-      #  t -= delta
-      #  t = Math.max(Math.min(t, @maxTop - @miniOverlayer.height()), @minTop)
-      #  @miniOverlayer.css({
-      #    top: t
-      #  })
-
-  scroll: (top) ->
-    h = @miniEditorView.height() * @scaleX
-
-    if h > @scrollView.height()
-      n = (top) / (@editorView.find('.lines').outerHeight() - @editorView.height())
-      sv = @miniEditorView.find('.scroll-view')
-      sv.css({
-        top: -(sv.outerHeight() - @miniOverlayer.height() / @scaleX) * n
-      })
-      @miniOverlayer.css({
-        top: n * (@miniOverlayer.height() / @scaleX - @miniOverlayer.height())
-      })
-    else
-      @miniOverlayer.css({
-        top: top
-      })

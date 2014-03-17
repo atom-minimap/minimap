@@ -1,4 +1,11 @@
 
+0.1.4 / 2014-03-17
+==================
+
+* add Redacted font, improves styles, by @abe33
+* refactors updateMinimapView
+* add a config.js, defualts config
+
 0.0.4 / 2014-03-16
 ==================
 

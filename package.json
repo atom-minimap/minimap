@@ -4,12 +4,13 @@
   "version": "0.0.4",
   "private": true,
   "description": "A preview of the full source code.",
-  "activationEvents": ["minimap:toggle"],
+  "activationEvents": [
+    "minimap:toggle"
+  ],
   "repository": "https://github.com/fundon/atom-minimap",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
