@@ -5,6 +5,8 @@
 * add Redacted font, improves styles, by @abe33
 * refactors updateMinimapView
 * add a config.js, defualts config
+* add scrollLeft and scrollTop on minimap, sync to editor
+* fix #10, js erors when opening image files
 
 0.0.4 / 2014-03-16
 ==================
