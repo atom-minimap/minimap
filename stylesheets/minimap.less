@@ -16,27 +16,17 @@
   position: fixed;
   left: inherit;
   right: 0;
-  box-sizing: border-box;
-  opacity: .8;
+  opacity: .77;
   width: 150px;
   height: 100%;
+  box-sizing: border-box;
   -webkit-transform: scale(1) translate(0, 0);
   -webkit-transform-origin: right top;
 
-  .editor {
-    font-family: Redacted;
-    letter-spacing: -1px;
-  }
-
-  .minimap-editor {
-    width: 100%;
-    position: absolute;
-  }
-
   .minimap-overlayer {
+    position: absolute;
     visibility: hidden;
     width: 100%;
-    position: absolute;
     background-color: #888;
     opacity: .5;
   }
@@ -46,8 +36,18 @@
   }
 
   .minimap-editor {
+    position: absolute;
+    width: 100%;
     .scroll-view {
       top: 0;
+    }
+  }
+
+  // Themes
+  &[data-theme="redacted"] {
+    .editor {
+      font-family: Redacted !important;
+      letter-spacing: -1px;
     }
   }
 }
