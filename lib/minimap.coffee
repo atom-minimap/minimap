@@ -20,4 +20,4 @@ module.exports =
   open: ->
     unless @minimapView
       @minimapView = new MinimapView()
-    @minimapView.update()
+    @minimapView.updateActiveStatus()
