@@ -26,7 +26,8 @@ class MinimapView extends View
 
     @on('mousewheel', @mousewheel.bind(this))
 
-    @subscribe(@paneView.model.$activeItem, @onActiveItemChanged)
+    @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    @subscribe @paneView.model, 'destroy', => @destroy()
 
     #@subscribe atom.workspaceView, 'cursor:moved', =>
     #  @update()
