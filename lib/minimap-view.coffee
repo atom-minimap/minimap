@@ -23,7 +23,7 @@ class MinimapView extends View
 
     @attach()
 
-    this.on('mousewheel', @mousewheel.bind(this))
+    @on('mousewheel', @mousewheel.bind(this))
 
     @subscribe atom.workspaceView, 'pane-container:active-pane-item-changed', =>
       @updateActiveStatus()
@@ -34,9 +34,9 @@ class MinimapView extends View
 
   attach: ->
     themeProp = 'minimap.theme'
-    this.subscribe atom.config.observe themeProp, callNow: true, =>
-      this.configs.theme = atom.config.get(themeProp) || CONFIGS.theme
-      this.updateTheme()
+    @subscribe atom.config.observe themeProp, callNow: true, =>
+      @configs.theme = atom.config.get(themeProp) || CONFIGS.theme
+      @updateTheme()
 
   destroy: ->
     atom.workspaceView.minimap = null
@@ -45,7 +45,7 @@ class MinimapView extends View
 
   # Update Styles
   updateTheme: ->
-    this.attr('data-theme', this.configs.theme)
+    @attr('data-theme', this.configs.theme)
 
   updateActiveStatus: ->
     @getActivePane()
@@ -75,20 +75,23 @@ class MinimapView extends View
       @pane.append(this)
 
     if !@editor
-      this.addClass('hide')
+      @addClass('hide')
       return
-    if this.hasClass('hide')
-      this.removeClass('hide')
+    if @hasClass('hide')
+      @removeClass('hide')
 
     # update minimap-editor
-    @miniEditorView.update(@editor.displayBuffer.screenLines)
+    setImmediate =>
+      @miniEditorView.update(@editor.displayBuffer.screenLines)
 
     # offset minimap
-    this.offset({ 'top': @editorView.offset().top })
+    @offset({ 'top': @editorView.offset().top })
 
     # current editor bind scrollTop event
     @editor.off('scroll-top-changed.editor')
     @editor.on('scroll-top-changed.editor', @scrollTop.bind(this))
+    @editor.off('scroll-left-changed.editor')
+    @editor.on('scroll-left-changed.editor', @scrollLeft.bind(this))
 
     # reset minimap layer size
     @reset()
@@ -126,9 +129,14 @@ class MinimapView extends View
     @scrollViewLines[0].getBoundingClientRect()
 
   mousewheel: (e) ->
-    delta = e.originalEvent.wheelDeltaY
-    if delta
-      @editorView.scrollTop(@editorView.scrollTop() - delta)
+    {wheelDeltaX, wheelDeltaY} = e.originalEvent
+    if wheelDeltaX
+      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
+    if wheelDeltaY
+      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
+
+  scrollLeft: (left) ->
+    @miniScrollView.scrollLeft(left * scaleX)
 
   scrollTop: (top) ->
     h = @miniEditorView.height() * scaleY
@@ -143,9 +151,8 @@ class MinimapView extends View
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'
     translateStr = 'translate(' + xy.join(',') + 'px)'
-    this.css({
-      width: width,
-      '-webkit-transform': scaleStr + ' ' + translateStr,
+    @css
+      width: width
+      '-webkit-transform': scaleStr + ' ' + translateStr
       'transform': scaleStr + ' ' + translateStr
-    })
 
