@@ -1,4 +1,4 @@
-{$, EditorView, ScrollView} = require 'atom'
+{EditorView, ScrollView} = require 'atom'
 
 module.exports =
 class MinimapEditorView extends ScrollView
@@ -11,27 +11,19 @@ class MinimapEditorView extends ScrollView
   initialize: ->
     super
 
-    @editorSettings = atom.config.get('editor')
-    this.css(@editorSettings)
-
-  destroy: ->
-
-  update: (text, screenLines) ->
+  update: (screenLines) ->
     @lines.empty()
-
-    for line, i in screenLines
+    for line in screenLines
       @lines.append(EditorView.buildLineHtml({
         tokens: line.tokens,
         text: line.text,
-        attributes: {
-          'class': 'line'
-        },
+        attributes: { 'class': 'line' },
         htmlEolInvisibles: ''
       }))
 
   getClientRect: ->
     sv = @scrollView[0]
-    return {
+    {
       width: sv.scrollWidth,
       height: sv.scrollHeight
     }
