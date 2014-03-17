@@ -6,7 +6,7 @@ A preview of the full source code, likes Sublime Text minimap.
 
 ### Features
 
-* Redacted font, by @abe33
+* Redacted font, by [@abe33](https://github.com/abe33)
 * Gray overlayer
 * Supports mousewheel
 
