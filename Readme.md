@@ -9,6 +9,7 @@ A preview of the full source code, likes Sublime Text minimap.
 * Redacted font, by [@abe33](https://github.com/abe33)
 * Gray overlayer
 * Supports mousewheel
+* Left/Right, Up/Down scrolling.
 
 
 ### Todo list:
