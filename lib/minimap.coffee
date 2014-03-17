@@ -18,6 +18,9 @@ module.exports =
       @open()
 
   open: ->
+    console.log atom.workspaceView.getActivePaneView()
+    paneView = atom.workspaceView.getActivePaneView()
+
     unless @minimapView
-      @minimapView = new MinimapView()
-    @minimapView.updateActiveStatus()
+      @minimapView = new MinimapView(paneView)
+    @minimapView.onActiveItemChanged(paneView.getActiveItem())
