@@ -136,6 +136,7 @@ class MinimapView extends View
     @scrollViewLines[0].getBoundingClientRect()
 
   mouseWheel: (e) ->
+    return if @isClicked
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
     if wheelDeltaX
       @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
@@ -160,8 +161,21 @@ class MinimapView extends View
       @miniOverlayer[0].style.webkitTransform =
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
 
+  isClicked: false
   mouseDown: (e) ->
-    console.dir(e)
+    @isClicked = true
+    e.preventDefault()
+    e.stopPropagation
+    y = e.pageY - @offset().top
+    top = Math.max(y / scaleY - @miniOverlayer.height() / 2, 0)
+    top = Math.min(top, @miniEditorView.height() - @miniOverlayer.height() / 2)
+    # @note: currently, no animation.
+    @editorView.scrollTop(top)
+    # Fix trigger `mousewheel` event.
+    self = this
+    setTimeout ->
+      self.isClicked = false
+    , 377
 
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'
