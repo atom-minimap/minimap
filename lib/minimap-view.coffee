@@ -47,6 +47,8 @@ class MinimapView extends View
     @attr('data-theme', this.configs.theme)
 
   onActiveItemChanged: (item) =>
+    # Fix called twice when open minimap!
+    return if @activeItem == item
     @activeItem = item
     @getActiveEditor()
     @updateMinimapView()
