@@ -18,19 +18,19 @@ class MinimapView extends View
 
   configs: {}
 
-  initialize: ->
-    atom.workspaceView.minimap = this
+  constructor: (@paneView) ->
+    super
 
+  initialize: ->
     @attach()
 
     @on('mousewheel', @mousewheel.bind(this))
 
-    @subscribe atom.workspaceView, 'pane-container:active-pane-item-changed', =>
-      @updateActiveStatus()
+    @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    @subscribe @paneView.model, 'destroy', => @destroy()
 
     #@subscribe atom.workspaceView, 'cursor:moved', =>
     #  @update()
-
 
   attach: ->
     themeProp = 'minimap.theme'
@@ -39,7 +39,6 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
-    atom.workspaceView.minimap = null
     @remove()
     @detach()
 
@@ -47,17 +46,13 @@ class MinimapView extends View
   updateTheme: ->
     @attr('data-theme', this.configs.theme)
 
-  updateActiveStatus: ->
-    @getActivePane()
+  onActiveItemChanged: (item) =>
+    @activeItem = item
     @getActiveEditor()
     @updateMinimapView()
 
-  getActivePane: ->
-    unless @pane
-      @pane = atom.workspaceView.getActivePane()
-
   getActiveEditor: ->
-    @editorView = atom.workspaceView.getActiveView()
+    @editorView = @paneView.viewForItem(@activeItem)
     # Ignore `Settings Tab` or `Tabs` are empty.
     if !@editorView || !@editorView.hasClass('editor')
       return @editor = @scrollView = null
@@ -68,11 +63,11 @@ class MinimapView extends View
 
   # wtf? Long long function!
   updateMinimapView: ->
-    unless @pane.find('.minimap').length
+    unless @paneView.find('.minimap').length
       @miniEditorView = new MinimapEditorView()
       @miniScrollView = @miniEditorView.find('.scroll-view')
       @miniOverlayer.before(@miniEditorView)
-      @pane.append(this)
+      @paneView.append(this)
 
     if !@editor
       @addClass('hide')
@@ -82,7 +77,12 @@ class MinimapView extends View
 
     # update minimap-editor
     setImmediate =>
-      @miniEditorView.update(@editor.displayBuffer.screenLines)
+      # FIXME Due to racing conditions during the `destroyed`
+      # event dispatch the editor can be null, until a better
+      # solution is implemented it will prevent the delayed
+      # code from raising an error.
+      if @editor?
+        @miniEditorView.update(@editor.displayBuffer.screenLines)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
@@ -155,4 +155,3 @@ class MinimapView extends View
       width: width
       '-webkit-transform': scaleStr + ' ' + translateStr
       'transform': scaleStr + ' ' + translateStr
-
