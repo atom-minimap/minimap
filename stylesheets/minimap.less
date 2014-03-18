@@ -21,9 +21,7 @@
   width: 125px;
   height: 100%;
   box-sizing: border-box;
-  -webkit-perspective: 0;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: scale(1) translate3d(0, 0, 0);
+  .accelerated;
   -webkit-transform-origin: right top;
 
   .minimap-overlayer {
@@ -32,8 +30,7 @@
     width: 100%;
     background-color: #888;
     opacity: .5;
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
+    .accelerated;
   }
 
   &:hover .minimap-overlayer {
@@ -44,9 +41,9 @@
     position: absolute;
     width: 100%;
     .scroll-view {
-      -webkit-backface-visibility: hidden;
-      -webkit-transform: translate3d(0, 0, 0);
+      .accelerated;
     }
+    .accelerated;
   }
 
   // Themes
@@ -55,5 +52,13 @@
       font-family: Redacted !important;
       letter-spacing: -1px;
     }
+  }
+
+  // Mixins
+  .accelerated {
+    -webkit-backface-visibility: hidden;
+    webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 }
