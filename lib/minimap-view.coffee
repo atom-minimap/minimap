@@ -44,7 +44,7 @@ class MinimapView extends View
 
   # Update Styles
   updateTheme: ->
-    @attr('data-theme', this.configs.theme)
+    @attr 'data-theme': this.configs.theme
 
   onActiveItemChanged: (item) =>
     # Fix called twice when open minimap!
@@ -84,7 +84,9 @@ class MinimapView extends View
       # solution is implemented it will prevent the delayed
       # code from raising an error.
       if @editor?
-        @miniEditorView.update(@editor.displayBuffer.screenLines)
+        @miniScrollView[0].style.webkitTransform =
+          @miniScrollView[0].style.transform = 'translate3d(0, 0, 0)'
+        @miniEditorView.update(@editor.getGrammar(), @editor.getText())
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
@@ -105,10 +107,12 @@ class MinimapView extends View
 
     # reset minimap-editor
     maxTop = @miniEditorView.height()
-    @miniScrollView.css({ top: 0 })
 
     # reset minimap-overlayer
-    @miniOverlayer.css({ height: @editorViewRect.height, top: 0 })
+    @miniOverlayer.css
+      height: @editorViewRect.height
+      '-webkit-transform': 'translate3d(0, 0, 0)'
+      transform: 'translate3d(0, 0, 0)'
 
     scaleX = .2
     scaleY = scaleX * .8
@@ -145,15 +149,19 @@ class MinimapView extends View
     if h > @scrollView.height()
       miniOverLayerHeight = @miniOverlayer.height()
       n = top / (@scrollViewLines.outerHeight() - @editorView.height())
-      @miniScrollView.css({ top: -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n })
-      @miniOverlayer.css({ top: n * (miniOverLayerHeight / scaleY - miniOverLayerHeight) })
+      #@miniScrollView.css({ top: -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n })
+      @miniScrollView[0].style.webkitTransform =
+        @miniScrollView[0].style.transform = 'translate3d(0, ' + (-(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n) + 'px, 0)'
+      #@miniOverlayer.css({ top: n * (miniOverLayerHeight / scaleY - miniOverLayerHeight) })
+      @miniOverlayer[0].style.webkitTransform =
+        @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (miniOverLayerHeight / scaleY - miniOverLayerHeight)) + 'px, 0)'
     else
-      @miniOverlayer.css({ top: top })
+      @miniOverlayer[0].style.webkitTransform =
+        @miniOverlayer[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
 
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'
-    translateStr = 'translate(' + xy.join(',') + 'px)'
-    @css
-      width: width
-      '-webkit-transform': scaleStr + ' ' + translateStr
-      'transform': scaleStr + ' ' + translateStr
+    translateStr = 'translate3d(' + xy.join(',') + 'px, 0)'
+    @[0].style.width = width + 'px'
+    @[0].style.webkitTransform =
+      @[0].style.transform = scaleStr + ' ' + translateStr

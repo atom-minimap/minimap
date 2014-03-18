@@ -21,7 +21,9 @@
   width: 125px;
   height: 100%;
   box-sizing: border-box;
-  -webkit-transform: scale(1) translate(0, 0);
+  -webkit-perspective: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: scale(1) translate3d(0, 0, 0);
   -webkit-transform-origin: right top;
 
   .minimap-overlayer {
@@ -30,6 +32,8 @@
     width: 100%;
     background-color: #888;
     opacity: .5;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
   }
 
   &:hover .minimap-overlayer {
@@ -40,7 +44,8 @@
     position: absolute;
     width: 100%;
     .scroll-view {
-      top: 0;
+      -webkit-backface-visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
     }
   }
 
