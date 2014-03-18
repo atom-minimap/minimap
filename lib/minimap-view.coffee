@@ -24,7 +24,8 @@ class MinimapView extends View
   initialize: ->
     @attach()
 
-    @on('mousewheel', @mousewheel.bind(this))
+    @on('mousewheel', @mouseWheel.bind(this))
+    @on('mousedown', @mouseDown.bind(this))
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @paneView.model, 'destroy', => @destroy()
@@ -134,7 +135,7 @@ class MinimapView extends View
   getScrollViewClientRect: ->
     @scrollViewLines[0].getBoundingClientRect()
 
-  mousewheel: (e) ->
+  mouseWheel: (e) ->
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
     if wheelDeltaX
       @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
@@ -158,6 +159,9 @@ class MinimapView extends View
     else
       @miniOverlayer[0].style.webkitTransform =
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
+
+  mouseDown: (e) ->
+    console.dir(e)
 
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'
