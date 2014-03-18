@@ -20,7 +20,7 @@ class MinimapEditorView extends ScrollView
         tokens: tokens,
         text: text,
         attributes: { 'class': 'line' },
-        htmlEolInvisibles: ''
+        htmlEolInvisibles: '&nbsp;'
       }))
     @lines.html(html.join(''))
     html = displayBuffer = screenLines = null
