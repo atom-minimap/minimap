@@ -14,7 +14,7 @@ apm install minimap
 
 * [Redacted Font][]
 * Multiple Panes
-* Mouse wheel and simple click-scroll _(no animation)_ support
+* Mouse wheel and simple click-to-scroll _(no animation)_ support
 
 ### Contributors
 
