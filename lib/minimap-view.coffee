@@ -122,7 +122,8 @@ class MinimapView extends View
     @transform(width, [scaleX, scaleY], [x, y])
     #if @scrollViewRect.height < @editorViewRect.height #else
 
-    @scrollTop(@editorView.scrollTop())
+    setImmediate =>
+      @scrollTop(@editorView.scrollTop())
 
 
   reset: ->
@@ -148,27 +149,34 @@ class MinimapView extends View
 
   scrollTop: (top) ->
     h = @miniEditorView.height() * scaleY
+    miniOverLayerHeight = @miniOverlayer.height()
+    n = top / (@scrollViewLines.outerHeight() - miniOverLayerHeight)
     if h > @scrollView.height()
-      miniOverLayerHeight = @miniOverlayer.height()
-      n = top / (@scrollViewLines.outerHeight() - @editorView.height())
       #@miniScrollView.css({ top: -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n })
-      @miniScrollView[0].style.webkitTransform =
-        @miniScrollView[0].style.transform = 'translate3d(0, ' + (-(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n) + 'px, 0)'
       #@miniOverlayer.css({ top: n * (miniOverLayerHeight / scaleY - miniOverLayerHeight) })
+      top = -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n
+      @miniScrollView.data('top', top)
+      @miniScrollView[0].style.webkitTransform =
+        @miniScrollView[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
       @miniOverlayer[0].style.webkitTransform =
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (miniOverLayerHeight / scaleY - miniOverLayerHeight)) + 'px, 0)'
     else
       @miniOverlayer[0].style.webkitTransform =
-        @miniOverlayer[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
+        @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (@miniEditorView.height() - miniOverLayerHeight)) + 'px, 0)'
 
   isClicked: false
   mouseDown: (e) ->
     @isClicked = true
     e.preventDefault()
     e.stopPropagation
+    miniOverLayerHeight = @miniOverlayer.height()
+    h = @miniEditorView.height()
     y = e.pageY - @offset().top
-    top = Math.max(y / scaleY - @miniOverlayer.height() / 2, 0)
-    top = Math.min(top, @miniEditorView.height() - @miniOverlayer.height() / 2)
+    y -= @miniScrollView.data('top') * scaleY || 0
+    n = y / (miniOverLayerHeight * scaleY)
+    top = n * miniOverLayerHeight - miniOverLayerHeight / 2
+    top = Math.max(top, 0)
+    top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
