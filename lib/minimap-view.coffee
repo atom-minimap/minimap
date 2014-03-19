@@ -14,7 +14,8 @@ module.exports =
 class MinimapView extends View
   @content: ->
     @div class: 'minimap', =>
-      @div outlet: 'miniOverlayer', class: "minimap-overlayer"
+      @div outlet: 'minimapWrapper', class: "minimap-wrapper", =>
+        @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
   configs: {}
 
