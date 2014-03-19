@@ -1,4 +1,13 @@
 
+0.2.0 / 2014-03-19
+==================
+
+* supports to multi `paneViews`, by @abe33
+* add simple `click-to-scroll`, no animation
+* use css3 transform instead of left/top
+* fix minimap obscured when tree view to toggled to right side of window, #9, by @Orangetronic
+* fix not display empty line
+
 0.1.4 / 2014-03-17
 ==================
 
