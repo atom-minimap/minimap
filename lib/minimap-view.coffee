@@ -14,6 +14,7 @@ module.exports =
 class MinimapView extends View
   @content: ->
     @div class: 'minimap', =>
+      @subview 'miniEditorView', new MinimapEditorView()
       @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
   configs: {}
@@ -24,8 +25,8 @@ class MinimapView extends View
   initialize: ->
     @attach()
 
-    @on('mousewheel', @mouseWheel.bind(this))
-    @on('mousedown', @mouseDown.bind(this))
+    @on 'mousewheel', @mouseWheel.bind(this)
+    @on 'mousedown', @mouseDown.bind(this)
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @paneView.model, 'destroy', => @destroy()
@@ -67,9 +68,7 @@ class MinimapView extends View
   # wtf? Long long function!
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
-      @miniEditorView = new MinimapEditorView()
       @miniScrollView = @miniEditorView.find('.scroll-view')
-      @miniOverlayer.before(@miniEditorView)
       @paneView.append(this)
 
     if !@editor
