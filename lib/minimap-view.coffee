@@ -191,6 +191,6 @@ class MinimapView extends View
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'
     translateStr = 'translate3d(' + xy.join(',') + 'px, 0)'
-    @[0].style.width = width + 'px'
+    # @[0].style.width = width + 'px'
     @[0].style.webkitTransform =
-      @[0].style.transform = scaleStr + ' ' + translateStr
+      @[0].style.transform = scaleStr #+ ' ' + translateStr
