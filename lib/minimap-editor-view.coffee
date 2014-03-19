@@ -24,7 +24,7 @@ class MinimapEditorView extends ScrollView
       }))
     @lines.html(html.join(''))
     html = displayBuffer = screenLines = null
-    console.log('Update MinimapEditorView load time ', Date.now() - start, 'ms')
+    console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
 
   getClientRect: ->
     sv = @scrollView[0]
