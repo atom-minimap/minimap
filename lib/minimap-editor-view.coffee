@@ -8,22 +8,19 @@ class MinimapEditorView extends ScrollView
       @div class: 'scroll-view', outlet: 'scrollView', =>
         @div class: 'lines', outlet: 'lines'
 
+  constructor: (@editorView) ->
+    super
+
   initialize: ->
     super
 
   update: (grammar, text) ->
     start = Date.now()
-    screenLines = grammar.tokenizeLines(text)
-    html = []
-    for tokens in screenLines
-      html.push(EditorView.buildLineHtml({
-        tokens: tokens,
-        text: text,
-        attributes: { 'class': 'line' },
-        htmlEolInvisibles: '&nbsp;'
-      }))
-    @lines.html(html.join(''))
-    html = displayBuffer = screenLines = null
+    numLines = @editorView.getModel().displayBuffer.getLines().length
+    lines = @editorView.buildLineElementsForScreenRows(0, numLines)
+    @lines.html ''
+    @lines.append lines
+
     console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
 
   getClientRect: ->

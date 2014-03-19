@@ -68,7 +68,8 @@ class MinimapView extends View
   # wtf? Long long function!
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
-      @miniEditorView = new MinimapEditorView()
+      @miniEditorView = new MinimapEditorView(@editorView)
+      @miniEditorView.css width: @scrollView.width()
       @miniScrollView = @miniEditorView.find('.scroll-view')
       @miniOverlayer.before(@miniEditorView)
       @paneView.addClass('with-minimap').append(this)
