@@ -1,8 +1,10 @@
-{View} = require 'atom'
+{$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
 
 CONFIGS = require './config'
+
+require './resizeend.js'
 
 minTop = 0
 maxTop = 0
@@ -25,11 +27,12 @@ class MinimapView extends View
   initialize: ->
     @attach()
 
-    @on 'mousewheel', @mouseWheel.bind(this)
-    @on 'mousedown', @mouseDown.bind(this)
+    @on 'mousewheel', @mouseWheel
+    @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @paneView.model, 'destroy', => @destroy()
+    @subscribe $(window), 'resize:end', @resizeend
 
     #@subscribe atom.workspaceView, 'cursor:moved', =>
     #  @update()
@@ -64,6 +67,12 @@ class MinimapView extends View
     @scrollView = @editorView.find('.scroll-view')
     @scrollViewLines = @scrollView.find('.lines')
 
+    # current editor bind scrollTop event
+    @editor.off 'scroll-top-changed.editor'
+    @editor.on 'scroll-top-changed.editor', @scrollTop
+    @editor.off 'scroll-left-changed.editor'
+    @editor.on 'scroll-left-changed.editor', @scrollLeft
+
 
   # wtf? Long long function!
   updateMinimapView: ->
@@ -90,12 +99,6 @@ class MinimapView extends View
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
-
-    # current editor bind scrollTop event
-    @editor.off('scroll-top-changed.editor')
-    @editor.on('scroll-top-changed.editor', @scrollTop.bind(this))
-    @editor.off('scroll-left-changed.editor')
-    @editor.on('scroll-left-changed.editor', @scrollLeft.bind(this))
 
     # reset minimap layer size
     @reset()
@@ -135,7 +138,7 @@ class MinimapView extends View
   getScrollViewClientRect: ->
     @scrollViewLines[0].getBoundingClientRect()
 
-  mouseWheel: (e) ->
+  mouseWheel: (e) =>
     return if @isClicked
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
     if wheelDeltaX
@@ -143,10 +146,10 @@ class MinimapView extends View
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
-  scrollLeft: (left) ->
+  scrollLeft: (left) =>
     @miniScrollView.scrollLeft(left * scaleX)
 
-  scrollTop: (top) ->
+  scrollTop: (top) =>
     h = @miniEditorView.height() * scaleY
     miniOverLayerHeight = @miniOverlayer.height()
     n = top / (@scrollViewLines.outerHeight() - miniOverLayerHeight)
@@ -164,7 +167,7 @@ class MinimapView extends View
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (@miniEditorView.height() - miniOverLayerHeight)) + 'px, 0)'
 
   isClicked: false
-  mouseDown: (e) ->
+  mouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
     e.stopPropagation
@@ -190,3 +193,6 @@ class MinimapView extends View
     @[0].style.width = width + 'px'
     @[0].style.webkitTransform =
       @[0].style.transform = scaleStr + ' ' + translateStr
+
+  resizeend: (status) =>
+    @updateMinimapView()
