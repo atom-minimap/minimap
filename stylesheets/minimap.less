@@ -12,17 +12,23 @@
   unicode-range: U+21-FF;
 }
 
+.pane.with-minimap {
+  .scroll-view {
+    margin-right: 10%;
+  }
+  .vertical-scrollbar {
+    right: 10%;
+  }
+}
+
 .minimap {
   position: absolute;
-  margin-right: 15px;
-  right: 0;
-  left: inherit;
+  left: 90%;
   opacity: .77;
-  width: 125px;
   height: 100%;
   box-sizing: border-box;
   .accelerated;
-  -webkit-transform-origin: right top;
+  -webkit-transform-origin: 0 0;
 
   .minimap-overlayer {
     position: absolute;
@@ -39,6 +45,7 @@
 
   .minimap-editor {
     position: absolute;
+    -webkit-transform-origin: 0 0
     width: 100%;
     .scroll-view {
       .accelerated;
@@ -50,7 +57,7 @@
   &[data-theme="redacted"] {
     .editor {
       font-family: Redacted !important;
-      letter-spacing: -1px;
+      word-spacing: 2px
     }
   }
 
