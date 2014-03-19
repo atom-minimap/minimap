@@ -40,6 +40,7 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
+    @paneView.removeClass('with-minimap')
     @remove()
     @detach()
 
@@ -70,7 +71,7 @@ class MinimapView extends View
       @miniEditorView = new MinimapEditorView()
       @miniScrollView = @miniEditorView.find('.scroll-view')
       @miniOverlayer.before(@miniEditorView)
-      @paneView.append(this)
+      @paneView.addClass('with-minimap').append(this)
 
     if !@editor
       @addClass('hide')
