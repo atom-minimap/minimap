@@ -14,15 +14,17 @@
 
 .minimap {
   position: absolute;
-  margin-right: 15px;
-  right: 0;
   left: inherit;
-  opacity: .77;
+  right: 15px;
   width: 125px;
   height: 100%;
+  opacity: .77;
   box-sizing: border-box;
   .accelerated;
   -webkit-transform-origin: right top;
+  -webkit-user-select: none;
+  cursor: default;
+  display: -webkit-flex;
 
   .minimap-overlayer {
     position: absolute;
@@ -40,10 +42,11 @@
   .minimap-editor {
     position: absolute;
     width: 100%;
+    cursor: default;
+    .accelerated;
     .scroll-view {
       .accelerated;
     }
-    .accelerated;
   }
 
   // Themes
