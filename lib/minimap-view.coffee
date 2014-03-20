@@ -157,8 +157,8 @@ class MinimapView extends View
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
     if minimapCanScroll
-      minimapMaxScroll = (minimapHeight - scrollViewHeight) * @scaleY
-      overlayerScroll = overlayY / (editorLinesHeight - scrollViewHeight)
+      minimapMaxScroll = minimapHeight * @scaleY + scrollViewHeight / 2
+      overlayerScroll = overlayY / editorLinesHeight
       minimapScroll = -overlayerScroll * minimapMaxScroll
 
       @miniScrollView.data('top', minimapScroll)
@@ -178,7 +178,7 @@ class MinimapView extends View
   mouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
-    e.stopPropagation
+    e.stopPropagation()
     miniOverLayerHeight = @miniOverlayer.height()
     h = @miniEditorView.height()
     y = e.pageY - @offset().top
