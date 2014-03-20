@@ -163,6 +163,7 @@ class MinimapView extends View
       @miniOverlayer[0].style.webkitTransform =
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (miniOverLayerHeight / scaleY - miniOverLayerHeight)) + 'px, 0)'
     else
+      @miniScrollView.data('top', 0)
       @miniOverlayer[0].style.webkitTransform =
         @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (@miniEditorView.height() - miniOverLayerHeight)) + 'px, 0)'
 
@@ -182,9 +183,8 @@ class MinimapView extends View
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
-    self = this
-    setTimeout ->
-      self.isClicked = false
+    setTimeout =>
+      @isClicked = false
     , 377
 
   transform: (width, scale, xy) ->
