@@ -42,6 +42,12 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
+    @off 'mousewheel', @mouseWheel
+    @off 'mousedown', @mouseDown
+    @unsubscribe @paneView.model.$activeItem
+    @unsubscribe @paneView.model, 'destroy'
+    @unsubscribe $(window), 'resize:end'
+
     @paneView.removeClass('with-minimap')
     @remove()
     @detach()
@@ -82,7 +88,7 @@ class MinimapView extends View
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
       @miniEditorView.css width: @scrollView.width()
-      @miniScrollView = @miniEditorView.find('.scroll-view')
+      @miniScrollView = @miniEditorView.scrollView
       @paneView.addClass('with-minimap').append(this)
 
     if !@editor
@@ -154,6 +160,7 @@ class MinimapView extends View
       editorLinesHeight = @scrollViewLines.outerHeight()
       miniOverLayerHeight = @miniOverlayer.outerHeight()
 
+
       maxScroll = editorLinesHeight - miniOverLayerHeight
       topPercent = top / maxScroll
       minimapMaxScroll = editorLinesHeight - miniOverLayerHeight / @scaleY
@@ -178,7 +185,7 @@ class MinimapView extends View
   mouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
-    e.stopPropagation
+    e.stopPropagation()
     miniOverLayerHeight = @miniOverlayer.height()
     # overlayer center, point-y
     y = e.pageY - @offset().top
