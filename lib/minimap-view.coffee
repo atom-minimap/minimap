@@ -15,7 +15,6 @@ class MinimapView extends View
 
   configs: {}
 
-
   constructor: (@paneView) ->
     super
     @scaleX = 0.2
@@ -183,8 +182,8 @@ class MinimapView extends View
     miniOverLayerHeight = @miniOverlayer.height()
     h = @miniEditorView.height()
     y = e.pageY - @offset().top
-    y -= @miniScrollView.data('top') * scaleY || 0
-    n = y / (miniOverLayerHeight * scaleY)
+    y -= @miniScrollView.data('top') * @scaleY || 0
+    n = y / (miniOverLayerHeight * @scaleY)
     top = n * miniOverLayerHeight - miniOverLayerHeight / 2
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
