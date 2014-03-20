@@ -8,21 +8,10 @@ class MinimapEditorView extends ScrollView
       @div class: 'scroll-view', outlet: 'scrollView', =>
         @div class: 'lines', outlet: 'lines'
 
-  constructor: ->
-    super
-
   initialize: ->
     super
 
-  # Current editorView
-  editorView: null
-
-  setEditorView: (@editorView) ->
-
-  getEditorView: ->
-    @editorView
-
-  update: ->
+  update: (@editorView) ->
     start = Date.now()
     ###
     screenLines = grammar.tokenizeLines(text)
