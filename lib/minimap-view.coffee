@@ -83,7 +83,7 @@ class MinimapView extends View
   # wtf? Long long function!
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
-      @miniEditorView = new MinimapEditorView(@editorView)
+      @miniEditorView = new MinimapEditorView()
       @miniEditorView.css width: @scrollView.width()
       @miniScrollView = @miniEditorView.scrollView
       @miniOverlayer.before(@miniEditorView)
@@ -103,7 +103,7 @@ class MinimapView extends View
       # code from raising an error.
       if @editor?
         @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.update(@editor.getGrammar(), @editor.getText())
+        @miniEditorView.update(@editorView)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })

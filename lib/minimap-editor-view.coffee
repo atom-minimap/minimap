@@ -8,13 +8,10 @@ class MinimapEditorView extends ScrollView
       @div class: 'scroll-view', outlet: 'scrollView', =>
         @div class: 'lines', outlet: 'lines'
 
-  constructor: (@editorView) ->
-    super
-
   initialize: ->
     super
 
-  update: (grammar, text) ->
+  update: (@editorView) ->
     start = Date.now()
     numLines = @editorView.getModel().displayBuffer.getLines().length
     lines = @editorView.buildLineElementsForScreenRows(0, numLines)
