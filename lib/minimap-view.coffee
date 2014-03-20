@@ -161,7 +161,6 @@ class MinimapView extends View
       minimapMaxScroll = (minimapHeight - scrollViewHeight) * @scaleY
       overlayerScroll = overlayY / (editorLinesHeight - scrollViewHeight)
       minimapScroll = -overlayerScroll * minimapMaxScroll
-      console.log minimapHeight, overlayY, overlayY + scrollViewHeight
 
       @miniScrollView.data('top', minimapScroll)
       @transform @minimapWrapper[0], @minimapScale + @translateY(minimapScroll)
