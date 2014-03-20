@@ -8,14 +8,27 @@ class MinimapEditorView extends ScrollView
       @div class: 'scroll-view', outlet: 'scrollView', =>
         @div class: 'lines', outlet: 'lines'
 
-  constructor: (@editorView) ->
-    super
-
   initialize: ->
     super
 
-  update: (grammar, text) ->
+  update: (@editorView) ->
     start = Date.now()
+    ###
+    screenLines = grammar.tokenizeLines(text)
+    html = []
+    for tokens in screenLines
+      html.push(EditorView.buildLineHtml({
+        tokens: tokens,
+        text: text,
+        attributes: { 'class': 'line' },
+        htmlEolInvisibles: '&nbsp;'
+      }))
+    @lines.html(html.join(''))
+    html = displayBuffer = screenLines = null
+    ###
+
+    # FIXME: If the file is very large, the tokenizes doesn't generate completely,
+    # so doesn't have the syntax highlight until a new view is activated in the same pane.
     numLines = @editorView.getModel().displayBuffer.getLines().length
     lines = @editorView.buildLineElementsForScreenRows(0, numLines)
     @lines.html ''
