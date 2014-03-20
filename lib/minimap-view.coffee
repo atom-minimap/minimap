@@ -6,22 +6,20 @@ CONFIGS = require './config'
 
 require './resizeend.js'
 
-minTop = 0
-maxTop = 0
-
-scaleX = 1
-scaleY = 1
-
 module.exports =
 class MinimapView extends View
   @content: ->
     @div class: 'minimap', =>
-      @subview 'miniEditorView', new MinimapEditorView()
-      @div outlet: 'miniOverlayer', class: "minimap-overlayer"
+      @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
+        @subview 'miniEditorView', new MinimapEditorView()
+        @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
   configs: {}
 
   constructor: (@paneView) ->
+    @scaleX = 0.2
+    @scaleY = @scaleX * 0.8
+    @minimapScale = @scale(@scaleX, @scaleY)
     super
 
   initialize: ->
@@ -44,8 +42,11 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
+    @paneView.removeClass('with-minimap')
     @remove()
     @detach()
+
+  reset: -> @transform @minimapWrapper[0], @scale()
 
   # Update Styles
   updateTheme: ->
@@ -60,12 +61,15 @@ class MinimapView extends View
 
   getActiveEditor: ->
     @editorView = @paneView.viewForItem(@activeItem)
-    # Ignore `Settings Tab` or `Tabs` are empty.
+    # Ignore `Settings Tab` or `Tabs` are empty, the pane isn't a editor-view.
     if !@editorView || !@editorView.hasClass('editor')
       return @editor = @scrollView = null
+
     @editor = @editorView.getEditor()
     @scrollView = @editorView.find('.scroll-view')
     @scrollViewLines = @scrollView.find('.lines')
+
+    @miniEditorView.setEditorView(@editorView)
 
     # current editor bind scrollTop event
     @editor.off 'scroll-top-changed.editor'
@@ -77,8 +81,9 @@ class MinimapView extends View
   # wtf? Long long function!
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
+      @miniEditorView.css width: @scrollView.width()
       @miniScrollView = @miniEditorView.find('.scroll-view')
-      @paneView.append(this)
+      @paneView.addClass('with-minimap').append(this)
 
     if !@editor
       @addClass('hide')
@@ -93,8 +98,7 @@ class MinimapView extends View
       # solution is implemented it will prevent the delayed
       # code from raising an error.
       if @editor?
-        @miniScrollView[0].style.webkitTransform =
-          @miniScrollView[0].style.transform = 'translate3d(0, 0, 0)'
+        @transform @miniScrollView[0], @translateY(0)
         @miniEditorView.update(@editor.getGrammar(), @editor.getText())
 
     # offset minimap
@@ -108,29 +112,19 @@ class MinimapView extends View
     @scrollViewRect = @getScrollViewClientRect()
     @miniScrollViewRect = @miniEditorView.getClientRect()
 
-    # reset minimap-editor
-    maxTop = @miniEditorView.height()
-
     # reset minimap-overlayer
     @miniOverlayer.css
+      width: @scrollViewRect.width
       height: @editorViewRect.height
-      '-webkit-transform': 'translate3d(0, 0, 0)'
-      transform: 'translate3d(0, 0, 0)'
+      '-webkit-transform': @translateY()
+      transform: @translateY()
 
-    scaleX = .2
-    scaleY = scaleX * .8
-    width = 125 / scaleX
-    x = y = 0
-    @transform(width, [scaleX, scaleY], [x, y])
-    #if @scrollViewRect.height < @editorViewRect.height #else
+    @transform @miniWrapper[0], @minimapScale
 
     setImmediate =>
       @scrollTop(@editorView.scrollTop())
 
-
-  reset: ->
-    scaleX = scaleY = 1
-    @transform(125, [scaleX, scaleY], [0, 0])
+  reset: -> @transform @miniWrapper[0], @scale()
 
   getEditorViewClientRect: ->
     @scrollView[0].getBoundingClientRect()
@@ -147,24 +141,38 @@ class MinimapView extends View
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
   scrollLeft: (left) =>
-    @miniScrollView.scrollLeft(left * scaleX)
+    @miniScrollView.scrollLeft(left * @scaleX)
 
   scrollTop: (top) =>
-    h = @miniEditorView.height() * scaleY
-    miniOverLayerHeight = @miniOverlayer.height()
-    n = top / (@scrollViewLines.outerHeight() - miniOverLayerHeight)
-    if h > @scrollView.height()
-      #@miniScrollView.css({ top: -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n })
-      #@miniOverlayer.css({ top: n * (miniOverLayerHeight / scaleY - miniOverLayerHeight) })
-      top = -(@miniScrollView.outerHeight() - miniOverLayerHeight / scaleY) * n
-      @miniScrollView.data('top', top)
-      @miniScrollView[0].style.webkitTransform =
-        @miniScrollView[0].style.transform = 'translate3d(0, ' + top + 'px, 0)'
-      @miniOverlayer[0].style.webkitTransform =
-        @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (miniOverLayerHeight / scaleY - miniOverLayerHeight)) + 'px, 0)'
+    minimapHeight = @miniScrollView.outerHeight()
+    scrollViewHeight = @scrollView.outerHeight()
+
+    minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
+    minimapScroll = 0
+
+    if minimapCanScroll
+      editorLinesHeight = @scrollViewLines.outerHeight()
+      miniOverLayerHeight = @miniOverlayer.outerHeight()
+
+      maxScroll = editorLinesHeight - miniOverLayerHeight
+      topPercent = top / maxScroll
+      minimapMaxScroll = editorLinesHeight - miniOverLayerHeight / @scaleY
+      minimapScroll = topPercent * minimapMaxScroll * -1
+
+      @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
+
     else
-      @miniOverlayer[0].style.webkitTransform =
-        @miniOverlayer[0].style.transform = 'translate3d(0, ' + (n * (@miniEditorView.height() - miniOverLayerHeight)) + 'px, 0)'
+      @transform @miniWrapper[0], @minimapScale
+
+    # storing miniScrollView scrollTop
+    @data('top', minimapScroll)
+    @transform @miniOverlayer[0], @translateY(top)
+
+
+  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
+  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
+  transform: (el, transform) ->
+    el.style.webkitTransform = el.style.transform = transform
 
   isClicked: false
   mouseDown: (e) =>
@@ -172,27 +180,19 @@ class MinimapView extends View
     e.preventDefault()
     e.stopPropagation
     miniOverLayerHeight = @miniOverlayer.height()
-    h = @miniEditorView.height()
+    # overlayer center, point-y
     y = e.pageY - @offset().top
-    y -= @miniScrollView.data('top') * scaleY || 0
-    n = y / (miniOverLayerHeight * scaleY)
-    top = n * miniOverLayerHeight - miniOverLayerHeight / 2
+    y = y - @data('top') * @scaleY || 0
+    n = y / @scaleY
+    top = n - miniOverLayerHeight / 2
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
-    self = this
-    setTimeout ->
-      self.isClicked = false
+    setTimeout =>
+      @isClicked = false
     , 377
 
-  transform: (width, scale, xy) ->
-    scaleStr = 'scale(' + scale.join(',') + ')'
-    translateStr = 'translate3d(' + xy.join(',') + 'px, 0)'
-    @[0].style.width = width + 'px'
-    @[0].style.webkitTransform =
-      @[0].style.transform = scaleStr + ' ' + translateStr
-
-  resizeend: (status) =>
+  resizeend: =>
     @updateMinimapView()
