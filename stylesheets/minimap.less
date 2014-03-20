@@ -25,17 +25,22 @@
   position: absolute;
   left: 90%;
   opacity: .77;
-  height: 100%;
+  width: 10%;
+  bottom: 0;
+  overflow: hidden;
   box-sizing: border-box;
   .accelerated;
-  -webkit-transform-origin: 0 0;
+
+  .minimap-wrapper {
+    -webkit-transform-origin: 0 0;
+  }
 
   .minimap-overlayer {
     position: absolute;
-    visibility: hidden;
+    // visibility: hidden;
     width: 100%;
     background-color: #888;
-    opacity: .5;
+    opacity: .3;
     .accelerated;
   }
 

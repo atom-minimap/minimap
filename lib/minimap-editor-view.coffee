@@ -20,6 +20,7 @@ class MinimapEditorView extends ScrollView
     lines = @editorView.buildLineElementsForScreenRows(0, numLines)
     @lines.html ''
     @lines.append lines
+    @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
     console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
 
