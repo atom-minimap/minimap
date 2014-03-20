@@ -1,4 +1,15 @@
 
+0.2.2 / 2014-03-20
+==================
+
+* fix `@miniScrollView.data('top')` doesn't reset to 0 after switch with files
+
+0.2.1 / 2014-03-20
+==================
+
+* supports window resize
+* improve style
+
 0.2.0 / 2014-03-19
 ==================
 

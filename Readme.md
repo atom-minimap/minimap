@@ -25,7 +25,6 @@ https://github.com/fundon/atom-minimap/graphs/contributors
 
 ### Roadmap
 
-* Responsive, window resize etc.
 * Custom style
 * Sync editing
 * Smooth animation
