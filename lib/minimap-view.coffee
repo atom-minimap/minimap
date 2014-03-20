@@ -75,8 +75,6 @@ class MinimapView extends View
     @scrollView = @editorView.find('.scroll-view')
     @scrollViewLines = @scrollView.find('.lines')
 
-    @miniEditorView.setEditorView(@editorView)
-
     # current editor bind scrollTop event
     @editor.off 'scroll-top-changed.editor'
     @editor.on 'scroll-top-changed.editor', @scrollTop
@@ -105,7 +103,7 @@ class MinimapView extends View
       # code from raising an error.
       if @editor?
         @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.update(@editor.getGrammar(), @editor.getText())
+        @miniEditorView.update(@editorView)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
