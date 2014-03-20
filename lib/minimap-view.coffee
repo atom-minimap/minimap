@@ -140,7 +140,7 @@ class MinimapView extends View
   scrollLeft: (left) =>
     @miniScrollView.scrollLeft(left * scaleX)
 
-  scrollTop: (top) ->
+  scrollTop: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
