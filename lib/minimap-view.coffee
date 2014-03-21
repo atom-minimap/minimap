@@ -18,7 +18,7 @@ class MinimapView extends View
 
   constructor: (@paneView) ->
     super
-    
+
     @scaleX = 0.2
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
@@ -85,10 +85,10 @@ class MinimapView extends View
   getActiveBuffer: ->
     @buffer = @editor?.getBuffer?()
 
-  unsubscribeBuffer: =>
+  unsubscribeBuffer: ->
     @buffer.off 'changed', @onActiveBufferChanged if @buffer
 
-  subscribeBuffer: =>
+  subscribeBuffer: ->
     @buffer.on 'changed', @onActiveBufferChanged if @buffer
 
   onActiveBufferChanged: =>
