@@ -150,29 +150,27 @@ class MinimapView extends View
   scrollTop: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-
-    minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
+    scrollViewOffset = @scrollView.offset().top
+    overlayerOffset = @scrollView.find('.overlayer').offset().top
+    editorLinesHeight = @scrollViewLines.outerHeight()
+    miniOverLayerHeight = @miniOverlayer.outerHeight()
+    overlayY = -overlayerOffset + scrollViewOffset
     minimapScroll = 0
 
+    minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
+
     if minimapCanScroll
-      editorLinesHeight = @scrollViewLines.outerHeight()
-      miniOverLayerHeight = @miniOverlayer.outerHeight()
-
-
-      maxScroll = editorLinesHeight - miniOverLayerHeight
-      topPercent = top / maxScroll
-      minimapMaxScroll = editorLinesHeight - miniOverLayerHeight / @scaleY
-      minimapScroll = topPercent * minimapMaxScroll * -1
+      minimapMaxScroll = minimapHeight * @scaleY
+      overlayerScroll = overlayY / editorLinesHeight
+      minimapScroll = -overlayerScroll * minimapMaxScroll
 
       @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
 
     else
       @transform @miniWrapper[0], @minimapScale
 
-    # storing miniScrollView scrollTop
-    @data('top', minimapScroll)
-    @transform @miniOverlayer[0], @translateY(top)
-
+    @miniScrollView.data('top', minimapScroll)
+    @transform @miniOverlayer[0], @translateY(overlayY)
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
