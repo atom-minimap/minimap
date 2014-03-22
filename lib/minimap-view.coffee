@@ -17,10 +17,11 @@ class MinimapView extends View
   configs: {}
 
   constructor: (@paneView) ->
+    super
+
     @scaleX = 0.2
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
-    super
 
   initialize: ->
     @attach()
@@ -31,9 +32,6 @@ class MinimapView extends View
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @paneView.model, 'destroy', => @destroy()
     @subscribe $(window), 'resize:end', @resizeend
-
-    #@subscribe atom.workspaceView, 'cursor:moved', =>
-    #  @update()
 
   attach: ->
     themeProp = 'minimap.theme'
@@ -47,6 +45,7 @@ class MinimapView extends View
     @unsubscribe @paneView.model.$activeItem
     @unsubscribe @paneView.model, 'destroy'
     @unsubscribe $(window), 'resize:end'
+    @unsubscribeBuffer()
 
     @paneView.removeClass('with-minimap')
     @remove()
@@ -59,10 +58,12 @@ class MinimapView extends View
     @attr 'data-theme': this.configs.theme
 
   onActiveItemChanged: (item) =>
-    # Fix called twice when open minimap!
+    # Fix called twice when opening minimap!
     return if @activeItem == item
     @activeItem = item
     @getActiveEditor()
+    @getActiveBuffer()
+    @subscribeBuffer()
     @updateMinimapView()
 
   getActiveEditor: ->
@@ -72,7 +73,7 @@ class MinimapView extends View
       return @editor = @scrollView = null
 
     @editor = @editorView.getEditor()
-    @scrollView = @editorView.find('.scroll-view')
+    @scrollView = @editorView.scrollView
     @scrollViewLines = @scrollView.find('.lines')
 
     # current editor bind scrollTop event
@@ -81,6 +82,17 @@ class MinimapView extends View
     @editor.off 'scroll-left-changed.editor'
     @editor.on 'scroll-left-changed.editor', @scrollLeft
 
+  getActiveBuffer: ->
+    @buffer = @editor?.getBuffer?()
+
+  unsubscribeBuffer: ->
+    @buffer.off 'changed', @onActiveBufferChanged if @buffer
+
+  subscribeBuffer: ->
+    @buffer.on 'changed', @onActiveBufferChanged if @buffer
+
+  onActiveBufferChanged: =>
+    @updateMinimapView()
 
   # wtf? Long long function!
   updateMinimapView: ->
@@ -108,7 +120,7 @@ class MinimapView extends View
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
 
-    # reset minimap layer size
+    # reset size of minimap layer
     @reset()
 
     # get rects
@@ -117,11 +129,14 @@ class MinimapView extends View
     @miniScrollViewRect = @miniEditorView.getClientRect()
 
     # reset minimap-overlayer
+    # top will be set 0 when reseting
+    @miniOverlayer.addClass 'hide'
     @miniOverlayer.css
       width: @scrollViewRect.width
       height: @editorViewRect.height
       '-webkit-transform': @translateY()
       transform: @translateY()
+    @miniOverlayer.removeClass 'hide'
 
     @transform @miniWrapper[0], @minimapScale
 
