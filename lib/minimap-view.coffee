@@ -184,7 +184,7 @@ class MinimapView extends View
     else
       @transform @miniWrapper[0], @minimapScale
 
-    @miniScrollView.data('top', minimapScroll)
+    @data('top', minimapScroll)
     @transform @miniOverlayer[0], @translateY(overlayY)
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
