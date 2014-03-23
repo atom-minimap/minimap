@@ -151,8 +151,11 @@ class MinimapView extends View
 
   mouseWheel: (e) =>
     return if @isClicked
-
-    @editorView.updateScroll()
+    {wheelDeltaX, wheelDeltaY} = e.originalEvent
+    if wheelDeltaX
+      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
+    if wheelDeltaY
+      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
   updateScroll: =>
     minimapHeight = @miniScrollView.outerHeight()
