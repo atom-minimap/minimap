@@ -1,9 +1,11 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
+Debug = require './mixins/debug'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
+  Debug.includeInto(this)
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
@@ -16,24 +18,26 @@ class MinimapEditorView extends ScrollView
 
   update: (@editorView) ->
     start = Date.now()
+    @startBench()
 
     @lines[0].removeChild(@lines[0].childNodes[0])
     @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
-    console.log('cleaning:', (Date.now() - start) + 'ms')
+    @markIntermediateTime('cleaning')
     # FIXME: If the file is very large, the tokenizes doesn't generate
     # completely, so doesn't have the syntax highlight until a new view
     # is activated in the same pane.
     numLines = @editorView.getModel().displayBuffer.getLines().length
     lines = @editorView.buildLineElementsForScreenRows(0, numLines)
-    console.log(' build lines:', (Date.now() - start) + 'ms')
+
+    @markIntermediateTime('lines building')
     wrapper = $('<div/>')
     wrapper.append lines
     @lines.append wrapper
 
     @emit 'minimap:updated'
 
-    console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
+    @endBench('minimap update')
 
   getClientRect: ->
     sv = @scrollView[0]
