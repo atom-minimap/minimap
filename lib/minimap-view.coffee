@@ -167,7 +167,7 @@ class MinimapView extends View
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
     overlayerOffset = @scrollView.find('.overlayer').offset().top
-    editorLinesHeight = @scrollViewLines.outerHeight()
+    editorLinesHeight = @scrollViewLines.height()
     miniOverLayerHeight = @miniOverlayer.outerHeight()
     overlayY = -overlayerOffset + scrollViewOffset
     minimapScroll = 0
