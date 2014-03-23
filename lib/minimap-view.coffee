@@ -78,9 +78,9 @@ class MinimapView extends View
 
     # current editor bind scrollTop event
     @editor.off 'scroll-top-changed.editor'
-    @editor.on 'scroll-top-changed.editor', @scrollTop
+    @editor.on 'scroll-top-changed.editor', @updateScroll
     @editor.off 'scroll-left-changed.editor'
-    @editor.on 'scroll-left-changed.editor', @scrollLeft
+    @editor.on 'scroll-left-changed.editor', @updateScroll
 
   getActiveBuffer: ->
     @buffer = @editor?.getBuffer?()
@@ -140,8 +140,7 @@ class MinimapView extends View
 
     @transform @miniWrapper[0], @minimapScale
 
-    setImmediate =>
-      @scrollTop(@editorView.scrollTop())
+    setImmediate => @updateScroll()
 
   reset: -> @transform @miniWrapper[0], @scale()
 
@@ -153,16 +152,10 @@ class MinimapView extends View
 
   mouseWheel: (e) =>
     return if @isClicked
-    {wheelDeltaX, wheelDeltaY} = e.originalEvent
-    if wheelDeltaX
-      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
-    if wheelDeltaY
-      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
-  scrollLeft: (left) =>
-    @miniScrollView.scrollLeft(left * @scaleX)
+    @editorView.updateScroll()
 
-  scrollTop: (top) =>
+  updateScroll: =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
@@ -206,7 +199,7 @@ class MinimapView extends View
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
     # @note: currently, no animation.
-    @editorView.scrollTop(top)
+    @editorView.updateScroll()
     # Fix trigger `mousewheel` event.
     setTimeout =>
       @isClicked = false
