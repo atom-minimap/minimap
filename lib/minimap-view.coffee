@@ -41,9 +41,7 @@ class MinimapView extends View
   destroy: ->
     @off 'mousewheel', @mouseWheel
     @off 'mousedown', @mouseDown
-    @unsubscribe @paneView.model.$activeItem
-    @unsubscribe @paneView.model, 'destroy'
-    @unsubscribe $(window), 'resize:end'
+    @unsubscribe()
 
     @paneView.removeClass('with-minimap')
 
