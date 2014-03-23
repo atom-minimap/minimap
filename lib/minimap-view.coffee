@@ -12,6 +12,8 @@ maxTop = 0
 scaleX = 1
 scaleY = 1
 
+
+
 module.exports =
 class MinimapView extends View
   @content: ->
@@ -27,6 +29,8 @@ class MinimapView extends View
   initialize: ->
     @attach()
 
+    @scrollYTarget = 0
+
     @on 'mousewheel', @mouseWheel
     @on 'mousedown', @mouseDown
 
@@ -34,14 +38,37 @@ class MinimapView extends View
     @subscribe @paneView.model, 'destroy', => @destroy()
     @subscribe $(window), 'resize:end', @resizeend
 
-    #@subscribe atom.workspaceView, 'cursor:moved', =>
-    #  @update()
+    setInterval =>
+      if @isClicked
+        miniOverLayerHeight = @miniOverlayer.height()
+        h = @miniEditorView.height()
+        y = @scrollYTarget - @offset().top
+        y -= @miniScrollView.data('top') * scaleY || 0
+        n = y / (miniOverLayerHeight * scaleY)
+        top = n * miniOverLayerHeight - miniOverLayerHeight / 2
+        top = Math.max(top, 0)
+        top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
+        @editorView.scrollTop(top)
+    , 33
+
+    window.addEventListener 'mouseup', (e) =>
+      @isClicked = false
+
+
+    window.addEventListener 'mousemove', (e) =>
+      if @isClicked
+        @scrollYTarget = e.pageY
+
+    # @subscribe atom.workspaceView, 'cursor:moved', =>
+    #   @update()
+
 
   attach: ->
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) || CONFIGS.theme
       @updateTheme()
+
 
   destroy: ->
     @remove()
@@ -58,6 +85,9 @@ class MinimapView extends View
     @getActiveEditor()
     @updateMinimapView()
 
+
+
+
   getActiveEditor: ->
     @editorView = @paneView.viewForItem(@activeItem)
     # Ignore `Settings Tab` or `Tabs` are empty.
@@ -71,7 +101,8 @@ class MinimapView extends View
     @editor.off 'scroll-top-changed.editor'
     @editor.on 'scroll-top-changed.editor', @scrollTop
     @editor.off 'scroll-left-changed.editor'
-    @editor.on 'scroll-left-changed.editor', @scrollLeft
+    @editor.on 'scroll-left-changed.editor', @scroll
+
 
 
   # wtf? Long long function!
@@ -95,7 +126,8 @@ class MinimapView extends View
       if @editor?
         @miniScrollView[0].style.webkitTransform =
           @miniScrollView[0].style.transform = 'translate3d(0, 0, 0)'
-        @miniEditorView.update(@editor.getGrammar(), @editor.getText())
+        @miniEditorView.update(@editor, @editor.getGrammar(), @editor.getText())
+        #@miniEditorView.update(@editor)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
@@ -127,7 +159,6 @@ class MinimapView extends View
     setImmediate =>
       @scrollTop(@editorView.scrollTop())
 
-
   reset: ->
     scaleX = scaleY = 1
     @transform(125, [scaleX, scaleY], [0, 0])
@@ -145,6 +176,8 @@ class MinimapView extends View
       @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
+
+
 
   scrollLeft: (left) =>
     @miniScrollView.scrollLeft(left * scaleX)
@@ -172,6 +205,7 @@ class MinimapView extends View
     @isClicked = true
     e.preventDefault()
     e.stopPropagation
+    @scrollYTarget = e.pageY    #test
     miniOverLayerHeight = @miniOverlayer.height()
     h = @miniEditorView.height()
     y = e.pageY - @offset().top
@@ -180,12 +214,8 @@ class MinimapView extends View
     top = n * miniOverLayerHeight - miniOverLayerHeight / 2
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
-    # @note: currently, no animation.
     @editorView.scrollTop(top)
-    # Fix trigger `mousewheel` event.
-    setTimeout =>
-      @isClicked = false
-    , 377
+
 
   transform: (width, scale, xy) ->
     scaleStr = 'scale(' + scale.join(',') + ')'

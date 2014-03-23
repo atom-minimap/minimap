@@ -1,5 +1,6 @@
 // The ui-variables file is provided by base themes provided by Atom.
 //
+
 // See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
 // for a full listing of what's available.
 @import "ui-variables";
@@ -11,6 +12,7 @@
   src: url(atom://minimap/resources/redacted-regular.woff) format('woff');
   unicode-range: U+21-FF;
 }
+
 
 .minimap {
   position: absolute;
@@ -28,15 +30,16 @@
 
   .minimap-overlayer {
     position: absolute;
-    visibility: hidden;
     width: 100%;
-    background-color: #888;
-    opacity: .5;
+    background-color: #445;
+    opacity: .2;
     .accelerated;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
   }
 
   &:hover .minimap-overlayer {
-    visibility: visible;
+    opacity: .5;
   }
 
   .minimap-editor {
