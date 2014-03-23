@@ -13,13 +13,22 @@ class MinimapEditorView extends ScrollView
         @div class: 'lines', outlet: 'lines', =>
           @div class: 'lines-wrapper'
 
-  initialize: ->
-    super
+
+  destroy: ->
+    @unsubscribe()
+    @buffer = null
+    @editorView = null
 
   setEditorView: (@editorView) ->
+    @unsubscribe()
+    @buffer = @editorView.getEditor().getBuffer()
+    @subscribeToBuffer()
     @update()
 
-  update: () ->
+  subscribeToBuffer: ->
+    @subscribe @buffer, 'changed', @update
+
+  update: () =>
     @startBench()
 
     @lines[0].removeChild(@lines[0].childNodes[0])

@@ -44,9 +44,10 @@ class MinimapView extends View
     @unsubscribe @paneView.model.$activeItem
     @unsubscribe @paneView.model, 'destroy'
     @unsubscribe $(window), 'resize:end'
-    @unsubscribeBuffer()
 
     @paneView.removeClass('with-minimap')
+
+    @miniEditorView.destroy()
     @remove()
     @detach()
 
@@ -61,8 +62,6 @@ class MinimapView extends View
     return if @activeItem == item
     @activeItem = item
     @getActiveEditor()
-    @getActiveBuffer()
-    @subscribeBuffer()
     @updateMinimapView()
 
   getActiveEditor: ->
@@ -80,18 +79,6 @@ class MinimapView extends View
     @editor.on 'scroll-top-changed.editor', @updateScroll
     @editor.off 'scroll-left-changed.editor'
     @editor.on 'scroll-left-changed.editor', @updateScroll
-
-  getActiveBuffer: ->
-    @buffer = @editor?.getBuffer?()
-
-  unsubscribeBuffer: ->
-    @buffer.off 'changed', @onActiveBufferChanged if @buffer
-
-  subscribeBuffer: ->
-    @buffer.on 'changed', @onActiveBufferChanged if @buffer
-
-  onActiveBufferChanged: =>
-    @updateMinimapView()
 
   # wtf? Long long function!
   updateMinimapView: ->
@@ -125,7 +112,6 @@ class MinimapView extends View
     # get rects
     @editorViewRect = @getEditorViewClientRect()
     @scrollViewRect = @getScrollViewClientRect()
-    @miniScrollViewRect = @miniEditorView.getClientRect()
 
     # reset minimap-overlayer
     # top will be set 0 when reseting
