@@ -30,7 +30,6 @@ class MinimapView extends View
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @paneView.model, 'destroy', => @destroy()
     @subscribe $(window), 'resize:end', @resizeend
 
   attach: ->
