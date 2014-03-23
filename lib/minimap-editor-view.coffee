@@ -16,8 +16,10 @@ class MinimapEditorView extends ScrollView
   initialize: ->
     super
 
-  update: (@editorView) ->
-    start = Date.now()
+  setEditorView: (@editorView) ->
+    @update()
+
+  update: () ->
     @startBench()
 
     @lines[0].removeChild(@lines[0].childNodes[0])

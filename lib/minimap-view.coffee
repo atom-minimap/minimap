@@ -114,7 +114,7 @@ class MinimapView extends View
       # code from raising an error.
       if @editor?
         @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.update(@editorView)
+        @miniEditorView.setEditorView(@editorView)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
