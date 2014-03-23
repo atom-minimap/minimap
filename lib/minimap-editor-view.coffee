@@ -1,7 +1,9 @@
 {EditorView, ScrollView, $} = require 'atom'
+{Emitter} = require 'emissary'
 
 module.exports =
 class MinimapEditorView extends ScrollView
+  Emitter.includeInto(this)
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
@@ -28,6 +30,8 @@ class MinimapEditorView extends ScrollView
     wrapper = $('<div/>')
     wrapper.append lines
     @lines.append wrapper
+
+    @emit 'minimap:updated'
 
     console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
 
