@@ -30,6 +30,7 @@ class MinimapView extends View
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
     @subscribe $(window), 'resize:end', @resizeend
 
   attach: ->
