@@ -21,7 +21,7 @@ class MinimapEditorView extends ScrollView
 
   setEditorView: (@editorView) ->
     @unsubscribe()
-    @buffer = @editorView.getEditor().getBuffer()
+    @buffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
     @subscribeToBuffer()
     @update()
 
