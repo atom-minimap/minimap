@@ -16,22 +16,22 @@
 
 .minimap {
   position: absolute;
-  left: inherit;
-  right: 15px;
-  width: 125px;
-  height: 100%;
+  left: 90%;
   opacity: .77;
+  width: 10%;
+  bottom: 0;
+  overflow: hidden;
   box-sizing: border-box;
   .accelerated;
-  -webkit-transform-origin: right top;
-  -webkit-user-select: none;
-  cursor: default;
-  display: -webkit-flex;
+
+  .minimap-wrapper {
+    -webkit-transform-origin: 0 0;
+  }
 
   .minimap-overlayer {
     position: absolute;
     width: 100%;
-    background-color: #445;
+    background-color: #444;
     opacity: .2;
     .accelerated;
     -webkit-transition: opacity 0.5s;
@@ -44,6 +44,7 @@
 
   .minimap-editor {
     position: absolute;
+    -webkit-transform-origin: 0 0
     width: 100%;
     cursor: default;
     .accelerated;
@@ -56,7 +57,7 @@
   &[data-theme="redacted"] {
     .editor {
       font-family: Redacted !important;
-      letter-spacing: -1px;
+      word-spacing: 2px
     }
   }
 
