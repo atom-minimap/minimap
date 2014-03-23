@@ -6,13 +6,6 @@ CONFIGS = require './config'
 
 require './resizeend.js'
 
-# minTop = 0
-# maxTop = 0
-#
-# scaleX = 1
-# scaleY = 1
-
-
 module.exports =
 class MinimapView extends View
   @content: ->
@@ -47,8 +40,8 @@ class MinimapView extends View
         miniOverLayerHeight = @miniOverlayer.height()
         h = @miniEditorView.height()
         y = @scrollYTarget - @offset().top
-        y -= @miniScrollView.data('top') * scaleY || 0
-        n = y / (miniOverLayerHeight * scaleY)
+        y -= @miniScrollView.data('top') * @scaleY || 0
+        n = y / (miniOverLayerHeight * @scaleY)
         top = n * miniOverLayerHeight - miniOverLayerHeight / 2
         top = Math.max(top, 0)
         top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
@@ -57,6 +50,7 @@ class MinimapView extends View
 
     window.addEventListener 'mouseup', (e) =>
       @isClicked = false
+
 
 
     window.addEventListener 'mousemove', (e) =>
@@ -80,7 +74,7 @@ class MinimapView extends View
     @unsubscribe @paneView.model.$activeItem
     @unsubscribe @paneView.model, 'destroy'
     @unsubscribe $(window), 'resize:end'
-    @unsubscribeBuffer()
+    # @unsubscribeBuffer()
 
     @paneView.removeClass('with-minimap')
     @remove()
@@ -98,7 +92,7 @@ class MinimapView extends View
     @activeItem = item
     @getActiveEditor()
     @getActiveBuffer()
-    @subscribeBuffer()
+    # @subscribeBuffer()
     @updateMinimapView()
 
 
@@ -124,14 +118,14 @@ class MinimapView extends View
   getActiveBuffer: ->
     @buffer = @editor?.getBuffer?()
 
-  unsubscribeBuffer: ->
-    @buffer.off 'changed', @onActiveBufferChanged if @buffer
-
-  subscribeBuffer: ->
-    @buffer.on 'changed', @onActiveBufferChanged if @buffer
-
-  onActiveBufferChanged: =>
-    @updateMinimapView()
+  # unsubscribeBuffer: ->
+  #   @buffer.off 'changed', @onActiveBufferChanged if @buffer
+  #
+  # subscribeBuffer: ->
+  #   @buffer.on 'changed', @onActiveBufferChanged if @buffer
+  #
+  # onActiveBufferChanged: =>
+  #   @updateMinimapView()
 
   # wtf? Long long function!
   updateMinimapView: ->
@@ -155,9 +149,6 @@ class MinimapView extends View
       if @editor?
         @transform @miniScrollView[0], @translateY(0)
         @miniEditorView.update(@editor)
-        #new update
-        #@miniEditorView.update(@editor, @editorView)
-
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
@@ -209,6 +200,15 @@ class MinimapView extends View
     @miniScrollView.scrollLeft(left * @scaleX)
 
   scrollTop: (top) =>
+    miniOverLayerHeight = @miniOverlayer.height()
+    h = @miniEditorView.height()
+    y = @scrollYTarget - @offset().top
+    y -= @miniScrollView.data('top') * @scaleY || 0
+    n = y / (miniOverLayerHeight * @scaleY)
+    top = n * miniOverLayerHeight - miniOverLayerHeight / 2
+    top = Math.max(top, 0)
+    top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
+
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
@@ -216,8 +216,8 @@ class MinimapView extends View
     editorLinesHeight = @scrollViewLines.height()
     miniOverLayerHeight = @miniOverlayer.outerHeight()
     overlayY = -overlayerOffset + scrollViewOffset
-    minimapScroll = 0
 
+    minimapScroll = 0
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
     if minimapCanScroll
@@ -226,7 +226,6 @@ class MinimapView extends View
       minimapScroll = -overlayerScroll * minimapMaxScroll
 
       @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
-
     else
       @transform @miniWrapper[0], @minimapScale
 
@@ -253,7 +252,7 @@ class MinimapView extends View
     top = n - miniOverLayerHeight / 2
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
-    @editorView.scrollTop(top)
+    @editorView.scrollTop(@scrollYTarget)
 
 
   resizeend: =>

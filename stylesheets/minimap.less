@@ -14,28 +14,37 @@
 }
 
 
+.pane.with-minimap {
+  .scroll-view {
+    margin-right: 10%;
+  }
+  .vertical-scrollbar {
+    right: 10%;
+  }
+}
+
 .minimap {
+  // overflow:hidden;
   position: absolute;
-  left: 90%;
+  left: 90%;  
   opacity: .77;
   width: 10%;
-  bottom: 0;
-  overflow: hidden;
   box-sizing: border-box;
   .accelerated;
-
-  .minimap-wrapper {
-    -webkit-transform-origin: 0 0;
-  }
+  -webkit-user-select: none;
 
   .minimap-overlayer {
     position: absolute;
     width: 100%;
     background-color: #444;
-    opacity: .2;
+    opacity: .3;
     .accelerated;
     -webkit-transition: opacity 0.5s;
     transition: opacity 0.5s;
+  }
+
+  .minimap-wrapper {
+    -webkit-transform-origin: 0 0;
   }
 
   &:hover .minimap-overlayer {

@@ -7,9 +7,7 @@ class MinimapEditorView extends ScrollView
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
       @div class: 'scroll-view', outlet: 'scrollView', =>
-        @div class: 'lines', outlet: 'lines' #, =>
-          # @div class: 'lines-wrapper'
-
+        @div class: 'lines', outlet: 'lines'
 
   initialize: () ->
     super
@@ -19,7 +17,6 @@ class MinimapEditorView extends ScrollView
     @textChanges = []
 
 
-# <<<<<<< HEAD
   update: (editor) ->
     start = Date.now()
     @lines.html ''
@@ -29,14 +26,12 @@ class MinimapEditorView extends ScrollView
     @editor = null
     @setEditor(editor)
 
-  updateEditorLines: (editor, start, end, removed) ->
+  updateEditorLines: (editor, start, end) ->
     grammar = editor.getGrammar()
     if not @editorLines?
       @editorLines = []
     if not @htmlLines?
       @htmlLines = []
-    if not @domCache?
-      @domCache = []
 
     for x in [start..end]
       @editorLines[x] = editor.buffer.lines[x]
@@ -66,8 +61,6 @@ class MinimapEditorView extends ScrollView
 
     if !@editor?
       @editor = editor
-
-    @editor.buffer.stoppedChangingDelay = 300
 
     for x in [0..@editor.buffer.lines.length]
       @editorLines.push(@editor.buffer.lines[x])
@@ -104,7 +97,8 @@ class MinimapEditorView extends ScrollView
 
           if event.newRange.start.row < minLine then minLine = event.newRange.start.row
           if event.newRange.end.row > maxLine then maxLine = event.newRange.end.row
-
+          if event.oldRange.start.row < minLine then minLine = event.oldRange.start.row
+          if event.oldRange.end.row > maxLine then maxLine = event.oldRange.end.row
 
       @updateEditorLines(editor, minLine, maxLine)
 
@@ -114,26 +108,6 @@ class MinimapEditorView extends ScrollView
     @editor.buffer.on 'changed', (e) =>
       @textChanges.push(e)
 
-#=======
-#   update: (@editorView) ->
-#     start = Date.now()
-#
-#     @lines[0].removeChild(@lines[0].childNodes[0])
-#     @lines.css fontSize: "#{@editorView.getFontSize()}px"
-#
-#     console.log('cleaning:', (Date.now() - start) + 'ms')
-#     # FIXME: If the file is very large, the tokenizes doesn't generate
-#     # completely, so doesn't have the syntax highlight until a new view
-#     # is activated in the same pane.
-#     numLines = @editorView.getModel().displayBuffer.getLines().length
-#     lines = @editorView.buildLineElementsForScreenRows(0, numLines)
-#     console.log(' build lines:', (Date.now() - start) + 'ms')
-#     wrapper = $('<div/>')
-#     wrapper.append lines
-#     @lines.append wrapper
-#
-#     console.log('Update MinimapEditorView response time:', (Date.now() - start) + 'ms')
-# >>>>>>> dev
 
   getClientRect: ->
     sv = @scrollView[0]
