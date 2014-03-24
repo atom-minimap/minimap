@@ -37,7 +37,7 @@ class MinimapView extends View
 
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
-      @configs.theme = atom.config.get(themeProp) || CONFIGS.theme
+      @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
 
   destroy: ->
@@ -55,7 +55,7 @@ class MinimapView extends View
 
   # Update Styles
   updateTheme: ->
-    @attr 'data-theme': this.configs.theme
+    @attr 'data-theme': @configs.theme
 
   onActiveItemChanged: (item) =>
     # Fix called twice when opening minimap!
