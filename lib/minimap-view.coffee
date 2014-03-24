@@ -45,10 +45,8 @@ class MinimapView extends View
     @off 'mousedown', @mouseDown
     @unsubscribe()
 
-    @paneView.removeClass('with-minimap')
-
+    @deactivatePaneViewMinimap()
     @miniEditorView.destroy()
-    @remove()
     @detach()
 
   reset: -> @transform @minimapWrapper[0], @scale()
@@ -80,6 +78,16 @@ class MinimapView extends View
     @editor.off 'scroll-left-changed.editor'
     @editor.on 'scroll-left-changed.editor', @updateScroll
 
+  attachToPaneView: -> @paneView.append(this)
+  detachFromPaneView: -> @remove()
+
+  activatePaneViewMinimap: ->
+    @paneView.addClass('with-minimap')
+    @attachToPaneView()
+
+  deactivatePaneViewMinimap: ->
+    @paneView.removeClass('with-minimap')
+    @detachFromPaneView()
   # wtf? Long long function!
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
