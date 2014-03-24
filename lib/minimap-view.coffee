@@ -1,6 +1,7 @@
 {$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
+Debug = require './mixins/debug'
 
 CONFIGS = require './config'
 
@@ -8,6 +9,8 @@ require './resizeend.js'
 
 module.exports =
 class MinimapView extends View
+  Debug.includeInto(this)
+
   @content: ->
     @div class: 'minimap', =>
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
