@@ -28,8 +28,6 @@ class MinimapView extends View
     @miniScrollView = @miniEditorView.scrollView
 
   initialize: ->
-    @attach()
-
     @on 'mousewheel', @mouseWheel
     @on 'mousedown', @mouseDown
 
@@ -37,7 +35,6 @@ class MinimapView extends View
     @subscribe @miniEditorView, 'minimap:updated', @updateScroll
     @subscribe $(window), 'resize:end', @resizeend
 
-  attach: ->
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) || CONFIGS.theme
