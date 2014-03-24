@@ -77,6 +77,11 @@ class MinimapView extends View
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
+  activeTabSupportMinimap: ->
+    editorView = @getEditorView()
+
+    editorView? and editorView.hasClass('editor')
+
   attachToPaneView: -> @paneView.append(this)
   detachFromPaneView: -> @remove()
 
@@ -98,6 +103,8 @@ class MinimapView extends View
       return
     if @hasClass('hide')
       @removeClass('hide')
+  minimapIsAttached: -> @paneView.find('.minimap').length is 1
+
 
     # update minimap-editor
     setImmediate =>
