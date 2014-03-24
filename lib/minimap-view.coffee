@@ -18,6 +18,9 @@ class MinimapView extends View
         @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
   configs: {}
+  isClicked: false
+
+  # VIEW CREATION/DESTRUCTION
 
   constructor: (@paneView) ->
     super
@@ -49,26 +52,25 @@ class MinimapView extends View
     @miniEditorView.destroy()
     @detach()
 
-  reset: -> @transform @minimapWrapper[0], @scale()
+  # MINIMAP DISPLAY MANAGEMENT
 
-  # Update Styles
-  updateTheme: ->
-    @attr 'data-theme': @configs.theme
+  attachToPaneView: -> @paneView.append(this)
+  detachFromPaneView: -> @remove()
 
-  onActiveItemChanged: (item) =>
-    # Fix called twice when opening minimap!
-    return if @activeItem == item
-    @activeItem = item
+  activatePaneViewMinimap: ->
+    @paneView.addClass('with-minimap')
+    @attachToPaneView()
+    @updateMiniEditorWidth()
 
-    if @activeTabSupportMinimap()
-      @log 'minimap is supported by the current tab'
-      @activatePaneViewMinimap() unless @minimapIsAttached()
-      @storeActiveEditor()
-      @updateMinimapView()
-    else
-      # Ignore any tab that is not an editor
-      @deactivatePaneViewMinimap()
-      @log 'minimap is not supported by the current tab'
+  deactivatePaneViewMinimap: ->
+    @paneView.removeClass('with-minimap')
+    @detachFromPaneView()
+
+  resetMinimapTransform: -> @transform @minimapWrapper[0], @scale()
+
+  minimapIsAttached: -> @paneView.find('.minimap').length is 1
+
+  # EDITOR VIEW MANAGEMENT
 
   storeActiveEditor: ->
     @editorView = @getEditorView()
@@ -85,24 +87,14 @@ class MinimapView extends View
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
-  activeTabSupportMinimap: ->
-    editorView = @getEditorView()
+  getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
 
-    editorView? and editorView.hasClass('editor')
+  getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
-  attachToPaneView: -> @paneView.append(this)
-  detachFromPaneView: -> @remove()
+  # UPDATE METHODS
 
-  activatePaneViewMinimap: ->
-    @paneView.addClass('with-minimap')
-    @attachToPaneView()
-    @updateMiniEditorWidth()
-
-  deactivatePaneViewMinimap: ->
-    @paneView.removeClass('with-minimap')
-    @detachFromPaneView()
-
-  minimapIsAttached: -> @paneView.find('.minimap').length is 1
+  # Update Styles
+  updateTheme: -> @attr 'data-theme': @configs.theme
 
   updateMiniEditorWidth: -> @miniEditorView.css width: @scrollView.width()
 
@@ -122,7 +114,7 @@ class MinimapView extends View
     @offset({ 'top': @editorView.offset().top })
 
     # reset size of minimap layer
-    @reset()
+    @resetMinimapTransform()
 
     # get rects
     @editorViewRect = @getEditorViewClientRect()
@@ -141,22 +133,6 @@ class MinimapView extends View
     @transform @miniWrapper[0], @minimapScale
 
     setImmediate => @updateScroll()
-
-  reset: -> @transform @miniWrapper[0], @scale()
-
-  getEditorViewClientRect: ->
-    @scrollView[0].getBoundingClientRect()
-
-  getScrollViewClientRect: ->
-    @scrollViewLines[0].getBoundingClientRect()
-
-  mouseWheel: (e) =>
-    return if @isClicked
-    {wheelDeltaX, wheelDeltaY} = e.originalEvent
-    if wheelDeltaX
-      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
-    if wheelDeltaY
-      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
   updateScroll: =>
     minimapHeight = @miniScrollView.outerHeight()
@@ -183,12 +159,31 @@ class MinimapView extends View
     @miniScrollView.data('top', minimapScroll)
     @transform @miniOverlayer[0], @translateY(overlayY)
 
-  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
-  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
-  transform: (el, transform) ->
-    el.style.webkitTransform = el.style.transform = transform
+  # EVENT CALLBACKS
 
-  isClicked: false
+  onActiveItemChanged: (item) =>
+    # Fix called twice when opening minimap!
+    return if @activeItem == item
+    @activeItem = item
+
+    if @activeTabSupportMinimap()
+      @log 'minimap is supported by the current tab'
+      @activatePaneViewMinimap() unless @minimapIsAttached()
+      @storeActiveEditor()
+      @updateMinimapView()
+    else
+      # Ignore any tab that is not an editor
+      @deactivatePaneViewMinimap()
+      @log 'minimap is not supported by the current tab'
+
+  mouseWheel: (e) =>
+    return if @isClicked
+    {wheelDeltaX, wheelDeltaY} = e.originalEvent
+    if wheelDeltaX
+      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
+    if wheelDeltaY
+      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
+
   mouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
@@ -210,3 +205,15 @@ class MinimapView extends View
 
   resizeend: =>
     @updateMinimapView()
+
+  # OTHER PRIVATE METHODS
+
+  activeTabSupportMinimap: ->
+    editorView = @getEditorView()
+
+    editorView? and editorView.hasClass('editor')
+
+  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
+  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
+  transform: (el, transform) ->
+    el.style.webkitTransform = el.style.transform = transform
