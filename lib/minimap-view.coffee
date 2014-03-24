@@ -25,6 +25,7 @@ class MinimapView extends View
     @scaleX = 0.2
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
+    @miniScrollView = @miniEditorView.scrollView
 
   initialize: ->
     @attach()
@@ -86,7 +87,6 @@ class MinimapView extends View
   updateMinimapView: ->
     unless @paneView.find('.minimap').length
       @miniEditorView.css width: @scrollView.width()
-      @miniScrollView = @miniEditorView.scrollView
       @paneView.addClass('with-minimap').append(this)
 
     if !@editor
