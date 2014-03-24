@@ -59,8 +59,16 @@ class MinimapView extends View
     # Fix called twice when opening minimap!
     return if @activeItem == item
     @activeItem = item
-    @updateMinimapView()
+
+    if @activeTabSupportMinimap()
+      @log 'minimap is supported by the current tab'
+      @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
+      @updateMinimapView()
+    else
+      # Ignore any tab that is not an editor
+      @deactivatePaneViewMinimap()
+      @log 'minimap is not supported by the current tab'
 
   storeActiveEditor: ->
     @editorView = @getEditorView()
@@ -92,20 +100,11 @@ class MinimapView extends View
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
-  # wtf? Long long function!
-  updateMinimapView: ->
-    unless @paneView.find('.minimap').length
-      @miniEditorView.css width: @scrollView.width()
-      @paneView.addClass('with-minimap').append(this)
-
-    if !@editor
-      @addClass('hide')
-      return
-    if @hasClass('hide')
-      @removeClass('hide')
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
 
+  # wtf? Long long function!
+  updateMinimapView: ->
     # update minimap-editor
     setImmediate =>
       # FIXME Due to racing conditions during the `destroyed`
