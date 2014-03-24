@@ -59,8 +59,8 @@ class MinimapView extends View
     # Fix called twice when opening minimap!
     return if @activeItem == item
     @activeItem = item
-    @getActiveEditor()
     @updateMinimapView()
+      @storeActiveEditor()
 
   storeActiveEditor: ->
     @editorView = @getEditorView()
