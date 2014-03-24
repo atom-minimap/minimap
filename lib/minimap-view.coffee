@@ -62,11 +62,8 @@ class MinimapView extends View
     @getActiveEditor()
     @updateMinimapView()
 
-  getActiveEditor: ->
-    @editorView = @paneView.viewForItem(@activeItem)
-    # Ignore `Settings Tab` or `Tabs` are empty, the pane isn't a editor-view.
-    if !@editorView || !@editorView.hasClass('editor')
-      return @editor = @scrollView = null
+  storeActiveEditor: ->
+    @editorView = @getEditorView()
 
     @editor = @editorView.getEditor()
     @scrollView = @editorView.scrollView
@@ -77,6 +74,8 @@ class MinimapView extends View
     @editor.on 'scroll-top-changed.editor', @updateScroll
     @editor.off 'scroll-left-changed.editor'
     @editor.on 'scroll-left-changed.editor', @updateScroll
+
+  getEditorView: -> @paneView.viewForItem(@activeItem)
 
   attachToPaneView: -> @paneView.append(this)
   detachFromPaneView: -> @remove()
