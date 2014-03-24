@@ -96,12 +96,15 @@ class MinimapView extends View
   activatePaneViewMinimap: ->
     @paneView.addClass('with-minimap')
     @attachToPaneView()
+    @updateMiniEditorWidth()
 
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
+
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
+  updateMiniEditorWidth: -> @miniEditorView.css width: @scrollView.width()
 
   # wtf? Long long function!
   updateMinimapView: ->
