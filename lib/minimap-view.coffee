@@ -60,7 +60,6 @@ class MinimapView extends View
   activatePaneViewMinimap: ->
     @paneView.addClass('with-minimap')
     @attachToPaneView()
-    @updateMiniEditorWidth()
 
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
@@ -170,6 +169,7 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
+      @updateMiniEditorWidth()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
