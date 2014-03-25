@@ -12,5 +12,8 @@
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "emissary": "1.x",
+    "mixto": "1.x"
+  }
 }

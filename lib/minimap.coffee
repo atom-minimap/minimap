@@ -34,3 +34,7 @@ module.exports =
       view.onActiveItemChanged(paneView.getActiveItem())
 
       @minimapViews[paneView.model.id] = view
+
+      paneView.model.on 'destroyed', =>
+        @minimapViews[paneView.model.id]?.destroy()
+        delete @minimapViews[paneView.model.id]

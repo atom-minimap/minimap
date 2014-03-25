@@ -1,6 +1,7 @@
 {$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
+Debug = require './mixins/debug'
 
 CONFIGS = require './config'
 
@@ -8,6 +9,8 @@ require './resizeend.js'
 
 module.exports =
 class MinimapView extends View
+  Debug.includeInto(this)
+
   @content: ->
     @div class: 'minimap', =>
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
@@ -15,6 +18,9 @@ class MinimapView extends View
         @div outlet: 'miniOverlayer', class: "minimap-overlayer"
 
   configs: {}
+  isClicked: false
+
+  # VIEW CREATION/DESTRUCTION
 
   constructor: (@paneView) ->
     super
@@ -22,55 +28,52 @@ class MinimapView extends View
     @scaleX = 0.2
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
+    @miniScrollView = @miniEditorView.scrollView
 
   initialize: ->
-    @attach()
-
     @on 'mousewheel', @mouseWheel
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @paneView.model, 'destroy', => @destroy()
+    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
     @subscribe $(window), 'resize:end', @resizeend
 
-  attach: ->
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
-      @configs.theme = atom.config.get(themeProp) || CONFIGS.theme
+      @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
 
   destroy: ->
     @off 'mousewheel', @mouseWheel
     @off 'mousedown', @mouseDown
-    @unsubscribe @paneView.model.$activeItem
-    @unsubscribe @paneView.model, 'destroy'
-    @unsubscribe $(window), 'resize:end'
-    @unsubscribeBuffer()
+    @unsubscribe()
 
-    @paneView.removeClass('with-minimap')
-    @remove()
+    @deactivatePaneViewMinimap()
+    @miniEditorView.destroy()
     @detach()
 
-  reset: -> @transform @minimapWrapper[0], @scale()
+  # MINIMAP DISPLAY MANAGEMENT
 
-  # Update Styles
-  updateTheme: ->
-    @attr 'data-theme': this.configs.theme
+  attachToPaneView: -> @paneView.append(this)
+  detachFromPaneView: -> @remove()
 
-  onActiveItemChanged: (item) =>
-    # Fix called twice when opening minimap!
-    return if @activeItem == item
-    @activeItem = item
-    @getActiveEditor()
-    @getActiveBuffer()
-    @subscribeBuffer()
-    @updateMinimapView()
+  activatePaneViewMinimap: ->
+    @paneView.addClass('with-minimap')
+    @attachToPaneView()
+    @updateMiniEditorWidth()
 
-  getActiveEditor: ->
-    @editorView = @paneView.viewForItem(@activeItem)
-    # Ignore `Settings Tab` or `Tabs` are empty, the pane isn't a editor-view.
-    if !@editorView || !@editorView.hasClass('editor')
-      return @editor = @scrollView = null
+  deactivatePaneViewMinimap: ->
+    @paneView.removeClass('with-minimap')
+    @detachFromPaneView()
+
+  resetMinimapTransform: -> @transform @minimapWrapper[0], @scale()
+
+  minimapIsAttached: -> @paneView.find('.minimap').length is 1
+
+  # EDITOR VIEW MANAGEMENT
+
+  storeActiveEditor: ->
+    @editorView = @getEditorView()
 
     @editor = @editorView.getEditor()
     @scrollView = @editorView.scrollView
@@ -78,35 +81,25 @@ class MinimapView extends View
 
     # current editor bind scrollTop event
     @editor.off 'scroll-top-changed.editor'
-    @editor.on 'scroll-top-changed.editor', @scrollTop
+    @editor.on 'scroll-top-changed.editor', @updateScroll
     @editor.off 'scroll-left-changed.editor'
-    @editor.on 'scroll-left-changed.editor', @scrollLeft
+    @editor.on 'scroll-left-changed.editor', @updateScroll
 
-  getActiveBuffer: ->
-    @buffer = @editor?.getBuffer?()
+  getEditorView: -> @paneView.viewForItem(@activeItem)
 
-  unsubscribeBuffer: ->
-    @buffer.off 'changed', @onActiveBufferChanged if @buffer
+  getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
 
-  subscribeBuffer: ->
-    @buffer.on 'changed', @onActiveBufferChanged if @buffer
+  getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
-  onActiveBufferChanged: =>
-    @updateMinimapView()
+  # UPDATE METHODS
+
+  # Update Styles
+  updateTheme: -> @attr 'data-theme': @configs.theme
+
+  updateMiniEditorWidth: -> @miniEditorView.css width: @scrollView.width()
 
   # wtf? Long long function!
   updateMinimapView: ->
-    unless @paneView.find('.minimap').length
-      @miniEditorView.css width: @scrollView.width()
-      @miniScrollView = @miniEditorView.scrollView
-      @paneView.addClass('with-minimap').append(this)
-
-    if !@editor
-      @addClass('hide')
-      return
-    if @hasClass('hide')
-      @removeClass('hide')
-
     # update minimap-editor
     setImmediate =>
       # FIXME Due to racing conditions during the `destroyed`
@@ -115,18 +108,17 @@ class MinimapView extends View
       # code from raising an error.
       if @editor?
         @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.update(@editorView)
+        @miniEditorView.setEditorView(@editorView)
 
     # offset minimap
     @offset({ 'top': @editorView.offset().top })
 
     # reset size of minimap layer
-    @reset()
+    @resetMinimapTransform()
 
     # get rects
     @editorViewRect = @getEditorViewClientRect()
     @scrollViewRect = @getScrollViewClientRect()
-    @miniScrollViewRect = @miniEditorView.getClientRect()
 
     # reset minimap-overlayer
     # top will be set 0 when reseting
@@ -140,29 +132,9 @@ class MinimapView extends View
 
     @transform @miniWrapper[0], @minimapScale
 
-    setImmediate =>
-      @scrollTop(@editorView.scrollTop())
+    setImmediate => @updateScroll()
 
-  reset: -> @transform @miniWrapper[0], @scale()
-
-  getEditorViewClientRect: ->
-    @scrollView[0].getBoundingClientRect()
-
-  getScrollViewClientRect: ->
-    @scrollViewLines[0].getBoundingClientRect()
-
-  mouseWheel: (e) =>
-    return if @isClicked
-    {wheelDeltaX, wheelDeltaY} = e.originalEvent
-    if wheelDeltaX
-      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
-    if wheelDeltaY
-      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
-
-  scrollLeft: (left) =>
-    @miniScrollView.scrollLeft(left * @scaleX)
-
-  scrollTop: (top) =>
+  updateScroll: =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
@@ -187,12 +159,31 @@ class MinimapView extends View
     @data('top', minimapScroll)
     @transform @miniOverlayer[0], @translateY(overlayY)
 
-  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
-  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
-  transform: (el, transform) ->
-    el.style.webkitTransform = el.style.transform = transform
+  # EVENT CALLBACKS
 
-  isClicked: false
+  onActiveItemChanged: (item) =>
+    # Fix called twice when opening minimap!
+    return if @activeItem == item
+    @activeItem = item
+
+    if @activeTabSupportMinimap()
+      @log 'minimap is supported by the current tab'
+      @activatePaneViewMinimap() unless @minimapIsAttached()
+      @storeActiveEditor()
+      @updateMinimapView()
+    else
+      # Ignore any tab that is not an editor
+      @deactivatePaneViewMinimap()
+      @log 'minimap is not supported by the current tab'
+
+  mouseWheel: (e) =>
+    return if @isClicked
+    {wheelDeltaX, wheelDeltaY} = e.originalEvent
+    if wheelDeltaX
+      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
+    if wheelDeltaY
+      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
+
   mouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
@@ -206,7 +197,7 @@ class MinimapView extends View
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
     # @note: currently, no animation.
-    @editorView.scrollTop(top)
+    @editorView.updateScroll()
     # Fix trigger `mousewheel` event.
     setTimeout =>
       @isClicked = false
@@ -214,3 +205,15 @@ class MinimapView extends View
 
   resizeend: =>
     @updateMinimapView()
+
+  # OTHER PRIVATE METHODS
+
+  activeTabSupportMinimap: ->
+    editorView = @getEditorView()
+
+    editorView? and editorView.hasClass('editor')
+
+  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
+  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
+  transform: (el, transform) ->
+    el.style.webkitTransform = el.style.transform = transform
