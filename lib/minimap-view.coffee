@@ -50,12 +50,12 @@ class MinimapView extends View
 
     @deactivatePaneViewMinimap()
     @miniEditorView.destroy()
-    @detach()
+    @remove()
 
   # MINIMAP DISPLAY MANAGEMENT
 
   attachToPaneView: -> @paneView.append(this)
-  detachFromPaneView: -> @remove()
+  detachFromPaneView: -> @detach()
 
   activatePaneViewMinimap: ->
     @paneView.addClass('with-minimap')
