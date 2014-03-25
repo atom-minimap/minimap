@@ -66,7 +66,7 @@ class MinimapView extends View
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
 
-  resetMinimapTransform: -> @transform @minimapWrapper[0], @scale()
+  resetMinimapTransform: -> @transform @miniWrapper[0], @scale()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
