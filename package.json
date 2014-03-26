@@ -4,6 +4,13 @@
   "version": "0.2.2",
   "private": true,
   "description": "A preview of the full source code.",
+  "author": "Fangdun Cai <cfddream@gmail.com>",
+  "contributors": [
+    {
+      "name": "Cédric Néhémie",
+      "email": "cedric.nehemie@gmail.com"
+    }
+  ],
   "activationEvents": [
     "minimap:toggle"
   ],
