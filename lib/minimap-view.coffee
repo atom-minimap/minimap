@@ -50,23 +50,22 @@ class MinimapView extends View
 
     @deactivatePaneViewMinimap()
     @miniEditorView.destroy()
-    @detach()
+    @remove()
 
   # MINIMAP DISPLAY MANAGEMENT
 
   attachToPaneView: -> @paneView.append(this)
-  detachFromPaneView: -> @remove()
+  detachFromPaneView: -> @detach()
 
   activatePaneViewMinimap: ->
     @paneView.addClass('with-minimap')
     @attachToPaneView()
-    @updateMiniEditorWidth()
 
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
 
-  resetMinimapTransform: -> @transform @minimapWrapper[0], @scale()
+  resetMinimapTransform: -> @transform @miniWrapper[0], @scale()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
@@ -170,6 +169,7 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
+      @updateMiniEditorWidth()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
