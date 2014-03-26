@@ -78,10 +78,11 @@ class MinimapView extends View
     @scrollViewLines = @scrollView.find('.lines')
 
     # current editor bind scrollTop event
-    @editor.off 'scroll-top-changed.editor'
-    @editor.on 'scroll-top-changed.editor', @updateScroll
-    @editor.off 'scroll-left-changed.editor'
-    @editor.on 'scroll-left-changed.editor', @updateScroll
+    @unsubscribe @editor, 'scroll-top-changed.editor'
+    @unsubscribe @editor, 'scroll-left-changed.editor'
+
+    @subscribe @editor, 'scroll-top-changed.editor', @updateScroll
+    @subscribe @editor, 'scroll-left-changed.editor', @updateScroll
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
