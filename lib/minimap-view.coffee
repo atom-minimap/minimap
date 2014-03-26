@@ -44,8 +44,7 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
-    @off 'mousewheel', @mouseWheel
-    @off 'mousedown', @mouseDown
+    @off()
     @unsubscribe()
 
     @deactivatePaneViewMinimap()
