@@ -136,22 +136,14 @@ class MinimapView extends View
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
     overlayerOffset = @scrollView.find('.overlayer').offset().top
-    editorLinesHeight = @scrollViewLines.trueHeight()
-    miniOverLayerHeight = @miniOverlayer.outerHeight()
     overlayY = -overlayerOffset + scrollViewOffset
-    minimapScroll = 0
-
-    @log minimapHeight, @scaleY, minimapHeight * @scaleY, scrollViewHeight
-
+    scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
+    minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
     if minimapCanScroll
-      minimapMaxScroll = minimapHeight * @scaleY
-      overlayerScroll = overlayY / editorLinesHeight
-      minimapScroll = -overlayerScroll * minimapMaxScroll
-
+      minimapScroll = -(scrollRatio * minimapMaxScroll)
       @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
-
     else
       @transform @miniWrapper[0], @minimapScale
 
