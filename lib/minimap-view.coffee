@@ -36,7 +36,7 @@ class MinimapView extends View
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @miniEditorView, 'minimap:updated', @updateScroll
-    @subscribe $(window), 'resize:end', @resizeend
+    @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
@@ -95,8 +95,6 @@ class MinimapView extends View
   # Update Styles
   updateTheme: -> @attr 'data-theme': @configs.theme
 
-  updateMiniEditorWidth: -> @miniEditorView.css width: @scrollView.width()
-
   # wtf? Long long function!
   updateMinimapView: ->
     # update minimap-editor
@@ -138,10 +136,12 @@ class MinimapView extends View
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
     overlayerOffset = @scrollView.find('.overlayer').offset().top
-    editorLinesHeight = @scrollViewLines.height()
+    editorLinesHeight = @scrollViewLines.trueHeight()
     miniOverLayerHeight = @miniOverlayer.outerHeight()
     overlayY = -overlayerOffset + scrollViewOffset
     minimapScroll = 0
+
+    @log minimapHeight, @scaleY, minimapHeight * @scaleY, scrollViewHeight
 
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
@@ -169,7 +169,6 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
-      @updateMiniEditorWidth()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
@@ -203,7 +202,8 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  resizeend: =>
+  onScrollViewResized: =>
+    @miniEditorView.update()
     @updateMinimapView()
 
   # OTHER PRIVATE METHODS

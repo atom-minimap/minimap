@@ -46,9 +46,8 @@ class MinimapEditorView extends ScrollView
     wrapper.append lines
     @lines.append wrapper
 
-    @emit 'minimap:updated'
-
     @endBench('minimap update')
+    @emit 'minimap:updated'
 
   getClientRect: ->
     sv = @scrollView[0]
