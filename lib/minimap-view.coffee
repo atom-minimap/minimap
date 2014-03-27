@@ -147,7 +147,7 @@ class MinimapView extends View
     else
       @transform @miniWrapper[0], @minimapScale
 
-    @miniScrollView.data('top', minimapScroll)
+    @data('top', minimapScroll)
     @transform @miniOverlayer[0], @translateY(overlayY)
 
   # EVENT CALLBACKS
