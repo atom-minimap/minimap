@@ -186,7 +186,7 @@ class MinimapView extends View
     top = Math.max(top, 0)
     top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
     # @note: currently, no animation.
-    @editorView.updateScroll()
+    @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
     setTimeout =>
       @isClicked = false
