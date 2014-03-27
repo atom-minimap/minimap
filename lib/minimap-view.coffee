@@ -123,8 +123,6 @@ class MinimapView extends View
     @miniOverlayer.css
       width: @scrollViewRect.width
       height: @editorViewRect.height
-      '-webkit-transform': @translateY()
-      transform: @translateY()
     @miniOverlayer.removeClass 'hide'
 
     @transform @miniWrapper[0], @minimapScale
