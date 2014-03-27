@@ -29,6 +29,7 @@ class MinimapView extends View
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
     @miniScrollView = @miniEditorView.scrollView
+    @minimapScroll = 0
 
   initialize: ->
     @on 'mousewheel', @mouseWheel
@@ -140,12 +141,12 @@ class MinimapView extends View
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
     if minimapCanScroll
-      minimapScroll = -(scrollRatio * minimapMaxScroll)
-      @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
+      @minimapScroll = -(scrollRatio * minimapMaxScroll)
+      @transform @miniWrapper[0], @minimapScale + @translateY(@minimapScroll)
     else
+      @minimapScroll = 0
       @transform @miniWrapper[0], @minimapScale
 
-    @data('top', minimapScroll)
     @transform @miniOverlayer[0], @translateY(overlayY)
 
   # EVENT CALLBACKS
@@ -177,14 +178,15 @@ class MinimapView extends View
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
+    minimapHeight = @miniScrollView.outerHeight()
     miniOverLayerHeight = @miniOverlayer.height()
-    # overlayer center, point-y
+    # Overlayer's center-y
     y = e.pageY - @offset().top
-    y = y - @data('top') * @scaleY || 0
+    y = y - @minimapScroll * @scaleY || 0
     n = y / @scaleY
     top = n - miniOverLayerHeight / 2
     top = Math.max(top, 0)
-    top = Math.min(top, @miniScrollView.outerHeight() - miniOverLayerHeight)
+    top = Math.min(top, minimapHeight - miniOverLayerHeight)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
