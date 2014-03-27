@@ -36,7 +36,7 @@ class MinimapView extends View
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @miniEditorView, 'minimap:updated', @updateScroll
-    @subscribe $(window), 'resize:end', @resizeend
+    @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
@@ -44,8 +44,7 @@ class MinimapView extends View
       @updateTheme()
 
   destroy: ->
-    @off 'mousewheel', @mouseWheel
-    @off 'mousedown', @mouseDown
+    @off()
     @unsubscribe()
 
     @deactivatePaneViewMinimap()
@@ -78,11 +77,12 @@ class MinimapView extends View
     @scrollView = @editorView.scrollView
     @scrollViewLines = @scrollView.find('.lines')
 
-    # current editor bind scrollTop event
-    @editor.off 'scroll-top-changed.editor'
-    @editor.on 'scroll-top-changed.editor', @updateScroll
-    @editor.off 'scroll-left-changed.editor'
-    @editor.on 'scroll-left-changed.editor', @updateScroll
+    # current editor binds scroll events
+    @unsubscribe @editor, 'scroll-top-changed.editor'
+    @unsubscribe @editor, 'scroll-left-changed.editor'
+
+    @subscribe @editor, 'scroll-top-changed.editor', @updateScroll
+    @subscribe @editor, 'scroll-left-changed.editor', @updateScroll
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
@@ -94,8 +94,6 @@ class MinimapView extends View
 
   # Update Styles
   updateTheme: -> @attr 'data-theme': @configs.theme
-
-  updateMiniEditorWidth: -> @miniEditorView.css width: @scrollView.width()
 
   # wtf? Long long function!
   updateMinimapView: ->
@@ -125,8 +123,6 @@ class MinimapView extends View
     @miniOverlayer.css
       width: @scrollViewRect.width
       height: @editorViewRect.height
-      '-webkit-transform': @translateY()
-      transform: @translateY()
     @miniOverlayer.removeClass 'hide'
 
     @transform @miniWrapper[0], @minimapScale
@@ -138,20 +134,14 @@ class MinimapView extends View
     scrollViewHeight = @scrollView.outerHeight()
     scrollViewOffset = @scrollView.offset().top
     overlayerOffset = @scrollView.find('.overlayer').offset().top
-    editorLinesHeight = @scrollViewLines.height()
-    miniOverLayerHeight = @miniOverlayer.outerHeight()
     overlayY = -overlayerOffset + scrollViewOffset
-    minimapScroll = 0
-
+    scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
+    minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
     if minimapCanScroll
-      minimapMaxScroll = minimapHeight * @scaleY
-      overlayerScroll = overlayY / editorLinesHeight
-      minimapScroll = -overlayerScroll * minimapMaxScroll
-
+      minimapScroll = -(scrollRatio * minimapMaxScroll)
       @transform @miniWrapper[0], @minimapScale + @translateY(minimapScroll)
-
     else
       @transform @miniWrapper[0], @minimapScale
 
@@ -169,7 +159,6 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
-      @updateMiniEditorWidth()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
@@ -203,7 +192,8 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  resizeend: =>
+  onScrollViewResized: =>
+    @miniEditorView.update()
     @updateMinimapView()
 
   # OTHER PRIVATE METHODS

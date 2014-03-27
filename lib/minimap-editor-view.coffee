@@ -29,9 +29,15 @@ class MinimapEditorView extends ScrollView
     @subscribe @buffer, 'changed', @update
 
   update: () =>
+    return unless @editorView?
+    
     @startBench()
 
-    @lines[0].removeChild(@lines[0].childNodes[0])
+    lines = @lines[0]
+    if lines?
+      child = lines.childNodes[0]
+      lines.removeChild(child) if child?
+
     @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
     @markIntermediateTime('cleaning')
@@ -46,9 +52,8 @@ class MinimapEditorView extends ScrollView
     wrapper.append lines
     @lines.append wrapper
 
-    @emit 'minimap:updated'
-
     @endBench('minimap update')
+    @emit 'minimap:updated'
 
   getClientRect: ->
     sv = @scrollView[0]
