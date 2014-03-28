@@ -24,6 +24,9 @@ module.exports =
 
     @active = not @active
 
+  updateAllViews: ->
+    view.onScrollViewResized() for id,view of @minimapViews
+
   open: ->
     # When toggled we'll look for each existing and future pane thanks to
     # the `eachPaneView` method. It returns a subscription object so we'll
@@ -32,5 +35,12 @@ module.exports =
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
       view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
+      @updateAllViews()
 
       @minimapViews[paneView.model.id] = view
+
+      paneView.model.on 'destroyed', =>
+        @minimapViews[paneView.model.id]?.destroy()
+        delete @minimapViews[paneView.model.id]
+
+        @updateAllViews()
