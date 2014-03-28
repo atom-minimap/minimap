@@ -182,7 +182,7 @@ class MinimapView extends View
     miniOverLayerHeight = @miniOverlayer.height()
     # Overlayer's center-y
     y = e.pageY - @offset().top
-    y = y - @minimapScroll * @scaleY || 0
+    y = y - @minimapScroll * @scaleY
     n = y / @scaleY
     top = n - miniOverLayerHeight / 2
     top = Math.max(top, 0)
