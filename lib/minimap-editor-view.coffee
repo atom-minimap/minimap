@@ -13,6 +13,7 @@ class MinimapEditorView extends ScrollView
         @div class: 'lines', outlet: 'lines', =>
           @div class: 'lines-wrapper'
 
+  frameRequested: false
 
   destroy: ->
     @unsubscribe()
@@ -30,30 +31,35 @@ class MinimapEditorView extends ScrollView
 
   update: () =>
     return unless @editorView?
-    
-    @startBench()
+    return if @frameRequested
 
-    lines = @lines[0]
-    if lines?
-      child = lines.childNodes[0]
-      lines.removeChild(child) if child?
+    @frameRequested = true
+    webkitRequestAnimationFrame =>
+      @frameRequested = false
 
-    @lines.css fontSize: "#{@editorView.getFontSize()}px"
+      @startBench()
 
-    @markIntermediateTime('cleaning')
-    # FIXME: If the file is very large, the tokenizes doesn't generate
-    # completely, so doesn't have the syntax highlight until a new view
-    # is activated in the same pane.
-    numLines = @editorView.getModel().displayBuffer.getLines().length
-    lines = @editorView.buildLineElementsForScreenRows(0, numLines)
+      lines = @lines[0]
+      if lines?
+        child = lines.childNodes[0]
+        lines.removeChild(child) if child?
 
-    @markIntermediateTime('lines building')
-    wrapper = $('<div/>')
-    wrapper.append lines
-    @lines.append wrapper
+      @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
-    @endBench('minimap update')
-    @emit 'minimap:updated'
+      @markIntermediateTime('cleaning')
+      # FIXME: If the file is very large, the tokenizes doesn't generate
+      # completely, so doesn't have the syntax highlight until a new view
+      # is activated in the same pane.
+      numLines = @editorView.getModel().displayBuffer.getLines().length
+      lines = @editorView.buildLineElementsForScreenRows(0, numLines)
+
+      @markIntermediateTime('lines building')
+      wrapper = $('<div/>')
+      wrapper.append lines
+      @lines.append wrapper
+
+      @endBench('minimap update')
+      @emit 'minimap:updated'
 
   getClientRect: ->
     sv = @scrollView[0]
