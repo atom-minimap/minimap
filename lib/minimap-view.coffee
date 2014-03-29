@@ -106,7 +106,6 @@ class MinimapView extends View
 
   updateMinimapEditorView: => @miniEditorView.update()
 
-  # wtf? Long long function!
   updateMinimapView: ->
     # update minimap-editor
     setImmediate =>
