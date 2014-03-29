@@ -79,9 +79,11 @@ class MinimapView extends View
     @scrollViewLines = @scrollView.find('.lines')
 
     # current editor binds scroll events
+    @unsubscribe @editor, 'screen-lines-changed'
     @unsubscribe @editor, 'scroll-top-changed.editor'
     @unsubscribe @editor, 'scroll-left-changed.editor'
 
+    @subscribe @editor, 'screen-lines-changed', => @miniEditorView.update()
     @subscribe @editor, 'scroll-top-changed.editor', @updateScroll
     @subscribe @editor, 'scroll-left-changed.editor', @updateScroll
 
