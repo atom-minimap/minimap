@@ -100,16 +100,10 @@ class MinimapView extends View
   updateMinimapView: ->
     # update minimap-editor
     setImmediate =>
-      # FIXME Due to racing conditions during the `destroyed`
-      # event dispatch the editor can be null, until a better
-      # solution is implemented it will prevent the delayed
-      # code from raising an error.
-      if @editor?
-        @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.setEditorView(@editorView)
+      @miniEditorView.setEditorView(@editorView)
 
     # offset minimap
-    @offset({ 'top': @editorView.offset().top })
+    @offset top: @editorView.offset().top
 
     # reset size of minimap layer
     @resetMinimapTransform()
@@ -120,11 +114,9 @@ class MinimapView extends View
 
     # reset minimap-overlayer
     # top will be set 0 when reseting
-    @miniOverlayer.addClass 'hide'
     @miniOverlayer.css
       width: @scrollViewRect.width
       height: @editorViewRect.height
-    @miniOverlayer.removeClass 'hide'
 
     @transform @miniWrapper[0], @minimapScale
 
