@@ -2,7 +2,7 @@
 
 A preview of the full source code, likes Sublime Text minimap.
 
-![](https://github.com/fundon/atom-minimap/blob/master/resources/minimap-dark-splits.png?raw=true)
+![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/screenshot.png?raw=true)
 
 ### Installation
 
