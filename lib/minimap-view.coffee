@@ -74,14 +74,19 @@ class MinimapView extends View
   storeActiveEditor: ->
     @editorView = @getEditorView()
 
+    @unsubscribeFromEditor()
+
     @editor = @editorView.getEditor()
     @scrollView = @editorView.scrollView
     @scrollViewLines = @scrollView.find('.lines')
 
-    # current editor binds event handlers
+    @subscribeToEditor()
+
+  unsubscribeFromEditor: ->
     @unsubscribe @editor, '.minimap'
 
-    @subscribe @editor, 'screen-lines-changed.minimap', => @miniEditorView.update()
+  subscribeToEditor: ->
+    @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
     @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
     @subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
 
@@ -96,7 +101,8 @@ class MinimapView extends View
   # Update Styles
   updateTheme: -> @attr 'data-theme': @configs.theme
 
-  # wtf? Long long function!
+  updateMinimapEditorView: => @miniEditorView.update()
+
   updateMinimapView: ->
     # update minimap-editor
     setImmediate =>
