@@ -83,15 +83,12 @@ class MinimapView extends View
     @subscribeToEditor()
 
   unsubscribeFromEditor: ->
-    @unsubscribe @editor, 'screen-lines-changed'
-    @unsubscribe @editor, 'scroll-top-changed.editor'
-    @unsubscribe @editor, 'scroll-left-changed.editor'
-
+    @unsubscribe @editor, '.minimap'
 
   subscribeToEditor: ->
-    @subscribe @editor, 'screen-lines-changed', @updateMinimapEditorView
-    @subscribe @editor, 'scroll-top-changed.editor', @updateScroll
-    @subscribe @editor, 'scroll-left-changed.editor', @updateScroll
+    @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
+    @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
+    @subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
