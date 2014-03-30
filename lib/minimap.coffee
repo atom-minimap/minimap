@@ -1,6 +1,7 @@
 MinimapView = require './minimap-view'
 
-module.exports =
+class Minimap
+
   # We'll be storing each MinimapView using the id of their PaneView
   minimapViews: {}
 
@@ -44,3 +45,5 @@ module.exports =
         delete @minimapViews[paneView.model.id]
 
         @updateAllViews()
+
+module.exports = new Minimap()
