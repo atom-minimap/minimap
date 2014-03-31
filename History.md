@@ -1,3 +1,14 @@
+0.3.0 / 2014-03-31
+==================
+
+* add `minimap-wrapper` container, wrapped `minimap-editor` and `minimap-overlayer`
+* add `with-minimap` css class to pane, #16
+* responsive support for minimap and tweaks css styles
+* `minimap-overlayer` displayed by default, #25
+* add test cases, #28
+* refactor minimap views, #32
+* feature minimap partial update, performance improvement #35
+* subscribe `screen-lines-changed` of editor and syncing
 
 0.2.2 / 2014-03-20
 ==================
