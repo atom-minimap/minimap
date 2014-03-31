@@ -116,14 +116,9 @@ class MinimapView extends View
     # reset size of minimap layer
     @resetMinimapTransform()
 
-    # get rects
     @editorViewRect = @getEditorViewClientRect()
-    @scrollViewRect = @getScrollViewClientRect()
-
-    # reset minimap-overlayer
-    # top will be set 0 when reseting
     @miniVisibleArea.css
-      width: @scrollViewRect.width
+      width: @editorViewRect.width
       height: @editorViewRect.height
 
     @transform @miniWrapper[0], @minimapScale

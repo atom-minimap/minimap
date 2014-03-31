@@ -32,27 +32,35 @@ class Minimap
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
 
+  minimapForEditorView: (editorView) ->
+    @minimapForPaneView(editorView.getPane())
+
+  minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
+
+  minimapForPane: (pane) -> @minimapViews[pane.id]
+
   open: ->
     # When toggled we'll look for each existing and future pane thanks to
     # the `eachPaneView` method. It returns a subscription object so we'll
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
+      paneId = paneView.model.id
       view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 
-      @minimapViews[paneView.model.id] = view
+      @minimapViews[paneId] = view
       @emit('minimap-view:created', view)
 
       paneView.model.on 'destroyed', =>
-        view = @minimapViews[paneView.model.id]
+        view = @minimapViews[paneId]
 
         if view?
           @emit('minimap-view:before-destruction', view)
 
           view.destroy()
-          delete @minimapViews[paneView.model.id]
+          delete @minimapViews[paneId]
           @updateAllViews()
 
 
