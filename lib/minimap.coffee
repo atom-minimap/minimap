@@ -38,21 +38,22 @@ class Minimap
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
+      paneId = paneView.model.id
       view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 
-      @minimapViews[paneView.model.id] = view
+      @minimapViews[paneId] = view
       @emit('minimap-view:created', view)
 
       paneView.model.on 'destroyed', =>
-        view = @minimapViews[paneView.model.id]
+        view = @minimapViews[paneId]
 
         if view?
           @emit('minimap-view:before-destruction', view)
 
           view.destroy()
-          delete @minimapViews[paneView.model.id]
+          delete @minimapViews[paneId]
           @updateAllViews()
 
 
