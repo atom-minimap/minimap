@@ -37,11 +37,7 @@ class Minimap
 
   minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
 
-  minimapForPane: (pane) ->
-    console.log pane
-    console.log pane.id
-    console.log @minimapViews
-    @minimapViews[pane.id]
+  minimapForPane: (pane) -> @minimapViews[pane.id]
 
   open: ->
     # When toggled we'll look for each existing and future pane thanks to
