@@ -12,36 +12,44 @@
   unicode-range: U+21-FF;
 }
 
+.pane.with-minimap {
+  :not(.minimap-editor) > .scroll-view {
+    margin-right: 10%;
+  }
+  .vertical-scrollbar {
+    right: 10%;
+  }
+}
+
 .minimap {
   position: absolute;
-  left: inherit;
-  right: 15px;
-  width: 125px;
-  height: 100%;
-  opacity: .77;
+  left: 90%;
+  width: 10%;
+  bottom: 0;
+  overflow: hidden;
   box-sizing: border-box;
   .accelerated;
-  -webkit-transform-origin: right top;
-  -webkit-user-select: none;
-  cursor: default;
-  display: -webkit-flex;
+
+  .line {
+    opacity: .6;
+  }
+
+  .minimap-wrapper {
+    position: absolute;
+    .accelerated;
+    -webkit-transform-origin: 0 0;
+  }
 
   .minimap-overlayer {
     position: absolute;
-    visibility: hidden;
     width: 100%;
     background-color: #888;
-    opacity: .5;
+    opacity: .2;
     .accelerated;
-  }
-
-  &:hover .minimap-overlayer {
-    visibility: visible;
   }
 
   .minimap-editor {
     position: absolute;
-    width: 100%;
     cursor: default;
     .accelerated;
     .scroll-view {
@@ -53,15 +61,15 @@
   &[data-theme="redacted"] {
     .editor {
       font-family: Redacted !important;
-      letter-spacing: -1px;
+      word-spacing: 2px;
     }
   }
 
   // Mixins
   .accelerated {
     -webkit-backface-visibility: hidden;
-    webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    transform: translateZ(0);
+            backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
   }
 }
