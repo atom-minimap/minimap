@@ -32,6 +32,17 @@ class Minimap
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
 
+  minimapForEditorView: (editorView) ->
+    @minimapForPaneView(editorView.getPane())
+
+  minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
+
+  minimapForPane: (pane) ->
+    console.log pane
+    console.log pane.id
+    console.log @minimapViews
+    @minimapViews[pane.id]
+
   open: ->
     # When toggled we'll look for each existing and future pane thanks to
     # the `eachPaneView` method. It returns a subscription object so we'll
