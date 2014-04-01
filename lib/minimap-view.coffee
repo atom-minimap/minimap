@@ -38,7 +38,8 @@ class MinimapView extends View
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
+    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
+
     @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
@@ -98,6 +99,11 @@ class MinimapView extends View
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
+  setMinimapEditorView: ->
+    # update minimap-editor
+    setImmediate =>
+      @miniEditorView.setEditorView(@editorView)
+
   # UPDATE METHODS
 
   # Update Styles
@@ -105,32 +111,28 @@ class MinimapView extends View
 
   updateMinimapEditorView: => @miniEditorView.update()
 
-  updateMinimapView: ->
-    # update minimap-editor
-    setImmediate =>
-      @miniEditorView.setEditorView(@editorView)
-
+  updateMinimapView: =>
     # offset minimap
     @offset top: @editorView.offset().top
-
-    # reset size of minimap layer
-    @resetMinimapTransform()
 
     @editorViewRect = @getEditorViewClientRect()
     @miniVisibleArea.css
       width: @editorViewRect.width
       height: @editorViewRect.height
 
-    @transform @miniWrapper[0], @minimapScale
-
     setImmediate => @updateScroll()
 
-  updateScroll: =>
+  updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    scrollViewOffset = @scrollView.offset().top
-    overlayerOffset = @scrollView.find('.overlayer').offset().top
-    overlayY = -overlayerOffset + scrollViewOffset
+    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`).
+    # Or we can find a better solution.
+    if top?
+      overlayY = top
+    else
+      scrollViewOffset = @scrollView.offset().top
+      overlayerOffset = @scrollView.find('.overlayer').offset().top
+      overlayY = -overlayerOffset + scrollViewOffset
     scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
     minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
@@ -155,7 +157,7 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
-      @updateMinimapView()
+      @setMinimapEditorView()
     else
       # Ignore any tab that is not an editor
       @deactivatePaneViewMinimap()
@@ -190,7 +192,6 @@ class MinimapView extends View
     , 377
 
   onScrollViewResized: =>
-    @miniEditorView.update()
     @updateMinimapView()
 
   # OTHER PRIVATE METHODS
