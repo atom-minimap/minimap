@@ -96,6 +96,11 @@ class MinimapView extends View
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
+  setMinimapEditorView: ->
+    # update minimap-editor
+    setImmediate =>
+      @miniEditorView.setEditorView(@editorView)
+
   # UPDATE METHODS
 
   # Update Styles
@@ -104,10 +109,6 @@ class MinimapView extends View
   updateMinimapEditorView: => @miniEditorView.update()
 
   updateMinimapView: ->
-    # update minimap-editor
-    setImmediate =>
-      @miniEditorView.setEditorView(@editorView)
-
     # offset minimap
     @offset top: @editorView.offset().top
 
@@ -158,6 +159,7 @@ class MinimapView extends View
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
+      @setMinimapEditorView()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
@@ -193,7 +195,6 @@ class MinimapView extends View
     , 377
 
   onScrollViewResized: =>
-    @miniEditorView.update()
     @updateMinimapView()
 
   # OTHER PRIVATE METHODS
