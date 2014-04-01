@@ -14,14 +14,13 @@ apm install minimap
 
 * [Redacted Font][]
 * Multiple Panes
+* Responsive
 * Mouse wheel and simple click-to-scroll _(no animation)_ support
 
 ### Contributors
 
 https://github.com/fundon/atom-minimap/graphs/contributors
 
-
-[Redacted Font]: https://github.com/christiannaths/Redacted-Font
 
 ### Roadmap
 
@@ -32,3 +31,5 @@ https://github.com/fundon/atom-minimap/graphs/contributors
 ### License
 
 MIT
+
+[Redacted Font]: https://github.com/christiannaths/Redacted-Font
