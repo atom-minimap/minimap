@@ -124,12 +124,17 @@ class MinimapView extends View
 
     setImmediate => @updateScroll()
 
-  updateScroll: =>
+  updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    scrollViewOffset = @scrollView.offset().top
-    overlayerOffset = @scrollView.find('.overlayer').offset().top
-    overlayY = -overlayerOffset + scrollViewOffset
+    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`). 
+    # Or we can find a better solution.
+    if top isnt undefined
+      overlayY = top
+    else
+      scrollViewOffset = @scrollView.offset().top
+      overlayerOffset = @scrollView.find('.overlayer').offset().top
+      overlayY = -overlayerOffset + scrollViewOffset
     scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
     minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
@@ -155,7 +160,6 @@ class MinimapView extends View
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
       @setMinimapEditorView()
-      @updateMinimapView()
     else
       # Ignore any tab that is not an editor
       @deactivatePaneViewMinimap()
