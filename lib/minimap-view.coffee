@@ -38,7 +38,8 @@ class MinimapView extends View
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
+    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
+
     @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
@@ -110,7 +111,7 @@ class MinimapView extends View
 
   updateMinimapEditorView: => @miniEditorView.update()
 
-  updateMinimapView: ->
+  updateMinimapView: =>
     # offset minimap
     @offset top: @editorView.offset().top
 
@@ -124,9 +125,9 @@ class MinimapView extends View
   updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`). 
+    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`).
     # Or we can find a better solution.
-    if top isnt undefined
+    if top?
       overlayY = top
     else
       scrollViewOffset = @scrollView.offset().top
