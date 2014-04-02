@@ -2,23 +2,34 @@
 
 A preview of the full source code, likes Sublime Text minimap.
 
-![](https://github.com/fundon/atom-minimap/blob/master/resources/minimap-dark.png?raw=true)
+![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/screenshot.png?raw=true)
+
+### Installation
+
+```
+apm install minimap
+```
 
 ### Features
 
-* Redacted font, by [@abe33](https://github.com/abe33)
-* Gray overlayer
-* Supports mousewheel
+* [Redacted Font][]
+* Multiple Panes
+* Responsive
+* Mouse wheel and simple click-to-scroll _(no animation)_ support
+
+### Contributors
+
+https://github.com/fundon/atom-minimap/graphs/contributors
 
 
-### Todo list:
+### Roadmap
 
-* ~~Mointor TabPage/File tree state [new, close, move, active]~~
-* Monitor Editor state [scroll, resize, edit]
-* Monitor Window state [resize]
-* ~~Minimap adds some events[mouse, scroll]~~
-* Constom Minimap style
-* ~~Some behaviour more like Sublime Text minimap~~
-* Bind Keys
-* Performance improvement
-* Drag overlayer, and sync scroll
+* Custom style
+* Sync editing
+* Smooth animation
+
+### License
+
+MIT
+
+[Redacted Font]: https://github.com/christiannaths/Redacted-Font

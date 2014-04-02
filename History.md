@@ -1,3 +1,45 @@
+0.4.0 / 2014-04-02
+==================
+
+* update redacted font, fixed instead of regular
+* expose an instance of a Minimap class
+* refactor view to have the same structure ad editor view
+* move resizeend.js to vendor dir
+* store pane id as a local variable to minimize bloats
+* fix scrolling when on Vim mode or in Find pane
+* disalbed syncing scroll when `scroll-left-changed` of editor
+
+0.3.0 / 2014-03-31
+==================
+
+* add `minimap-wrapper` container, wrapped `minimap-editor` and `minimap-overlayer`
+* add `with-minimap` css class to pane, #16
+* responsive support for minimap and tweaks css styles
+* `minimap-overlayer` displayed by default, #25
+* add test cases, #28
+* refactor minimap views, #32
+* feature minimap partial update, performance improvement #35
+* subscribe `screen-lines-changed` of editor and syncing
+
+0.2.2 / 2014-03-20
+==================
+
+* fix `@miniScrollView.data('top')` doesn't reset to 0 after switch with files
+
+0.2.1 / 2014-03-20
+==================
+
+* supports window resize
+* improve style
+
+0.2.0 / 2014-03-19
+==================
+
+* supports to multi `paneViews`, by @abe33
+* add simple `click-to-scroll`, no animation
+* use css3 transform instead of left/top
+* fix minimap obscured when tree view to toggled to right side of window, #9, by @Orangetronic
+* fix not display empty line
 
 0.1.4 / 2014-03-17
 ==================

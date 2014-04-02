@@ -8,38 +8,52 @@
   font-family: 'Redacted';
   font-weight: normal;
   font-style: normal;
-  src: url(atom://minimap/resources/redacted-regular.woff) format('woff');
+  src: url(atom://minimap/resources/redacted-fixed.woff) format('woff');
   unicode-range: U+21-FF;
 }
 
-.minimap {
-  position: fixed;
-  left: inherit;
-  right: 0;
-  opacity: .77;
-  width: 125px;
-  height: 100%;
-  box-sizing: border-box;
-  -webkit-transform: scale(1) translate(0, 0);
-  -webkit-transform-origin: right top;
+.pane.with-minimap {
+  :not(.minimap-editor) > .scroll-view {
+    margin-right: 10%;
+  }
+  .vertical-scrollbar {
+    right: 10%;
+  }
+}
 
-  .minimap-overlayer {
-    position: absolute;
-    visibility: hidden;
-    width: 100%;
-    background-color: #888;
-    opacity: .5;
+.minimap {
+  position: absolute;
+  left: 90%;
+  width: 10%;
+  bottom: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  .accelerated;
+
+  .line {
+    opacity: .6;
   }
 
-  &:hover .minimap-overlayer {
-    visibility: visible;
+  .minimap-wrapper {
+    position: absolute;
+    .accelerated;
+    -webkit-transform-origin: 0 0;
+  }
+
+  .minimap-visible-area {
+    position: absolute;
+    width: 100%;
+    background-color: #888;
+    opacity: .2;
+    .accelerated;
   }
 
   .minimap-editor {
     position: absolute;
-    width: 100%;
+    cursor: default;
+    .accelerated;
     .scroll-view {
-      top: 0;
+      .accelerated;
     }
   }
 
@@ -47,7 +61,14 @@
   &[data-theme="redacted"] {
     .editor {
       font-family: Redacted !important;
-      letter-spacing: -1px;
     }
+  }
+
+  // Mixins
+  .accelerated {
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
   }
 }
