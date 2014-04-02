@@ -39,8 +39,7 @@ class MinimapView extends View
     @on 'mousedown', '.minimap-visible-area', (e) =>
       isPressed = true
       @on 'mousemove.visible-area', (e) =>
-        if isPressed
-          @.triggerHandler 'mousedown', e
+          @onMouseDown e if isPressed
       @on 'mouseup.visible-area', (e) =>
         isPressed = false
         @off '.visible-area'
@@ -181,16 +180,14 @@ class MinimapView extends View
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
-  onMouseDown: (e, te) =>
+  onMouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
     minimapHeight = @miniScrollView.outerHeight()
     miniVisibleAreaHeight = @miniVisibleArea.height()
-    # `te` is a extraParameter of triggerHandler
-    pageY = e.pageY || (te && te.pageY)
     # Overlayer's center-y
-    y = pageY - @offset().top
+    y = e.pageY - @offset().top
     y = y - @minimapScroll * @scaleY
     n = y / @scaleY
     top = n - miniVisibleAreaHeight / 2
