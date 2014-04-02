@@ -91,7 +91,7 @@ class MinimapView extends View
   subscribeToEditor: ->
     @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
     @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
-    @subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
+    #@subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
 
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
