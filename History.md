@@ -7,6 +7,7 @@
 * move resizeend.js to vendor dir
 * store pane id as a local variable to minimize bloats
 * fix scrolling when on Vim mode or in Find pane
+* disalbed syncing scroll when `scroll-left-changed` of editor
 
 0.3.0 / 2014-03-31
 ==================
