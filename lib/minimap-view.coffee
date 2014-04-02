@@ -125,7 +125,7 @@ class MinimapView extends View
   updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`).
+    # Need scroll-top value when in find pane or on Vim mode(`gg`, `shift+g`).
     # Or we can find a better solution.
     if top?
       overlayY = top
