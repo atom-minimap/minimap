@@ -1,3 +1,13 @@
+0.4.0 / 2014-04-02
+==================
+
+* update redacted font, fixed instead of regular
+* expose an instance of a Minimap class
+* refactor view to have the same structure ad editor view
+* move resizeend.js to vendor dir
+* store pane id as a local variable to minimize bloats
+* fix scrolling when on Vim mode or in Find pane
+
 0.3.0 / 2014-03-31
 ==================
 
