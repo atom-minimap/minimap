@@ -34,8 +34,8 @@ class MinimapView extends View
     @minimapScroll = 0
 
   initialize: ->
-    @on 'mousewheel', @mouseWheel
-    @on 'mousedown', @mouseDown
+    @on 'mousewheel', @onMouseWheel
+    @on 'mousedown', @onMouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
@@ -101,8 +101,7 @@ class MinimapView extends View
 
   setMinimapEditorView: ->
     # update minimap-editor
-    setImmediate =>
-      @miniEditorView.setEditorView(@editorView)
+    setImmediate => @miniEditorView.setEditorView(@editorView)
 
   # UPDATE METHODS
 
@@ -163,7 +162,7 @@ class MinimapView extends View
       @deactivatePaneViewMinimap()
       @log 'minimap is not supported by the current tab'
 
-  mouseWheel: (e) =>
+  onMouseWheel: (e) =>
     return if @isClicked
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
     if wheelDeltaX
@@ -171,7 +170,7 @@ class MinimapView extends View
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
-  mouseDown: (e) =>
+  onMouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
