@@ -14,8 +14,10 @@ class MinimapView extends View
   @content: ->
     @div class: 'minimap', =>
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
+        @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
         @subview 'miniEditorView', new MinimapEditorView()
-        @div outlet: 'miniOverlayer', class: "minimap-overlayer"
+        @div outlet: 'miniOverlayer', class: "minimap-overlayer", =>
+          @div outlet: 'miniVisibleArea', class: "minimap-visible-area"
 
   configs: {}
   isClicked: false
@@ -36,7 +38,8 @@ class MinimapView extends View
     @on 'mousedown', @mouseDown
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
+    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
+
     @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
@@ -108,18 +111,13 @@ class MinimapView extends View
 
   updateMinimapEditorView: => @miniEditorView.update()
 
-  updateMinimapView: ->
+  updateMinimapView: =>
     # offset minimap
     @offset top: @editorView.offset().top
 
-    # get rects
     @editorViewRect = @getEditorViewClientRect()
-    @scrollViewRect = @getScrollViewClientRect()
-
-    # reset minimap-overlayer
-    # top will be set 0 when reseting
-    @miniOverlayer.css
-      width: @scrollViewRect.width
+    @miniVisibleArea.css
+      width: @editorViewRect.width
       height: @editorViewRect.height
 
     setImmediate => @updateScroll()
@@ -127,9 +125,9 @@ class MinimapView extends View
   updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`). 
+    # Need scroll-top value when in find-replace or in Vim mode(`gg`, `shift+g`).
     # Or we can find a better solution.
-    if top isnt undefined
+    if top?
       overlayY = top
     else
       scrollViewOffset = @scrollView.offset().top
@@ -146,7 +144,7 @@ class MinimapView extends View
       @minimapScroll = 0
       @transform @miniWrapper[0], @minimapScale
 
-    @transform @miniOverlayer[0], @translateY(overlayY)
+    @transform @miniVisibleArea[0], @translateY(overlayY)
 
   # EVENT CALLBACKS
 
@@ -178,14 +176,14 @@ class MinimapView extends View
     e.preventDefault()
     e.stopPropagation()
     minimapHeight = @miniScrollView.outerHeight()
-    miniOverLayerHeight = @miniOverlayer.height()
+    miniVisibleAreaHeight = @miniVisibleArea.height()
     # Overlayer's center-y
     y = e.pageY - @offset().top
     y = y - @minimapScroll * @scaleY
     n = y / @scaleY
-    top = n - miniOverLayerHeight / 2
+    top = n - miniVisibleAreaHeight / 2
     top = Math.max(top, 0)
-    top = Math.min(top, minimapHeight - miniOverLayerHeight)
+    top = Math.min(top, minimapHeight - miniVisibleAreaHeight)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.

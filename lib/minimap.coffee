@@ -1,6 +1,9 @@
+{Emitter} = require 'emissary'
 MinimapView = require './minimap-view'
 
-module.exports =
+class Minimap
+  Emitter.includeInto(this)
+
   # We'll be storing each MinimapView using the id of their PaneView
   minimapViews: {}
 
@@ -15,17 +18,26 @@ module.exports =
     view.destroy() for id, view of @minimapViews
     @eachPaneViewSubscription.off()
     @minimapViews = {}
+    @emit('deactivated')
 
   toggle: ->
     if @active
       @deactivate()
     else
       @open()
+      @emit('activated')
 
     @active = not @active
 
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
+
+  minimapForEditorView: (editorView) ->
+    @minimapForPaneView(editorView.getPane())
+
+  minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
+
+  minimapForPane: (pane) -> @minimapViews[pane.id]
 
   open: ->
     # When toggled we'll look for each existing and future pane thanks to
@@ -33,14 +45,24 @@ module.exports =
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
+      paneId = paneView.model.id
       view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 
-      @minimapViews[paneView.model.id] = view
+      @minimapViews[paneId] = view
+      @emit('minimap-view:created', view)
 
       paneView.model.on 'destroyed', =>
-        @minimapViews[paneView.model.id]?.destroy()
-        delete @minimapViews[paneView.model.id]
+        view = @minimapViews[paneId]
 
-        @updateAllViews()
+        if view?
+          @emit('minimap-view:before-destruction', view)
+
+          view.destroy()
+          delete @minimapViews[paneId]
+          @updateAllViews()
+
+
+
+module.exports = new Minimap()

@@ -8,7 +8,7 @@
   font-family: 'Redacted';
   font-weight: normal;
   font-style: normal;
-  src: url(atom://minimap/resources/redacted-regular.woff) format('woff');
+  src: url(atom://minimap/resources/redacted-fixed.woff) format('woff');
   unicode-range: U+21-FF;
 }
 
@@ -40,7 +40,7 @@
     -webkit-transform-origin: 0 0;
   }
 
-  .minimap-overlayer {
+  .minimap-visible-area {
     position: absolute;
     width: 100%;
     background-color: #888;
@@ -61,7 +61,6 @@
   &[data-theme="redacted"] {
     .editor {
       font-family: Redacted !important;
-      word-spacing: 2px;
     }
   }
 
