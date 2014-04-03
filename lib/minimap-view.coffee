@@ -32,22 +32,16 @@ class MinimapView extends View
     @minimapScale = @scale(@scaleX, @scaleY)
     @miniScrollView = @miniEditorView.scrollView
     @minimapScroll = 0
-
     @transform @miniWrapper[0], @minimapScale
+    # dragging's status
+    @isPressed = false
 
   initialize: ->
 
-    isPressed = false
-    @on 'mousedown', '.minimap-visible-area', (e) =>
-      isPressed = true
-      @on 'mousemove.visible-area', (e) =>
-          @onMouseDown e if isPressed
-      @on 'mouseup.visible-area', (e) =>
-        isPressed = false
-        @off '.visible-area'
-
     @on 'mousewheel', @onMouseWheel
     @on 'mousedown', @onMouseDown
+
+    @on 'mousedown', '.minimap-visible-area', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
@@ -202,6 +196,20 @@ class MinimapView extends View
 
   onScrollViewResized: =>
     @updateMinimapView()
+
+  onDragStart: (e) =>
+    # only supports for left-click
+    return unless e.which is 1
+    @isPressed = true
+    @on 'mousemove.visible-area', @onMove
+    @on 'mouseup.visible-area', @onDragEnd
+
+  onMove: (e) =>
+    @onMouseDown e if @isPressed
+
+  onDragEnd: (e) =>
+    @isPressed = false
+    @off '.visible-area'
 
   # OTHER PRIVATE METHODS
 
