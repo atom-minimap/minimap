@@ -27,12 +27,12 @@ class Minimap
   toggle: (debugMode=false) ->
     @allowDebug = debugMode
     if @active
+      @active = false
       @deactivate()
     else
       @open()
+      @active = true
       @emit('activated')
-
-    @active = not @active
 
   toggleDebug: ->
     @toggle(true)
