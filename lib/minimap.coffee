@@ -11,8 +11,12 @@ class Minimap
   # minimapViews object will never be set to null.
   active: false
 
+  # Does the minimap debug features are activated on toggle
+  allowDebug: false
+
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggle()
+    atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
 
   deactivate: ->
     view.destroy() for id, view of @minimapViews
@@ -20,7 +24,8 @@ class Minimap
     @minimapViews = {}
     @emit('deactivated')
 
-  toggle: ->
+  toggle: (debugMode=false) ->
+    @allowDebug = debugMode
     if @active
       @deactivate()
     else
@@ -29,6 +34,9 @@ class Minimap
 
     @active = not @active
 
+  toggleDebug: ->
+    @toggle(true)
+
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
 
@@ -36,7 +44,6 @@ class Minimap
     @minimapForPaneView(editorView.getPane())
 
   minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
-
   minimapForPane: (pane) -> @minimapViews[pane.id]
 
   open: ->
@@ -46,7 +53,7 @@ class Minimap
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
       paneId = paneView.model.id
-      view = new MinimapView(paneView)
+      view = new MinimapView(paneView, @allowDebug)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 

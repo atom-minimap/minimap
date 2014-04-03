@@ -2,6 +2,8 @@ Mixin = require 'mixto'
 
 module.exports =
 class Debug extends Mixin
+  allowDebug: false
+  
   log: (args...) ->
     console.log.apply(console, args) if @inDevMode()
 
@@ -35,4 +37,4 @@ class Debug extends Mixin
       time = @logIntermediateTime(label)
       @benchmarkTimes.push(time)
 
-  inDevMode: -> atom.inDevMode()
+  inDevMode: -> @allowDebug and atom.inDevMode()
