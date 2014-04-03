@@ -33,6 +33,8 @@ class MinimapView extends View
     @miniScrollView = @miniEditorView.scrollView
     @minimapScroll = 0
 
+    @transform @miniWrapper[0], @minimapScale
+
   initialize: ->
 
     isPressed = false
@@ -77,8 +79,6 @@ class MinimapView extends View
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
-
-  resetMinimapTransform: -> @transform @miniWrapper[0], @scale()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
