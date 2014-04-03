@@ -24,7 +24,7 @@ class MinimapView extends View
 
   # VIEW CREATION/DESTRUCTION
 
-  constructor: (@paneView) ->
+  constructor: (@paneView, @allowDebug) ->
     super
 
     @scaleX = 0.2
@@ -32,10 +32,16 @@ class MinimapView extends View
     @minimapScale = @scale(@scaleX, @scaleY)
     @miniScrollView = @miniEditorView.scrollView
     @minimapScroll = 0
+    @transform @miniWrapper[0], @minimapScale
+    # dragging's status
+    @isPressed = false
+    @miniEditorView.allowDebug = @allowDebug
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
     @on 'mousedown', @onMouseDown
+
+    @on 'mousedown', '.minimap-visible-area', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
@@ -46,6 +52,7 @@ class MinimapView extends View
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
+
 
   destroy: ->
     @off()
@@ -67,8 +74,6 @@ class MinimapView extends View
   deactivatePaneViewMinimap: ->
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
-
-  resetMinimapTransform: -> @transform @miniWrapper[0], @scale()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
@@ -192,6 +197,20 @@ class MinimapView extends View
 
   onScrollViewResized: =>
     @updateMinimapView()
+
+  onDragStart: (e) =>
+    # only supports for left-click
+    return unless e.which is 1
+    @isPressed = true
+    @on 'mousemove.visible-area', @onMove
+    @on 'mouseup.visible-area', @onDragEnd
+
+  onMove: (e) =>
+    @onMouseDown e if @isPressed
+
+  onDragEnd: (e) =>
+    @isPressed = false
+    @off '.visible-area'
 
   # OTHER PRIVATE METHODS
 

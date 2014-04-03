@@ -15,7 +15,13 @@ apm install minimap
 * [Redacted Font][]
 * Multiple Panes
 * Responsive
-* Mouse wheel and simple click-to-scroll _(no animation)_ support
+* Mouse wheel and click-to-scroll _(no animation)_
+* drag-to-scroll
+
+### Shortcuts
+
+* `ctrl-k ctrl-m` toggle the minimap without the logs
+* `ctrl-k ctrl-d` toggle the minimap with the logs
 
 ### Contributors
 

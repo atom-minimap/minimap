@@ -1,3 +1,10 @@
+0.5.0 / 2014-04-03
+==================
+
+* drag-to-scroll
+* using `ctrl-k ctrl-m` toggle the minimap without the logs
+* using `ctrl-k ctrl-d` toggle the minimap with the logs
+
 0.4.0 / 2014-04-02
 ==================
 
