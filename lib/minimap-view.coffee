@@ -116,6 +116,7 @@ class MinimapView extends View
   updateMinimapEditorView: => @miniEditorView.update()
 
   updateMinimapView: =>
+    return unless @editorView
     # offset minimap
     @offset top: @editorView.offset().top
 
