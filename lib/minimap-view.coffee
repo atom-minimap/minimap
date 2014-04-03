@@ -116,6 +116,7 @@ class MinimapView extends View
   updateMinimapEditorView: => @miniEditorView.update()
 
   updateMinimapView: =>
+    return unless @editorView
     # offset minimap
     @offset top: @editorView.offset().top
 
@@ -162,6 +163,7 @@ class MinimapView extends View
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
       @setMinimapEditorView()
+      @updateMinimapView()
     else
       # Ignore any tab that is not an editor
       @deactivatePaneViewMinimap()

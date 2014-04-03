@@ -5,7 +5,6 @@
 * using `ctrl-k ctrl-m` toggle the minimap without the logs
 * using `ctrl-k ctrl-d` toggle the minimap with the logs
 
-
 0.4.0 / 2014-04-02
 ==================
 
@@ -15,6 +14,7 @@
 * move resizeend.js to vendor dir
 * store pane id as a local variable to minimize bloats
 * fix scrolling when on Vim mode or in Find pane
+* disalbed syncing scroll when `scroll-left-changed` of editor
 
 0.3.0 / 2014-03-31
 ==================
