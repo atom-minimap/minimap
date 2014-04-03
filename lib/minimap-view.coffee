@@ -37,7 +37,6 @@ class MinimapView extends View
     @isPressed = false
 
   initialize: ->
-
     @on 'mousewheel', @onMouseWheel
     @on 'mousedown', @onMouseDown
 
