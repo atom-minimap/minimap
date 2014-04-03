@@ -24,7 +24,7 @@ class MinimapView extends View
 
   # VIEW CREATION/DESTRUCTION
 
-  constructor: (@paneView) ->
+  constructor: (@paneView, @allowDebug) ->
     super
 
     @scaleX = 0.2
@@ -35,6 +35,7 @@ class MinimapView extends View
     @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
+    @miniEditorView.allowDebug = @allowDebug
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
@@ -51,6 +52,7 @@ class MinimapView extends View
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
+
 
   destroy: ->
     @off()
