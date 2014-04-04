@@ -5,8 +5,6 @@ Debug = require './mixins/debug'
 
 CONFIGS = require './config'
 
-require '../vendor/resizeend'
-
 module.exports =
 class MinimapView extends View
   Debug.includeInto(this)

@@ -1,6 +1,8 @@
 {Emitter} = require 'emissary'
 MinimapView = require './minimap-view'
 
+require '../vendor/resizeend'
+
 class Minimap
   Emitter.includeInto(this)
 
