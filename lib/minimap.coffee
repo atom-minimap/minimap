@@ -1,6 +1,8 @@
 {Emitter} = require 'emissary'
 MinimapView = require './minimap-view'
 
+require '../vendor/resizeend'
+
 class Minimap
   Emitter.includeInto(this)
 
@@ -27,12 +29,12 @@ class Minimap
   toggle: (debugMode=false) ->
     @allowDebug = debugMode
     if @active
+      @active = false
       @deactivate()
     else
       @open()
+      @active = true
       @emit('activated')
-
-    @active = not @active
 
   toggleDebug: ->
     @toggle(true)

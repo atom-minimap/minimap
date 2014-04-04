@@ -5,8 +5,6 @@ Debug = require './mixins/debug'
 
 CONFIGS = require './config'
 
-require '../vendor/resizeend'
-
 module.exports =
 class MinimapView extends View
   Debug.includeInto(this)
@@ -81,10 +79,10 @@ class MinimapView extends View
 
   storeActiveEditor: ->
     @editorView = @getEditorView()
+    @editor = @editorView.getEditor()
 
     @unsubscribeFromEditor()
 
-    @editor = @editorView.getEditor()
     @scrollView = @editorView.scrollView
     @scrollViewLines = @scrollView.find('.lines')
 
@@ -98,11 +96,18 @@ class MinimapView extends View
     @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
     #@subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
 
+  # See /Applications/Atom.app/Contents/Resources/app/src/pane-view.js#349
+  # pane-view's private api
+  # `paneView.activeView` and `paneView.activeItem`
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
   getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
+
+  # See https://atom.io/docs/api/v0.83.0/api/classes/Pane.html#getActiveEditor-instance
+  # Returns an Editor if the pane item is an Editor, or null otherwise.
+  getEditor: -> @paneView.model.getActiveEditor()
 
   setMinimapEditorView: ->
     # update minimap-editor
@@ -116,6 +121,7 @@ class MinimapView extends View
   updateMinimapEditorView: => @miniEditorView.update()
 
   updateMinimapView: =>
+    return unless @editorView
     # offset minimap
     @offset top: @editorView.offset().top
 
@@ -154,7 +160,7 @@ class MinimapView extends View
 
   onActiveItemChanged: (item) =>
     # Fix called twice when opening minimap!
-    return if @activeItem == item
+    return if item is @activeItem
     @activeItem = item
 
     if @activeTabSupportMinimap()
@@ -162,6 +168,7 @@ class MinimapView extends View
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
       @setMinimapEditorView()
+      @updateMinimapView()
     else
       # Ignore any tab that is not an editor
       @deactivatePaneViewMinimap()
@@ -195,12 +202,11 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  onScrollViewResized: =>
-    @updateMinimapView()
+  onScrollViewResized: => @updateMinimapView()
 
   onDragStart: (e) =>
     # only supports for left-click
-    return unless e.which is 1
+    return if e.which isnt 1
     @isPressed = true
     @on 'mousemove.visible-area', @onMove
     @on 'mouseup.visible-area', @onDragEnd
@@ -214,10 +220,7 @@ class MinimapView extends View
 
   # OTHER PRIVATE METHODS
 
-  activeTabSupportMinimap: ->
-    editorView = @getEditorView()
-
-    editorView? and editorView.hasClass('editor')
+  activeTabSupportMinimap: -> @getEditor()
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
