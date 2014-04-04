@@ -2,6 +2,7 @@
 ==================
 
 * fix broken minimap activation on non editor view, #46
+* move resizeend to main file
 
 0.5.0 / 2014-04-03
 ==================
