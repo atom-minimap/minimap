@@ -1,14 +1,16 @@
 {Emitter} = require 'emissary'
 Debug = require 'prolix'
 
-require '../vendor/resizeend'
-
 ViewManagement = require './mixins/view-management'
+PluginManagement = require './mixins/plugin-management'
+
+require '../vendor/resizeend'
 
 class Minimap
   Emitter.includeInto(this)
-  ViewManagement.includeInto(this)
   Debug('minimap').includeInto(this)
+  ViewManagement.includeInto(this)
+  PluginManagement.includeInto(this)
 
   configDefaults: { plugins: {} }
 
