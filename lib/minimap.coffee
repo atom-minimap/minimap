@@ -1,4 +1,5 @@
 {Emitter} = require 'emissary'
+Debug = require 'prolix'
 
 require '../vendor/resizeend'
 
@@ -7,6 +8,7 @@ ViewManagement = require './mixins/view-management'
 class Minimap
   Emitter.includeInto(this)
   ViewManagement.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   configDefaults: { plugins: {} }
 
@@ -14,19 +16,15 @@ class Minimap
   # minimapViews object will never be set to null.
   active: false
 
-  # Does the minimap debug features are activated on toggle
-  allowDebug: false
-
   activate: ->
-    atom.workspaceView.command 'minimap:toggle', => @toggle()
+    atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
 
   deactivate: ->
     @destroyViews()
     @emit('deactivated')
 
-  toggle: (debugMode=false) ->
-    @allowDebug = debugMode
+  toggle: () ->
     if @active
       @active = false
       @deactivate()
@@ -36,7 +34,11 @@ class Minimap
       @emit('activated')
 
   toggleDebug: ->
-    @toggle(true)
+    @getChannel().activate()
+    @toggle()
 
+  toggleNoDebug: ->
+    @getChannel().deactivate()
+    @toggle()
 
 module.exports = new Minimap()
