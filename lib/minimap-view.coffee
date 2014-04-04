@@ -202,12 +202,11 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  onScrollViewResized: =>
-    @updateMinimapView()
+  onScrollViewResized: => @updateMinimapView()
 
   onDragStart: (e) =>
     # only supports for left-click
-    return unless e.which is 1
+    return if e.which isnt 1
     @isPressed = true
     @on 'mousemove.visible-area', @onMove
     @on 'mouseup.visible-area', @onDragEnd
@@ -221,8 +220,7 @@ class MinimapView extends View
 
   # OTHER PRIVATE METHODS
 
-  activeTabSupportMinimap: ->
-    @getEditor()
+  activeTabSupportMinimap: -> @getEditor()
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
