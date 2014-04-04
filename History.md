@@ -1,3 +1,8 @@
+0.6.0 / 2014-04-04
+==================
+
+* fix broken minimap activation on non editor view, #46
+
 0.5.0 / 2014-04-03
 ==================
 
