@@ -16,7 +16,7 @@ class ViewManagement extends Mixin
   minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
   minimapForPane: (pane) -> @minimapViews[pane.id]
 
-  destroyView: ->
+  destroyViews: ->
     view.destroy() for id, view of @minimapViews
     @eachPaneViewSubscription.off()
     @minimapViews = {}
