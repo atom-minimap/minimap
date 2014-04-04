@@ -16,7 +16,7 @@ apm install minimap
 * Multiple Panes
 * Responsive
 * Mouse wheel and click-to-scroll _(no animation)_
-* drag-to-scroll
+* Drag-to-scroll
 
 ### Shortcuts
 
