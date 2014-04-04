@@ -1,10 +1,12 @@
 {Emitter} = require 'emissary'
 MinimapView = require './minimap-view'
+Debug = require 'prolix'
 
 require '../vendor/resizeend'
 
 class Minimap
   Emitter.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   # We'll be storing each MinimapView using the id of their PaneView
   minimapViews: {}
@@ -13,11 +15,8 @@ class Minimap
   # minimapViews object will never be set to null.
   active: false
 
-  # Does the minimap debug features are activated on toggle
-  allowDebug: false
-
   activate: ->
-    atom.workspaceView.command 'minimap:toggle', => @toggle()
+    atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
 
   deactivate: ->
@@ -26,8 +25,7 @@ class Minimap
     @minimapViews = {}
     @emit('deactivated')
 
-  toggle: (debugMode=false) ->
-    @allowDebug = debugMode
+  toggle: () ->
     if @active
       @active = false
       @deactivate()
@@ -37,7 +35,12 @@ class Minimap
       @emit('activated')
 
   toggleDebug: ->
-    @toggle(true)
+    @getChannel().activate()
+    @toggle()
+
+  toggleNoDebug: ->
+    @getChannel().deactivate()
+    @toggle()
 
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
@@ -55,7 +58,7 @@ class Minimap
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
       paneId = paneView.model.id
-      view = new MinimapView(paneView, @allowDebug)
+      view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 
