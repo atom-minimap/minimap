@@ -1,11 +1,11 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
-Debug = require './mixins/debug'
+Debug = require 'prolix'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
-  Debug.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
