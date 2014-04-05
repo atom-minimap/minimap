@@ -1,13 +1,13 @@
 {$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
-Debug = require './mixins/debug'
+Debug = require 'prolix'
 
 CONFIGS = require './config'
 
 module.exports =
 class MinimapView extends View
-  Debug.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   @content: ->
     @div class: 'minimap', =>
@@ -22,7 +22,7 @@ class MinimapView extends View
 
   # VIEW CREATION/DESTRUCTION
 
-  constructor: (@paneView, @allowDebug) ->
+  constructor: (@paneView) ->
     super
 
     @scaleX = 0.2
@@ -33,7 +33,6 @@ class MinimapView extends View
     @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
-    @miniEditorView.allowDebug = @allowDebug
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
