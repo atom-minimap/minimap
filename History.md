@@ -1,3 +1,10 @@
+0.7.0 / 2014-04-05
+==================
+
+* use `prolix` mixin for debug
+* add plugins list
+* `find-and-replace` and `git-diff` now available!
+
 0.6.0 / 2014-04-04
 ==================
 
