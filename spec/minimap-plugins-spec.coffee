@@ -27,6 +27,12 @@ describe "Minimap Plugins", ->
     it 'should be available in the minimap', ->
       expect(Minimap.plugins['dummy']).toBe(@plugin)
 
+    it 'should have created a default config for the plugin', ->
+      expect(Minimap.configDefaults.plugins.dummy).toBeDefined()
+
+    it 'should have set the corresponding config', ->
+      expect(atom.config.get 'minimap.plugins.dummy').toBeDefined()
+
     describe 'and then unregistered', ->
       beforeEach ->
         Minimap.unregisterPlugin 'dummy'
