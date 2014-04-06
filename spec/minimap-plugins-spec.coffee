@@ -11,13 +11,12 @@ describe "Minimap Plugins", ->
       atom.workspaceView.attachToDom()
       editorView = atom.workspaceView.getActiveView()
 
-    beforeEach ->
-      @plugin =
-        activate: ->
-        deactivate: ->
+    @plugin =
+      activatePlugin: ->
+      deactivatePlugin: ->
 
-      spyOn @plugin, 'activate'
-      spyOn @plugin, 'deactivate'
+    spyOn @plugin, 'activatePlugin'
+    spyOn @plugin, 'deactivatePlugin'
 
   describe 'registered before activation', ->
 
@@ -39,6 +38,21 @@ describe "Minimap Plugins", ->
 
       it 'should have been removed', ->
         expect(Minimap.plugins['dummy']).toBeUndefined()
+
+    describe 'the registered plugin', ->
+      it 'should have received an activation call', ->
+        Minimap.registerPlugin 'dummy', @plugin
+        expect(@plugin.activatePlugin).toHaveBeenCalled()
+
+      describe 'when the config for it is false', ->
+        beforeEach ->
+          atom.config.set 'minimap.plugins.dummy', false
+          Minimap.registerPlugin 'dummy', @plugin
+
+        it 'should have received a deactivation call', ->
+          expect(@plugin.deactivatePlugin).toHaveBeenCalled()
+
+
 
     describe 'on minimap activation', ->
       beforeEach ->

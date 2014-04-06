@@ -12,5 +12,9 @@ class PluginManagement extends Mixin
       
     @plugins[name] = plugin
 
+    if atom.config.get("minimap.plugins.#{name}")
+      plugin.activatePlugin()
+    else
+      plugin.deactivatePlugin()
   unregisterPlugin: (name) ->
     delete @plugins[name]
