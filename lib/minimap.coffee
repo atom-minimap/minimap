@@ -17,7 +17,9 @@ class Minimap
   PluginManagement.includeInto(this)
 
   # Public: The default minimap settings
-  configDefaults: { plugins: {} }
+  configDefaults:
+    plugins: {}
+    autoToggle: false
 
   # Internal: The activation state of the minimap package.
   active: false
@@ -26,6 +28,7 @@ class Minimap
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
+    @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
 
   # Public: Deactivates the minimap package.
   deactivate: ->
