@@ -6,26 +6,43 @@ PluginManagement = require './mixins/plugin-management'
 
 require '../vendor/resizeend'
 
+# Public: The `Minimap` package provides a eagle-eye view of text buffers.
+#
+# It also provides API for plugin packages that want to interact with the
+# minimap and be available to the user through the minimap settings..
 class Minimap
   Emitter.includeInto(this)
   Debug('minimap').includeInto(this)
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
+  # Public: The default minimap settings
   configDefaults: { plugins: {} }
 
-  # We'll be using this property to store the toggle state as the
-  # minimapViews object will never be set to null.
+  # Internal: The activation state of the minimap package.
   active: false
 
+  # Public: Activates the minimap package.
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
 
+  # Public: Deactivates the minimap package.
   deactivate: ->
     @destroyViews()
     @emit('deactivated')
 
+  # Public: Toggles the minimap activation state with debug turned on.
+  toggleDebug: ->
+    @getChannel().activate()
+    @toggle()
+
+  # Public: Toggles the minimap activation state with debug turned off.
+  toggleNoDebug: ->
+    @getChannel().deactivate()
+    @toggle()
+
+  # Internal: Toggles the minimap activation state.
   toggle: () ->
     if @active
       @active = false
@@ -35,12 +52,5 @@ class Minimap
       @active = true
       @emit('activated')
 
-  toggleDebug: ->
-    @getChannel().activate()
-    @toggle()
-
-  toggleNoDebug: ->
-    @getChannel().deactivate()
-    @toggle()
-
+# The minimap module is an instance of the {Minimap} class.
 module.exports = new Minimap()
