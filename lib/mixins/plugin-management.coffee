@@ -37,5 +37,5 @@ class PluginManagement extends Mixin
   #
   # name - The identifying name of the plugin to unregister.
   unregisterPlugin: (name) ->
-    delete @configDefault.plugins[name]
+    delete @configDefaults.plugins[name]
     delete @plugins[name]
