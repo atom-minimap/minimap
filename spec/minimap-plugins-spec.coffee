@@ -39,6 +39,13 @@ describe "Minimap Plugins", ->
       it 'should have been removed', ->
         expect(Minimap.plugins['dummy']).toBeUndefined()
 
+      describe 'when the config is modified', ->
+        beforeEach ->
+          atom.config.set 'minimap.plugins.dummy', false
+
+        it 'should not receive an activation call', ->
+          expect(@plugin.deactivatePlugin).not.toHaveBeenCalled()
+
     describe 'the registered plugin', ->
       it 'should have received an activation call', ->
         Minimap.registerPlugin 'dummy', @plugin
@@ -52,7 +59,13 @@ describe "Minimap Plugins", ->
         it 'should have received a deactivation call', ->
           expect(@plugin.deactivatePlugin).toHaveBeenCalled()
 
+      describe 'when the config is modified after registration', ->
+        beforeEach ->
+          Minimap.registerPlugin 'dummy', @plugin
+          atom.config.set 'minimap.plugins.dummy', false
 
+        it 'should have received a deactivation call', ->
+          expect(@plugin.deactivatePlugin).toHaveBeenCalled()
 
     describe 'on minimap activation', ->
       beforeEach ->
