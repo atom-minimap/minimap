@@ -17,4 +17,5 @@ class PluginManagement extends Mixin
     else
       plugin.deactivatePlugin()
   unregisterPlugin: (name) ->
+    delete @configDefault.plugins[name]
     delete @plugins[name]
