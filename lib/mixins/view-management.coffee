@@ -19,7 +19,7 @@ class ViewManagement extends Mixin
   # Returns the {MinimapView} object associated to the pane containing
   # the passed-in {EditorView}.
   minimapForEditorView: (editorView) ->
-    @minimapForPaneView(editorView.getPane())
+    @minimapForPaneView(editorView?.getPane())
 
   # Public: Returns the {MinimapView} object associated to the passed-in
   # {PaneView} object.
@@ -28,7 +28,7 @@ class ViewManagement extends Mixin
   #
   # Returns the {MinimapView} object associated to the passed-in
   # {PaneView} object.
-  minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
+  minimapForPaneView: (paneView) -> @minimapForPane(paneView?.model)
 
   # Public: Returns the {MinimapView} object associated to the passed-in
   # {Pane} object.
@@ -37,7 +37,7 @@ class ViewManagement extends Mixin
   #
   # Returns the {MinimapView} object associated to the passed-in
   # {Pane} object.
-  minimapForPane: (pane) -> @minimapViews[pane.id]
+  minimapForPane: (pane) -> @minimapViews[pane.id] if pane?
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
