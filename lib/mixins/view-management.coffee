@@ -59,14 +59,15 @@ class ViewManagement extends Mixin
       @updateAllViews()
 
       @minimapViews[paneId] = view
-      @emit('minimap-view:created', view)
+      @emit('minimap-view:created', {view})
 
       paneView.model.on 'destroyed', =>
         view = @minimapViews[paneId]
 
         if view?
-          @emit('minimap-view:before-destruction', view)
+          @emit('minimap-view:will-be-destroyed', {view})
 
           view.destroy()
           delete @minimapViews[paneId]
+          @emit('minimap-view:destroyed', {view})
           @updateAllViews()
