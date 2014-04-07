@@ -1,80 +1,59 @@
 {Emitter} = require 'emissary'
-MinimapView = require './minimap-view'
 Debug = require 'prolix'
+
+ViewManagement = require './mixins/view-management'
+PluginManagement = require './mixins/plugin-management'
 
 require '../vendor/resizeend'
 
+# Public: The `Minimap` package provides a eagle-eye view of text buffers.
+#
+# It also provides API for plugin packages that want to interact with the
+# minimap and be available to the user through the minimap settings..
 class Minimap
   Emitter.includeInto(this)
   Debug('minimap').includeInto(this)
+  ViewManagement.includeInto(this)
+  PluginManagement.includeInto(this)
 
-  # We'll be storing each MinimapView using the id of their PaneView
-  minimapViews: {}
+  # Public: The default minimap settings
+  configDefaults:
+    plugins: {}
+    autoToggle: false
 
-  # We'll be using this property to store the toggle state as the
-  # minimapViews object will never be set to null.
+  # Internal: The activation state of the minimap package.
   active: false
 
+  # Public: Activates the minimap package.
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
+    @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
 
+  # Public: Deactivates the minimap package.
   deactivate: ->
-    view.destroy() for id, view of @minimapViews
-    @eachPaneViewSubscription.off()
-    @minimapViews = {}
+    @destroyViews()
     @emit('deactivated')
 
+  # Public: Toggles the minimap activation state with debug turned on.
+  toggleDebug: ->
+    @getChannel().activate()
+    @toggle()
+
+  # Public: Toggles the minimap activation state with debug turned off.
+  toggleNoDebug: ->
+    @getChannel().deactivate()
+    @toggle()
+
+  # Internal: Toggles the minimap activation state.
   toggle: () ->
     if @active
       @active = false
       @deactivate()
     else
-      @open()
+      @createViews()
       @active = true
       @emit('activated')
 
-  toggleDebug: ->
-    @getChannel().activate()
-    @toggle()
-
-  toggleNoDebug: ->
-    @getChannel().deactivate()
-    @toggle()
-
-  updateAllViews: ->
-    view.onScrollViewResized() for id,view of @minimapViews
-
-  minimapForEditorView: (editorView) ->
-    @minimapForPaneView(editorView.getPane())
-
-  minimapForPaneView: (paneView) -> @minimapForPane(paneView.model)
-  minimapForPane: (pane) -> @minimapViews[pane.id]
-
-  open: ->
-    # When toggled we'll look for each existing and future pane thanks to
-    # the `eachPaneView` method. It returns a subscription object so we'll
-    # store it and it will be used in the `deactivate` method to removes
-    # the callback.
-    @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
-      paneId = paneView.model.id
-      view = new MinimapView(paneView)
-      view.onActiveItemChanged(paneView.getActiveItem())
-      @updateAllViews()
-
-      @minimapViews[paneId] = view
-      @emit('minimap-view:created', view)
-
-      paneView.model.on 'destroyed', =>
-        view = @minimapViews[paneId]
-
-        if view?
-          @emit('minimap-view:before-destruction', view)
-
-          view.destroy()
-          delete @minimapViews[paneId]
-          @updateAllViews()
-
-
-
+# The minimap module is an instance of the {Minimap} class.
 module.exports = new Minimap()
