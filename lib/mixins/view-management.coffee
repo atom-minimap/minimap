@@ -54,7 +54,7 @@ class ViewManagement extends Mixin
     # the callback.
     @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
       paneId = paneView.model.id
-      view = new MinimapView(paneView, @allowDebug)
+      view = new MinimapView(paneView)
       view.onActiveItemChanged(paneView.getActiveItem())
       @updateAllViews()
 
