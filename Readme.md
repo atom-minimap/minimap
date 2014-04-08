@@ -41,6 +41,7 @@ The minimap can be augmented with plugins, belows the list of available plugins 
 
   * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
+  * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
 
 ### Roadmap
 
