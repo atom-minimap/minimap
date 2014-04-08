@@ -22,12 +22,14 @@ apm install minimap
 
 * `ctrl-k ctrl-m` toggle the minimap without the logs
 * `ctrl-k ctrl-d` toggle the minimap with the logs
-*  Customizing Key Bindings
-  ```cson
-  '.editor':
-    'cmd-m': 'minimap:toggle'
-    'cmd-d': 'minimap:toggle-debug'
-  ```
+
+Customizing Key Bindings
+
+```cson
+'.editor':
+  'cmd-m': 'minimap:toggle'
+  'cmd-d': 'minimap:toggle-debug'
+```
 
 ### Contributors
 
