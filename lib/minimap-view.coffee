@@ -72,6 +72,7 @@ class MinimapView extends View
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
 
+  activeViewSupportMinimap: -> @getEditor()?
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
   # EDITOR VIEW MANAGEMENT
@@ -162,7 +163,7 @@ class MinimapView extends View
     return if item is @activeItem
     @activeItem = item
 
-    if @getEditor()
+    if @activeViewSupportMinimap()
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
