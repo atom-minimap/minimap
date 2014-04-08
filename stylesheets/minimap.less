@@ -59,8 +59,11 @@
 
   // Themes
   &[data-theme="redacted"] {
-    .editor {
-      font-family: Redacted !important;
+    .editor /*, .minimap-underlayer, .minimap-overlayer */ {
+      font-family: Redacted, Inconsolata, Monaco, Consolas, 'Courier New', Courier !important;
+      // With faux-italic and faux-bold the char width changes, and we don't
+      // want that :).
+      font-weight: normal !important;
     }
   }
 
