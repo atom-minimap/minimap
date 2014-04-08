@@ -104,7 +104,7 @@ class MinimapView extends View
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
-  # See https://atom.io/docs/api/v0.83.0/api/classes/Pane.html#getActiveEditor-instance
+  # See Atom's API /api/classes/Pane.html#getActiveEditor-instance
   # Returns an Editor if the pane item is an Editor, or null otherwise.
   getEditor: -> @paneView.model.getActiveEditor()
 
@@ -162,7 +162,7 @@ class MinimapView extends View
     return if item is @activeItem
     @activeItem = item
 
-    if @activeTabSupportMinimap()
+    if @getEditor()
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
@@ -218,8 +218,6 @@ class MinimapView extends View
     @off '.visible-area'
 
   # OTHER PRIVATE METHODS
-
-  activeTabSupportMinimap: -> @getEditor()
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
