@@ -8,7 +8,7 @@
   font-family: 'Redacted';
   font-weight: normal;
   font-style: normal;
-  src: url(atom://minimap/resources/redacted-regular.woff) format('woff');
+  src: url(atom://minimap/resources/redacted-fixed.woff) format('woff');
   unicode-range: U+21-FF;
 }
 
@@ -24,32 +24,28 @@
 .minimap {
   position: absolute;
   left: 90%;
-  opacity: .77;
   width: 10%;
   bottom: 0;
   overflow: hidden;
   box-sizing: border-box;
   .accelerated;
 
+  .line {
+    opacity: .6;
+  }
+
   .minimap-wrapper {
     position: absolute;
-    //width: 100/0.2%;
-    //height: 100%;
     .accelerated;
     -webkit-transform-origin: 0 0;
   }
 
-  .minimap-overlayer {
+  .minimap-visible-area {
     position: absolute;
-    // visibility: hidden;
     width: 100%;
     background-color: #888;
-    opacity: .3;
+    opacity: .2;
     .accelerated;
-  }
-
-  &:hover .minimap-overlayer {
-    visibility: visible;
   }
 
   .minimap-editor {
@@ -63,9 +59,11 @@
 
   // Themes
   &[data-theme="redacted"] {
-    .editor {
-      font-family: Redacted !important;
-      word-spacing: 2px
+    .editor /*, .minimap-underlayer, .minimap-overlayer */ {
+      font-family: Redacted, Inconsolata, Monaco, Consolas, 'Courier New', Courier !important;
+      // With faux-italic and faux-bold the char width changes, and we don't
+      // want that :).
+      font-weight: normal !important;
     }
   }
 

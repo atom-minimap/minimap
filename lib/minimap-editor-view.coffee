@@ -1,11 +1,11 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
-Debug = require './mixins/debug'
+Debug = require 'prolix'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
-  Debug.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
@@ -13,24 +13,83 @@ class MinimapEditorView extends ScrollView
         @div class: 'lines', outlet: 'lines', =>
           @div class: 'lines-wrapper'
 
+  frameRequested: false
+
+  constructor: ->
+    super
+    @bufferChanges = []
 
   destroy: ->
     @unsubscribe()
-    @buffer = null
     @editorView = null
 
   setEditorView: (@editorView) ->
     @unsubscribe()
-    @buffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
     @subscribeToBuffer()
     @update()
 
   subscribeToBuffer: ->
-    @subscribe @buffer, 'changed', @update
+    buffer = @editorView.getEditor().buffer
+    tokenizedBuffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
+    @subscribe buffer, 'changed', @registerBufferChanges
+    @subscribe tokenizedBuffer, 'changed', @update
+
+  registerBufferChanges: (event) =>
+    @bufferChanges.push event
 
   update: () =>
     return unless @editorView?
-    
+    return if @frameRequested
+
+    @frameRequested = true
+    webkitRequestAnimationFrame =>
+      @frameRequested = false
+      if @bufferChanges.length > 0
+        @updateMinimapWithBufferChanges()
+      else
+        @rebuildMinimap()
+
+      @emit 'minimap:updated'
+
+  updateMinimapWithBufferChanges: ->
+    @startBench()
+
+    displayBuffer = @editorView.getEditor().displayBuffer
+    while @bufferChanges.length > 0
+      {newRange, oldRange} = @bufferChanges.shift()
+
+      newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
+      oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
+
+      @deleteRowsAtRange(oldScreenRange)
+      @createRowsAtRange(newScreenRange)
+      @markIntermediateTime("update buffer change")
+
+    @endBench('complete update')
+
+  deleteRowsAtRange: (range) ->
+    linesWrapper = @lines[0].childNodes[0]
+    start = range.start.row
+    end = range.end.row
+    lines = Array::slice.call(linesWrapper.childNodes, start, end + 1 or 9e9)
+
+    linesWrapper.removeChild line for line in lines
+
+  createRowsAtRange: (range) ->
+    start = range.start.row
+    end = range.end.row
+    lines = @editorView.buildLineElementsForScreenRows(start, end)
+
+    @insertLineAt(line, start + i) for line,i in lines
+
+  insertLineAt: (line, at) ->
+    linesWrapper = @lines[0].childNodes[0]
+
+    refLine = linesWrapper.childNodes[at]
+    linesWrapper.insertBefore(line, refLine)
+
+
+  rebuildMinimap: ->
     @startBench()
 
     lines = @lines[0]
@@ -53,7 +112,6 @@ class MinimapEditorView extends ScrollView
     @lines.append wrapper
 
     @endBench('minimap update')
-    @emit 'minimap:updated'
 
   getClientRect: ->
     sv = @scrollView[0]

@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./lib/minimap",
-  "version": "0.2.2",
+  "version": "0.8.0",
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
@@ -15,16 +15,14 @@
       "email": "cedric.nehemie@gmail.com"
     }
   ],
-  "activationEvents": [
-    "minimap:toggle"
-  ],
-  "repository": "https://github.com/fundon/atom-minimap",
+  "repository": "https://github.com/atom-minimap/atom-minimap",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
     "emissary": "1.x",
-    "mixto": "1.x"
+    "mixto": "1.x",
+    "prolix": "1.x"
   }
 }

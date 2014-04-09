@@ -1,21 +1,21 @@
 {$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
-Debug = require './mixins/debug'
+Debug = require 'prolix'
 
 CONFIGS = require './config'
 
-require './resizeend.js'
-
 module.exports =
 class MinimapView extends View
-  Debug.includeInto(this)
+  Debug('minimap').includeInto(this)
 
   @content: ->
     @div class: 'minimap', =>
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
+        @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
         @subview 'miniEditorView', new MinimapEditorView()
-        @div outlet: 'miniOverlayer', class: "minimap-overlayer"
+        @div outlet: 'miniOverlayer', class: "minimap-overlayer", =>
+          @div outlet: 'miniVisibleArea', class: "minimap-visible-area"
 
   configs: {}
   isClicked: false
@@ -30,19 +30,26 @@ class MinimapView extends View
     @minimapScale = @scale(@scaleX, @scaleY)
     @miniScrollView = @miniEditorView.scrollView
     @minimapScroll = 0
+    @transform @miniWrapper[0], @minimapScale
+    # dragging's status
+    @isPressed = false
 
   initialize: ->
-    @on 'mousewheel', @mouseWheel
-    @on 'mousedown', @mouseDown
+    @on 'mousewheel', @onMouseWheel
+    @on 'mousedown', @onMouseDown
+
+    @on 'mousedown', '.minimap-visible-area', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
-    @subscribe @miniEditorView, 'minimap:updated', @updateScroll
+    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
+
     @subscribe $(window), 'resize:end', @onScrollViewResized
 
     themeProp = 'minimap.theme'
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
+
 
   destroy: ->
     @off()
@@ -65,77 +72,77 @@ class MinimapView extends View
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
 
-  resetMinimapTransform: -> @transform @miniWrapper[0], @scale()
-
+  activeViewSupportMinimap: -> @getEditor()?
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
   # EDITOR VIEW MANAGEMENT
 
   storeActiveEditor: ->
     @editorView = @getEditorView()
-
     @editor = @editorView.getEditor()
+
+    @unsubscribeFromEditor()
+
     @scrollView = @editorView.scrollView
     @scrollViewLines = @scrollView.find('.lines')
 
-    # current editor binds scroll events
-    @unsubscribe @editor, 'scroll-top-changed.editor'
-    @unsubscribe @editor, 'scroll-left-changed.editor'
+    @subscribeToEditor()
 
-    @subscribe @editor, 'scroll-top-changed.editor', @updateScroll
-    @subscribe @editor, 'scroll-left-changed.editor', @updateScroll
+  unsubscribeFromEditor: ->
+    @unsubscribe @editor, '.minimap'
 
+  subscribeToEditor: ->
+    @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
+    @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
+    #@subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
+
+  # See /Applications/Atom.app/Contents/Resources/app/src/pane-view.js#349
+  # pane-view's private api
+  # `paneView.activeView` and `paneView.activeItem`
   getEditorView: -> @paneView.viewForItem(@activeItem)
 
   getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
+  # See Atom's API /api/classes/Pane.html#getActiveEditor-instance
+  # Returns an Editor if the pane item is an Editor, or null otherwise.
+  getEditor: -> @paneView.model.getActiveEditor()
+
+  setMinimapEditorView: ->
+    # update minimap-editor
+    setImmediate => @miniEditorView.setEditorView(@editorView)
+
   # UPDATE METHODS
 
   # Update Styles
   updateTheme: -> @attr 'data-theme': @configs.theme
 
-  # wtf? Long long function!
-  updateMinimapView: ->
-    # update minimap-editor
-    setImmediate =>
-      # FIXME Due to racing conditions during the `destroyed`
-      # event dispatch the editor can be null, until a better
-      # solution is implemented it will prevent the delayed
-      # code from raising an error.
-      if @editor?
-        @transform @miniScrollView[0], @translateY(0)
-        @miniEditorView.setEditorView(@editorView)
+  updateMinimapEditorView: => @miniEditorView.update()
 
+  updateMinimapView: =>
+    return unless @editorView
     # offset minimap
-    @offset({ 'top': @editorView.offset().top })
+    @offset top: @editorView.offset().top
 
-    # reset size of minimap layer
-    @resetMinimapTransform()
-
-    # get rects
     @editorViewRect = @getEditorViewClientRect()
-    @scrollViewRect = @getScrollViewClientRect()
-
-    # reset minimap-overlayer
-    # top will be set 0 when reseting
-    @miniOverlayer.addClass 'hide'
-    @miniOverlayer.css
-      width: @scrollViewRect.width
+    @miniVisibleArea.css
+      width: @editorViewRect.width
       height: @editorViewRect.height
-    @miniOverlayer.removeClass 'hide'
-
-    @transform @miniWrapper[0], @minimapScale
 
     setImmediate => @updateScroll()
 
-  updateScroll: =>
+  updateScroll: (top) =>
     minimapHeight = @miniScrollView.outerHeight()
     scrollViewHeight = @scrollView.outerHeight()
-    scrollViewOffset = @scrollView.offset().top
-    overlayerOffset = @scrollView.find('.overlayer').offset().top
-    overlayY = -overlayerOffset + scrollViewOffset
+    # Need scroll-top value when in find pane or on Vim mode(`gg`, `shift+g`).
+    # Or we can find a better solution.
+    if top?
+      overlayY = top
+    else
+      scrollViewOffset = @scrollView.offset().top
+      overlayerOffset = @scrollView.find('.overlayer').offset().top
+      overlayY = -overlayerOffset + scrollViewOffset
     scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
     minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
     minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
@@ -147,26 +154,27 @@ class MinimapView extends View
       @minimapScroll = 0
       @transform @miniWrapper[0], @minimapScale
 
-    @transform @miniOverlayer[0], @translateY(overlayY)
+    @transform @miniVisibleArea[0], @translateY(overlayY)
 
   # EVENT CALLBACKS
 
   onActiveItemChanged: (item) =>
     # Fix called twice when opening minimap!
-    return if @activeItem == item
+    return if item is @activeItem
     @activeItem = item
 
-    if @activeTabSupportMinimap()
+    if @activeViewSupportMinimap()
       @log 'minimap is supported by the current tab'
       @activatePaneViewMinimap() unless @minimapIsAttached()
       @storeActiveEditor()
+      @setMinimapEditorView()
       @updateMinimapView()
     else
       # Ignore any tab that is not an editor
       @deactivatePaneViewMinimap()
       @log 'minimap is not supported by the current tab'
 
-  mouseWheel: (e) =>
+  onMouseWheel: (e) =>
     return if @isClicked
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
     if wheelDeltaX
@@ -174,19 +182,19 @@ class MinimapView extends View
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
-  mouseDown: (e) =>
+  onMouseDown: (e) =>
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
     minimapHeight = @miniScrollView.outerHeight()
-    miniOverLayerHeight = @miniOverlayer.height()
+    miniVisibleAreaHeight = @miniVisibleArea.height()
     # Overlayer's center-y
     y = e.pageY - @offset().top
     y = y - @minimapScroll * @scaleY
     n = y / @scaleY
-    top = n - miniOverLayerHeight / 2
+    top = n - miniVisibleAreaHeight / 2
     top = Math.max(top, 0)
-    top = Math.min(top, minimapHeight - miniOverLayerHeight)
+    top = Math.min(top, minimapHeight - miniVisibleAreaHeight)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
@@ -194,16 +202,23 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  onScrollViewResized: =>
-    @miniEditorView.update()
-    @updateMinimapView()
+  onScrollViewResized: => @updateMinimapView()
+
+  onDragStart: (e) =>
+    # only supports for left-click
+    return if e.which isnt 1
+    @isPressed = true
+    @on 'mousemove.visible-area', @onMove
+    @on 'mouseup.visible-area', @onDragEnd
+
+  onMove: (e) =>
+    @onMouseDown e if @isPressed
+
+  onDragEnd: (e) =>
+    @isPressed = false
+    @off '.visible-area'
 
   # OTHER PRIVATE METHODS
-
-  activeTabSupportMinimap: ->
-    editorView = @getEditorView()
-
-    editorView? and editorView.hasClass('editor')
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translateY: (y=0) -> "translate3d(0, #{y}px, 0)"

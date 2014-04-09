@@ -1,3 +1,45 @@
+0.7.0 / 2014-04-05
+==================
+
+* use `prolix` mixin for debug
+* add plugins list
+* `find-and-replace` and `git-diff` now available!
+
+0.6.0 / 2014-04-04
+==================
+
+* fix broken minimap activation on non editor view, #46
+* move resizeend to main file
+
+0.5.0 / 2014-04-03
+==================
+
+* drag-to-scroll
+* using `ctrl-k ctrl-m` toggle the minimap without the logs
+* using `ctrl-k ctrl-d` toggle the minimap with the logs
+
+0.4.0 / 2014-04-02
+==================
+
+* update redacted font, fixed instead of regular
+* expose an instance of a Minimap class
+* refactor view to have the same structure ad editor view
+* move resizeend.js to vendor dir
+* store pane id as a local variable to minimize bloats
+* fix scrolling when on Vim mode or in Find pane
+* disalbed syncing scroll when `scroll-left-changed` of editor
+
+0.3.0 / 2014-03-31
+==================
+
+* add `minimap-wrapper` container, wrapped `minimap-editor` and `minimap-overlayer`
+* add `with-minimap` css class to pane, #16
+* responsive support for minimap and tweaks css styles
+* `minimap-overlayer` displayed by default, #25
+* add test cases, #28
+* refactor minimap views, #32
+* feature minimap partial update, performance improvement #35
+* subscribe `screen-lines-changed` of editor and syncing
 
 0.2.2 / 2014-03-20
 ==================
