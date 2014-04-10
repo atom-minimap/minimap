@@ -1,5 +1,17 @@
 
 #
+#   .............
+#   .           .------------> Minimap Scroller
+#   ---------   .
+#   |       |----------> Minimap Wrapper
+#   |       |   .
+#   |       |   .
+#   #########------> Minimap Indicator (Minimap visible area)
+#   |       |   .
+#   ---------   .
+#   .           .
+#   .............
+#
 #  Basic Rectangle
 #
 class Rectangle
