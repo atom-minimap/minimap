@@ -140,13 +140,10 @@ class MinimapView extends View
     evw = editorViewRect.width
     evh = editorViewRect.height
 
-    @miniVisibleArea.css
-      width: width
-      height: evh
-
     # VisibleArea's size
-    @indicator.width = width
-    @indicator.height = evh
+    @miniVisibleArea.css
+      width : @indicator.width  = width
+      height: @indicator.height = evh
 
     miniScrollViewRect = @miniEditorView.getClientRect()
     msvw = miniScrollViewRect.width || 0
@@ -186,7 +183,6 @@ class MinimapView extends View
   # EVENT CALLBACKS
 
   onActiveItemChanged: (item) =>
-    @log item
     # Fix called twice when opening minimap!
     return if item is @activeItem
     @activeItem = item
