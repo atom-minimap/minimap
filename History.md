@@ -1,3 +1,15 @@
+0.9.0 / 2014-04-11
+==================
+
+* add minimap indicator
+* split updateScrollX and updateScrollY
+
+0.8.0 / 2014-04-10
+==================
+
+* minimap api
+* minnimap plugin manager
+
 0.7.0 / 2014-04-05
 ==================
 
