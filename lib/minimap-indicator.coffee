@@ -96,7 +96,8 @@ class Indicator extends Rectangle
     @calBoundaryY y
 
   computeFromCenterX: (cx) ->
-    @setCenterY cx - @scroller.x
+    @setCenterY(cx) - @scroller.x
 
   computeFromCenterY: (cy) ->
-    @setCenterY cy - @scroller.y
+    @setCenterY(cy) - @scroller.y
+
