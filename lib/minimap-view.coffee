@@ -34,6 +34,7 @@ class MinimapView extends View
     @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
+    @offsetLeft = 0
     @offsetTop = 0
     @indicator = new MinimapIndicator()
 
@@ -96,8 +97,9 @@ class MinimapView extends View
 
   subscribeToEditor: ->
     @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
-    @subscribe @editor, 'scroll-top-changed.minimap', @updateScroll
-    #@subscribe @editor, 'scroll-left-changed.minimap', @updateScroll
+    @subscribe @editor, 'scroll-top-changed.minimap', @updateScrollY
+    # Hacked scroll-left
+    @subscribe @scrollView, 'scroll.minimap', @updateScrollX
 
   # See /Applications/Atom.app/Contents/Resources/app/src/pane-view.js#349
   # pane-view's private api
@@ -160,7 +162,7 @@ class MinimapView extends View
 
     setImmediate => @updateScroll()
 
-  updateScroll: (top) =>
+  updateScrollY: (top) =>
     # Need scroll-top value when in find pane or on Vim mode(`gg`, `shift+g`).
     # Or we can find a better solution.
     if top?
@@ -170,10 +172,18 @@ class MinimapView extends View
       overlayerOffset = @scrollView.find('.overlayer').offset().top
       overlayY = -overlayerOffset + scrollViewOffset
 
-    @indicator.y = overlayY
-    @indicator.updateRatio()
-    @indicator.updateScrollerPosition()
+    @indicator.setY(overlayY)
+    @updatePositions()
 
+  updateScrollX: =>
+    @indicator.setX(@scrollView[0].scrollLeft)
+    @updatePositions()
+
+  updateScroll: =>
+    @updateScrollX()
+    @updateScrollY()
+
+  updatePositions: ->
     @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
     @transform @miniWrapper[0], @minimapScale + @translate(@indicator.scroller.x, @indicator.scroller.y)
 

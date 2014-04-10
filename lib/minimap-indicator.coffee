@@ -64,13 +64,33 @@ class Indicator extends Rectangle
     @minBoundaryY = 0
     @maxBoundaryY = @maxPosY
 
-  updateRatio: ->
+  setX: (@x) ->
+    @updateRatioX()
+    @updateScrollerPositionX()
+
+  setY: (@y) ->
+    @updateRatioY()
+    @updateScrollerPositionY()
+
+  updateRatioX: ->
     @ratioX = @x / @maxPosX if @maxPosX isnt 0
+
+  updateRatioY: ->
     @ratioY = @y / @maxPosY if @maxPosY isnt 0
 
-  updateScrollerPosition: ->
+  updateRatio: ->
+    @updateRatioX()
+    @updateRatioY()
+
+  updateScrollerPositionX: ->
     @scroller.x = - @ratioX * @scroller.maxScrollX
+
+  updateScrollerPositionY: ->
     @scroller.y = - @ratioY * @scroller.maxScrollY
+
+  updateScrollerPosition: ->
+    @updateScrollerPositionX()
+    @updateScrollerPositionY()
 
   updatePosition: ->
     x = Math.round @ratioX * @scroller.maxScrollX
