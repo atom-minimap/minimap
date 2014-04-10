@@ -156,9 +156,6 @@ class MinimapView extends View
     @indicator.setScrollerSize msvw, msvh
 
     # Compute boundary
-    posX = Math.max 0, msvw - width
-    posY = Math.max 0, msvh - evh
-    @indicator.updateMaxPos posX, posY
     @indicator.updateBoundary()
 
     setImmediate => @updateScroll()
