@@ -1,6 +1,7 @@
 {$, View} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
+MinimapIndicator = require './minimap-indicator'
 Debug = require 'prolix'
 
 CONFIGS = require './config'
@@ -33,6 +34,8 @@ class MinimapView extends View
     @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
+    @offsetTop = 0
+    @indicator = new MinimapIndicator()
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
@@ -105,6 +108,8 @@ class MinimapView extends View
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
+  getMinimapClientRect: -> @[0].getBoundingClientRect()
+
   # See Atom's API /api/classes/Pane.html#getActiveEditor-instance
   # Returns an Editor if the pane item is an Editor, or null otherwise.
   getEditor: -> @paneView.model.getActiveEditor()
@@ -122,19 +127,46 @@ class MinimapView extends View
 
   updateMinimapView: =>
     return unless @editorView
-    # offset minimap
-    @offset top: @editorView.offset().top
+    return unless @indicator
 
-    @editorViewRect = @getEditorViewClientRect()
+    # offset minimap
+    @offset top: (@offsetTop = @editorView.offset().top)
+
+    {width, height} = @getMinimapClientRect()
+    width /= @scaleX
+    height /= @scaleY
+
+    editorViewRect = @getEditorViewClientRect()
+    evw = editorViewRect.width
+    evh = editorViewRect.height
+
     @miniVisibleArea.css
-      width: @editorViewRect.width
-      height: @editorViewRect.height
+      width: width
+      height: evh
+
+    # VisibleArea's size
+    @indicator.width = width
+    @indicator.height = evh
+
+    miniScrollViewRect = @miniEditorView.getClientRect()
+    msvw = miniScrollViewRect.width || 0
+    msvh = miniScrollViewRect.height || 0
+
+    # Minimap's size
+    @indicator.setWrapperSize width, Math.min(height, msvh)
+
+    # Minimap ScrollView's size
+    @indicator.setScrollerSize msvw, msvh
+
+    # Compute boundary
+    posX = Math.max 0, msvw - width
+    posY = Math.max 0, msvh - evh
+    @indicator.updateMaxPos posX, posY
+    @indicator.updateBoundary()
 
     setImmediate => @updateScroll()
 
   updateScroll: (top) =>
-    minimapHeight = @miniScrollView.outerHeight()
-    scrollViewHeight = @scrollView.outerHeight()
     # Need scroll-top value when in find pane or on Vim mode(`gg`, `shift+g`).
     # Or we can find a better solution.
     if top?
@@ -143,22 +175,18 @@ class MinimapView extends View
       scrollViewOffset = @scrollView.offset().top
       overlayerOffset = @scrollView.find('.overlayer').offset().top
       overlayY = -overlayerOffset + scrollViewOffset
-    scrollRatio = overlayY / (minimapHeight - scrollViewHeight)
-    minimapMaxScroll = ((minimapHeight * @scaleY) - scrollViewHeight) / @scaleY
-    minimapCanScroll = (minimapHeight * @scaleY) > scrollViewHeight
 
-    if minimapCanScroll
-      @minimapScroll = -(scrollRatio * minimapMaxScroll)
-      @transform @miniWrapper[0], @minimapScale + @translateY(@minimapScroll)
-    else
-      @minimapScroll = 0
-      @transform @miniWrapper[0], @minimapScale
+    @indicator.y = overlayY
+    @indicator.updateRatio()
+    @indicator.updateScrollerPosition()
 
-    @transform @miniVisibleArea[0], @translateY(overlayY)
+    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
+    @transform @miniWrapper[0], @minimapScale + @translate(@indicator.scroller.x, @indicator.scroller.y)
 
   # EVENT CALLBACKS
 
   onActiveItemChanged: (item) =>
+    @log item
     # Fix called twice when opening minimap!
     return if item is @activeItem
     @activeItem = item
@@ -186,15 +214,9 @@ class MinimapView extends View
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
-    minimapHeight = @miniScrollView.outerHeight()
-    miniVisibleAreaHeight = @miniVisibleArea.height()
-    # Overlayer's center-y
-    y = e.pageY - @offset().top
-    y = y - @minimapScroll * @scaleY
-    n = y / @scaleY
-    top = n - miniVisibleAreaHeight / 2
-    top = Math.max(top, 0)
-    top = Math.min(top, minimapHeight - miniVisibleAreaHeight)
+    # VisibleArea's center-y
+    y = e.pageY - @offsetTop
+    top = @indicator.computeFromCenterY(y / @scaleY)
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
@@ -221,6 +243,6 @@ class MinimapView extends View
   # OTHER PRIVATE METHODS
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
-  translateY: (y=0) -> "translate3d(0, #{y}px, 0)"
+  translate: (x=0,y=0) -> "translate3d(#{x}px, #{y}px, 0)"
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
