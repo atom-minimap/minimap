@@ -6,7 +6,7 @@
 #   |       |----------> Minimap Wrapper
 #   |       |   .
 #   |       |   .
-#   #########------> Minimap Indicator
+#   =========------> Minimap Indicator
 #   |       |   .
 #   ---------   .
 #   .           .
