@@ -6,11 +6,13 @@
 #   |       |----------> Minimap Wrapper
 #   |       |   .
 #   |       |   .
-#   #########------> Minimap Indicator (Minimap visible area)
+#   #########------> Minimap Indicator
 #   |       |   .
 #   ---------   .
 #   .           .
 #   .............
+#
+
 #
 #  Basic Rectangle
 #
@@ -120,4 +122,3 @@ class Indicator extends Rectangle
 
   computeFromCenterY: (cy) ->
     @setCenterY(cy) - @scroller.y
-
