@@ -13,7 +13,7 @@
 ==================
 
 * minimap api
-* minnimap plugin manager
+* minimap plugin manager
 
 0.7.0 / 2014-04-05
 ==================
