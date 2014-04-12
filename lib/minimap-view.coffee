@@ -92,8 +92,8 @@ class MinimapView extends View
     @subscribeToEditor()
 
   unsubscribeFromEditor: ->
-    @unsubscribe @editor, '.minimap'
-    @unsubscribe @scrollView, '.minimap'
+    @unsubscribe @editor, '.minimap' if @editor?
+    @unsubscribe @scrollView, '.minimap' if @scrollView?
 
   subscribeToEditor: ->
     @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
