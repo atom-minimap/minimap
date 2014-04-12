@@ -30,7 +30,6 @@ class MinimapView extends View
     @scaleY = @scaleX * 0.8
     @minimapScale = @scale(@scaleX, @scaleY)
     @miniScrollView = @miniEditorView.scrollView
-    @minimapScroll = 0
     @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
@@ -93,8 +92,8 @@ class MinimapView extends View
     @subscribeToEditor()
 
   unsubscribeFromEditor: ->
-    @unsubscribe @editor, '.minimap'
-    @unsubscribe @scrollView, '.minimap'
+    @unsubscribe @editor, '.minimap' if @editor?
+    @unsubscribe @scrollView, '.minimap' if @scrollView?
 
   subscribeToEditor: ->
     @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
