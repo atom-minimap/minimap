@@ -1,3 +1,8 @@
+0.9.1 / 2014-04-13
+==================
+
+* fix minimap doesn't update on active view changes when auto-toggle is true, #59
+
 0.9.0 / 2014-04-11
 ==================
 
