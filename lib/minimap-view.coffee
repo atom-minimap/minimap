@@ -142,6 +142,8 @@ class MinimapView extends View
     evw = editorViewRect.width
     evh = editorViewRect.height
 
+    @miniWrapper.css {width}
+
     # VisibleArea's size
     @miniVisibleArea.css
       width : @indicator.width  = width
