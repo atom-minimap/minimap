@@ -135,10 +135,12 @@ class MinimapView extends View
     @offset top: (@offsetTop = @editorView.offset().top)
 
     {width, height} = @getMinimapClientRect()
+    editorViewRect = @getEditorViewClientRect()
+    miniScrollViewRect = @miniEditorView.getClientRect()
+
     width /= @scaleX
     height /= @scaleY
 
-    editorViewRect = @getEditorViewClientRect()
     evw = editorViewRect.width
     evh = editorViewRect.height
 
@@ -149,7 +151,6 @@ class MinimapView extends View
       width : @indicator.width  = width
       height: @indicator.height = evh
 
-    miniScrollViewRect = @miniEditorView.getClientRect()
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
 
