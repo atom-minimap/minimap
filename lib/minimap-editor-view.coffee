@@ -32,12 +32,12 @@ class MinimapEditorView extends ScrollView
     buffer = @editorView.getEditor().buffer
     tokenizedBuffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
     @subscribe buffer, 'changed', @registerBufferChanges
-    @subscribe tokenizedBuffer, 'changed', @update
+    @subscribe buffer, 'contents-modified', @update
 
   registerBufferChanges: (event) =>
     @bufferChanges.push event
 
-  update: () =>
+  update: =>
     return unless @editorView?
     return if @frameRequested
 
