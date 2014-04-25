@@ -19,6 +19,11 @@ class MinimapEditorView extends ScrollView
     super
     @bufferChanges = []
 
+  initialize: ->
+    @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
+    atom.config.observe 'editor.lineHeight', =>
+      @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
+
   destroy: ->
     @unsubscribe()
     @editorView = null
