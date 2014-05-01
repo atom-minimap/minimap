@@ -44,6 +44,9 @@ class MinimapView extends View
     @on 'mousedown', '.minimap-visible-area', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    # Fixed item move to other pane.
+    @subscribe @paneView.model, 'item-removed', (item) -> item.off '.minimap'
+
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
 
     @subscribe $(window), 'resize:end', @onScrollViewResized
