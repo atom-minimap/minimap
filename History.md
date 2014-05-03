@@ -1,3 +1,13 @@
+0.9.4 / 2014/05-01
+==================
+
+* fix item move to other pane, both panes's minimap updates #65
+
+0.9.3 / 2014/04-25
+==================
+
+* Properly stick to the editor line height
+
 0.9.1 / 2014-04-13
 ==================
 
