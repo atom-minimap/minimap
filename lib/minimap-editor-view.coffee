@@ -61,14 +61,17 @@ class MinimapEditorView extends ScrollView
 
     displayBuffer = @editorView.getEditor().displayBuffer
     while @bufferChanges.length > 0
-      {newRange, oldRange} = @bufferChanges.shift()
+      try
+        {newRange, oldRange} = @bufferChanges.shift()
 
-      newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
-      oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
+        newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
+        oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
 
-      @deleteRowsAtRange(oldScreenRange)
-      @createRowsAtRange(newScreenRange)
-      @markIntermediateTime("update buffer change")
+        @deleteRowsAtRange(oldScreenRange)
+        @createRowsAtRange(newScreenRange)
+        @markIntermediateTime("update buffer change")
+      catch e
+        continue
 
     @endBench('complete update')
 
