@@ -1,3 +1,8 @@
+0.9.5 / 2014/05-04
+==================
+
+* add reference to the new highlight-selected plugin
+
 0.9.4 / 2014/05-01
 ==================
 
