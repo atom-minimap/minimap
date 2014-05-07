@@ -3,7 +3,7 @@
 Debug = require 'prolix'
 
 module.exports =
-class MinimapEditorView extends ScrollView
+class MinimapPaneView extends ScrollView
   Emitter.includeInto(this)
   Debug('minimap').includeInto(this)
 
@@ -44,17 +44,11 @@ class MinimapEditorView extends ScrollView
 
   update: =>
     return unless @editorView?
-    return if @frameRequested
 
-    @frameRequested = true
-    webkitRequestAnimationFrame =>
-      @frameRequested = false
-      if @bufferChanges.length > 0
-        @updateMinimapWithBufferChanges()
-      else
-        @rebuildMinimap()
-
-      @emit 'minimap:updated'
+    if @bufferChanges.length > 0
+      @updateMinimapWithBufferChanges()
+    else
+      @rebuildMinimap()
 
   updateMinimapWithBufferChanges: ->
     @startBench()
@@ -70,10 +64,12 @@ class MinimapEditorView extends ScrollView
         @deleteRowsAtRange(oldScreenRange)
         @createRowsAtRange(newScreenRange)
         @markIntermediateTime("update buffer change")
+
       catch e
         continue
 
     @endBench('complete update')
+    @emit 'minimap:updated'
 
   deleteRowsAtRange: (range) ->
     linesWrapper = @lines[0].childNodes[0]
@@ -98,8 +94,11 @@ class MinimapEditorView extends ScrollView
 
 
   rebuildMinimap: ->
+    return if @rebuilding
+
     @startBench()
 
+    @rebuilding = true
     lines = @lines[0]
     if lines?
       child = lines.childNodes[0]
@@ -108,18 +107,28 @@ class MinimapEditorView extends ScrollView
     @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
     @markIntermediateTime('cleaning')
-    # FIXME: If the file is very large, the tokenizes doesn't generate
-    # completely, so doesn't have the syntax highlight until a new view
-    # is activated in the same pane.
-    numLines = @editorView.getModel().displayBuffer.getLines().length
-    lines = @editorView.buildLineElementsForScreenRows(0, numLines)
 
-    @markIntermediateTime('lines building')
+    numLines = @editorView.getModel().displayBuffer.getLines().length
+
     wrapper = $('<div/>')
-    wrapper.append lines
     @lines.append wrapper
 
-    @endBench('minimap update')
+    batchSize = 100
+    batch = (start=0) =>
+      end = Math.min(start + batchSize, numLines)
+      @log start, end
+      lines = @editorView.buildLineElementsForScreenRows(start, end)
+
+      @markIntermediateTime('batch finished')
+      wrapper.append lines
+      if end is numLines
+        @rebuilding = false
+        @endBench('minimap update')
+        @emit 'minimap:updated'        
+      else
+        webkitRequestAnimationFrame -> batch(end + 1)
+
+    batch()
 
   getClientRect: ->
     sv = @scrollView[0]
