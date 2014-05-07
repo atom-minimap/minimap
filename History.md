@@ -1,3 +1,9 @@
+0.9.6 / 2014/05-07
+==================
+
+* fix error on closing an image view pane
+* add Travis CI
+
 0.9.5 / 2014/05-04
 ==================
 
