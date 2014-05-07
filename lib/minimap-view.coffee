@@ -23,7 +23,10 @@ class MinimapView extends View
 
   # VIEW CREATION/DESTRUCTION
 
-  constructor: (@paneView) ->
+  constructor: (@editorView) ->
+    @editor = @editorView.getEditor()
+    @paneView = @editorView.getPane()
+
     super
 
     @scaleX = 0.2
@@ -36,6 +39,15 @@ class MinimapView extends View
     @offsetLeft = 0
     @offsetTop = 0
     @indicator = new MinimapIndicator()
+
+    @scrollView = @editorView.scrollView
+    @scrollViewLines = @scrollView.find('.lines')
+
+    @subscribeToEditor()
+
+    @miniEditorView.setEditorView(@editorView)
+
+    @updateMinimapView()
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
@@ -55,7 +67,6 @@ class MinimapView extends View
     @subscribe atom.config.observe themeProp, callNow: true, =>
       @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
-
 
   destroy: ->
     @off()
@@ -83,17 +94,6 @@ class MinimapView extends View
 
   # EDITOR VIEW MANAGEMENT
 
-  storeActiveEditor: ->
-    @editorView = @getEditorView()
-    @editor = @editorView.getEditor()
-
-    @unsubscribeFromEditor()
-
-    @scrollView = @editorView.scrollView
-    @scrollViewLines = @scrollView.find('.lines')
-
-    @subscribeToEditor()
-
   unsubscribeFromEditor: ->
     @unsubscribe @editor, '.minimap' if @editor?
     @unsubscribe @scrollView, '.minimap' if @scrollView?
@@ -104,11 +104,6 @@ class MinimapView extends View
     # Hacked scroll-left
     @subscribe @scrollView, 'scroll.minimap', @updateScrollX
 
-  # See /Applications/Atom.app/Contents/Resources/app/src/pane-view.js#349
-  # pane-view's private api
-  # `paneView.activeView` and `paneView.activeItem`
-  getEditorView: -> @paneView.viewForItem(@activeItem)
-
   getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
 
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
@@ -118,10 +113,6 @@ class MinimapView extends View
   # See Atom's API /api/classes/Pane.html#getActiveEditor-instance
   # Returns an Editor if the pane item is an Editor, or null otherwise.
   getEditor: -> @paneView.model.getActiveEditor()
-
-  setMinimapEditorView: ->
-    # update minimap-editor
-    setImmediate => @miniEditorView.setEditorView(@editorView)
 
   # UPDATE METHODS
 
@@ -197,19 +188,13 @@ class MinimapView extends View
 
   onActiveItemChanged: (item) =>
     # Fix called twice when opening minimap!
-    return if item is @activeItem
-    @activeItem = item
 
-    if @activeViewSupportMinimap()
-      @log 'minimap is supported by the current tab'
-      @activatePaneViewMinimap() unless @minimapIsAttached()
-      @storeActiveEditor()
-      @setMinimapEditorView()
+    activeView = @paneView.viewForItem(item)
+    if activeView is @editorView
+      @attachToPaneView() if @parent().length is 0
       @updateMinimapView()
     else
-      # Ignore any tab that is not an editor
-      @deactivatePaneViewMinimap()
-      @log 'minimap is not supported by the current tab'
+      @detachFromPaneView() if @parent().length is 1
 
   onMouseWheel: (e) =>
     return if @isClicked
