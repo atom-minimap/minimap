@@ -1,4 +1,4 @@
-# Minimap package
+# Minimap package [![Build Status](https://travis-ci.org/fundon/atom-minimap.svg?branch=master)](https://travis-ci.org/fundon/atom-minimap)
 
 A preview of the full source code.
 

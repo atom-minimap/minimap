@@ -45,7 +45,7 @@ class MinimapView extends View
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     # Fixed item move to other pane.
-    @subscribe @paneView.model, 'item-removed', (item) -> item.off '.minimap'
+    @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
 
