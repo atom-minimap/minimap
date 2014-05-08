@@ -89,7 +89,6 @@ class MinimapView extends View
     @paneView.removeClass('with-minimap')
     @detachFromPaneView()
 
-  activeViewSupportMinimap: -> @getEditor()?
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
   # EDITOR VIEW MANAGEMENT
@@ -109,10 +108,6 @@ class MinimapView extends View
   getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
 
   getMinimapClientRect: -> @[0].getBoundingClientRect()
-
-  # See Atom's API /api/classes/Pane.html#getActiveEditor-instance
-  # Returns an Editor if the pane item is an Editor, or null otherwise.
-  getEditor: -> @paneView.model.getActiveEditor()
 
   # UPDATE METHODS
 
