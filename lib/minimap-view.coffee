@@ -1,4 +1,4 @@
-{$, View} = require 'atom'
+{$, View, EditorView} = require 'atom'
 
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
@@ -72,22 +72,17 @@ class MinimapView extends View
     @off()
     @unsubscribe()
 
-    @deactivatePaneViewMinimap()
+    @detachFromPaneView()
     @miniEditorView.destroy()
     @remove()
 
   # MINIMAP DISPLAY MANAGEMENT
 
-  attachToPaneView: -> @paneView.append(this)
-  detachFromPaneView: -> @detach()
-
-  activatePaneViewMinimap: ->
+  attachToPaneView: ->
     @paneView.addClass('with-minimap')
-    @attachToPaneView()
+    @paneView.append(this)
 
-  deactivatePaneViewMinimap: ->
-    @paneView.removeClass('with-minimap')
-    @detachFromPaneView()
+  detachFromPaneView: -> @detach()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
@@ -98,7 +93,6 @@ class MinimapView extends View
     @unsubscribe @scrollView, '.minimap' if @scrollView?
 
   subscribeToEditor: ->
-    @subscribe @editor, 'screen-lines-changed.minimap', @updateMinimapEditorView
     @subscribe @editor, 'scroll-top-changed.minimap', @updateScrollY
     # Hacked scroll-left
     @subscribe @scrollView, 'scroll.minimap', @updateScrollX
@@ -190,6 +184,8 @@ class MinimapView extends View
       @updateMinimapView()
     else
       @detachFromPaneView() if @parent().length is 1
+      @paneView.removeClass('with-minimap') unless activeView instanceof EditorView
+
 
   onMouseWheel: (e) =>
     return if @isClicked

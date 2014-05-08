@@ -29,26 +29,30 @@ class MinimapPaneView extends ScrollView
     @editorView = null
 
   setEditorView: (@editorView) ->
-    @unsubscribe()
     @subscribeToBuffer()
     @update()
 
   subscribeToBuffer: ->
     buffer = @editorView.getEditor().buffer
-    tokenizedBuffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
+    editor = @editorView.getEditor()
     @subscribe buffer, 'changed', @registerBufferChanges
-    @subscribe buffer, 'contents-modified', @update
+    @subscribe editor, 'screen-lines-changed.minimap', @update
 
   registerBufferChanges: (event) =>
+    console.log 'here'
     @bufferChanges.push event
 
   update: =>
     return unless @editorView?
+    return if @frameRequested
 
-    if @bufferChanges.length > 0
-      @updateMinimapWithBufferChanges()
-    else
-      @rebuildMinimap()
+    @frameRequested = true
+    webkitRequestAnimationFrame =>
+      @frameRequested = false
+      if @bufferChanges.length > 0
+        @updateMinimapWithBufferChanges()
+      else
+        @rebuildMinimap()
 
   updateMinimapWithBufferChanges: ->
     @startBench()
