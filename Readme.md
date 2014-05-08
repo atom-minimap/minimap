@@ -31,6 +31,19 @@ Customizing Key Bindings
   'cmd-d': 'minimap:toggle-debug'
 ```
 
+### Customizing Style
+
+If you want to use other font instead of Redacted font or want to change any styles,   
+you can change the `style.less`(Open Your Stylesheet).
+
+```css
+.minimap .lines {
+  font-family: Monaco;
+}
+...
+```
+
+
 ### Contributors
 
 https://github.com/fundon/atom-minimap/graphs/contributors
@@ -46,7 +59,6 @@ The minimap can be augmented with plugins, belows the list of available plugins 
 
 ### Roadmap
 
-* Custom style
 * Smooth animation
 
 ### License
