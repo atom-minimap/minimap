@@ -8,8 +8,6 @@ describe "MinimapView", ->
     runs ->
       atom.workspaceView = new WorkspaceView
       atom.workspaceView.openSync('sample.js')
-
-    runs ->
       atom.workspaceView.attachToDom()
       editorView = atom.workspaceView.getActiveView()
       editorView.setText("This is the file content")
