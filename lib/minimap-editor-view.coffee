@@ -41,6 +41,10 @@ class MinimapPaneView extends ScrollView
   registerBufferChanges: (event) =>
     @bufferChanges.push event
 
+  getHeight: -> @getLinesCount() * @getLineHeight()
+  getLineHeight: -> parseInt @editorView.css('line-height')
+  getLinesCount: -> @editorView.getEditor().buffer.getLines().length
+
   update: =>
     return unless @editorView?
     return if @frameRequested
