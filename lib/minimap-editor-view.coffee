@@ -106,7 +106,7 @@ class MinimapPaneView extends ScrollView
 
     @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
-    @markIntermediateTime('cleaning')
+    @endBench('cleaning')
 
     numLines = @editorView.getModel().displayBuffer.getLines().length
 
@@ -115,18 +115,20 @@ class MinimapPaneView extends ScrollView
 
     batchSize = 100
     batch = (start=0) =>
+      @startBench()
+
       end = Math.min(start + batchSize, numLines)
       @log start, end
       lines = @editorView.buildLineElementsForScreenRows(start, end)
 
-      @markIntermediateTime('batch finished')
       wrapper.append lines
       if end is numLines
         @rebuilding = false
-        @endBench('minimap update')
-        @emit 'minimap:updated'        
+        @emit 'minimap:updated'
       else
         webkitRequestAnimationFrame -> batch(end + 1)
+
+      @endBench('batch finished')
 
     batch()
 
