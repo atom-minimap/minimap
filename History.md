@@ -1,3 +1,19 @@
+0.9.8 / 2014/05-08
+==================
+
+* add Customizing Style to Readme
+
+0.9.7 / 2014/05-08
+==================
+
+* better rendering for ASCII characters, fix #69
+
+0.9.6 / 2014/05-07
+==================
+
+* fix error on closing an image view pane
+* add Travis CI
+
 0.9.5 / 2014/05-04
 ==================
 
