@@ -39,7 +39,6 @@ class MinimapPaneView extends ScrollView
     @subscribe editor, 'screen-lines-changed.minimap', @update
 
   registerBufferChanges: (event) =>
-    console.log 'here'
     @bufferChanges.push event
 
   update: =>
