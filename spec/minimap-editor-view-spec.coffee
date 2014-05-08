@@ -37,8 +37,8 @@ describe "MinimapView", ->
         lineHeight = parseInt editorView.css('line-height')
         linesCount = editorView.editor.buffer.getLines().length
 
-        console.log view.css('line-height')
-
         height = lineHeight * linesCount
 
         expect(view.getHeight()).toEqual(height)
+
+      
