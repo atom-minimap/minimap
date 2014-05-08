@@ -42,7 +42,7 @@ class ViewManagement extends Mixin
   # Internal: Destroys all views currently in use.
   destroyViews: ->
     view.destroy() for id, view of @minimapViews
-    @eachPaneViewSubscription.off()
+    @eachPaneViewSubscription?.off()
     @minimapViews = {}
 
   # Internal: Registers to each pane view existing or to be created and creates

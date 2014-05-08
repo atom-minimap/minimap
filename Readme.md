@@ -1,4 +1,4 @@
-# Minimap package
+# Minimap package [![Build Status](https://travis-ci.org/fundon/atom-minimap.svg?branch=master)](https://travis-ci.org/fundon/atom-minimap)
 
 A preview of the full source code.
 
@@ -31,6 +31,19 @@ Customizing Key Bindings
   'cmd-d': 'minimap:toggle-debug'
 ```
 
+### Customizing Style
+
+If you want to use other font instead of Redacted font or want to change any styles,   
+you can change the `style.less`(Open Your Stylesheet).
+
+```css
+.minimap .lines {
+  font-family: Monaco;
+}
+...
+```
+
+
 ### Contributors
 
 https://github.com/fundon/atom-minimap/graphs/contributors
@@ -42,10 +55,10 @@ The minimap can be augmented with plugins, belows the list of available plugins 
   * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
   * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
+  * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
 
 ### Roadmap
 
-* Custom style
 * Smooth animation
 
 ### License

@@ -19,6 +19,11 @@ class MinimapEditorView extends ScrollView
     super
     @bufferChanges = []
 
+  initialize: ->
+    @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
+    atom.config.observe 'editor.lineHeight', =>
+      @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
+
   destroy: ->
     @unsubscribe()
     @editorView = null
@@ -32,12 +37,12 @@ class MinimapEditorView extends ScrollView
     buffer = @editorView.getEditor().buffer
     tokenizedBuffer = @editorView.getEditor().displayBuffer.tokenizedBuffer
     @subscribe buffer, 'changed', @registerBufferChanges
-    @subscribe tokenizedBuffer, 'changed', @update
+    @subscribe buffer, 'contents-modified', @update
 
   registerBufferChanges: (event) =>
     @bufferChanges.push event
 
-  update: () =>
+  update: =>
     return unless @editorView?
     return if @frameRequested
 
@@ -56,14 +61,17 @@ class MinimapEditorView extends ScrollView
 
     displayBuffer = @editorView.getEditor().displayBuffer
     while @bufferChanges.length > 0
-      {newRange, oldRange} = @bufferChanges.shift()
+      try
+        {newRange, oldRange} = @bufferChanges.shift()
 
-      newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
-      oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
+        newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
+        oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
 
-      @deleteRowsAtRange(oldScreenRange)
-      @createRowsAtRange(newScreenRange)
-      @markIntermediateTime("update buffer change")
+        @deleteRowsAtRange(oldScreenRange)
+        @createRowsAtRange(newScreenRange)
+        @markIntermediateTime("update buffer change")
+      catch e
+        continue
 
     @endBench('complete update')
 

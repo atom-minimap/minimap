@@ -1,3 +1,51 @@
+0.9.8 / 2014/05-08
+==================
+
+* add Customizing Style to Readme
+
+0.9.7 / 2014/05-08
+==================
+
+* better rendering for ASCII characters, fix #69
+
+0.9.6 / 2014/05-07
+==================
+
+* fix error on closing an image view pane
+* add Travis CI
+
+0.9.5 / 2014/05-04
+==================
+
+* add reference to the new highlight-selected plugin
+
+0.9.4 / 2014/05-01
+==================
+
+* fix item move to other pane, both panes's minimap updates #65
+
+0.9.3 / 2014/04-25
+==================
+
+* Properly stick to the editor line height
+
+0.9.1 / 2014-04-13
+==================
+
+* fix minimap doesn't update on active view changes when auto-toggle is true, #59
+
+0.9.0 / 2014-04-11
+==================
+
+* add minimap indicator
+* split updateScrollX and updateScrollY
+
+0.8.0 / 2014-04-10
+==================
+
+* minimap api
+* minimap plugin manager
+
 0.7.0 / 2014-04-05
 ==================
 
