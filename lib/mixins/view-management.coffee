@@ -30,6 +30,12 @@ class ViewManagement extends Mixin
     @eachEditorViewSubscription?.off()
     @minimapViews = {}
 
+  eachMinimapView: (callback) ->
+    callback(minimapView) for id,minimapView of @minimapViews
+    createdCallback = (minimapView) -> callback(minimapView)
+    @on('minimap-view:created', createdCallback)
+    off: => @off('minimap-view:created', createdCallback)
+
   # Internal: Registers to each pane view existing or to be created and creates
   # a {MinimapView} instance for each.
   createViews: ->
