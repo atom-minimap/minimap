@@ -82,7 +82,9 @@ class MinimapView extends View
     @paneView.addClass('with-minimap')
     @paneView.append(this)
 
-  detachFromPaneView: -> @detach()
+  detachFromPaneView: ->
+    @paneView.removeClass('with-minimap')
+    @detach()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
