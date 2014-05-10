@@ -1,16 +1,19 @@
 {$, View, EditorView} = require 'atom'
 {Emitter} = require 'emissary'
+Debug = require 'prolix'
+Delegato = require 'delegato'
 
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
-Debug = require 'prolix'
-
 CONFIGS = require './config'
 
 module.exports =
 class MinimapView extends View
   Debug('minimap').includeInto(this)
+  Delegato.includeInto(this)
   Emitter.includeInto(this)
+
+  @delegatesMethods 'getLineHeight', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', toProperty: 'miniVisibleArea'
 
   @content: ->
     @div class: 'minimap', =>
