@@ -1,36 +1,34 @@
+path = require 'path'
 MinimapEditorView = require '../lib/minimap-editor-view'
+MinimapView = require '../lib/minimap-view'
 {WorkspaceView} = require 'atom'
 
-view = null
+minimapView = null
+minimapEditorView = null
 editorView = null
 updateCallback = null
 
-describe "MinimapView", ->
+describe "MinimapEditorView", ->
+  afterEach -> minimapView?.detach()
   beforeEach ->
     runs ->
       atom.workspaceView = new WorkspaceView
-      atom.workspaceView.openSync('sample.js')
+      atom.project.setPath(path.join(__dirname, 'fixtures'))
+
+      atom.workspaceView.openSync('two-hundred.txt')
 
     runs ->
       atom.workspaceView.attachToDom()
       editorView = atom.workspaceView.getActiveView()
-      editorView.setText("""
-        class Dummy
-          constructor: ->
-            @name = 'dummy'
-
-          sayHello: ->
-            "hello, I'm \#{@name} :)"
-      """)
 
   describe 'once created and initialized with an editor view', ->
     beforeEach ->
-      updateCallback = jasmine.createSpy('updateCallback')
-      view = new MinimapEditorView
-      view.setEditorView editorView
+      minimapView = new MinimapView editorView
+      minimapView.attachToPaneView()
+      minimapView.height 5
 
-      # @view.once 'minimap:updated', updateCallback
-      # waitsFor -> updateCallback.callCount is 1
+      minimapEditorView = minimapView.miniEditorView
+
 
     describe '::getHeight', ->
       it 'returns its content height based on its line-height', ->
@@ -39,6 +37,16 @@ describe "MinimapView", ->
 
         height = lineHeight * linesCount
 
-        expect(view.getHeight()).toEqual(height)
+        expect(minimapEditorView.getHeight()).toEqual(height)
 
-      
+    describe 'on update', ->
+      beforeEach ->
+        updateCallback = jasmine.createSpy('updateCallback')
+        minimapEditorView.once 'minimap:updated', updateCallback
+        minimapEditorView.update()
+
+        waitsFor -> updateCallback.callCount is 1
+
+      it 'should only render visible lines', ->
+        lines = minimapEditorView.lines.children()
+        expect(lines.length).toEqual(12)

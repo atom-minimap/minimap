@@ -10,14 +10,14 @@ class MinimapPaneView extends ScrollView
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
       @div class: 'scroll-view', outlet: 'scrollView', =>
-        @div class: 'lines', outlet: 'lines', =>
-          @div class: 'lines-wrapper'
+        @div class: 'lines', outlet: 'lines'
 
+  lineOverdraw: 10
   frameRequested: false
 
   constructor: ->
     super
-    @bufferChanges = []
+    @pendingChanges = []
 
   initialize: ->
     @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
@@ -29,115 +29,200 @@ class MinimapPaneView extends ScrollView
     @editorView = null
 
   setEditorView: (@editorView) ->
-    @subscribeToBuffer()
-    @update()
+    @editor = @editorView.getModel()
+    @buffer = @editorView.getEditor().buffer
 
-  subscribeToBuffer: ->
-    buffer = @editorView.getEditor().buffer
-    editor = @editorView.getEditor()
-    @subscribe buffer, 'changed', @registerBufferChanges
-    @subscribe editor, 'screen-lines-changed.minimap', @update
+    # @subscribe @buffer, 'changed', @registerBufferChanges
+    @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
+      @pendingChanges.push changes
+      return if @frameRequested
+      @frameRequested = true
+
+      setImmediate =>
+        @startBench()
+        @update()
+        @endBench('minimpap update')
+        @frameRequested = false
 
   registerBufferChanges: (event) =>
-    @bufferChanges.push event
+    @pendingChanges.push event
 
   getHeight: -> @getLinesCount() * @getLineHeight()
-  getLineHeight: -> parseInt @editorView.css('line-height')
-  getLinesCount: -> @editorView.getEditor().buffer.getLines().length
+  getLineHeight: -> @lineHeight ||= parseInt @editorView.css('line-height')
+  getLinesCount: -> @editorView.getEditor().getScreenLineCount()
+
+  getMinimapScreenHeight: -> @minimapView.height() / @minimapView.scaleY
+  getMinimapHeightInLines: -> Math.ceil(@getMinimapScreenHeight() / @getLineHeight())
+
+  getFirstVisibleScreenRow: ->
+    screenRow = Math.floor(@scrollTop() / @getLineHeight())
+    screenRow = 0 if isNaN(screenRow)
+    screenRow
+
+  getLastVisibleScreenRow: ->
+    calculatedRow = Math.ceil((@scrollTop() + @getMinimapScreenHeight()) / @getLineHeight()) - 1
+    screenRow = Math.max(0, Math.min(@editor.getScreenLineCount() - 1, calculatedRow))
+    screenRow = 0 if isNaN(screenRow)
+    screenRow
 
   update: =>
     return unless @editorView?
-    return if @frameRequested
 
-    @frameRequested = true
-    webkitRequestAnimationFrame =>
-      @frameRequested = false
-      if @bufferChanges.length > 0
-        @updateMinimapWithBufferChanges()
-      else
-        @rebuildMinimap()
-
-  updateMinimapWithBufferChanges: ->
-    @startBench()
-
-    displayBuffer = @editorView.getEditor().displayBuffer
-    while @bufferChanges.length > 0
-      try
-        {newRange, oldRange} = @bufferChanges.shift()
-
-        newScreenRange = displayBuffer.screenRangeForBufferRange(newRange)
-        oldScreenRange = displayBuffer.screenRangeForBufferRange(oldRange)
-
-        @deleteRowsAtRange(oldScreenRange)
-        @createRowsAtRange(newScreenRange)
-        @markIntermediateTime("update buffer change")
-
-      catch e
-        continue
-
-    @endBench('complete update')
-    @emit 'minimap:updated'
-
-  deleteRowsAtRange: (range) ->
-    linesWrapper = @lines[0].childNodes[0]
-    start = range.start.row
-    end = range.end.row
-    lines = Array::slice.call(linesWrapper.childNodes, start, end + 1 or 9e9)
-
-    linesWrapper.removeChild line for line in lines
-
-  createRowsAtRange: (range) ->
-    start = range.start.row
-    end = range.end.row
-    lines = @editorView.buildLineElementsForScreenRows(start, end)
-
-    @insertLineAt(line, start + i) for line,i in lines
-
-  insertLineAt: (line, at) ->
-    linesWrapper = @lines[0].childNodes[0]
-
-    refLine = linesWrapper.childNodes[at]
-    linesWrapper.insertBefore(line, refLine)
-
-
-  rebuildMinimap: ->
-    return if @rebuilding
-
-    @startBench()
-
-    @rebuilding = true
-    lines = @lines[0]
-    if lines?
-      child = lines.childNodes[0]
-      lines.removeChild(child) if child?
+    firstVisibleScreenRow = @getFirstVisibleScreenRow()
+    lastScreenRowToRender = firstVisibleScreenRow + @getMinimapHeightInLines() - 1
+    lastScreenRow = @editor.getLastScreenRow()
 
     @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
-    @endBench('cleaning')
+    if @firstRenderedScreenRow? and firstVisibleScreenRow >= @firstRenderedScreenRow and lastScreenRowToRender <= @lastRenderedScreenRow
+      renderFrom = Math.min(lastScreenRow, @firstRenderedScreenRow)
+      renderTo = Math.min(lastScreenRow, @lastRenderedScreenRow)
+    else
+      renderFrom = Math.min(lastScreenRow, Math.max(0, firstVisibleScreenRow - @lineOverdraw))
+      renderTo = Math.min(lastScreenRow, lastScreenRowToRender + @lineOverdraw)
 
-    numLines = @editorView.getModel().displayBuffer.getLines().length
+    if @pendingChanges.length == 0 and @firstRenderedScreenRow and @firstRenderedScreenRow <= renderFrom and renderTo <= @lastRenderedScreenRow
+      return
 
-    wrapper = $('<div/>')
-    @lines.append wrapper
+    changes = @pendingChanges
+    intactRanges = @computeIntactRanges(renderFrom, renderTo)
 
-    batchSize = 100
-    batch = (start=0) =>
-      @startBench()
+    @clearDirtyRanges(intactRanges)
+    @fillDirtyRanges(intactRanges, renderFrom, renderTo)
+    @firstRenderedScreenRow = renderFrom
+    @lastRenderedScreenRow = renderTo
+    @updatePaddingOfRenderedLines()
+    @emit 'minimap:updated'
 
-      end = Math.min(start + batchSize, numLines)
-      @log start, end
-      lines = @editorView.buildLineElementsForScreenRows(start, end)
+   computeIntactRanges: (renderFrom, renderTo) ->
+    return [] if !@firstRenderedScreenRow? and !@lastRenderedScreenRow?
 
-      wrapper.append lines
-      if end is numLines
-        @rebuilding = false
-        @emit 'minimap:updated'
+    intactRanges = [{start: @firstRenderedScreenRow, end: @lastRenderedScreenRow, domStart: 0}]
+
+    if @editorView.showIndentGuide
+      emptyLineChanges = []
+      for change in @pendingChanges
+        changes = @computeSurroundingEmptyLineChanges(change)
+        emptyLineChanges.push(changes...)
+
+      @pendingChanges.push(emptyLineChanges...)
+
+    for change in @pendingChanges
+      newIntactRanges = []
+      for range in intactRanges
+        if change.end < range.start and change.screenDelta != 0
+          newIntactRanges.push(
+            start: range.start + change.screenDelta
+            end: range.end + change.screenDelta
+            domStart: range.domStart
+          )
+        else if change.end < range.start or change.start > range.end
+          newIntactRanges.push(range)
+        else
+          if change.start > range.start
+            newIntactRanges.push(
+              start: range.start
+              end: change.start - 1
+              domStart: range.domStart)
+          if change.end < range.end
+            newIntactRanges.push(
+              start: change.end + change.screenDelta + 1
+              end: range.end + change.screenDelta
+              domStart: range.domStart + change.end + 1 - range.start
+            )
+
+      intactRanges = newIntactRanges
+
+    @truncateIntactRanges(intactRanges, renderFrom, renderTo)
+
+    @pendingChanges = []
+
+    intactRanges
+
+  truncateIntactRanges: (intactRanges, renderFrom, renderTo) ->
+    i = 0
+    while i < intactRanges.length
+      range = intactRanges[i]
+      if range.start < renderFrom
+        range.domStart += renderFrom - range.start
+        range.start = renderFrom
+      if range.end > renderTo
+        range.end = renderTo
+      if range.start >= range.end
+        intactRanges.splice(i--, 1)
+      i++
+    intactRanges.sort (a, b) -> a.domStart - b.domStart
+
+  computeSurroundingEmptyLineChanges: (change) ->
+    emptyLineChanges = []
+
+    if change.bufferDelta?
+      afterStart = change.end + change.bufferDelta + 1
+      if @editor.lineForBufferRow(afterStart) is ''
+        afterEnd = afterStart
+        afterEnd++ while @editor.lineForBufferRow(afterEnd + 1) is ''
+        emptyLineChanges.push({start: afterStart, end: afterEnd, screenDelta: 0})
+
+      beforeEnd = change.start - 1
+      if @editor.lineForBufferRow(beforeEnd) is ''
+        beforeStart = beforeEnd
+        beforeStart-- while @editor.lineForBufferRow(beforeStart - 1) is ''
+        emptyLineChanges.push({start: beforeStart, end: beforeEnd, screenDelta: 0})
+
+    emptyLineChanges
+
+  clearDirtyRanges: (intactRanges) ->
+    if intactRanges.length == 0
+      @lines[0].innerHTML = ''
+    else if currentLine = @lines[0].firstChild
+      domPosition = 0
+      for intactRange in intactRanges
+        while intactRange.domStart > domPosition
+          currentLine = @clearLine(currentLine)
+          domPosition++
+
+        for i in [intactRange.start..intactRange.end]
+          currentLine = currentLine.nextSibling
+          domPosition++
+
+      while currentLine
+        currentLine = @clearLine(currentLine)
+
+  clearLine: (lineElement) ->
+    next = lineElement.nextSibling
+    @lines[0].removeChild(lineElement)
+    next
+
+
+  fillDirtyRanges: (intactRanges, renderFrom, renderTo) ->
+    i = 0
+    nextIntact = intactRanges[i]
+    currentLine = @lines[0].firstChild
+
+    row = renderFrom
+    while row <= renderTo
+      if row == nextIntact?.end + 1
+        nextIntact = intactRanges[++i]
+
+      if !nextIntact or row < nextIntact.start
+        if nextIntact
+          dirtyRangeEnd = nextIntact.start - 1
+        else
+          dirtyRangeEnd = renderTo
+
+        for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
+          @lines[0].insertBefore(lineElement, currentLine)
+          row++
       else
-        webkitRequestAnimationFrame -> batch(end + 1)
+        currentLine = currentLine?.nextSibling
+        row++
 
-      @endBench('batch finished')
+  updatePaddingOfRenderedLines: ->
+    paddingTop = @firstRenderedScreenRow * @lineHeight
+    @lines.css('padding-top', paddingTop)
 
-    batch()
+    paddingBottom = (@editor.getLastScreenRow() - @lastRenderedScreenRow) * @lineHeight
+    @lines.css('padding-bottom', paddingBottom)
 
   getClientRect: ->
     sv = @scrollView[0]

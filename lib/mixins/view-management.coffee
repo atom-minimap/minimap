@@ -50,6 +50,8 @@ class ViewManagement extends Mixin
       @minimapViews[editorId] = view
       @emit('minimap-view:created', {view})
 
+      view.updateMinimapEditorView()
+
       editorView.editor.on 'destroyed', =>
         view = @minimapViews[editorId]
 
