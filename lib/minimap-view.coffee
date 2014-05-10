@@ -189,6 +189,7 @@ class MinimapView extends View
     activeView = @paneView.viewForItem(item)
     if activeView is @editorView
       @attachToPaneView() if @parent().length is 0
+      @updateMinimapEditorView()
       @updateMinimapView()
     else
       @detachFromPaneView() if @parent().length is 1
