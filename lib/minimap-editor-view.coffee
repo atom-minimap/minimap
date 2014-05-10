@@ -90,8 +90,8 @@ class MinimapPaneView extends ScrollView
       renderFrom = Math.min(lastScreenRow, Math.max(0, firstVisibleScreenRow - @lineOverdraw))
       renderTo = Math.min(lastScreenRow, lastScreenRowToRender + @lineOverdraw)
 
-    if @pendingChanges.length == 0 and @firstRenderedScreenRow and @firstRenderedScreenRow <= renderFrom and renderTo <= @lastRenderedScreenRow
-      return
+    has_no_changes = @pendingChanges.length == 0 and @firstRenderedScreenRow and @firstRenderedScreenRow <= renderFrom and renderTo <= @lastRenderedScreenRow
+    return if has_no_changes
 
     changes = @pendingChanges
     intactRanges = @computeIntactRanges(renderFrom, renderTo)
