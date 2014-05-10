@@ -1,4 +1,5 @@
 {$, View, EditorView} = require 'atom'
+{Emitter} = require 'emissary'
 
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
@@ -9,6 +10,7 @@ CONFIGS = require './config'
 module.exports =
 class MinimapView extends View
   Debug('minimap').includeInto(this)
+  Emitter.includeInto(this)
 
   @content: ->
     @div class: 'minimap', =>
@@ -45,6 +47,7 @@ class MinimapView extends View
 
     @subscribeToEditor()
 
+    @miniEditorView.minimapView = this
     @miniEditorView.setEditorView(@editorView)
 
     @updateMinimapView()
@@ -85,6 +88,7 @@ class MinimapView extends View
   detachFromPaneView: ->
     @paneView.removeClass('with-minimap')
     @detach()
+
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
@@ -170,10 +174,12 @@ class MinimapView extends View
   updateScroll: =>
     @updateScrollX()
     @updateScrollY()
+    @emit 'minimap:scroll'
 
   updatePositions: ->
     @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
     @transform @miniWrapper[0], @minimapScale + @translate(@indicator.scroller.x, @indicator.scroller.y)
+    @miniEditorView.scrollTop @indicator.scroller.y * -1
 
   # EVENT CALLBACKS
 

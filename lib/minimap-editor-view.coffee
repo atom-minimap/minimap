@@ -35,14 +35,24 @@ class MinimapPaneView extends ScrollView
     # @subscribe @buffer, 'changed', @registerBufferChanges
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
       @pendingChanges.push changes
-      return if @frameRequested
-      @frameRequested = true
+      @requestUpdate()
 
-      setImmediate =>
-        @startBench()
-        @update()
-        @endBench('minimpap update')
-        @frameRequested = false
+  requestUpdate: ->
+    return if @frameRequested
+    @frameRequested = true
+
+    setImmediate =>
+      @startBench()
+      @update()
+      @endBench('minimpap update')
+      @frameRequested = false
+
+  scrollTop: (scrollTop, options={}) ->
+    return @cachedScrollTop or 0 unless scrollTop?
+    return if scrollTop is @cachedScrollTop
+
+    @cachedScrollTop = scrollTop
+    @requestUpdate()
 
   registerBufferChanges: (event) =>
     @pendingChanges.push event
