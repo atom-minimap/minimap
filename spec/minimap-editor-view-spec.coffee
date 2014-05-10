@@ -30,14 +30,14 @@ describe "MinimapEditorView", ->
 
       minimapEditorView = minimapView.miniEditorView
 
-    describe '::getHeight', ->
+    describe '::getMinimapHeight', ->
       it 'returns its content height based on its line-height', ->
         lineHeight = parseInt editorView.css('line-height')
         linesCount = editorView.editor.buffer.getLines().length
 
         height = lineHeight * linesCount
 
-        expect(minimapEditorView.getHeight()).toEqual(height)
+        expect(minimapEditorView.getMinimapHeight()).toEqual(height)
 
     describe '::update', ->
       beforeEach ->
@@ -69,3 +69,5 @@ describe "MinimapEditorView", ->
           lines = minimapEditorView.lines.children()
           expect(lines.length).toEqual(22)
           expect(minimapEditorView.scrollTop()).toEqual(300)
+
+    describe '::'
