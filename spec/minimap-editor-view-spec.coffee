@@ -26,9 +26,9 @@ describe "MinimapEditorView", ->
       minimapView = new MinimapView editorView
       minimapView.attachToPaneView()
       minimapView.height 5
+      minimapView.updatePositions = ->
 
       minimapEditorView = minimapView.miniEditorView
-
 
     describe '::getHeight', ->
       it 'returns its content height based on its line-height', ->
@@ -39,7 +39,7 @@ describe "MinimapEditorView", ->
 
         expect(minimapEditorView.getHeight()).toEqual(height)
 
-    describe 'on update', ->
+    describe '::update', ->
       beforeEach ->
         updateCallback = jasmine.createSpy('updateCallback')
         minimapEditorView.once 'minimap:updated', updateCallback
@@ -47,6 +47,25 @@ describe "MinimapEditorView", ->
 
         waitsFor -> updateCallback.callCount is 1
 
-      it 'should only render visible lines', ->
+      it 'renders visible lines augmented with line overdraw', ->
         lines = minimapEditorView.lines.children()
         expect(lines.length).toEqual(12)
+
+    describe '::scrollTop', ->
+      beforeEach ->
+        updateCallback = jasmine.createSpy('updateCallback')
+        minimapEditorView.on 'minimap:updated', updateCallback
+        minimapEditorView.update()
+
+        waitsFor -> updateCallback.callCount is 1
+
+      it 'renders visible lines augmented with line overdraw', ->
+
+        minimapEditorView.scrollTop 300
+
+        waitsFor -> updateCallback.callCount >= 2
+
+        runs ->
+          lines = minimapEditorView.lines.children()
+          expect(lines.length).toEqual(22)
+          expect(minimapEditorView.scrollTop()).toEqual(300)
