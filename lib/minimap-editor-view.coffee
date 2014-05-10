@@ -32,7 +32,6 @@ class MinimapPaneView extends ScrollView
     @editor = @editorView.getModel()
     @buffer = @editorView.getEditor().buffer
 
-    # @subscribe @buffer, 'changed', @registerBufferChanges
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
       @pendingChanges.push changes
       @requestUpdate()
