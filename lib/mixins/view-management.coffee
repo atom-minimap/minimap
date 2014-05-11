@@ -19,55 +19,45 @@ class ViewManagement extends Mixin
   # Returns the {MinimapView} object associated to the pane containing
   # the passed-in {EditorView}.
   minimapForEditorView: (editorView) ->
-    @minimapForPaneView(editorView?.getPane())
+    @minimapForEditor(editorView?.getEditor())
 
-  # Public: Returns the {MinimapView} object associated to the passed-in
-  # {PaneView} object.
-  #
-  # paneView - A {PaneView} instance
-  #
-  # Returns the {MinimapView} object associated to the passed-in
-  # {PaneView} object.
-  minimapForPaneView: (paneView) -> @minimapForPane(paneView?.model)
-
-  # Public: Returns the {MinimapView} object associated to the passed-in
-  # {Pane} object.
-  #
-  # pane - A {Pane} instance
-  #
-  # Returns the {MinimapView} object associated to the passed-in
-  # {Pane} object.
-  minimapForPane: (pane) -> @minimapViews[pane.id] if pane?
+  minimapForEditor: (editor) ->
+    @minimapViews[editor.id] if editor?
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
     view.destroy() for id, view of @minimapViews
-    @eachPaneViewSubscription?.off()
+    @eachEditorViewSubscription?.off()
     @minimapViews = {}
+
+  eachMinimapView: (callback) ->
+    callback(minimapView) for id,minimapView of @minimapViews
+    createdCallback = (minimapView) -> callback(minimapView)
+    @on('minimap-view:created', createdCallback)
+    off: => @off('minimap-view:created', createdCallback)
 
   # Internal: Registers to each pane view existing or to be created and creates
   # a {MinimapView} instance for each.
   createViews: ->
-    # When toggled we'll look for each existing and future pane thanks to
-    # the `eachPaneView` method. It returns a subscription object so we'll
+    # When toggled we'll look for each existing and future editors thanks to
+    # the `eacheditorView` method. It returns a subscription object so we'll
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
-    @eachPaneViewSubscription = atom.workspaceView.eachPaneView (paneView) =>
-      paneId = paneView.model.id
-      view = new MinimapView(paneView)
-      view.onActiveItemChanged(paneView.getActiveItem())
-      @updateAllViews()
+    @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
+      editorId = editorView.editor.id
+      view = new MinimapView(editorView)
 
-      @minimapViews[paneId] = view
+      @minimapViews[editorId] = view
       @emit('minimap-view:created', {view})
 
-      paneView.model.on 'destroyed', =>
-        view = @minimapViews[paneId]
+      view.updateMinimapEditorView()
+
+      editorView.editor.on 'destroyed', =>
+        view = @minimapViews[editorId]
 
         if view?
           @emit('minimap-view:will-be-destroyed', {view})
 
           view.destroy()
-          delete @minimapViews[paneId]
+          delete @minimapViews[editorId]
           @emit('minimap-view:destroyed', {view})
-          @updateAllViews()

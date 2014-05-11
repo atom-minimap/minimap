@@ -1,3 +1,18 @@
+1.0.0 / ?
+==================
+
+* minimap views are now created for each editor and not for each pane
+* add a `eachMinimapView` subscription method in `Minimap` class
+* add a view aware minimap rendering, it speeds up rendering and updates for large files
+* add delegation of `MinimapEditorView` methods in `MinimapView`, allowing to manipulate most of its API directory from a minimap view
+* add a lines API on `MinimapEditorView` allowing to decorates lines with classes even when they are not rendered yet
+
+
+0.10.0 / 2014/05-11
+==================
+
+* add Minimap.versionMatch method allowing plugins to test against minimap version
+
 0.9.8 / 2014/05-08
 ==================
 
