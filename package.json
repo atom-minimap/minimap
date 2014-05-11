@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./lib/minimap",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
@@ -24,6 +24,7 @@
     "emissary": "1.x",
     "mixto": "1.x",
     "prolix": "1.x",
+    "delegato": "1.x",
     "semver": "~2.3.0"
   }
 }
