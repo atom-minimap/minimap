@@ -1,4 +1,4 @@
-1.0.0 / ?
+1.0.0 / 2014/05-11
 ==================
 
 * minimap views are now created for each editor and not for each pane
@@ -9,7 +9,7 @@
 
 
 0.10.0 / 2014/05-11
-==================
+===================
 
 * add Minimap.versionMatch method allowing plugins to test against minimap version
 
