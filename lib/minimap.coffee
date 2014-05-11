@@ -1,5 +1,6 @@
 {Emitter} = require 'emissary'
 Debug = require 'prolix'
+semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
@@ -79,6 +80,9 @@ class Minimap
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
+  # Public: The minimap package version
+  version: require('../package.json').version
+
   # Public: The default minimap settings
   configDefaults:
     plugins: {}
@@ -107,6 +111,15 @@ class Minimap
   toggleNoDebug: ->
     @getChannel().deactivate()
     @toggle()
+
+  # Public: Verifies that the passed-in version expression is satisfied by
+  # the current minimap version.
+  #
+  # `expectedVersion` - A [semver]() compatible expression to match against
+  #                     the minimap version.
+  #
+  # Returns `true` if the version matches the expression, `false` otherwise.
+  versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
 
   # Public: Returns the char width ratio of the minimap compared to the real
   # editor. **The value is currently hard-coded until we find a good way to
