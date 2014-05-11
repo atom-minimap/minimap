@@ -23,6 +23,7 @@
   "dependencies": {
     "emissary": "1.x",
     "mixto": "1.x",
-    "prolix": "1.x"
+    "prolix": "1.x",
+    "semver": "~2.3.0"
   }
 }
