@@ -1,5 +1,4 @@
 {$, View, EditorView} = require 'atom'
-{Emitter} = require 'emissary'
 Debug = require 'prolix'
 Delegato = require 'delegato'
 
@@ -11,7 +10,6 @@ module.exports =
 class MinimapView extends View
   Debug('minimap').includeInto(this)
   Delegato.includeInto(this)
-  Emitter.includeInto(this)
 
   @delegatesMethods 'getLineHeight', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'addLineClass', 'removeLineClass', 'removeAllLineClasses', toProperty: 'miniEditorView'
 
@@ -177,7 +175,7 @@ class MinimapView extends View
   updateScroll: =>
     @updateScrollX()
     @updateScrollY()
-    @emit 'minimap:scroll'
+    @trigger 'minimap:scroll'
 
   updatePositions: ->
     @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
