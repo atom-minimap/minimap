@@ -13,7 +13,7 @@ class MinimapView extends View
   Delegato.includeInto(this)
   Emitter.includeInto(this)
 
-  @delegatesMethods 'getLineHeight', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'addLineClass', 'removeLineClass', toProperty: 'miniVisibleArea'
+  @delegatesMethods 'getLineHeight', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'addLineClass', 'removeLineClass', 'removeAllLineClasses', toProperty: 'miniVisibleArea'
 
   @content: ->
     @div class: 'minimap', =>

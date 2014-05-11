@@ -108,7 +108,7 @@ describe "MinimapEditorView", ->
 
           waitsFor -> updateCallback.callCount is 1
 
-        it 'decorates the rendered line with the specified class', ->
+        it 'not decorates the rendered line with the specified class', ->
           lines = minimapEditorView.lines.children()
           expect(lines[1].className.indexOf('some-class')).toEqual(-1)
 
@@ -121,7 +121,42 @@ describe "MinimapEditorView", ->
 
           waitsFor -> updateCallback.callCount is 1
 
-        it 'decorates the rendered line with the specified class', ->
+        it 'not decorates the rendered line with the specified class', ->
           minimapEditorView.removeLineClass 2, 'some-class'
           lines = minimapEditorView.lines.children()
           expect(lines[1].className.indexOf('some-class')).toEqual(-1)
+
+    describe '::removeAllLineClasses', ->
+      describe 'called before the first update', ->
+        beforeEach ->
+          minimapEditorView.addLineClass 2, 'some-class'
+          minimapEditorView.addLineClass 4, 'some-class'
+          minimapEditorView.addLineClass 6, 'some-class'
+          minimapEditorView.addLineClass 8, 'some-class'
+          minimapEditorView.removeAllLineClasses()
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.on 'minimap:updated', updateCallback
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'not decorates the rendered line with the specified class', ->
+          expect(minimapEditorView.find('some-class').length).toEqual(0)
+
+      describe 'called after an update', ->
+        beforeEach ->
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.addLineClass 2, 'some-class'
+          minimapEditorView.addLineClass 4, 'some-class'
+          minimapEditorView.addLineClass 6, 'some-class'
+          minimapEditorView.addLineClass 8, 'some-class'
+          minimapEditorView.on 'minimap:updated', updateCallback
+
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'not decorates the rendered line with the specified class', ->
+          minimapEditorView.removeAllLineClasses()          
+
+          expect(minimapEditorView.find('some-class').length).toEqual(0)

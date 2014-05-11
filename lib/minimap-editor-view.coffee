@@ -70,6 +70,14 @@ class MinimapPaneView extends ScrollView
       index = line - @firstRenderedScreenRow - 1
       @lines.children()[index].classList.remove(cls)
 
+  removeAllLineClasses: (classesToRemove...) ->
+    for k,classes of @lineClasses
+      for cls in classes
+        if classesToRemove.length is 0 or cls in classesToRemove
+          @find(".#{cls}").removeClass(cls)
+
+    @lineClasses = {}
+
   registerBufferChanges: (event) =>
     @pendingChanges.push event
 
