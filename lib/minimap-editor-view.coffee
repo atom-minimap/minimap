@@ -18,6 +18,7 @@ class MinimapPaneView extends ScrollView
   constructor: ->
     super
     @pendingChanges = []
+    @lineClasses = {}
 
   initialize: ->
     @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
@@ -52,6 +53,22 @@ class MinimapPaneView extends ScrollView
 
     @cachedScrollTop = scrollTop
     @requestUpdate()
+
+  addLineClass: (line, cls) ->
+    @lineClasses[line] ||= []
+    @lineClasses[line].push cls
+
+    if @firstRenderedScreenRow? and line >= @firstRenderedScreenRow and line <= @lastRenderedScreenRow
+      index = line - @firstRenderedScreenRow - 1
+      @lines.children()[index].classList.add(cls)
+
+  removeLineClass: (line, cls) ->
+    if @lineClasses[line] and (index = @lineClasses[line].indexOf cls) isnt -1
+      @lineClasses[line].splice(index, 1)
+
+    if @firstRenderedScreenRow? and line >= @firstRenderedScreenRow and line <= @lastRenderedScreenRow
+      index = line - @firstRenderedScreenRow - 1
+      @lines.children()[index].classList.remove(cls)
 
   registerBufferChanges: (event) =>
     @pendingChanges.push event
@@ -103,7 +120,7 @@ class MinimapPaneView extends ScrollView
     @updatePaddingOfRenderedLines()
     @emit 'minimap:updated'
 
-   computeIntactRanges: (renderFrom, renderTo) ->
+  computeIntactRanges: (renderFrom, renderTo) ->
     return [] if !@firstRenderedScreenRow? and !@lastRenderedScreenRow?
 
     intactRanges = [{start: @firstRenderedScreenRow, end: @lastRenderedScreenRow, domStart: 0}]
@@ -220,6 +237,8 @@ class MinimapPaneView extends ScrollView
           dirtyRangeEnd = renderTo
 
         for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
+          classes = @lineClasses[row+1]
+          lineElement.classList.add(classes...) if classes?
           @lines[0].insertBefore(lineElement, currentLine)
           row++
       else

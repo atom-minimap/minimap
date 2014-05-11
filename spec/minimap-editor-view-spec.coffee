@@ -70,4 +70,58 @@ describe "MinimapEditorView", ->
           expect(lines.length).toEqual(22)
           expect(minimapEditorView.scrollTop()).toEqual(300)
 
-    describe '::'
+    describe '::addLineClass', ->
+      describe 'called before the first update', ->
+        beforeEach ->
+          minimapEditorView.addLineClass 2, 'some-class'
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.on 'minimap:updated', updateCallback
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'decorates the rendered line with the specified class', ->
+          lines = minimapEditorView.lines.children()
+          expect(lines[1].className.indexOf('some-class')).not.toEqual(-1)
+
+      describe 'called after an update', ->
+        beforeEach ->
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.on 'minimap:updated', updateCallback
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'decorates the rendered line with the specified class', ->
+          minimapEditorView.addLineClass 2, 'some-class'
+          lines = minimapEditorView.lines.children()
+          expect(lines[1].className.indexOf('some-class')).not.toEqual(-1)
+
+    describe '::removeLineClass', ->
+      describe 'called before the first update', ->
+        beforeEach ->
+          minimapEditorView.addLineClass 2, 'some-class'
+          minimapEditorView.removeLineClass 2, 'some-class'
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.on 'minimap:updated', updateCallback
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'decorates the rendered line with the specified class', ->
+          lines = minimapEditorView.lines.children()
+          expect(lines[1].className.indexOf('some-class')).toEqual(-1)
+
+      describe 'called after an update', ->
+        beforeEach ->
+          updateCallback = jasmine.createSpy('updateCallback')
+          minimapEditorView.addLineClass 2, 'some-class'
+          minimapEditorView.on 'minimap:updated', updateCallback
+          minimapEditorView.update()
+
+          waitsFor -> updateCallback.callCount is 1
+
+        it 'decorates the rendered line with the specified class', ->
+          minimapEditorView.removeLineClass 2, 'some-class'
+          lines = minimapEditorView.lines.children()
+          expect(lines[1].className.indexOf('some-class')).toEqual(-1)
