@@ -1,3 +1,4 @@
+{EditorView} = require 'atom'
 Mixin = require 'mixto'
 MinimapView = require '../minimap-view'
 
@@ -45,6 +46,7 @@ class ViewManagement extends Mixin
     # the callback.
     @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
       editorId = editorView.editor.id
+      paneView = editorView.getPane()
       view = new MinimapView(editorView)
 
       @minimapViews[editorId] = view
@@ -61,3 +63,5 @@ class ViewManagement extends Mixin
           view.destroy()
           delete @minimapViews[editorId]
           @emit('minimap-view:destroyed', {view})
+
+          paneView.addClass('with-minimap') if paneView.activeView instanceof EditorView
