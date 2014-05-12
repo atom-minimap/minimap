@@ -1,4 +1,10 @@
-1.0.0 / 2014/05-11
+1.0.1 / 2014-05-12
+==================
+
+* fix with-minimal class removed from pane on tab close
+
+
+1.0.0 / 2014-05-11
 ==================
 
 * minimap views are now created for each editor and not for each pane
@@ -8,38 +14,38 @@
 * add a lines API on `MinimapEditorView` allowing to decorates lines with classes even when they are not rendered yet
 
 
-0.10.0 / 2014/05-11
+0.10.0 / 2014-05-11
 ===================
 
 * add Minimap.versionMatch method allowing plugins to test against minimap version
 
-0.9.8 / 2014/05-08
+0.9.8 / 2014-05-08
 ==================
 
 * add Customizing Style to Readme
 
-0.9.7 / 2014/05-08
+0.9.7 / 2014-05-08
 ==================
 
 * better rendering for ASCII characters, fix #69
 
-0.9.6 / 2014/05-07
+0.9.6 / 2014-05-07
 ==================
 
 * fix error on closing an image view pane
 * add Travis CI
 
-0.9.5 / 2014/05-04
+0.9.5 / 2014-05-04
 ==================
 
 * add reference to the new highlight-selected plugin
 
-0.9.4 / 2014/05-01
+0.9.4 / 2014-05-01
 ==================
 
 * fix item move to other pane, both panes's minimap updates #65
 
-0.9.3 / 2014/04-25
+0.9.3 / 2014-04-25
 ==================
 
 * Properly stick to the editor line height
