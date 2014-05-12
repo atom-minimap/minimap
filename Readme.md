@@ -34,11 +34,17 @@ Customizing Key Bindings
 ### Customizing Style
 
 If you want to use other font instead of Redacted font or want to change any styles,   
-you can change the `style.less`(Open Your Stylesheet).
+Edit your `style.less`(Open Your Stylesheet).
 
 ```css
 .minimap .lines {
   font-family: Monaco;
+}
+
+// hide scrollbar
+.with-minimap .vertical-scrollbar {
+  opacity: 0;
+  width: 0;
 }
 ...
 ```
