@@ -1,4 +1,4 @@
-1.0.2 / ?
+1.0.2 / 2014-05-15
 ==================
 
 * fix inconsistent arguments passed to `eachMinimapView` callbacks for already existing minimaps
