@@ -32,7 +32,7 @@ class ViewManagement extends Mixin
     @minimapViews = {}
 
   eachMinimapView: (callback) ->
-    callback(minimapView) for id,minimapView of @minimapViews
+    callback({view: minimapView}) for id,minimapView of @minimapViews
     createdCallback = (minimapView) -> callback(minimapView)
     @on('minimap-view:created', createdCallback)
     off: => @off('minimap-view:created', createdCallback)
