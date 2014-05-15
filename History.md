@@ -1,7 +1,12 @@
+1.0.2 / ?
+==================
+
+* fix inconsistent arguments passed to `eachMinimapView` callbacks for already existing minimaps
+
 1.0.1 / 2014-05-12
 ==================
 
-* fix with-minimal class removed from pane on tab close
+* fix with-minimap class removed from pane on tab close
 
 
 1.0.0 / 2014-05-11
