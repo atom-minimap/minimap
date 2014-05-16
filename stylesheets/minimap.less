@@ -12,12 +12,24 @@
   unicode-range: U+21-FF;
 }
 
+
 .pane.with-minimap {
-  :not(.minimap-editor) > .scroll-view {
+  :not(.minimap-editor) > .editor {
     margin-right: 10%;
   }
-  .vertical-scrollbar {
-    right: 10%;
+}
+
+.minimap-on-left {
+  .pane.with-minimap {
+    :not(.minimap-editor) > .editor {
+      margin-right: 0;
+      margin-left: 10%;
+    }
+
+    .minimap {
+      left: initial;
+      right: 90%;
+    }
   }
 }
 
@@ -29,6 +41,10 @@
   overflow: hidden;
   box-sizing: border-box;
   .accelerated;
+
+  .editor {
+    margin: 0 !important;
+  }
 
   .lines {
     word-spacing: -1px;

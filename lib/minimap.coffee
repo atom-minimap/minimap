@@ -87,6 +87,7 @@ class Minimap
   configDefaults:
     plugins: {}
     autoToggle: false
+    displayMinimapOnLeft: false
 
   # Internal: The activation state of the minimap package.
   active: false
@@ -96,6 +97,10 @@ class Minimap
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
     @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
+    atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
+    atom.config.observe 'minimap.displayMinimapOnLeft', =>
+      atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
+
 
   # Public: Deactivates the minimap package.
   deactivate: ->
