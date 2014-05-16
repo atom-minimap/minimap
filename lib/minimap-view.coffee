@@ -199,7 +199,7 @@ class MinimapView extends View
 
     scrollRange = totalHeight - height
 
-    @miniScroller.css top: @indicator.ratioY * scrollRange
+    @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange)
 
   # EVENT CALLBACKS
 
