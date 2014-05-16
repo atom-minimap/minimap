@@ -15,6 +15,7 @@ class MinimapView extends View
 
   @content: ->
     @div class: 'minimap', =>
+      @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
         @subview 'miniEditorView', new MinimapEditorView()
@@ -134,6 +135,14 @@ class MinimapView extends View
     evw = editorViewRect.width
     evh = editorViewRect.height
 
+    minimapVisibilityRatio = miniScrollViewRect.height / height
+
+    @miniScroller.height(evh / minimapVisibilityRatio)
+    if minimapVisibilityRatio > 1
+      @miniScroller.show()
+    else
+      @miniScroller.hide()
+
     @miniWrapper.css {width}
 
     # VisibleArea's size
@@ -181,6 +190,16 @@ class MinimapView extends View
     @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
     @transform @miniWrapper[0], @minimapScale + @translate(@indicator.scroller.x, @indicator.scroller.y)
     @miniEditorView.scrollTop @indicator.scroller.y * -1
+
+    @updateScrollerPosition()
+
+  updateScrollerPosition: ->
+    height = @miniScroller.height()
+    totalHeight = @height()
+
+    scrollRange = totalHeight - height
+
+    @miniScroller.css top: @indicator.ratioY * scrollRange
 
   # EVENT CALLBACKS
 
