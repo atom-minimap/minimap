@@ -18,6 +18,11 @@ apm install minimap
 * Mouse wheel and click-to-scroll _(no animation)_
 * Drag-to-scroll
 
+### Settings
+
+* `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
+* `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
+
 ### Shortcuts
 
 * `ctrl-k ctrl-m` toggle the minimap without the logs
@@ -33,8 +38,7 @@ Customizing Key Bindings
 
 ### Customizing Style
 
-If you want to use other font instead of Redacted font or want to change any styles,   
-Edit your `style.less`(Open Your Stylesheet).
+If you want to use another font instead of the default Redacted font or change any styles, edit your `style.less` (Open Your Stylesheet).
 
 ```css
 .minimap .lines {
@@ -49,7 +53,6 @@ Edit your `style.less`(Open Your Stylesheet).
 ...
 ```
 
-
 ### Contributors
 
 https://github.com/fundon/atom-minimap/graphs/contributors
@@ -62,6 +65,8 @@ The minimap can be augmented with plugins, belows the list of available plugins 
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
   * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
+
+Plugins activation can be managed directly from the minimap package settings.
 
 ### Roadmap
 
