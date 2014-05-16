@@ -1,3 +1,9 @@
+1.2.0 / ?
+==================
+
+* add a `Display Minimap On Left` setting allowing for the minimap to be placed on the left of the editor view
+* add a line on the right edge of the minimap indicating how much of the buffer is displayed by the minimap. This line is only displayed if the minimap can scroll.
+
 1.1.0 / 2014-05-16
 ==================
 
