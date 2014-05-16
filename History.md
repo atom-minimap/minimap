@@ -1,3 +1,8 @@
+1.1.0 / ?
+==================
+
+* removes obsolete minimap contextual menu
+
 1.0.2 / 2014-05-15
 ==================
 
