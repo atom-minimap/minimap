@@ -3,7 +3,7 @@
 Debug = require 'prolix'
 
 module.exports =
-class MinimapPaneView extends ScrollView
+class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
   Debug('minimap').includeInto(this)
 
