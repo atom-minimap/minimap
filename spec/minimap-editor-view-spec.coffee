@@ -26,6 +26,7 @@ describe "MinimapEditorView", ->
       minimapView = new MinimapView editorView
       minimapView.attachToPaneView()
       minimapView.height 5
+      minimapView.miniEditorView.lineOverdraw = 10
       minimapView.updatePositions = ->
 
       minimapEditorView = minimapView.miniEditorView
@@ -157,6 +158,6 @@ describe "MinimapEditorView", ->
           waitsFor -> updateCallback.callCount is 1
 
         it 'not decorates the rendered line with the specified class', ->
-          minimapEditorView.removeAllLineClasses()          
+          minimapEditorView.removeAllLineClasses()
 
           expect(minimapEditorView.find('some-class').length).toEqual(0)
