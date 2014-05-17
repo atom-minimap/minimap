@@ -12,30 +12,44 @@ class ViewManagement extends Mixin
   updateAllViews: ->
     view.onScrollViewResized() for id,view of @minimapViews
 
-  # Public: Returns the {MinimapView} object associated to the pane containing
-  # the passed-in {EditorView}.
+  # Public: Returns the {MinimapView} object associated to the
+  # passed-in {EditorView}.
   #
   # editorView - An {EditorView} instance
   #
-  # Returns the {MinimapView} object associated to the pane containing
-  # the passed-in {EditorView}.
+  # Returns the {MinimapView} object associated to the passed-in {EditorView}.
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
+  # Public: Returns the {MinimapView} object associated to the
+  # passed-in {Editor}.
+  #
+  # editorView - An {Editor} instance
+  #
+  # Returns the {MinimapView} object associated to the passed-in {Editor}.
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
+
+  # Public: Calls `iterator` for each present and future minimap views.
+  #
+  # iterator - A {Function} to call for each minimap view. It will receive
+  #            an object with the following property:
+  #            * view - The {MinimapView} instance
+  #
+  # Returns a subscription object with a `off` method so that it is possible to
+  # unsubscribe the iterator from being called for future views.
+  eachMinimapView: (iterator) ->
+    return unless iterator?
+    iterator({view: minimapView}) for id,minimapView of @minimapViews
+    createdCallback = (minimapView) -> iterator(minimapView)
+    @on('minimap-view:created', createdCallback)
+    off: => @off('minimap-view:created', createdCallback)
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
     view.destroy() for id, view of @minimapViews
     @eachEditorViewSubscription?.off()
     @minimapViews = {}
-
-  eachMinimapView: (callback) ->
-    callback({view: minimapView}) for id,minimapView of @minimapViews
-    createdCallback = (minimapView) -> callback(minimapView)
-    @on('minimap-view:created', createdCallback)
-    off: => @off('minimap-view:created', createdCallback)
 
   # Internal: Registers to each pane view existing or to be created and creates
   # a {MinimapView} instance for each.
