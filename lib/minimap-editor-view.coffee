@@ -12,13 +12,15 @@ class MinimapPaneView extends ScrollView
       @div class: 'scroll-view', outlet: 'scrollView', =>
         @div class: 'lines', outlet: 'lines'
 
-  lineOverdraw: 10
   frameRequested: false
 
   constructor: ->
     super
     @pendingChanges = []
     @lineClasses = {}
+    @lineOverdraw = atom.config.get('minimap.lineOverdraw')
+    atom.config.observe 'minimap.lineOverdraw', =>
+      @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
   initialize: ->
     @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'

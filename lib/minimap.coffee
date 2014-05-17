@@ -88,6 +88,8 @@ class Minimap
     plugins: {}
     autoToggle: false
     displayMinimapOnLeft: false
+    lineOverdraw: 10
+
 
   # Internal: The activation state of the minimap package.
   active: false
