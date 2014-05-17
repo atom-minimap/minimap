@@ -14,6 +14,7 @@ describe "MinimapView", ->
 
     waitsForPromise ->
       promise = atom.packages.activatePackage('minimap')
+      atom.config.set 'minimap.lineOverdraw', 10
       atom.workspaceView.trigger 'minimap:toggle'
       promise
 
