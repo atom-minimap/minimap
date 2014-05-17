@@ -3,6 +3,7 @@
 
 * add a `Display Minimap On Left` setting allowing for the minimap to be placed on the left of the editor view
 * add a line on the right edge of the minimap indicating how much of the buffer is displayed by the minimap. This line is only displayed if the minimap can scroll.
+* add a `lineOverdraw` setting that allow to change the number of additional lines to render in the minimap. Bigger values will increase render time but will reduce the number of redraws during scrolling.
 
 1.1.0 / 2014-05-16
 ==================
