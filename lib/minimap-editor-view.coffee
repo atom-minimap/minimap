@@ -18,11 +18,12 @@ class MinimapEditorView extends ScrollView
     super
     @pendingChanges = []
     @lineClasses = {}
+
+  initialize: ->
     @lineOverdraw = atom.config.get('minimap.lineOverdraw')
     atom.config.observe 'minimap.lineOverdraw', =>
       @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
-  initialize: ->
     @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
     atom.config.observe 'editor.lineHeight', =>
       @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
