@@ -73,6 +73,12 @@ class MinimapView extends View
       @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
       @updateTheme()
 
+    @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
+    @miniScroller.toggleClass 'visible', @miniScrollVisible
+    atom.config.observe 'minimap.minimapScrollIndicator', =>
+      @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
+      @miniScroller.toggleClass 'visible', @miniScrollVisible
+
   destroy: ->
     @off()
     @unsubscribe()
@@ -138,10 +144,7 @@ class MinimapView extends View
     minimapVisibilityRatio = miniScrollViewRect.height / height
 
     @miniScroller.height(evh / minimapVisibilityRatio)
-    if minimapVisibilityRatio > 1
-      @miniScroller.show()
-    else
-      @miniScroller.hide()
+    @miniScroller.toggleClass 'visible', minimapVisibilityRatio > 1 and @miniScrollVisible
 
     @miniWrapper.css {width}
 

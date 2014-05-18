@@ -88,6 +88,7 @@ class Minimap
     plugins: {}
     autoToggle: false
     displayMinimapOnLeft: false
+    minimapScrollIndicator: true
     lineOverdraw: 10
 
 
