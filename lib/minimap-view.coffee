@@ -259,6 +259,6 @@ class MinimapView extends View
   # OTHER PRIVATE METHODS
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
-  translate: (x=0,y=0) -> "translate3d(#{x}px, #{y}px, 0)"
+  translate: (x=0,y=0) -> "translate(#{x}px, #{y}px)"
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
