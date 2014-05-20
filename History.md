@@ -1,4 +1,4 @@
-1.2.0 / ?
+1.2.0 / 2014-05-20
 ==================
 
 * add a `Display Minimap On Left` setting allowing for the minimap to be placed on the left of the editor view
