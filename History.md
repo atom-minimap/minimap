@@ -1,3 +1,9 @@
+1.3.0 / 2014-05-21
+==================
+
+* fix broken minimap when `useReactEditor` is enabled 
+* 🐎  remove forced hardware acceleration on minimap
+
 1.2.0 / 2014-05-20
 ==================
 
