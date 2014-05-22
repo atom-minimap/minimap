@@ -68,6 +68,10 @@ The minimap can be augmented with plugins, belows the list of available plugins 
 
 Plugins activation can be managed directly from the minimap package settings.
 
+### Wiki
+
+* [How to create a minimap plugin?](https://github.com/fundon/atom-minimap/wiki/Plugin)
+
 ### Roadmap
 
 * Smooth animation
