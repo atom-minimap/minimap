@@ -1,6 +1,7 @@
 {EditorView} = require 'atom'
 Mixin = require 'mixto'
 MinimapView = require '../minimap-view'
+MinimapReactView = require '../minimap-react-view'
 
 # Public: Provides methods to manage minimap views per pane.
 module.exports =
@@ -61,7 +62,10 @@ class ViewManagement extends Mixin
     @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
       editorId = editorView.editor.id
       paneView = editorView.getPane()
-      view = new MinimapView(editorView)
+      if atom.config.get('core.useReactEditor')
+        view = new MinimapReactView(editorView)
+      else
+        view = new MinimapView(editorView)
 
       @minimapViews[editorId] = view
       @emit('minimap-view:created', {view})
