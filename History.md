@@ -1,3 +1,8 @@
+1.4.0 / 2014-06-27
+==================
+
+* prevent access to undefined lines in updates, fix #95
+
 1.3.0 / 2014-05-21
 ==================
 
