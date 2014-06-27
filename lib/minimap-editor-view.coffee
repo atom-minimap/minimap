@@ -63,7 +63,7 @@ class MinimapEditorView extends ScrollView
 
     if @firstRenderedScreenRow? and line >= @firstRenderedScreenRow and line <= @lastRenderedScreenRow
       index = line - @firstRenderedScreenRow - 1
-      @lines.children()[index].classList.add(cls)
+      @lines.children()[index]?.classList.add(cls)
 
   removeLineClass: (line, cls) ->
     if @lineClasses[line] and (index = @lineClasses[line].indexOf cls) isnt -1
@@ -71,7 +71,7 @@ class MinimapEditorView extends ScrollView
 
     if @firstRenderedScreenRow? and line >= @firstRenderedScreenRow and line <= @lastRenderedScreenRow
       index = line - @firstRenderedScreenRow - 1
-      @lines.children()[index].classList.remove(cls)
+      @lines.children()[index]?.classList.remove(cls)
 
   removeAllLineClasses: (classesToRemove...) ->
     for k,classes of @lineClasses
@@ -249,7 +249,7 @@ class MinimapEditorView extends ScrollView
 
         for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
           classes = @lineClasses[row+1]
-          lineElement.classList.add(classes...) if classes?
+          lineElement?.classList.add(classes...) if classes?
           @lines[0].insertBefore(lineElement, currentLine)
           row++
       else
