@@ -3,6 +3,8 @@ Minimap = require '../lib/minimap'
 
 describe "Minimap", ->
   beforeEach ->
+    atom.config.set 'editor.useReactEditor', false
+    
     runs ->
       atom.workspaceView = new WorkspaceView
       atom.workspaceView.openSync('sample.js')
