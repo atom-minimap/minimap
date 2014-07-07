@@ -1,7 +1,17 @@
+1.5.0 / 2014-07-07
+==================
+
+* add support for react editor mode
+
+1.4.0 / 2014-06-28
+==================
+
+* fix error on line classlist access
+
 1.3.0 / 2014-05-21
 ==================
 
-* fix broken minimap when `useReactEditor` is enabled 
+* fix broken minimap when `useReactEditor` is enabled
 * 🐎  remove forced hardware acceleration on minimap
 
 1.2.0 / 2014-05-20
