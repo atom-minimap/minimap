@@ -11,7 +11,9 @@ updateCallback = null
 describe "MinimapEditorView", ->
   afterEach -> minimapView?.detach()
   beforeEach ->
-    runs ->
+    atom.config.set 'editor.useReactEditor', false
+
+    runs ->  
       atom.workspaceView = new WorkspaceView
       atom.project.setPath(path.join(__dirname, 'fixtures'))
 
