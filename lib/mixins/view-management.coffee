@@ -62,10 +62,8 @@ class ViewManagement extends Mixin
     @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
       editorId = editorView.editor.id
       paneView = editorView.getPane()
-      if atom.config.get('core.useReactEditor')
-        view = new MinimapReactView(editorView)
-      else
-        view = new MinimapView(editorView)
+      
+      view = new MinimapView(editorView)
 
       @minimapViews[editorId] = view
       @emit('minimap-view:created', {view})

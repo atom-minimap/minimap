@@ -13,6 +13,7 @@ class MinimapEditorView extends ScrollView
         @div class: 'lines', outlet: 'lines'
 
   frameRequested: false
+  dummyNode: document.createElement('div')
 
   constructor: ->
     super
@@ -247,11 +248,28 @@ class MinimapEditorView extends ScrollView
         else
           dirtyRangeEnd = renderTo
 
-        for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
-          classes = @lineClasses[row+1]
-          lineElement?.classList.add(classes...) if classes?
-          @lines[0].insertBefore(lineElement, currentLine)
-          row++
+        if @editorView instanceof EditorView
+          for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
+            classes = @lineClasses[row+1]
+            lineElement?.classList.add(classes...) if classes?
+            @lines[0].insertBefore(lineElement, currentLine)
+            row++
+        else
+          linesComponent = @editorView.component.refs.lines
+          lines = @editor.linesForScreenRows(row, dirtyRangeEnd)
+
+          linesComponent.props.lineDecorations ||= {}
+
+          for line,i in lines
+            screenRow = row + i
+            html = linesComponent.buildLineHTML(line, screenRow)
+            @dummyNode.innerHTML = html
+            lineElement = @dummyNode.childNodes[0]
+            classes = @lineClasses[row+1]
+            lineElement?.classList.add(classes...) if classes?
+            lineElement?.style.cssText=""
+            @lines[0].insertBefore(lineElement, currentLine)
+            row++
       else
         currentLine = currentLine?.nextSibling
         row++

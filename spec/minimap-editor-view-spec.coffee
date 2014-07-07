@@ -13,11 +13,12 @@ describe "MinimapEditorView", ->
   beforeEach ->
     atom.config.set 'editor.useReactEditor', false
 
-    runs ->  
+    runs ->
       atom.workspaceView = new WorkspaceView
       atom.project.setPath(path.join(__dirname, 'fixtures'))
 
-      atom.workspaceView.openSync('two-hundred.txt')
+    waitsForPromise ->
+      atom.workspaceView.open('two-hundred.txt')
 
     runs ->
       atom.workspaceView.attachToDom()

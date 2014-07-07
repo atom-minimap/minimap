@@ -35,7 +35,9 @@ describe "Minimap Indicator", ->
   beforeEach ->
     runs ->
       atom.workspaceView = new WorkspaceView
-      atom.workspaceView.openSync('sample.js')
+
+    waitsForPromise ->
+      atom.workspaceView.open('sample.js')
 
     runs ->
       atom.workspaceView.attachToDom()
