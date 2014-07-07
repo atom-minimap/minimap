@@ -98,9 +98,9 @@ class Minimap
   # Public: Activates the minimap package.
   activate: ->
     # Warns user that minimap currently doesn't support the React Editor View
-    if atom.config.get('core.useReactEditor')
-      console.warn("Minimap currently doesn't support the React Editor View experimental feature. Please turn off the `Use React Editor` option in the settings if you want to enable the minimap.")
-      return @deactivate()
+    # if atom.config.get('core.useReactEditor')
+    #   console.warn("Minimap currently doesn't support the React Editor View experimental feature. Please turn off the `Use React Editor` option in the settings if you want to enable the minimap.")
+    #   return @deactivate()
 
 
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
