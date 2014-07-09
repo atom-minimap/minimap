@@ -1,3 +1,8 @@
+1.5.2 / 2014-07-09
+==================
+
+* fix an unexpected offset on the right side of the editor contents 
+
 1.5.1 / 2014-07-09
 ==================
 
