@@ -216,7 +216,7 @@ class MinimapView extends View
       @updateMinimapView()
     else
       @detachFromPaneView() if @parent().length is 1
-      @paneView.addClass('with-minimap') if activeView.hasClass('editor')
+      @paneView.addClass('with-minimap') if activeView?.hasClass('editor')
 
   onMouseWheel: (e) =>
     return if @isClicked

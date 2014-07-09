@@ -80,4 +80,4 @@ class ViewManagement extends Mixin
           delete @minimapViews[editorId]
           @emit('minimap-view:destroyed', {view})
 
-          paneView.addClass('with-minimap') if paneView.activeView.hasClass('editor')
+          paneView.addClass('with-minimap') if paneView.activeView?.hasClass('editor')
