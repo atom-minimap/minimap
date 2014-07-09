@@ -271,10 +271,13 @@ class MinimapEditorView extends ScrollView
             html = linesComponent.buildLineHTML(line, screenRow)
             @dummyNode.innerHTML = html
             lineElement = @dummyNode.childNodes[0]
+            unless lineElement?
+              console.warn "Unexpected undefined line element at screen row #{screenRow}"
+              continue
             classes = @lineClasses[row+1]
-            lineElement?.classList.add(classes...) if classes?
-            lineElement?.style.cssText=""
             lineElement.className = 'line'
+            lineElement.classList.add(classes...) if classes?
+            lineElement.style.cssText=""
             @lines[0].insertBefore(lineElement, currentLine)
             row++
       else
