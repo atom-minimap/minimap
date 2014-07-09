@@ -274,6 +274,7 @@ class MinimapEditorView extends ScrollView
             classes = @lineClasses[row+1]
             lineElement?.classList.add(classes...) if classes?
             lineElement?.style.cssText=""
+            lineElement.className = 'line'
             @lines[0].insertBefore(lineElement, currentLine)
             row++
       else
