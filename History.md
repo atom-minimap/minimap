@@ -1,3 +1,10 @@
+1.5.1 / 2014-07-09
+==================
+
+* fix with-minimap decoration removed on tab change when react editor is enabled
+* fix pane styles with minimap and react editor enabled
+* fix minimap line-height with react editor enabled
+
 1.5.0 / 2014-07-07
 ==================
 
