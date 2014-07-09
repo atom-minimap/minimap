@@ -36,7 +36,7 @@ describe "MinimapEditorView", ->
 
     describe '::getMinimapHeight', ->
       it 'returns its content height based on its line-height', ->
-        lineHeight = parseInt editorView.css('line-height')
+        lineHeight = parseInt editorView.find('.lines').css('line-height')
         linesCount = editorView.editor.buffer.getLines().length
 
         height = lineHeight * linesCount
