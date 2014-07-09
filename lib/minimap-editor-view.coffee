@@ -213,6 +213,10 @@ class MinimapEditorView extends ScrollView
     if intactRanges.length == 0
       @lines[0].innerHTML = ''
     else if currentLine = @lines[0].firstChild
+      unless currentLine?
+        console.warn "Unexpected undefined first line in clearing dirty ranges"
+        return
+
       domPosition = 0
       for intactRange in intactRanges
         while intactRange.domStart > domPosition
@@ -220,6 +224,9 @@ class MinimapEditorView extends ScrollView
           domPosition++
 
         for i in [intactRange.start..intactRange.end]
+          unless currentLine?
+            console.warn "Unexpected undefined line when clearing dirty range #{intactRange.start}..#{intactRange.end}"
+            return
           currentLine = currentLine.nextSibling
           domPosition++
 
@@ -230,7 +237,6 @@ class MinimapEditorView extends ScrollView
     next = lineElement.nextSibling
     @lines[0].removeChild(lineElement)
     next
-
 
   fillDirtyRanges: (intactRanges, renderFrom, renderTo) ->
     i = 0
