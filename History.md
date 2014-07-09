@@ -4,6 +4,7 @@
 * fix with-minimap decoration removed on tab change when react editor is enabled
 * fix pane styles with minimap and react editor enabled
 * fix minimap line-height with react editor enabled
+* fix error raised when closing the last tab in a pane
 
 1.5.0 / 2014-07-07
 ==================
