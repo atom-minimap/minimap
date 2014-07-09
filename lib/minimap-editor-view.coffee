@@ -22,12 +22,17 @@ class MinimapEditorView extends ScrollView
 
   initialize: ->
     @lineOverdraw = atom.config.get('minimap.lineOverdraw')
+
     atom.config.observe 'minimap.lineOverdraw', =>
       @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
-    @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
     atom.config.observe 'editor.lineHeight', =>
-      @lines.css 'line-height', atom.config.get('editor.lineHeight') + 'em'
+      if @editorView?
+        @lines.css lineHeight: "#{@getLineHeight()}px"
+
+    atom.config.observe 'editor.fontSize', =>
+      if @editorView?
+        @lines.css fontSize: "#{@getFontSize()}px"
 
   destroy: ->
     @unsubscribe()
@@ -36,6 +41,10 @@ class MinimapEditorView extends ScrollView
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
     @buffer = @editorView.getEditor().buffer
+
+    @lines.css
+      lineHeight: "#{@getLineHeight()}px"
+      fontSize: "#{@getFontSize()}px"
 
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
       @pendingChanges.push changes
@@ -87,6 +96,7 @@ class MinimapEditorView extends ScrollView
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
   getLineHeight: -> @lineHeight ||= parseInt @editorView.find('.lines').css('line-height')
+  getFontSize: -> @fontSize ||= parseInt @editorView.find('.lines').css('font-size')
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() / @minimapView.scaleY
@@ -109,8 +119,6 @@ class MinimapEditorView extends ScrollView
     firstVisibleScreenRow = @getFirstVisibleScreenRow()
     lastScreenRowToRender = firstVisibleScreenRow + @getMinimapHeightInLines() - 1
     lastScreenRow = @editor.getLastScreenRow()
-
-    @lines.css fontSize: "#{@editorView.getFontSize()}px"
 
     if @firstRenderedScreenRow? and firstVisibleScreenRow >= @firstRenderedScreenRow and lastScreenRowToRender <= @lastRenderedScreenRow
       renderFrom = Math.min(lastScreenRow, @firstRenderedScreenRow)
