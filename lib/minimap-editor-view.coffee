@@ -228,6 +228,9 @@ class MinimapEditorView extends ScrollView
       domPosition = 0
       for intactRange in intactRanges
         while intactRange.domStart > domPosition
+          unless currentLine?
+            console.warn "Unexpected undefined line at dom position #{domPosition} with range starting at position #{intactRange.domStart} (#{intactRange.start}..#{intactRange.end})"
+            return
           currentLine = @clearLine(currentLine)
           domPosition++
 
