@@ -57,7 +57,7 @@ class MinimapEditorView extends ScrollView
     setImmediate =>
       @startBench()
       @update()
-      @endBench('minimpap update')
+      @endBench('minimap update')
       @frameRequested = false
 
   scrollTop: (scrollTop, options={}) ->
