@@ -1,7 +1,13 @@
+1.6.0 / 2014-07-09
+==================
+
+* add a `Use Hardware Acceleration` option that allow to choose between `translate` or `translate3d` for the minimap scroll offset
+* fix a weird rendering issue where many update of the minimap were done with various offset
+
 1.5.2 / 2014-07-09
 ==================
 
-* fix an unexpected offset on the right side of the editor contents 
+* fix an unexpected offset on the right side of the editor contents
 
 1.5.1 / 2014-07-09
 ==================
