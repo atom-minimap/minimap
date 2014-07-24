@@ -79,6 +79,9 @@ class MinimapView extends View
       @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
       @miniScroller.toggleClass 'visible', @miniScrollVisible
 
+    atom.config.observe 'minimap.useHardwareAcceleration', =>
+      @updateScroll() if @ScrollView?
+
   destroy: ->
     @off()
     @unsubscribe()
@@ -259,6 +262,11 @@ class MinimapView extends View
   # OTHER PRIVATE METHODS
 
   scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
-  translate: (x=0,y=0) -> "translate(#{x}px, #{y}px)"
+  translate: (x=0,y=0) ->
+    if atom.config.get 'minimap.useHardwareAcceleration'
+      "translate3d(#{x}px, #{y}px, 0)"
+    else
+      "translate(#{x}px, #{y}px)"
+
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform

@@ -90,6 +90,7 @@ class Minimap
     displayMinimapOnLeft: false
     minimapScrollIndicator: true
     lineOverdraw: 10
+    useHardwareAcceleration: true
 
 
   # Internal: The activation state of the minimap package.
