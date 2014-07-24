@@ -267,7 +267,7 @@ class MinimapEditorView extends ScrollView
 
         if @editorView instanceof EditorView
           for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
-            classes = @lineClasses[row+1]
+            classes = @classesForRow(row)
             lineElement?.classList.add(classes...) if classes?
             @lines[0].insertBefore(lineElement, currentLine)
             row++
@@ -277,15 +277,14 @@ class MinimapEditorView extends ScrollView
 
           linesComponent.props.lineDecorations ||= {}
 
-          for line,i in lines
-            screenRow = row + i
-            html = linesComponent.buildLineHTML(line, screenRow)
+          for line in lines
+            html = linesComponent.buildLineHTML(line, row)
             @dummyNode.innerHTML = html
             lineElement = @dummyNode.childNodes[0]
             unless lineElement?
               console.warn "Unexpected undefined line element at screen row #{screenRow}"
               continue
-            classes = @lineClasses[row+1]
+            classes = @classesForRow(row)
             lineElement.className = 'line'
             lineElement.classList.add(classes...) if classes?
             lineElement.style.cssText=""
@@ -294,6 +293,8 @@ class MinimapEditorView extends ScrollView
       else
         currentLine = currentLine?.nextSibling
         row++
+
+  classesForRow: (row) -> @lineClasses[row+1]
 
   updatePaddingOfRenderedLines: ->
     paddingTop = @firstRenderedScreenRow * @lineHeight
