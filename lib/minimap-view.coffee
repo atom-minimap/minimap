@@ -168,7 +168,12 @@ class MinimapView extends View
     # Compute boundary
     @indicator.updateBoundary()
 
-    setImmediate => @updateScroll()
+    return if @frameRequested
+
+    @frameRequested = true
+    webkitRequestAnimationFrame =>
+      @updateScroll()
+      @frameRequested = false
 
   updateScrollY: (top) =>
     # Need scroll-top value when in find pane or on Vim mode(`gg`, `shift+g`).
