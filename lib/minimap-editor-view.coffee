@@ -95,11 +95,11 @@ class MinimapEditorView extends ScrollView
     @pendingChanges.push event
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
-  getLineHeight: -> @lineHeight ||= parseInt @editorView.find('.lines').css('line-height')
-  getFontSize: -> @fontSize ||= parseInt @editorView.find('.lines').css('font-size')
+  getLineHeight: -> @lineHeight ||= Math.round  parseInt(@editorView.find('.lines').css('line-height')) * @minimapView.scaleY
+  getFontSize: -> @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) * @minimapView.scaleY
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
-  getMinimapScreenHeight: -> @minimapView.height() / @minimapView.scaleY
+  getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
   getMinimapHeightInLines: -> Math.ceil(@getMinimapScreenHeight() / @getLineHeight())
 
   getFirstVisibleScreenRow: ->
