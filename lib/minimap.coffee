@@ -91,6 +91,8 @@ class Minimap
     minimapScrollIndicator: true
     lineOverdraw: 10
     useHardwareAcceleration: true
+    scaleX: 0.2
+    scaleY: 0.16
 
 
   # Internal: The activation state of the minimap package.

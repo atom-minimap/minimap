@@ -33,11 +33,8 @@ class MinimapView extends View
 
     super
 
-    @scaleX = 0.2
-    @scaleY = @scaleX * 0.8
-    @minimapScale = @scale(@scaleX, @scaleY)
+    @computeScale()
     @miniScrollView = @miniEditorView.scrollView
-    @transform @miniWrapper[0], @minimapScale
     # dragging's status
     @isPressed = false
     @offsetLeft = 0
@@ -81,6 +78,21 @@ class MinimapView extends View
 
     atom.config.observe 'minimap.useHardwareAcceleration', =>
       @updateScroll() if @ScrollView?
+
+  computeScale: ->
+    scaleY = atom.config.get('minimap.scaleY')
+    originalLineHeight = parseInt(@editorView.find('.lines').css('line-height'))
+    computedLineHeight = @getLineHeight()
+
+    @scaleX = @scaleY = computedLineHeight / originalLineHeight
+
+    @transform @miniOverlayer[0], @scale(@scaleX, @scaleY)
+    @transform @miniUnderlayer[0], @scale(@scaleX, @scaleY)
+
+  getLineHeight: ->
+    @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scaleY')
+  getFontSize: ->
+    @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) *  atom.config.get('minimap.scaleY')
 
   destroy: ->
     @off()
@@ -142,7 +154,7 @@ class MinimapView extends View
     # height /= @scaleY
 
     evw = editorViewRect.width
-    evh = editorViewRect.height * @scaleY
+    evh = editorViewRect.height
 
     minimapVisibilityRatio = miniScrollViewRect.height / height
 
@@ -152,9 +164,12 @@ class MinimapView extends View
     @miniWrapper.css {width}
 
     # VisibleArea's size
+    @indicator.height = evh * @scaleY
+    @indicator.width = width / @scaleX
+
     @miniVisibleArea.css
-      width : @indicator.width = width
-      height: @indicator.height = evh
+      width : width / @scaleX
+      height: evh
 
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
@@ -198,8 +213,8 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y * @scaleY)
-    @transform @miniWrapper[0], @minimapScale + @translate(@indicator.scroller.x, @indicator.scroller.y * @scaleY)
+    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
+    @transform @miniWrapper[0], @translate(@indicator.scroller.x * @scaleX, @indicator.scroller.y * @scaleY)
     @miniEditorView.scrollTop @indicator.scroller.y * -1 * @scaleY
 
     @updateScrollerPosition()
@@ -210,7 +225,7 @@ class MinimapView extends View
 
     scrollRange = totalHeight - height
 
-    @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange)
+    @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange *  @scaleY)
 
   # EVENT CALLBACKS
 
@@ -266,7 +281,7 @@ class MinimapView extends View
 
   # OTHER PRIVATE METHODS
 
-  scale: (x=1,y=1) -> return ""; "scale(#{x}, #{y}) "
+  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translate: (x=0,y=0) ->
     if atom.config.get 'minimap.useHardwareAcceleration'
       "translate3d(#{x}px, #{y}px, 0)"
