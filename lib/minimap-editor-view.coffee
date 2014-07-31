@@ -34,6 +34,12 @@ class MinimapEditorView extends ScrollView
       if @editorView?
         @lines.css fontSize: "#{@getFontSize()}px"
 
+  pixelPositionForScreenPosition: (position) ->
+    {row, column} = @buffer.constructor.Point.fromObject(position)
+    actualRow = Math.floor(row)
+
+    {top: row * @getLineHeight(), left: column}
+
   destroy: ->
     @unsubscribe()
     @editorView = null
