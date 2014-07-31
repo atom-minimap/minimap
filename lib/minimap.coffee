@@ -138,11 +138,6 @@ class Minimap
   # Returns `true` if the version matches the expression, `false` otherwise.
   versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
 
-  # Public: Returns the char width ratio of the minimap compared to the real
-  # editor. **The value is currently hard-coded until we find a good way to
-  # compute it from the editor state**.
-  getCharWidthRatio: -> 0.85
-
   # Internal: Toggles the minimap activation state.
   toggle: () ->
     if @active
