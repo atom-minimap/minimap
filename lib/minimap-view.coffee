@@ -86,8 +86,8 @@ class MinimapView extends View
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
-    @transform @miniOverlayer[0], @scale(@scaleX, @scaleY)
-    @transform @miniUnderlayer[0], @scale(@scaleX, @scaleY)
+    # @transform @miniOverlayer[0], @scale(@scaleX, @scaleY)
+    # @transform @miniUnderlayer[0], @scale(@scaleX, @scaleY)
 
   getLineHeight: ->
     @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scaleY')
@@ -169,7 +169,7 @@ class MinimapView extends View
 
     @miniVisibleArea.css
       width : width / @scaleX
-      height: evh
+      height: evh * @scaleY
 
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
@@ -213,7 +213,7 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
+    @transform @miniVisibleArea[0], @translate(@indicator.x * @scaleX, @indicator.y * @scaleY)
     @transform @miniWrapper[0], @translate(@indicator.scroller.x * @scaleX, @indicator.scroller.y * @scaleY)
     @miniEditorView.scrollTop @indicator.scroller.y * -1 * @scaleY
 
