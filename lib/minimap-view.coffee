@@ -53,7 +53,9 @@ class MinimapView extends View
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
-    @on 'mousedown', @onMouseDown
+    @on 'mousedown', (e) =>
+      @onMouseDown(e)
+      @onDragStart(e)
 
     @on 'mousedown', '.minimap-visible-area', @onDragStart
 
@@ -255,7 +257,7 @@ class MinimapView extends View
     e.stopPropagation()
     # VisibleArea's center-y
     y = e.pageY - @offsetTop
-    top = @indicator.computeFromCenterY(y / @scaleY)
+    top = @indicator.computeFromCenterY(y) / @scaleY
     # @note: currently, no animation.
     @editorView.scrollTop(top)
     # Fix trigger `mousewheel` event.
