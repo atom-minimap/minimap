@@ -202,7 +202,7 @@ class MinimapView extends View
       overlayerOffset = @scrollView.find('.overlayer').offset().top
       overlayY = -overlayerOffset + scrollViewOffset
 
-    @indicator.setY(overlayY)
+    @indicator.setY(overlayY * @scaleY)
     @updatePositions()
 
   updateScrollX: =>
@@ -215,9 +215,9 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(@indicator.x * @scaleX, @indicator.y * @scaleY)
-    @transform @miniWrapper[0], @translate(@indicator.scroller.x * @scaleX, @indicator.scroller.y * @scaleY)
-    @miniEditorView.scrollTop @indicator.scroller.y * -1 * @scaleY
+    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
+    @transform @miniWrapper[0], @translate(@indicator.scroller.x, @indicator.scroller.y)
+    @miniEditorView.scrollTop @indicator.scroller.y * -1
 
     @updateScrollerPosition()
 
@@ -227,7 +227,7 @@ class MinimapView extends View
 
     scrollRange = totalHeight - height
 
-    @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange *  @scaleY)
+    @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange)
 
   # EVENT CALLBACKS
 
