@@ -3,12 +3,9 @@ MinimapEditorView = require '../lib/minimap-editor-view'
 MinimapView = require '../lib/minimap-view'
 {WorkspaceView} = require 'atom'
 
-minimapView = null
-minimapEditorView = null
-editorView = null
-updateCallback = null
 
 describe "MinimapEditorView", ->
+  [minimapView, minimapEditorView, editorView, updateCallback] = []
   afterEach -> minimapView?.detach()
   beforeEach ->
     atom.config.set 'editor.useReactEditor', false
@@ -16,6 +13,9 @@ describe "MinimapEditorView", ->
     runs ->
       atom.workspaceView = new WorkspaceView
       atom.project.setPath(path.join(__dirname, 'fixtures'))
+
+    waitsForPromise ->
+      promise = atom.packages.activatePackage('minimap')
 
     waitsForPromise ->
       atom.workspaceView.open('two-hundred.txt')
@@ -39,7 +39,7 @@ describe "MinimapEditorView", ->
         lineHeight = parseInt editorView.find('.lines').css('line-height')
         linesCount = editorView.editor.buffer.getLines().length
 
-        height = lineHeight * linesCount
+        height = lineHeight * linesCount * minimapView.scaleY
 
         expect(minimapEditorView.getMinimapHeight()).toEqual(height)
 
