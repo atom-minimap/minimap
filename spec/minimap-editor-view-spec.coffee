@@ -6,7 +6,9 @@ MinimapView = require '../lib/minimap-view'
 
 describe "MinimapEditorView", ->
   [minimapView, minimapEditorView, editorView, updateCallback] = []
+
   afterEach -> minimapView?.detach()
+
   beforeEach ->
     atom.config.set 'editor.useReactEditor', false
 
