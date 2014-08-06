@@ -188,7 +188,7 @@ class MinimapView extends View
     return if @frameRequested
 
     @frameRequested = true
-    webkitRequestAnimationFrame =>
+    requestAnimationFrame =>
       @updateScroll()
       @frameRequested = false
 
