@@ -1,7 +1,6 @@
 {EditorView} = require 'atom'
 Mixin = require 'mixto'
 MinimapView = require '../minimap-view'
-MinimapReactView = require '../minimap-react-view'
 
 # Public: Provides methods to manage minimap views per pane.
 module.exports =
