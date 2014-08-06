@@ -1,6 +1,6 @@
 {EditorView} = require 'atom'
 Mixin = require 'mixto'
-MinimapView = require '../minimap-view'
+MinimapView = null
 
 # Public: Provides methods to manage minimap views per pane.
 module.exports =
@@ -59,6 +59,8 @@ class ViewManagement extends Mixin
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
     @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
+      MinimapView ||= require '../minimap-view'
+
       editorId = editorView.editor.id
       paneView = editorView.getPane()
 
