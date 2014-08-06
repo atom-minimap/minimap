@@ -139,11 +139,16 @@ class MinimapEditorView extends ScrollView
     changes = @pendingChanges
     intactRanges = @computeIntactRanges(renderFrom, renderTo)
 
+    node = @lines[0]
+    node.classList.add 'hidden'
+
     @clearDirtyRanges(intactRanges)
     @fillDirtyRanges(intactRanges, renderFrom, renderTo)
     @firstRenderedScreenRow = renderFrom
     @lastRenderedScreenRow = renderTo
     @updatePaddingOfRenderedLines()
+
+    node.classList.remove 'hidden'
     @emit 'minimap:updated'
 
   computeIntactRanges: (renderFrom, renderTo) ->
