@@ -10,7 +10,7 @@ describe "Minimap Plugins", ->
       atom.workspaceView.open('sample.js')
 
     runs ->
-      atom.workspaceView.attachToDom()
+      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
 
     atom.config.set 'minimap.plugins.dummy', undefined

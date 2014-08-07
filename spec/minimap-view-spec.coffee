@@ -13,7 +13,7 @@ describe "MinimapView", ->
       atom.workspaceView.open('sample.js')
 
     runs ->
-      atom.workspaceView.attachToDom()
+      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
       editorView.setText("This is the file content")
 

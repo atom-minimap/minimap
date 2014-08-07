@@ -23,7 +23,7 @@ describe "MinimapEditorView", ->
       atom.workspaceView.open('two-hundred.txt')
 
     runs ->
-      atom.workspaceView.attachToDom()
+      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
 
   describe 'once created and initialized with an editor view', ->

@@ -11,7 +11,7 @@ describe "Minimap", ->
       atom.workspaceView.open('sample.js')
 
     runs ->
-      atom.workspaceView.attachToDom()
+      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
 
   describe "when the minimap:toggle event is triggered", ->
