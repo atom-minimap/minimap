@@ -40,7 +40,7 @@ describe "Minimap Indicator", ->
       atom.workspaceView.open('sample.js')
 
     runs ->
-      atom.workspaceView.attachToDom()
+      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
 
   describe 'set indicator size', ->
