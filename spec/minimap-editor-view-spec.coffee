@@ -10,6 +10,7 @@ describe "MinimapEditorView", ->
   afterEach -> minimapView?.detach()
 
   beforeEach ->
+    atom.config.set 'minimap.lineOverdraw', 10
     atom.config.set 'minimap.scaleY', 0.16
     atom.config.set 'minimap.scaleX', 0.2
 

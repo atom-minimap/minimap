@@ -10,6 +10,10 @@ describe "MinimapView", ->
       atom.workspaceView = new WorkspaceView
 
     waitsForPromise ->
+      atom.config.set 'minimap.lineOverdraw', 10
+      atom.config.set 'minimap.scaleX', 0.2
+      atom.config.set 'minimap.scaleY', 0.16
+      
       atom.workspaceView.open('sample.js')
 
     runs ->
@@ -18,10 +22,10 @@ describe "MinimapView", ->
       editorView.setText("This is the file content")
 
     waitsForPromise ->
-      promise = atom.packages.activatePackage('minimap')
-      atom.config.set 'minimap.lineOverdraw', 10
+      atom.packages.activatePackage('minimap')
+
+    runs ->
       atom.workspaceView.trigger 'minimap:toggle'
-      promise
 
   describe 'once the package is toggled', ->
     it 'should have retrieved the editor content', ->
