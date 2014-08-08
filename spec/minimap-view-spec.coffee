@@ -1,5 +1,5 @@
-MinimapView = require '../lib/minimap-view'
 {WorkspaceView} = require 'atom'
+Minimap = require '../lib/minimap'
 
 editorView = null
 
@@ -7,18 +7,18 @@ describe "MinimapView", ->
   beforeEach ->
 
     runs ->
+      # atom.config.set 'minimap', Minimap.configDefaults
       atom.workspaceView = new WorkspaceView
 
     waitsForPromise ->
-      atom.config.set 'minimap.lineOverdraw', 10
-      atom.config.set 'minimap.scaleX', 0.2
-      atom.config.set 'minimap.scaleY', 0.16
-      
+
       atom.workspaceView.open('sample.js')
 
     runs ->
       atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
+      editorView.find('.lines').css('line-height', '14px')
+      editorView.height(50)
       editorView.setText("This is the file content")
 
     waitsForPromise ->
@@ -29,6 +29,7 @@ describe "MinimapView", ->
 
   describe 'once the package is toggled', ->
     it 'should have retrieved the editor content', ->
+
       waitsFor ->
         atom.workspaceView.find('.minimap .line').length > 0
 

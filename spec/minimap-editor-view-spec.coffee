@@ -1,6 +1,7 @@
 path = require 'path'
 MinimapEditorView = require '../lib/minimap-editor-view'
 MinimapView = require '../lib/minimap-view'
+Minimap = require '../lib/minimap'
 {WorkspaceView} = require 'atom'
 
 
@@ -10,12 +11,13 @@ describe "MinimapEditorView", ->
   afterEach -> minimapView?.detach()
 
   beforeEach ->
-    atom.config.set 'minimap.lineOverdraw', 10
-    atom.config.set 'minimap.scaleY', 0.16
-    atom.config.set 'minimap.scaleX', 0.2
+    atom.config.set 'minimap', Minimap.configDefaults
 
     runs ->
       atom.workspaceView = new WorkspaceView
+
+      atom.workspaceView.simulateDomAttachment()
+
       atom.project.setPath(path.join(__dirname, 'fixtures'))
 
     waitsForPromise ->
@@ -25,18 +27,20 @@ describe "MinimapEditorView", ->
       atom.workspaceView.open('two-hundred.txt')
 
     runs ->
-      atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
+      editorView.find('.lines').css('line-height', '16px')
 
   describe 'once created and initialized with an editor view', ->
     beforeEach ->
-      minimapView = new MinimapView editorView
-      minimapView.attachToPaneView()
-      minimapView.height 5
-      minimapView.miniEditorView.lineOverdraw = 10
-      minimapView.updatePositions = ->
+      runs ->
+        minimapView = new MinimapView editorView
+        minimapView.attachToPaneView()
+        minimapView.computeScale()
+        minimapView.height 5
+        minimapView.miniEditorView.lineOverdraw = 10
+        minimapView.updatePositions = ->
 
-      minimapEditorView = minimapView.miniEditorView
+        minimapEditorView = minimapView.miniEditorView
 
     describe '::getMinimapHeight', ->
       it 'returns its content height based on its line-height', ->
