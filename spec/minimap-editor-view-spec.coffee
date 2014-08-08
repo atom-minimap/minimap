@@ -10,7 +10,8 @@ describe "MinimapEditorView", ->
   afterEach -> minimapView?.detach()
 
   beforeEach ->
-    atom.config.set 'editor.useReactEditor', false
+    atom.config.set 'minimap.scaleY', 0.16
+    atom.config.set 'minimap.scaleX', 0.2
 
     runs ->
       atom.workspaceView = new WorkspaceView
