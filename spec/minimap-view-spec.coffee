@@ -7,7 +7,7 @@ describe "MinimapView", ->
   beforeEach ->
 
     runs ->
-      # atom.config.set 'minimap', Minimap.configDefaults
+      atom.config.set 'minimap', Minimap.configDefaults
       atom.workspaceView = new WorkspaceView
 
     waitsForPromise ->
