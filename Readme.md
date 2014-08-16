@@ -12,9 +12,6 @@ apm install minimap
 
 ### Features
 
-* [Redacted Font][]
-* Multiple Panes
-* Responsive
 * Mouse wheel and click-to-scroll _(no animation)_
 * Drag-to-scroll
 
@@ -22,13 +19,18 @@ apm install minimap
 
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
+* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
+* `Line Overdraw`: The amount of lines that are rendered past the bounds of the editor view. Smaller values may result in more updates but with less lines rendered each time while larger values will reduce the latency between a scroll and the display of the previously hidden lines at the cost of a bigger update time.
+* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used.
+* `Scale`: The scale of the minimap.
+* `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
 
-### Shortcuts
+### Key Bindings
 
-* `ctrl-k ctrl-m` toggle the minimap without the logs
-* `ctrl-k ctrl-d` toggle the minimap with the logs
+* `ctrl-k ctrl-m`: Toggles the minimap without the logs.
+* `ctrl-k ctrl-d`: Toggles the minimap with the logs.
 
-Customizing Key Bindings
+Customizing Key Bindings:
 
 ```cson
 '.editor':
@@ -38,7 +40,7 @@ Customizing Key Bindings
 
 ### Customizing Style
 
-If you want to use another font instead of the default Redacted font or change any styles, edit your `style.less` (Open Your Stylesheet).
+If you want to use another font instead of the default [Redacted][] font or change any styles, edit your `style.less` (Open Your Stylesheet).
 
 ```css
 .minimap .lines {
@@ -50,7 +52,6 @@ If you want to use another font instead of the default Redacted font or change a
   opacity: 0;
   width: 0;
 }
-...
 ```
 
 ### Contributors
@@ -71,10 +72,6 @@ Plugins activation can be managed directly from the minimap package settings.
 ### Wiki
 
 * [How to create a minimap plugin?](https://github.com/fundon/atom-minimap/wiki/Plugin)
-
-### Roadmap
-
-* Smooth animation
 
 ### License
 
