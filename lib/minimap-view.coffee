@@ -82,19 +82,16 @@ class MinimapView extends View
       @updateScroll() if @ScrollView?
 
   computeScale: ->
-    scaleY = atom.config.get('minimap.scaleY')
+    scaleY = atom.config.get('minimap.scale')
     originalLineHeight = parseInt(@editorView.find('.lines').css('line-height'))
     computedLineHeight = @getLineHeight()
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
-    # @transform @miniOverlayer[0], @scale(@scaleX, @scaleY)
-    # @transform @miniUnderlayer[0], @scale(@scaleX, @scaleY)
-
   getLineHeight: ->
-    @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scaleY')
+    @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scale')
   getFontSize: ->
-    @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) *  atom.config.get('minimap.scaleY')
+    @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) *  atom.config.get('minimap.scale')
 
   destroy: ->
     @off()
@@ -151,9 +148,6 @@ class MinimapView extends View
     {width, height} = @getMinimapClientRect()
     editorViewRect = @getEditorViewClientRect()
     miniScrollViewRect = @miniEditorView.getClientRect()
-
-    # width /= @scaleX
-    # height /= @scaleY
 
     evw = editorViewRect.width
     evh = editorViewRect.height
