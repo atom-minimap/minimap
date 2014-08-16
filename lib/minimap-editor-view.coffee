@@ -276,31 +276,25 @@ class MinimapEditorView extends ScrollView
         else
           dirtyRangeEnd = renderTo
 
-        if @editorView instanceof EditorView
-          for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
-            classes = @classesForRow(row)
-            lineElement?.classList.add(classes...) if classes?
-            @lines[0].insertBefore(lineElement, currentLine)
-            row++
-        else
-          linesComponent = @editorView.component.refs.lines
-          lines = @editor.linesForScreenRows(row, dirtyRangeEnd)
 
-          linesComponent.props.lineDecorations ||= {}
+        linesComponent = @editorView.component.refs.lines
+        lines = @editor.linesForScreenRows(row, dirtyRangeEnd)
 
-          for line in lines
-            html = linesComponent.buildLineHTML(line, row)
-            @dummyNode.innerHTML = html
-            lineElement = @dummyNode.childNodes[0]
-            unless lineElement?
-              console.warn "Unexpected undefined line element at screen row #{screenRow}"
-              continue
-            classes = @classesForRow(row)
-            lineElement.className = 'line'
-            lineElement.classList.add(classes...) if classes?
-            lineElement.style.cssText=""
-            @lines[0].insertBefore(lineElement, currentLine)
-            row++
+        linesComponent.props.lineDecorations ||= {}
+
+        for line in lines
+          html = linesComponent.buildLineHTML(line, row)
+          @dummyNode.innerHTML = html
+          lineElement = @dummyNode.childNodes[0]
+          unless lineElement?
+            console.warn "Unexpected undefined line element at screen row #{screenRow}"
+            continue
+          classes = @classesForRow(row)
+          lineElement.className = 'line'
+          lineElement.classList.add(classes...) if classes?
+          lineElement.style.cssText=""
+          @lines[0].insertBefore(lineElement, currentLine)
+          row++
       else
         currentLine = currentLine?.nextSibling
         row++
