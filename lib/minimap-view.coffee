@@ -209,8 +209,8 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(@indicator.x, @indicator.y)
-    @transform @miniWrapper[0], @translate(@indicator.scroller.x, @indicator.scroller.y)
+    @transform @miniVisibleArea[0], @translate(0, @indicator.y)
+    @transform @miniWrapper[0], @translate(0, @indicator.scroller.y)
     @miniEditorView.scrollTop @indicator.scroller.y * -1
 
     @updateScrollerPosition()
