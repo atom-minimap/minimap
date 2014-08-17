@@ -1,5 +1,11 @@
+2.1.0 / 2014-08-17
+==================
+
+* add a quick access dropdown to toggle activation of minimap plugins
+
 2.0.0 / 2014-08-16
 ==================
+
 * remove the use of css scaling to render the minimap
 * add new API allowing to replace an `EditorView` with a `MinimapView` for screen position computation in plugins that need to display markers over the minimap
 * add click-then-drag support on the minimap *track*
