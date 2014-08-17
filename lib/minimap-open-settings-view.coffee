@@ -13,13 +13,17 @@ class MinimapOpenSettingsView extends View
       if @dropdown?
         @dropdown.destroy()
       else
-        offset = @offset()
+        minimap = @parent()
+        offset = minimap.offset()
         @dropdown = new MinimapPluginsDropdownView
-        @dropdown.css
-          top: offset.top
-          right: window.innerWidth - offset.left
 
-        @dropdown.attach()
+        css = top: offset.top
+        if atom.config.get('minimap.displayMinimapOnLeft')
+          css.left = offset.left + minimap.width()
+        else
+          css.right =  window.innerWidth - offset.left
+
+        @dropdown.css(css).attach()
 
         @dropdown.on 'minimap:settings-dropdown-destroyed', =>
           @dropdown.off()
