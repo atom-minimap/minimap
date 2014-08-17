@@ -283,12 +283,16 @@ class MinimapEditorView extends ScrollView
         linesComponent.props.lineDecorations ||= {}
 
         line = lines[0]
-        re = ///
-        #{line.invisibles.cr}|
-        #{line.invisibles.eol}|
-        #{line.invisibles.space}|
-        #{line.invisibles.tab}
-        ///g
+
+        if line.invisibles?
+          re = ///
+          #{line.invisibles.cr}|
+          #{line.invisibles.eol}|
+          #{line.invisibles.space}|
+          #{line.invisibles.tab}
+          ///g
+        else
+          re = /\s/g
 
         for line in lines
           if @minimapView.displayCodeHighlights
