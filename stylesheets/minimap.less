@@ -1,7 +1,3 @@
-// The ui-variables file is provided by base themes provided by Atom.
-//
-// See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
-// for a full listing of what's available.
 @import "ui-variables";
 
 @font-face {
@@ -14,17 +10,64 @@
 
 
 .pane.with-minimap {
-  :not(.minimap-editor) > .editor-contents, :not(.minimap-editor) > .editor:not(.react) {
+  :not(.minimap-editor) > .editor-contents,
+  :not(.minimap-editor) > .editor:not(.react) {
     padding-right: 10%;
   }
   .vertical-scrollbar {
     right: 10%;
   }
 }
+.minimap-plugins-list {
+  position: absolute !important;
+
+  .hidden-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: none;
+  }
+
+  ol {
+    margin-top: 0 !important;
+
+    li:hover {
+      background: @background-color-highlight;
+    }
+  }
+}
+
+.open-minimap-settings {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  color: @text-color;
+  font-size: 20px;
+  text-align: center;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  display: block;
+  right: 4px;
+  transition: opacity 0.4s;
+
+  &:before {
+    content: '\f02f';
+    font-family: 'Octicons Regular';
+  }
+}
+
+.minimap:hover .open-minimap-settings {
+  opacity: 1;
+  transition: opacity 0.1s;
+}
 
 .minimap-on-left {
   .pane.with-minimap {
-    :not(.minimap-editor) > .editor-contents, :not(.minimap-editor) > .editor:not(.react) {
+    :not(.minimap-editor) > .editor-contents,
+    :not(.minimap-editor) > .editor:not(.react) {
       padding-right: 0;
       padding-left: 10%;
     }
@@ -104,7 +147,7 @@
 
   // Themes
   &[data-theme="redacted"] {
-    .editor /*, .minimap-underlayer, .minimap-overlayer */ {
+    .editor {
       font-family: Redacted, Inconsolata, Monaco, Consolas, 'Courier New', Courier !important;
       // With faux-italic and faux-bold the char width changes, and we don't
       // want that :).
