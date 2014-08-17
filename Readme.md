@@ -29,6 +29,7 @@ apm install minimap
 
 * `ctrl-k ctrl-m`: Toggles the minimap without the logs.
 * `ctrl-k ctrl-d`: Toggles the minimap with the logs.
+* `ctrl-k ctrl-s`: Toggles the minimap plugins quick access dropdown.
 
 Customizing Key Bindings:
 
@@ -67,7 +68,9 @@ The minimap can be augmented with plugins, belows the list of available plugins 
   * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
 
-Plugins activation can be managed directly from the minimap package settings.
+Plugins activation can be managed directly from the minimap package settings or by using the quick access dropdown available on the mimimap itself:
+
+![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true)
 
 ### Wiki
 
