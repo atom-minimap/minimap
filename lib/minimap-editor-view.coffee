@@ -291,8 +291,6 @@ class MinimapEditorView extends ScrollView
           #{line.invisibles.space}|
           #{line.invisibles.tab}
           ///g
-        else
-          re = /\s/g
 
         for line in lines
           if @minimapView.displayCodeHighlights
@@ -303,7 +301,8 @@ class MinimapEditorView extends ScrollView
             if line.text.length is 0
               html = ' '
             else
-              html = line.text.replace(re, ' ')
+              html = line.text
+              html = html.replace(re, ' ') if re?
 
             lineElement = document.createElement('div')
             lineElement.className = 'line'
