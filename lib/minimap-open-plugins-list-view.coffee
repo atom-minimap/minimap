@@ -9,7 +9,10 @@ class MinimapOpenPluginsListView extends View
   dropdown: null
 
   initialize: ->
-    @on 'click', =>
+    @on 'mousedown', (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      
       if @dropdown?
         @dropdown.destroy()
       else

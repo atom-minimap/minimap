@@ -282,10 +282,29 @@ class MinimapEditorView extends ScrollView
 
         linesComponent.props.lineDecorations ||= {}
 
+        line = lines[0]
+        re = ///
+        #{line.invisibles.cr}|
+        #{line.invisibles.eol}|
+        #{line.invisibles.space}|
+        #{line.invisibles.tab}
+        ///g
+
         for line in lines
-          html = linesComponent.buildLineHTML(line, row)
-          @dummyNode.innerHTML = html
-          lineElement = @dummyNode.childNodes[0]
+          if @minimapView.displayCodeHighlights
+            html = linesComponent.buildLineHTML(line, row)
+            @dummyNode.innerHTML = html
+            lineElement = @dummyNode.childNodes[0]
+          else
+            if line.text.length is 0
+              html = ' '
+            else
+              html = line.text.replace(re, ' ')
+
+            lineElement = document.createElement('div')
+            lineElement.className = 'line'
+            lineElement.textContent = html
+
           unless lineElement?
             console.warn "Unexpected undefined line element at screen row #{screenRow}"
             continue

@@ -76,12 +76,24 @@ class MinimapView extends View
 
     @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
     @miniScroller.toggleClass 'visible', @miniScrollVisible
+
+    @displayCodeHighlights = atom.config.get('minimap.displayCodeHighlights')
+
     atom.config.observe 'minimap.minimapScrollIndicator', =>
       @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
       @miniScroller.toggleClass 'visible', @miniScrollVisible
 
     atom.config.observe 'minimap.useHardwareAcceleration', =>
       @updateScroll() if @ScrollView?
+
+    atom.config.observe 'minimap.displayCodeHighlights', =>
+      newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
+      if newOptionValue isnt @displayCodeHighlights
+        @displayCodeHighlights = newOptionValue
+        @miniEditorView.firstRenderedScreenRow = null
+        @miniEditorView.lastRenderedScreenRow = null
+        @miniEditorView.lines.html('')
+        @miniEditorView.requestUpdate()
 
   computeScale: ->
     scaleY = atom.config.get('minimap.scale')
