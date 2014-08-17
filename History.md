@@ -1,7 +1,12 @@
+2.2.0 / 2014-08-17
+==================
+
+* add option to toggle code highlights in the minimap
+
 2.1.1 / 2014-08-17
 ==================
 
-* fix minimap editor background hiding the underlayer 
+* fix minimap editor background hiding the underlayer
 
 2.1.0 / 2014-08-17
 ==================

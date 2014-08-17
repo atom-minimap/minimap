@@ -18,12 +18,13 @@ apm install minimap
 ### Settings
 
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
+* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens.
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
-* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
 * `Line Overdraw`: The amount of lines that are rendered past the bounds of the editor view. Smaller values may result in more updates but with less lines rendered each time while larger values will reduce the latency between a scroll and the display of the previously hidden lines at the cost of a bigger update time.
-* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used.
-* `Scale`: The scale of the minimap.
+* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
+* `Scale`: The scale of the minimap.
+* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used.
 
 ### Key Bindings
 
@@ -67,6 +68,7 @@ The minimap can be augmented with plugins, belows the list of available plugins 
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
   * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
+  * [Selection](https://atom.io/packages/minimap-selection)
 
 Plugins activation can be managed directly from the minimap package settings or by using the quick access dropdown available on the mimimap itself:
 
