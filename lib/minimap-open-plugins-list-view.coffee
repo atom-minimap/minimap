@@ -2,9 +2,9 @@
 MinimapPluginsDropdownView = require './minimap-plugins-dropdown-view'
 
 module.exports =
-class MinimapOpenSettingsView extends View
+class MinimapOpenPluginsListView extends View
   @content: ->
-    @div class: 'open-minimap-settings'
+    @div class: 'open-minimap-plugins-list'
 
   dropdown: null
 
@@ -25,6 +25,6 @@ class MinimapOpenSettingsView extends View
 
         @dropdown.css(css).attach()
 
-        @dropdown.on 'minimap:settings-dropdown-destroyed', =>
+        @dropdown.on 'minimap:plugins-dropdown-destroyed', =>
           @dropdown.off()
           @dropdown = null

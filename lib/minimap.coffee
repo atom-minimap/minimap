@@ -101,8 +101,8 @@ class Minimap
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
-    atom.workspaceView.command 'minimap:open-settings', =>
-      atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-settings').click()
+    atom.workspaceView.command 'minimap:open-plugins-list', =>
+      atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-plugins-list').click()
 
     atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
     atom.config.observe 'minimap.displayMinimapOnLeft', =>

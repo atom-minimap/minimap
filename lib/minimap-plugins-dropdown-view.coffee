@@ -31,7 +31,7 @@ class MinimapPluginsDropdownView extends View
     @hiddenInput.focus()
 
   destroy: =>
-    @trigger('minimap:settings-dropdown-destroyed')
+    @trigger('minimap:plugins-dropdown-destroyed')
     @off()
     @hiddenInput.off()
     @unsubscribe()
