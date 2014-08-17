@@ -1,3 +1,9 @@
+2.2.1 / 2014-08-17
+==================
+
+* fix error raised when tokenized line doesn't have an `invisibles` property
+
+
 2.2.0 / 2014-08-17
 ==================
 
