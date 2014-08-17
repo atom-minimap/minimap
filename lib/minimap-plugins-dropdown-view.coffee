@@ -10,6 +10,8 @@ class MinimapPluginsDropdownView extends View
       @input type: 'text', class: 'hidden-input', outlet: 'hiddenInput'
       @ol class: 'list-group mark-active', outlet: 'list'
 
+  selectedItem: null
+
   initialize: ->
     @plugins = {}
     @subscribe Minimap, 'plugin:added', ({name, plugin}) =>
@@ -21,7 +23,11 @@ class MinimapPluginsDropdownView extends View
     @subscribe Minimap, 'plugin:deactivated', ({name, plugin}) =>
       @deactivateItem(name, plugin)
 
+    @on 'core:move-up', @selectPreviousItem
+    @on 'core:move-down', @selectNextItem
     @on 'core:cancel', @destroy
+    @on 'core:validate', @toggleSelectedItem
+
     @hiddenInput.on 'focusout', @destroy
 
     @initList()
@@ -40,6 +46,25 @@ class MinimapPluginsDropdownView extends View
   initList: ->
     @addItemFor(name, plugin) for name, plugin of Minimap.plugins
 
+  toggleSelectedItem: =>
+    @selectedItem.mousedown()
+
+  selectNextItem: =>
+    @selectedItem.removeClass('selected')
+    if @selectedItem.index() isnt @list.children().length - 1
+      @selectedItem = @selectedItem.next()
+    else
+      @selectedItem = @list.children().first()
+    @selectedItem.addClass('selected')
+
+  selectPreviousItem: =>
+    @selectedItem.removeClass('selected')
+    if @selectedItem.index() isnt 0
+      @selectedItem = @selectedItem.prev()
+    else
+      @selectedItem = @list.children().last()
+    @selectedItem.addClass('selected')
+
   addItemFor: (name, plugin) ->
     cls = if plugin.isActive() then 'active' else ''
     item = $("<li class='#{cls}'>#{name}</li>")
@@ -48,6 +73,9 @@ class MinimapPluginsDropdownView extends View
       @trigger "minimap:toggle-#{name}"
     @plugins[name] = item
     @list.append item
+    unless @selectedItem?
+      @selectedItem = item
+      @selectedItem.addClass('selected')
 
   removeItemFor: (name, plugin) ->
     @list.remove(@plugins[name])
