@@ -5,7 +5,6 @@
   font-weight: normal;
   font-style: normal;
   src: url(atom://minimap/resources/redacted-fixed.woff) format('woff');
-  unicode-range: U+21-FF;
 }
 
 
@@ -149,9 +148,7 @@
   // Themes
   &[data-theme="redacted"] {
     .editor {
-      font-family: Redacted, Inconsolata, Monaco, Consolas, 'Courier New', Courier !important;
-      // With faux-italic and faux-bold the char width changes, and we don't
-      // want that :).
+      font-family: Redacted !important;
       font-weight: normal !important;
     }
   }
