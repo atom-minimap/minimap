@@ -66,6 +66,12 @@ class MinimapEditorView extends ScrollView
       @endBench('minimap update')
       @frameRequested = false
 
+  forceUpdate: ->
+    @firstRenderedScreenRow = null
+    @lastRenderedScreenRow = null
+    @lines.html('')
+    @requestUpdate()
+
   scrollTop: (scrollTop, options={}) ->
     return @cachedScrollTop or 0 unless scrollTop?
     return if scrollTop is @cachedScrollTop

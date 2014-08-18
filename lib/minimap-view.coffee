@@ -88,12 +88,7 @@ class MinimapView extends View
 
     atom.config.observe 'minimap.displayCodeHighlights', =>
       newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
-      if newOptionValue isnt @displayCodeHighlights
-        @displayCodeHighlights = newOptionValue
-        @miniEditorView.firstRenderedScreenRow = null
-        @miniEditorView.lastRenderedScreenRow = null
-        @miniEditorView.lines.html('')
-        @miniEditorView.requestUpdate()
+      @setDisplayCodeHighlights(newOptionValue)
 
   computeScale: ->
     scaleY = atom.config.get('minimap.scale')
@@ -106,6 +101,11 @@ class MinimapView extends View
     @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scale')
   getFontSize: ->
     @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) *  atom.config.get('minimap.scale')
+
+  setDisplayCodeHighlights: (value) ->
+    if value isnt @displayCodeHighlights
+      @displayCodeHighlights = value
+      @miniEditorView.forceUpdate()
 
   destroy: ->
     @off()
