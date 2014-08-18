@@ -1,10 +1,10 @@
 {View} = require 'atom'
-MinimapPluginsDropdownView = require './minimap-plugins-dropdown-view'
+MinimapQuickSettingsView = require './minimap-quick-settings-view'
 
 module.exports =
-class MinimapOpenPluginsListView extends View
+class MinimapOpenQuickSettingsView extends View
   @content: ->
-    @div class: 'open-minimap-plugins-list'
+    @div class: 'open-minimap-quick-settings'
 
   dropdown: null
 
@@ -12,13 +12,13 @@ class MinimapOpenPluginsListView extends View
     @on 'mousedown', (e) =>
       e.preventDefault()
       e.stopPropagation()
-      
+
       if @dropdown?
         @dropdown.destroy()
       else
         minimap = @parent()
         offset = minimap.offset()
-        @dropdown = new MinimapPluginsDropdownView
+        @dropdown = new MinimapQuickSettingsView
 
         css = top: offset.top
         if atom.config.get('minimap.displayMinimapOnLeft')
@@ -28,6 +28,6 @@ class MinimapOpenPluginsListView extends View
 
         @dropdown.css(css).attach()
 
-        @dropdown.on 'minimap:plugins-dropdown-destroyed', =>
+        @dropdown.on 'minimap:quick-settings-destroyed', =>
           @dropdown.off()
           @dropdown = null

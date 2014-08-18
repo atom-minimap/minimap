@@ -4,9 +4,9 @@ $ = View.__super__.constructor
 Minimap = require './minimap'
 
 module.exports =
-class MinimapPluginsDropdownView extends View
+class MinimapQuickSettingsView extends View
   @content: ->
-    @div class: 'select-list popover-list minimap-plugins-list', =>
+    @div class: 'select-list popover-list minimap-quick-settings', =>
       @input type: 'text', class: 'hidden-input', outlet: 'hiddenInput'
       @ol class: 'list-group mark-active', outlet: 'list'
 
@@ -37,7 +37,7 @@ class MinimapPluginsDropdownView extends View
     @hiddenInput.focus()
 
   destroy: =>
-    @trigger('minimap:plugins-dropdown-destroyed')
+    @trigger('minimap:quick-settings-destroyed')
     @off()
     @hiddenInput.off()
     @unsubscribe()

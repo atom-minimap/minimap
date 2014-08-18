@@ -10,7 +10,7 @@
 '.workspace':
   'ctrl-k ctrl-m': 'minimap:toggle'
   'ctrl-k ctrl-d': 'minimap:toggle-debug'
-  'ctrl-k ctrl-s': 'minimap:open-plugins-list'
+  'ctrl-k ctrl-s': 'minimap:open-quick-settings'
 
-'.minimap-plugins-list':
+'.minimap-quick-settings':
   'space': 'core:validate'

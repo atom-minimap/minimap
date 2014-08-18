@@ -4,7 +4,7 @@ Delegato = require 'delegato'
 
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
-MinimapOpenPluginsListView = require './minimap-open-plugins-list-view'
+MinimapOpenQuickSettingsView = require './minimap-open-quick-settings-view'
 CONFIGS = require './config'
 
 module.exports =
@@ -16,7 +16,7 @@ class MinimapView extends View
 
   @content: ->
     @div class: 'minimap', =>
-      @subview 'openSettings', new MinimapOpenPluginsListView
+      @subview 'openQuickSettings', new MinimapOpenQuickSettingsView
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
