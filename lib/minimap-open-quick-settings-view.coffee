@@ -18,7 +18,7 @@ class MinimapOpenQuickSettingsView extends View
       else
         minimap = @parent()
         offset = minimap.offset()
-        @dropdown = new MinimapQuickSettingsView
+        @dropdown = new MinimapQuickSettingsView(@parent().data('view'))
 
         css = top: offset.top
         if atom.config.get('minimap.displayMinimapOnLeft')

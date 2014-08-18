@@ -8,11 +8,13 @@ class MinimapQuickSettingsView extends View
   @content: ->
     @div class: 'select-list popover-list minimap-quick-settings', =>
       @input type: 'text', class: 'hidden-input', outlet: 'hiddenInput'
-      @ol class: 'list-group mark-active', outlet: 'list'
+      @ol class: 'list-group mark-active', outlet: 'list', =>
+        @li class: 'separator', outlet: 'separator'
+        @li class: (if atom.config.get('minimap.displayCodeHighlights') then 'active' else ''), outlet: 'codeHighlights', 'code-highlights'
 
   selectedItem: null
 
-  initialize: ->
+  initialize: (@minimapView) ->
     @plugins = {}
     @subscribe Minimap, 'plugin:added', ({name, plugin}) =>
       @addItemFor(name, plugin)
@@ -27,6 +29,11 @@ class MinimapQuickSettingsView extends View
     @on 'core:move-down', @selectNextItem
     @on 'core:cancel', @destroy
     @on 'core:validate', @toggleSelectedItem
+
+    @subscribe @codeHighlights, 'mousedown', (e) =>
+      e.preventDefault()
+      @minimapView.setDisplayCodeHighlights(!@minimapView.displayCodeHighlights)
+      @codeHighlights.toggleClass('active', @minimapView.displayCodeHighlights)
 
     @hiddenInput.on 'focusout', @destroy
 
@@ -53,6 +60,7 @@ class MinimapQuickSettingsView extends View
     @selectedItem.removeClass('selected')
     if @selectedItem.index() isnt @list.children().length - 1
       @selectedItem = @selectedItem.next()
+      @selectedItem = @selectedItem.next() if @selectedItem.is('.separator')
     else
       @selectedItem = @list.children().first()
     @selectedItem.addClass('selected')
@@ -61,6 +69,7 @@ class MinimapQuickSettingsView extends View
     @selectedItem.removeClass('selected')
     if @selectedItem.index() isnt 0
       @selectedItem = @selectedItem.prev()
+      @selectedItem = @selectedItem.prev() if @selectedItem.is('.separator')
     else
       @selectedItem = @list.children().last()
     @selectedItem.addClass('selected')
@@ -72,7 +81,7 @@ class MinimapQuickSettingsView extends View
       e.preventDefault()
       @trigger "minimap:toggle-#{name}"
     @plugins[name] = item
-    @list.append item
+    @separator.before item
     unless @selectedItem?
       @selectedItem = item
       @selectedItem.addClass('selected')

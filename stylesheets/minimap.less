@@ -31,6 +31,15 @@
   ol {
     margin-top: 0 !important;
 
+    .separator {
+      background: @background-color-highlight;
+      height: 1px;
+
+      &:first-child {
+        display: none;
+      }
+    }
+
     li:hover {
       background: @background-color-highlight;
     }
