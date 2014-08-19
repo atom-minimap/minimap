@@ -20,6 +20,7 @@ apm install minimap
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
 * `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens.
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
+* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.**
 * `Line Overdraw`: The amount of lines that are rendered past the bounds of the editor view. Smaller values may result in more updates but with less lines rendered each time while larger values will reduce the latency between a scroll and the display of the previously hidden lines at the cost of a bigger update time.
 * `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
@@ -30,7 +31,7 @@ apm install minimap
 
 * `ctrl-k ctrl-m`: Toggles the minimap without the logs.
 * `ctrl-k ctrl-d`: Toggles the minimap with the logs.
-* `ctrl-k ctrl-s`: Toggles the minimap plugins quick access dropdown.
+* `ctrl-k ctrl-s`: Toggles the minimap plugins quick settings dropdown.
 
 Customizing Key Bindings:
 
@@ -70,7 +71,7 @@ The minimap can be augmented with plugins, belows the list of available plugins 
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
   * [Selection](https://atom.io/packages/minimap-selection)
 
-Plugins activation can be managed directly from the minimap package settings or by using the quick access dropdown available on the mimimap itself:
+When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the minimap package settings or by using the quick settings dropdown available on the mimimap itself:
 
 ![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true)
 
