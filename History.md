@@ -1,3 +1,10 @@
+2.3.0 / 2014-08-19
+==================
+
+* add a setting to completely turn off the plugin controls from the minimap settings.
+* add a new entry in the quick settings dropdown to toggle the minimap highlights on a per-editor basis.
+
+
 2.2.2 / 2014-08-17
 ==================
 
