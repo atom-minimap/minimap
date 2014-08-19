@@ -1,3 +1,8 @@
+2.3.1 / 2014-08-19
+==================
+
+* fix a bug with removeAtKeyPath method in tests
+
 2.3.0 / 2014-08-19
 ==================
 
