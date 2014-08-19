@@ -22,21 +22,11 @@ class PluginManagement extends Mixin
   #        settings name as well as the key to unregister the module.
   # plugin - The plugin {Object} to register.
   registerPlugin: (name, plugin) ->
-    settingsKey = "minimap.plugins.#{name}"
-
-    @configDefaults.plugins[name] = true
-    atom.config.set(settingsKey, true) unless atom.config.get(settingsKey)?
-
     @plugins[name] = plugin
 
     @emit('plugin:added', {name, plugin})
 
-    atom.config.observe settingsKey, =>
-      @updatesPluginActivationState(name)
-
-    atom.workspaceView.command "minimap:toggle-#{name}", =>
-      atom.config.set settingsKey, not atom.config.get(settingsKey)
-      @updatesPluginActivationState(name)
+    @registerPluginControls(name, plugin) if atom.config.get('minimap.displayPluginsControls')
 
     @updatesPluginActivationState(name)
 
@@ -44,10 +34,8 @@ class PluginManagement extends Mixin
   #
   # name - The identifying name of the plugin to unregister.
   unregisterPlugin: (name) ->
-    atom.config.unobserve "minimap.plugins.#{name}"
-    atom.workspaceView.off "minimap:toggle-#{name}"
     plugin = @plugins[name]
-    delete @configDefaults.plugins[name]
+    @unregisterPluginControls(name) if atom.config.get('minimap.displayPluginsControls')
     delete @plugins[name]
     @emit('plugin:removed', {name, plugin})
 
@@ -65,3 +53,22 @@ class PluginManagement extends Mixin
     else if pluginActive and not settingActive
       plugin.deactivatePlugin()
       @emit('plugin:deactivated', {name, plugin})
+
+  registerPluginControls: (name, plugin) ->
+    settingsKey = "minimap.plugins.#{name}"
+    @configDefaults.plugins[name] = true
+
+    atom.config.set(settingsKey, true) unless atom.config.get(settingsKey)?
+
+    atom.config.observe settingsKey, =>
+      @updatesPluginActivationState(name)
+
+    atom.workspaceView.command "minimap:toggle-#{name}", =>
+      atom.config.set settingsKey, not atom.config.get(settingsKey)
+      @updatesPluginActivationState(name)
+
+  unregisterPluginControls: (name) ->
+    atom.config.unobserve "minimap.plugins.#{name}"
+    atom.config.removeAtKeyPath "minimap.plugins", name
+    atom.workspaceView.off "minimap:toggle-#{name}"
+    delete @configDefaults.plugins[name]

@@ -16,7 +16,7 @@ class MinimapView extends View
 
   @content: ->
     @div class: 'minimap', =>
-      @subview 'openQuickSettings', new MinimapOpenQuickSettingsView
+      @subview 'openQuickSettings', new MinimapOpenQuickSettingsView if atom.config.get('minimap.displayPluginsControls')
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
