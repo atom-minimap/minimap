@@ -13,7 +13,8 @@ describe "Minimap Plugins", ->
       atom.workspaceView.simulateDomAttachment()
       editorView = atom.workspaceView.getActiveView()
 
-    atom.config.set 'minimap.plugins.dummy', undefined
+      atom.config.set 'minimap.displayPluginsControls', true
+      atom.config.set 'minimap.plugins.dummy', undefined
 
     @plugin =
       active: false
