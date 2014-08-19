@@ -69,6 +69,5 @@ class PluginManagement extends Mixin
 
   unregisterPluginControls: (name) ->
     atom.config.unobserve "minimap.plugins.#{name}"
-    atom.config.removeAtKeyPath "minimap.plugins", name
     atom.workspaceView.off "minimap:toggle-#{name}"
     delete @configDefaults.plugins[name]
