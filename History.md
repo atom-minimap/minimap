@@ -1,3 +1,8 @@
+2.3.2 / 2014-08-22
+==================
+
+* re-enable the minimap to work with legacy EditorView class
+
 2.3.1 / 2014-08-19
 ==================
 
