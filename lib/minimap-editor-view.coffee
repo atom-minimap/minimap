@@ -282,47 +282,54 @@ class MinimapEditorView extends ScrollView
         else
           dirtyRangeEnd = renderTo
 
+        if @editorView.constructor.name is 'EditorView'
+          for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
+            classes = @classesForRow(row)
+            lineElement?.classList.add(classes...) if classes?
+            @lines[0].insertBefore(lineElement, currentLine)
+            row++
+        else
+          linesComponent = @editorView.component.refs.lines
+          lines = @editor.linesForScreenRows(row, dirtyRangeEnd)
 
-        linesComponent = @editorView.component.refs.lines
-        lines = @editor.linesForScreenRows(row, dirtyRangeEnd)
+          linesComponent.props.lineDecorations ||= {}
 
-        linesComponent.props.lineDecorations ||= {}
+          line = lines[0]
 
-        line = lines[0]
+          if line.invisibles?
+            re = ///
+            #{line.invisibles.cr}|
+            #{line.invisibles.eol}|
+            #{line.invisibles.space}|
+            #{line.invisibles.tab}
+            ///g
 
-        if line.invisibles?
-          re = ///
-          #{line.invisibles.cr}|
-          #{line.invisibles.eol}|
-          #{line.invisibles.space}|
-          #{line.invisibles.tab}
-          ///g
-
-        for line in lines
-          if @minimapView.displayCodeHighlights
-            html = linesComponent.buildLineHTML(line, row)
-            @dummyNode.innerHTML = html
-            lineElement = @dummyNode.childNodes[0]
-          else
-            if line.text.length is 0
-              html = ' '
+          for line in lines
+            if @minimapView.displayCodeHighlights
+              html = linesComponent.buildLineHTML(line, row)
+              @dummyNode.innerHTML = html
+              lineElement = @dummyNode.childNodes[0]
             else
-              html = line.text
-              html = html.replace(re, ' ') if re?
+              if line.text.length is 0
+                html = ' '
+              else
+                html = line.text
+                html = html.replace(re, ' ') if re?
 
-            lineElement = document.createElement('div')
+              lineElement = document.createElement('div')
+              lineElement.className = 'line'
+              lineElement.textContent = html
+
+            unless lineElement?
+              console.warn "Unexpected undefined line element at screen row #{screenRow}"
+              continue
+
+            classes = @classesForRow(row)
             lineElement.className = 'line'
-            lineElement.textContent = html
-
-          unless lineElement?
-            console.warn "Unexpected undefined line element at screen row #{screenRow}"
-            continue
-          classes = @classesForRow(row)
-          lineElement.className = 'line'
-          lineElement.classList.add(classes...) if classes?
-          lineElement.style.cssText=""
-          @lines[0].insertBefore(lineElement, currentLine)
-          row++
+            lineElement.classList.add(classes...) if classes?
+            lineElement.style.cssText=""
+            @lines[0].insertBefore(lineElement, currentLine)
+            row++
       else
         currentLine = currentLine?.nextSibling
         row++
