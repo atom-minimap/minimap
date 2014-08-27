@@ -282,7 +282,7 @@ class MinimapEditorView extends ScrollView
         else
           dirtyRangeEnd = renderTo
 
-        if @editorView.constructor.name is 'EditorView'
+        if @editorView.buildLineElementsForScreenRows?
           for lineElement in @editorView.buildLineElementsForScreenRows(row, dirtyRangeEnd)
             classes = @classesForRow(row)
             lineElement?.classList.add(classes...) if classes?

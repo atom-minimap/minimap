@@ -1,3 +1,8 @@
+2.3.3 / 2014-08-27
+==================
+
+* handle properly the changes in the atom editors classes
+
 2.3.2 / 2014-08-22
 ==================
 
