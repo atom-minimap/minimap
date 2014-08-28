@@ -37,8 +37,6 @@ class MinimapView extends View
 
     @computeScale()
     @miniScrollView = @miniEditorView.scrollView
-    # dragging's status
-    @isPressed = false
     @offsetLeft = 0
     @offsetTop = 0
     @indicator = new MinimapIndicator()
@@ -58,8 +56,6 @@ class MinimapView extends View
     @on 'mousedown', (e) =>
       @onMouseDown(e)
       @onDragStart(e)
-
-    @on 'mousedown', '.minimap-visible-area', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     # Fix items movin to another pane.
@@ -257,6 +253,8 @@ class MinimapView extends View
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
   onMouseDown: (e) =>
+    # Handle left-click only
+    return if e.which isnt 1
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
@@ -273,18 +271,15 @@ class MinimapView extends View
   onScrollViewResized: => @updateMinimapView()
 
   onDragStart: (e) =>
-    # only supports for left-click
+    # Handle left-click only
     return if e.which isnt 1
-    @isPressed = true
     @on 'mousemove.visible-area', @onMove
-    @on 'mouseup.visible-area', @onDragEnd
 
   onMove: (e) =>
-    @onMouseDown e if @isPressed
-
-  onDragEnd: (e) =>
-    @isPressed = false
-    @off '.visible-area'
+    if e.which is 1
+      @onMouseDown e
+    else
+      @off '.visible-area'
 
   # OTHER PRIVATE METHODS
 
