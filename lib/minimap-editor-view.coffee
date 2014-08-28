@@ -23,6 +23,7 @@ class MinimapEditorView extends ScrollView
     super
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
+    @tokenColorCache = {}
 
   initialize: ->
     @lineOverdraw = atom.config.get('minimap.lineOverdraw')
@@ -71,6 +72,7 @@ class MinimapEditorView extends ScrollView
       @frameRequested = false
 
   forceUpdate: ->
+    @tokenColorCache = {}
     @firstRenderedScreenRow = null
     @lastRenderedScreenRow = null
     @requestUpdate()
@@ -105,6 +107,39 @@ class MinimapEditorView extends ScrollView
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
+
+  getDomTokenColor: (token)->
+    dummyNode = @editorView.find('#minimap-dummy-node')
+    if dummyNode[0]?
+      root = dummyNode[0]
+    else
+      root = document.createElement('span')
+      root.style.visibility = 'hidden'
+      root.id = 'minimap-dummy-node'
+      @editorView.append(root)
+
+    parent = root
+    for scope in token.scopes
+      node = document.createElement('span')
+      #css is token scope without dots, see pushScope @ atom/atom/src/lines-component.coffee
+      node.className = scope.replace(/\.+/g, ' ')
+      if parent
+        parent.appendChild(node)
+      parent = node
+
+    color = getComputedStyle(parent).getPropertyValue('color')
+    root.innerHTML = ''
+    color
+
+  getTokenColor: (token)->
+    scopes = token.scopes.join()
+    if scopes of @tokenColorCache
+      return @tokenColorCache[scopes]
+    else
+      color = @getDomTokenColor(token)
+      @tokenColorCache[scopes] = color
+      color
+
   update: =>
     return unless @editorView?
 
@@ -113,29 +148,32 @@ class MinimapEditorView extends ScrollView
     @lineCanvas[0].height = @lineCanvas[0].offsetHeight
 
 
-
-    lines = @editor.linesForScreenRows(0, 300)
-    # linesComponent = @editorView.component.refs.lines
-    # linesComponent.props.lineDecorations ||= {}
-
-    # if @minimapView.displayCodeHighlights
-    #   @context.beginPath()
-    #   for line, y in lines
-    #     w = line.text.length
-    #     if w > 0
-    #       @context.moveTo(0.5, 4*y+0.5)
-    #       @context.lineTo(w+0.5, 4*y+0.5)
-    #   @context.stroke()
-    @context.strokeStyle = "#d0d0d0"
+    lines = @editor.linesForScreenRows(0, 400)
     @context.lineWidth = 2
 
-    for line, y in lines
-      w = line.text.length
-      if w > 0
-        @context.beginPath()
-        @context.moveTo(0.5, 4*y+0.5)
-        @context.lineTo(w+0.5, 4*y+0.5)
-        @context.stroke()
+    if @minimapView.displayCodeHighlights
+      for line, y in lines
+        x = 0
+        for token in line.tokens
+          w = token.screenDelta
+          if not token.isOnlyWhitespace()
+            color = @getTokenColor(token)
+            @context.beginPath()
+            @context.strokeStyle = color
+            @context.moveTo(x, 3*y)
+            @context.lineTo(x+w, 3*y)
+            @context.stroke()
+          x += w
+    else
+      @context.strokeStyle = "#D0D0D0"
+      @context.beginPath()
+      for line, y in lines
+        w = line.text.length
+        if w > 0
+          w0 = line.indentLevel * 2
+          @context.moveTo(w0, 3*y)
+          @context.lineTo(w, 3*y)
+      @context.stroke()
 
     @emit 'minimap:updated'
 
