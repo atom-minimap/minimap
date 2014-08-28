@@ -31,14 +31,6 @@ class MinimapEditorView extends ScrollView
     atom.config.observe 'minimap.lineOverdraw', =>
       @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
-    atom.config.observe 'editor.lineHeight', =>
-      # if @editorView?
-      #   @lines.css lineHeight: "#{@getLineHeight()}px"
-
-    atom.config.observe 'editor.fontSize', =>
-      # if @editorView?
-      #   @lines.css fontSize: "#{@getFontSize()}px"
-
   pixelPositionForScreenPosition: (position) ->
     {row, column} = @buffer.constructor.Point.fromObject(position)
     actualRow = Math.floor(row)
@@ -52,10 +44,6 @@ class MinimapEditorView extends ScrollView
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
     @buffer = @editorView.getEditor().buffer
-
-    # @lines.css
-    #   lineHeight: "#{@getLineHeight()}px"
-    #   fontSize: "#{@getFontSize()}px"
 
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
       @pendingChanges.push changes
@@ -89,8 +77,7 @@ class MinimapEditorView extends ScrollView
     @pendingChanges.push event
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
-  getLineHeight: -> @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * @minimapView.scaleY
-  getFontSize: -> @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) * @minimapView.scaleY
+  getLineHeight: -> 2
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
@@ -108,7 +95,11 @@ class MinimapEditorView extends ScrollView
     screenRow
 
 
-  getDomTokenColor: (token)->
+  retrieveTokenColorFromDom: (token)->
+    # This function insert a dummy token element in the DOM compute its style,
+    # return its color property, and remove the element from the DOM.
+    # This is quite an expensive operation so results are cached in getTokenColor.
+    # Note: it's probably not the best way to do that, but that's the simpler approach I found.
     dummyNode = @editorView.find('#minimap-dummy-node')
     if dummyNode[0]?
       root = dummyNode[0]
@@ -121,7 +112,8 @@ class MinimapEditorView extends ScrollView
     parent = root
     for scope in token.scopes
       node = document.createElement('span')
-      #css is token scope without dots, see pushScope @ atom/atom/src/lines-component.coffee
+      # css class is the token scope without the dots,
+      # see pushScope @ atom/atom/src/lines-component.coffee
       node.className = scope.replace(/\.+/g, ' ')
       if parent
         parent.appendChild(node)
@@ -132,13 +124,12 @@ class MinimapEditorView extends ScrollView
     color
 
   getTokenColor: (token)->
-    scopes = token.scopes.join()
-    if scopes of @tokenColorCache
-      return @tokenColorCache[scopes]
-    else
-      color = @getDomTokenColor(token)
-      @tokenColorCache[scopes] = color
-      color
+    #Retrieve color from cache if available
+    flatScopes = token.scopes.join()
+    if flatScopes not of @tokenColorCache
+      color = @retrieveTokenColorFromDom(token)
+      @tokenColorCache[flatScopes] = color
+    @tokenColorCache[flatScopes]
 
   update: =>
     return unless @editorView?
@@ -147,9 +138,8 @@ class MinimapEditorView extends ScrollView
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
     @lineCanvas[0].height = @lineCanvas[0].offsetHeight
 
-
-    lines = @editor.linesForScreenRows(0, 400)
-    @context.lineWidth = 2
+    lines = @editor.linesForScreenRows(@getFirstVisibleScreenRow(), @getLastVisibleScreenRow())
+    @context.lineWidth = 1
 
     if @minimapView.displayCodeHighlights
       for line, y in lines
@@ -160,19 +150,19 @@ class MinimapEditorView extends ScrollView
             color = @getTokenColor(token)
             @context.beginPath()
             @context.strokeStyle = color
-            @context.moveTo(x, 3*y)
-            @context.lineTo(x+w, 3*y)
+            @context.moveTo(x, 2*y)
+            @context.lineTo(x+w, 2*y)
             @context.stroke()
           x += w
     else
-      @context.strokeStyle = "#D0D0D0"
+      @context.strokeStyle = "#C0C0C0"
       @context.beginPath()
       for line, y in lines
         w = line.text.length
         if w > 0
           w0 = line.indentLevel * 2
-          @context.moveTo(w0, 3*y)
-          @context.lineTo(w, 3*y)
+          @context.moveTo(w0, 2*y+0.5)
+          @context.lineTo(w, 2*y+0.5)
       @context.stroke()
 
     @emit 'minimap:updated'
@@ -181,5 +171,5 @@ class MinimapEditorView extends ScrollView
     canvas = @lineCanvas[0]
     {
       width: canvas.scrollWidth,
-      height: canvas.scrollHeight
+      height: @getMinimapHeight()
     }

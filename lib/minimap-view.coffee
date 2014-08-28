@@ -91,16 +91,13 @@ class MinimapView extends View
       @setDisplayCodeHighlights(newOptionValue)
 
   computeScale: ->
-    scaleY = atom.config.get('minimap.scale')
     originalLineHeight = parseInt(@editorView.find('.lines').css('line-height'))
     computedLineHeight = @getLineHeight()
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
   getLineHeight: ->
-    @lineHeight ||= Math.round parseInt(@editorView.find('.lines').css('line-height')) * atom.config.get('minimap.scale')
-  getFontSize: ->
-    @fontSize ||= Math.round  parseInt(@editorView.find('.lines').css('font-size')) *  atom.config.get('minimap.scale')
+    return 2 # 1 for the line + 1 for the interline
 
   setDisplayCodeHighlights: (value) ->
     if value isnt @displayCodeHighlights
@@ -223,8 +220,8 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(0, @indicator.y)
-    @transform @miniWrapper[0], @translate(0, @indicator.scroller.y)
+    @transform @miniVisibleArea[0], @translate(0, @indicator.scroller.y+@indicator.y)
+    #@transform @miniWrapper[0], @translate(0, @indicator.scroller.y)
     @miniEditorView.scrollTop @indicator.scroller.y * -1
 
     @updateScrollerPosition()
