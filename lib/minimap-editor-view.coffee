@@ -12,8 +12,6 @@ class MinimapEditorView extends ScrollView
       @tag 'canvas', {
         outlet: 'lineCanvas'
         class: 'minimap-canvas'
-        width: 120
-        height: 1000
         id: 'line-canvas'
       }
 
@@ -43,10 +41,17 @@ class MinimapEditorView extends ScrollView
 
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
-    @buffer = @editorView.getEditor().buffer
+    @buffer = @editorView.getEditor().getBuffer()
+    @displayBuffer = @editor.displayBuffer
 
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
-      @pendingChanges.push changes
+      #@pendingChanges.push changes
+      @requestUpdate()
+
+    @subscribe @editor, 'contents-modified.minimap', =>
+      @requestUpdate()
+
+    @subscribe @displayBuffer, 'tokenized.minimap', =>
       @requestUpdate()
 
   requestUpdate: ->
@@ -72,9 +77,6 @@ class MinimapEditorView extends ScrollView
     @cachedScrollTop = scrollTop
     @requestUpdate()
 
-
-  registerBufferChanges: (event) =>
-    @pendingChanges.push event
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
   getLineHeight: -> 2
@@ -133,6 +135,7 @@ class MinimapEditorView extends ScrollView
 
   update: =>
     return unless @editorView?
+    return unless @displayBuffer.tokenizedBuffer.fullyTokenized
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
