@@ -83,7 +83,9 @@ class MinimapEditorView extends ScrollView
 
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
-  getLineHeight: -> 2
+  getLineHeight: -> 3
+  getCharHeight: -> 2
+  getCharWidth: -> 1
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
@@ -100,6 +102,7 @@ class MinimapEditorView extends ScrollView
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
+  getDefaultColor: -> @defaultColor ||= @minimapView.editorView.css('color')
 
   retrieveTokenColorFromDom: (token)->
     # This function insert a dummy token element in the DOM compute its style,
@@ -139,34 +142,38 @@ class MinimapEditorView extends ScrollView
 
   drawLines: (firstRow, lastRow, offsetRow, context) ->
     lines = @editor.linesForScreenRows(firstRow, lastRow)
-    context.lineWidth = 1
     lineHeight = @getLineHeight()
+    charHeight = @getCharHeight()
+    charWidth = @getCharWidth()
+    context.lineWidth = charHeight
+    displayCodeHighlights = @minimapView.displayCodeHighlights
 
-    if @minimapView.displayCodeHighlights
-      for line, row in lines
-        x = 0
-        y = offsetRow + row
-        for token in line.tokens
-          w = token.screenDelta
-          if not token.isOnlyWhitespace()
-            color = @getTokenColor(token)
-            context.beginPath()
-            context.strokeStyle = color
-            context.moveTo(x, y*lineHeight)
-            context.lineTo(x+w, y*lineHeight)
-            context.stroke()
-          x += w
-    else
-      context.strokeStyle = "#C0C0C0"
-      context.beginPath()
-      for line, row in lines
-        w = line.text.length
-        y = offsetRow + row
-        if w > 0
-          w0 = line.indentLevel * 2
-          context.moveTo(w0, y*lineHeight+0.5)
-          context.lineTo(w, y*lineHeight+0.5)
-      context.stroke()
+    for line, row in lines
+      x = 0
+      y = offsetRow + row
+      for token in line.tokens
+        w = token.screenDelta
+        unless token.isOnlyWhitespace() or token.hasInvisibleCharacters
+          color = if displayCodeHighlights then @getTokenColor(token) else @getDefaultColor()
+          context.fillStyle = color
+          chars = 0
+          y0 = y*lineHeight
+          for char in token.value
+            if /\s/.test char
+              if chars > 0
+                context.fillRect(x-chars, y0, chars*charWidth, charHeight)
+                context.fill()
+              chars = 0
+            else
+              chars++
+
+            x += charWidth
+
+          if chars > 0
+            context.fillRect(x-chars, y0, chars*charWidth, charHeight)
+            context.fill()
+        else
+          x += w * charWidth
 
   update: =>
     return unless @editorView?
@@ -185,7 +192,7 @@ class MinimapEditorView extends ScrollView
       @pendingChanges = []
 
     if @offscreenFirstRow?
-      @context.drawImage(@offscreenCanvas, 0, (@offscreenFirstRow-firstRow) * 2)
+      @context.drawImage(@offscreenCanvas, 0, (@offscreenFirstRow-firstRow) * @getLineHeight())
       if firstRow < @offscreenFirstRow
         @drawLines(firstRow, @offscreenFirstRow, 0, @context)
       if lastRow > @offscreenLastRow
