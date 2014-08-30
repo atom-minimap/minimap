@@ -198,7 +198,7 @@ class MinimapView extends View
     @updatePositions()
 
   updateScroll: =>
-    @updateScrollX()
+    @indicator.setX(@scrollView[0].scrollLeft)
     @updateScrollY()
     @trigger 'minimap:scroll'
 
