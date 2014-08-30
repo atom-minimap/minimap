@@ -5,7 +5,6 @@ Delegato = require 'delegato'
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
 MinimapOpenQuickSettingsView = require './minimap-open-quick-settings-view'
-CONFIGS = require './config'
 
 module.exports =
 class MinimapView extends View
@@ -24,7 +23,6 @@ class MinimapView extends View
         @div outlet: 'miniOverlayer', class: "minimap-overlayer", =>
           @div outlet: 'miniVisibleArea', class: "minimap-visible-area"
 
-  configs: {}
   isClicked: false
 
   # VIEW CREATION/DESTRUCTION
@@ -64,11 +62,6 @@ class MinimapView extends View
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
 
     @subscribe $(window), 'resize:end', @onScrollViewResized
-
-    themeProp = 'minimap.theme'
-    @subscribe atom.config.observe themeProp, callNow: true, =>
-      @configs.theme = atom.config.get(themeProp) ? CONFIGS.theme
-      @updateTheme()
 
     @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
     @miniScroller.toggleClass 'visible', @miniScrollVisible
@@ -136,9 +129,6 @@ class MinimapView extends View
   getMinimapClientRect: -> @[0].getBoundingClientRect()
 
   # UPDATE METHODS
-
-  # Update Styles
-  updateTheme: -> @attr 'data-theme': @configs.theme
 
   updateMinimapEditorView: => @miniEditorView.update()
 
