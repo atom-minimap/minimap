@@ -28,6 +28,7 @@ class MinimapEditorView extends ScrollView
 
   initialize: ->
     @lineOverdraw = atom.config.get('minimap.lineOverdraw')
+    @lineCanvas.webkitImageSmoothingEnabled = false
 
     atom.config.observe 'minimap.lineOverdraw', =>
       @lineOverdraw = atom.config.get('minimap.lineOverdraw')
