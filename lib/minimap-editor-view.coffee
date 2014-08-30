@@ -90,6 +90,7 @@ class MinimapEditorView extends ScrollView
   getLineHeight: -> 3
   getCharHeight: -> 2
   getCharWidth: -> 1
+  getTextOpacity: -> 0.6
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
@@ -106,7 +107,8 @@ class MinimapEditorView extends ScrollView
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
-  getDefaultColor: -> @defaultColor ||= @minimapView.editorView.css('color')
+  getDefaultColor: ->
+    @defaultColor ||= @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
   retrieveTokenColorFromDom: (token)->
     # This function insert a dummy token element in the DOM compute its style,
@@ -132,7 +134,7 @@ class MinimapEditorView extends ScrollView
         parent.appendChild(node)
       parent = node
 
-    color = getComputedStyle(parent).getPropertyValue('color')
+    color = @transparentize(getComputedStyle(parent).getPropertyValue('color'), @getTextOpacity())
     root.innerHTML = ''
     color
 
@@ -215,6 +217,9 @@ class MinimapEditorView extends ScrollView
     @offscreenLastRow = lastRow
 
     @emit 'minimap:updated'
+
+  transparentize: (color, opacity=1) ->
+    color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
 
   getClientRect: ->
     canvas = @lineCanvas[0]
