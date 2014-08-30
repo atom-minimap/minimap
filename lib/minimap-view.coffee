@@ -13,6 +13,9 @@ class MinimapView extends View
 
   @delegatesMethods 'getLineHeight', 'getCharHeight', 'getCharWidth', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'addLineClass', 'removeLineClass', 'removeAllLineClasses', 'pixelPositionForScreenPosition', toProperty: 'miniEditorView'
 
+  @delegatesProperty 'lineHeight', toMethod: 'getLineHeight'
+  @delegatesProperty 'charWidth', toMethod: 'getCharWidth'
+
   @content: ->
     @div class: 'minimap', =>
       @subview 'openQuickSettings', new MinimapOpenQuickSettingsView if atom.config.get('minimap.displayPluginsControls')

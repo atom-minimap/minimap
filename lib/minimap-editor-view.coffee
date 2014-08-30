@@ -1,11 +1,16 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
+Delegato = require 'delegato'
 Debug = require 'prolix'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
+  Delegato.includeInto(this)
   Debug('minimap').includeInto(this)
+
+  @delegatesProperty 'firstRenderedScreenRow', toMethod: 'getFirstVisibleScreenRow'
+  @delegatesProperty 'lastRenderedScreenRow', toMethod: 'getLastVisibleScreenRow'
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
