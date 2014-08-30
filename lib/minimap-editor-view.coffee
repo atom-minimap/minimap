@@ -161,7 +161,6 @@ class MinimapEditorView extends ScrollView
             if /\s/.test char
               if chars > 0
                 context.fillRect(x-chars, y0, chars*charWidth, charHeight)
-                context.fill()
               chars = 0
             else
               chars++
@@ -170,9 +169,9 @@ class MinimapEditorView extends ScrollView
 
           if chars > 0
             context.fillRect(x-chars, y0, chars*charWidth, charHeight)
-            context.fill()
         else
           x += w * charWidth
+    context.fill()
 
   update: =>
     return unless @editorView?
