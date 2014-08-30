@@ -81,7 +81,6 @@ class MinimapEditorView extends ScrollView
     @cachedScrollTop = scrollTop
     @requestUpdate()
 
-
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
   getLineHeight: -> 3
   getCharHeight: -> 2
@@ -199,7 +198,6 @@ class MinimapEditorView extends ScrollView
         @drawLines(@offscreenLastRow, lastRow, @offscreenLastRow-firstRow, @context)
     else
       @drawLines(firstRow, lastRow, 0, @context)
-
 
     # copy displayed canvas to offscreen canvas
     @offscreenCanvas.width = @lineCanvas[0].width
