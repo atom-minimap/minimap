@@ -23,6 +23,9 @@ class MinimapEditorView extends ScrollView
     @context = @lineCanvas[0].getContext('2d')
     @tokenColorCache = {}
 
+    @offscreenCanvas = document.createElement('canvas')
+    @offscreenCtxt = @offscreenCanvas.getContext('2d')
+
   initialize: ->
     @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
@@ -66,8 +69,8 @@ class MinimapEditorView extends ScrollView
 
   forceUpdate: ->
     @tokenColorCache = {}
-    @firstRenderedScreenRow = null
-    @lastRenderedScreenRow = null
+    @offscreenFirstRow = null
+    @offscreenLastRow = null
     @requestUpdate()
 
   scrollTop: (scrollTop, options={}) ->
@@ -133,6 +136,37 @@ class MinimapEditorView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
+  drawLines: (firstRow, lastRow, offsetRow, context) ->
+    lines = @editor.linesForScreenRows(firstRow, lastRow)
+    context.lineWidth = 1
+    lineHeight = @getLineHeight()
+
+    if @minimapView.displayCodeHighlights
+      for line, row in lines
+        x = 0
+        y = offsetRow + row
+        for token in line.tokens
+          w = token.screenDelta
+          if not token.isOnlyWhitespace()
+            color = @getTokenColor(token)
+            context.beginPath()
+            context.strokeStyle = color
+            context.moveTo(x, y*lineHeight)
+            context.lineTo(x+w, y*lineHeight)
+            context.stroke()
+          x += w
+    else
+      context.strokeStyle = "#C0C0C0"
+      context.beginPath()
+      for line, row in lines
+        w = line.text.length
+        y = offsetRow + row
+        if w > 0
+          w0 = line.indentLevel * 2
+          context.moveTo(w0, y*lineHeight+0.5)
+          context.lineTo(w, y*lineHeight+0.5)
+      context.stroke()
+
   update: =>
     return unless @editorView?
     return unless @displayBuffer.tokenizedBuffer.fullyTokenized
@@ -141,32 +175,25 @@ class MinimapEditorView extends ScrollView
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
     @lineCanvas[0].height = @lineCanvas[0].offsetHeight
 
-    lines = @editor.linesForScreenRows(@getFirstVisibleScreenRow(), @getLastVisibleScreenRow())
-    @context.lineWidth = 1
+    firstRow = @getFirstVisibleScreenRow()
+    lastRow = @getLastVisibleScreenRow()
 
-    if @minimapView.displayCodeHighlights
-      for line, y in lines
-        x = 0
-        for token in line.tokens
-          w = token.screenDelta
-          if not token.isOnlyWhitespace()
-            color = @getTokenColor(token)
-            @context.beginPath()
-            @context.strokeStyle = color
-            @context.moveTo(x, 2*y)
-            @context.lineTo(x+w, 2*y)
-            @context.stroke()
-          x += w
+    if @offscreenFirstRow?
+      @context.drawImage(@offscreenCanvas, 0, (@offscreenFirstRow-firstRow) * 2)
+      if firstRow < @offscreenFirstRow
+        @drawLines(firstRow, @offscreenFirstRow, 0, @context)
+      if lastRow > @offscreenLastRow
+        @drawLines(@offscreenLastRow, lastRow, @offscreenLastRow-firstRow, @context)
     else
-      @context.strokeStyle = "#C0C0C0"
-      @context.beginPath()
-      for line, y in lines
-        w = line.text.length
-        if w > 0
-          w0 = line.indentLevel * 2
-          @context.moveTo(w0, 2*y+0.5)
-          @context.lineTo(w, 2*y+0.5)
-      @context.stroke()
+      @drawLines(firstRow, lastRow, 0, @context)
+
+
+    # copy displayed canvas to offscreen canvas
+    @offscreenCanvas.width = @lineCanvas[0].width
+    @offscreenCanvas.height = @lineCanvas[0].height
+    @offscreenCtxt.drawImage(@lineCanvas[0], 0, 0)
+    @offscreenFirstRow = firstRow
+    @offscreenLastRow = lastRow
 
     @emit 'minimap:updated'
 
