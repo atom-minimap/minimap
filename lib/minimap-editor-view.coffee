@@ -48,7 +48,7 @@ class MinimapEditorView extends ScrollView
     @displayBuffer = @editor.displayBuffer
 
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
-      #@pendingChanges.push changes
+      @pendingChanges.push changes
       @requestUpdate()
 
     @subscribe @editor, 'contents-modified.minimap', =>
@@ -177,6 +177,11 @@ class MinimapEditorView extends ScrollView
 
     firstRow = @getFirstVisibleScreenRow()
     lastRow = @getLastVisibleScreenRow()
+
+    # TODO: for now we don't handle screen changes, simply ask for a full redraw
+    if @pendingChanges.length > 0
+      @offscreenFirstRow = null
+      @pendingChanges = []
 
     if @offscreenFirstRow?
       @context.drawImage(@offscreenCanvas, 0, (@offscreenFirstRow-firstRow) * 2)
