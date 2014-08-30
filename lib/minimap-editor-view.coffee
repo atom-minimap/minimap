@@ -158,8 +158,11 @@ class MinimapEditorView extends ScrollView
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace() or token.hasInvisibleCharacters
-          color = if displayCodeHighlights then @getTokenColor(token) else @getDefaultColor()
-          context.fillStyle = color
+          context.fillStyle = if displayCodeHighlights
+            @getTokenColor(token)
+          else
+            @getDefaultColor()
+
           chars = 0
           y0 = y*lineHeight
           for char in token.value
