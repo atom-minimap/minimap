@@ -268,7 +268,9 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
-  onScrollViewResized: => @updateMinimapView()
+  onScrollViewResized: =>
+    @miniEditorView.lineCanvas.height(@editorView.height())
+    @updateMinimapView()
 
   onDragStart: (e) =>
     # Handle left-click only
