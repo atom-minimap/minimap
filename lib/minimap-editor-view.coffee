@@ -62,9 +62,6 @@ class MinimapEditorView extends ScrollView
       @pendingChanges.push changes
       @requestUpdate()
 
-    @subscribe @editor, 'contents-modified.minimap', =>
-      @requestUpdate()
-
     @subscribe @displayBuffer, 'tokenized.minimap', =>
       @requestUpdate()
 
