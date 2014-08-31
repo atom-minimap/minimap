@@ -151,7 +151,8 @@ class MinimapEditorView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
-  drawLines: (firstRow, lastRow, offsetRow, context) ->
+  drawLines: (context, firstRow, lastRow, offsetRow) ->
+    return if firstRow > lastRow
     lines = @editor.linesForScreenRows(firstRow, lastRow)
     lineHeight = @getLineHeight()
     charHeight = @getCharHeight()
@@ -188,6 +189,23 @@ class MinimapEditorView extends ScrollView
           x += w * charWidth
     context.fill()
 
+  copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
+    lineHeight = @getLineHeight()
+    context.drawImage(bitmapCanvas,
+        0, srcRow * lineHeight,
+        bitmapCanvas.width, rowCount * lineHeight,
+        0, destRow * lineHeight,
+        bitmapCanvas.width, rowCount * lineHeight)
+
+  fillGapsBetweenIntactRanges: (context, intactRanges, firstRow, lastRow) ->
+    currentRow = firstRow
+    # intactRanges is sorted, we can safely fill between ranges
+    for intact in intactRanges
+      @drawLines(context, currentRow, intact.start-1, currentRow-firstRow)
+      currentRow = intact.end
+    if currentRow <= lastRow
+      @drawLines(context, currentRow, lastRow, currentRow-firstRow)
+
   update: =>
     return unless @editorView?
     return unless @displayBuffer.tokenizedBuffer.fullyTokenized
@@ -199,19 +217,13 @@ class MinimapEditorView extends ScrollView
     firstRow = @getFirstVisibleScreenRow()
     lastRow = @getLastVisibleScreenRow()
 
-    # TODO: for now we don't handle screen changes, simply ask for a full redraw
-    if @pendingChanges.length > 0
-      @offscreenFirstRow = null
-      @pendingChanges = []
-
-    if @offscreenFirstRow?
-      @context.drawImage(@offscreenCanvas, 0, (@offscreenFirstRow-firstRow) * @getLineHeight())
-      if firstRow < @offscreenFirstRow
-        @drawLines(firstRow, @offscreenFirstRow, 0, @context)
-      if lastRow > @offscreenLastRow
-        @drawLines(@offscreenLastRow, lastRow, @offscreenLastRow-firstRow, @context)
+    intactRanges = @computeIntactRanges(firstRow, lastRow)
+    if intactRanges.length is 0
+      @drawLines(@context, firstRow, lastRow, 0)
     else
-      @drawLines(firstRow, lastRow, 0, @context)
+      for intact in intactRanges
+        @copyBitmapPart(@context, @offscreenCanvas, intact.domStart, intact.start-firstRow, intact.end-intact.start)
+      @fillGapsBetweenIntactRanges(@context, intactRanges, firstRow, lastRow)
 
     # copy displayed canvas to offscreen canvas
     @offscreenCanvas.width = @lineCanvas[0].width
@@ -231,3 +243,54 @@ class MinimapEditorView extends ScrollView
       width: canvas.scrollWidth,
       height: @getMinimapHeight()
     }
+
+  computeIntactRanges: (firstRow, lastRow) ->
+    return [] if !@offscreenFirstRow? and !@offscreenLastRow?
+
+    intactRanges = [{start: @offscreenFirstRow, end: @offscreenLastRow, domStart: 0}]
+
+    for change in @pendingChanges
+      newIntactRanges = []
+      for range in intactRanges
+        if change.end < range.start and change.screenDelta != 0
+          newIntactRanges.push(
+            start: range.start + change.screenDelta
+            end: range.end + change.screenDelta
+            domStart: range.domStart
+          )
+        else if change.end < range.start or change.start > range.end
+          newIntactRanges.push(range)
+        else
+          if change.start > range.start
+            newIntactRanges.push(
+              start: range.start
+              end: change.start - 1
+              domStart: range.domStart)
+          if change.end < range.end
+            newIntactRanges.push(
+              start: change.end + change.screenDelta + 1
+              end: range.end + change.screenDelta
+              domStart: range.domStart + change.end + 1 - range.start
+            )
+
+      intactRanges = newIntactRanges
+
+    @truncateIntactRanges(intactRanges, firstRow, lastRow)
+
+    @pendingChanges = []
+
+    intactRanges
+
+  truncateIntactRanges: (intactRanges, firstRow, lastRow) ->
+    i = 0
+    while i < intactRanges.length
+      range = intactRanges[i]
+      if range.start < firstRow
+        range.domStart += firstRow - range.start
+        range.start = firstRow
+      if range.end > lastRow
+        range.end = lastRow
+      if range.start >= range.end
+        intactRanges.splice(i--, 1)
+      i++
+    intactRanges.sort (a, b) -> a.domStart - b.domStart
