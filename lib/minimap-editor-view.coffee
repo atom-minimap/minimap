@@ -1,11 +1,16 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
+Delegato = require 'delegato'
 Debug = require 'prolix'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
+  Delegato.includeInto(this)
   Debug('minimap').includeInto(this)
+
+  @delegatesProperty 'firstRenderedScreenRow', toMethod: 'getFirstVisibleScreenRow'
+  @delegatesProperty 'lastRenderedScreenRow', toMethod: 'getLastVisibleScreenRow'
 
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
@@ -84,12 +89,13 @@ class MinimapEditorView extends ScrollView
     return if scrollTop is @cachedScrollTop
 
     @cachedScrollTop = scrollTop
-    @requestUpdate()
+    @update()
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
   getLineHeight: -> 3
   getCharHeight: -> 2
   getCharWidth: -> 1
+  getTextOpacity: -> 0.6
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
@@ -106,7 +112,8 @@ class MinimapEditorView extends ScrollView
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
-  getDefaultColor: -> @defaultColor ||= @minimapView.editorView.css('color')
+  getDefaultColor: ->
+    @defaultColor ||= @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
   retrieveTokenColorFromDom: (token)->
     # This function insert a dummy token element in the DOM compute its style,
@@ -132,7 +139,7 @@ class MinimapEditorView extends ScrollView
         parent.appendChild(node)
       parent = node
 
-    color = getComputedStyle(parent).getPropertyValue('color')
+    color = @transparentize(getComputedStyle(parent).getPropertyValue('color'), @getTextOpacity())
     root.innerHTML = ''
     color
 
@@ -214,6 +221,9 @@ class MinimapEditorView extends ScrollView
     @offscreenLastRow = lastRow
 
     @emit 'minimap:updated'
+
+  transparentize: (color, opacity=1) ->
+    color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
 
   getClientRect: ->
     canvas = @lineCanvas[0]

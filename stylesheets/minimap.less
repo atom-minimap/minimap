@@ -97,18 +97,6 @@
     background: transparent;
   }
 
-  .lines {
-    -webkit-font-smoothing: none;
-
-    &.hidden {
-      display: none;
-    }
-  }
-
-  .line {
-    opacity: .6;
-  }
-
   .minimap-scroller {
     position: absolute;
     display: none;
@@ -152,15 +140,7 @@
 
   .minimap-canvas {
     width: 100%;
-    height: 100%;
-  }
-
-  // Themes
-  &[data-theme="redacted"] {
-    .editor {
-      font-family: Redacted !important;
-      font-weight: normal !important;
-    }
+    height: auto;
   }
 
   // Mixins

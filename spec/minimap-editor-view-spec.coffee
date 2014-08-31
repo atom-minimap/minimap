@@ -5,7 +5,7 @@ Minimap = require '../lib/minimap'
 {WorkspaceView} = require 'atom'
 
 
-describe "MinimapEditorView", ->
+xdescribe "MinimapEditorView", ->
   [minimapView, minimapEditorView, editorView, updateCallback] = []
 
   afterEach -> minimapView?.detach()
