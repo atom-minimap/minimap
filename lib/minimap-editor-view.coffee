@@ -86,7 +86,7 @@ class MinimapEditorView extends ScrollView
     return if scrollTop is @cachedScrollTop
 
     @cachedScrollTop = scrollTop
-    @update()
+    @requestUpdate()
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
   getLineHeight: -> 3
