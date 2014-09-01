@@ -266,6 +266,9 @@ class MinimapView extends View
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
+    # compute distance between indicator top and where it has been grabbed
+    y = e.pageY - @offsetTop
+    @grabY = y - (@indicator.y + @indicator.scroller.y)
     @on 'mousemove.visible-area', @onMove
 
   onMove: (e) =>
@@ -279,11 +282,9 @@ class MinimapView extends View
     # The logic for dragging the scroller is a bit different
     # than for a single click.
     # Here we have to compensate for the minimap scroll
-
-    # TODO: need to center the scroller where the mouse has grabbed it
     y = e.pageY - @offsetTop
-    top = y / @indicator.wrapper.height * @indicator.scroller.height/ @scaleY
-    @editorView.scrollTop(top)
+    top = (y-@grabY) * (@indicator.scroller.height-@indicator.height) / (@indicator.wrapper.height-@indicator.height)
+    @editorView.scrollTop(top / @scaleY)
 
 
   # OTHER PRIVATE METHODS
