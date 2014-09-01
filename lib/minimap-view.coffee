@@ -61,8 +61,16 @@ class MinimapView extends View
     # Fix items movin to another pane.
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
-    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapView
+    # The mutation observer is required so that we can relocate the minimap
+    # everytime the children of the pane changes.
+    @observer = new MutationObserver (mutations) =>
+      @offset top: (@offsetTop = @editorView.offset().top)
 
+    config = childList: true
+    @observer.observe @paneView.element, config
+
+    # The resize:end event is dispatched at the end of an animated resize
+    # to not flood the cpu with updates.
     @subscribe $(window), 'resize:end', @onScrollViewResized
 
     @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
@@ -95,6 +103,7 @@ class MinimapView extends View
   destroy: ->
     @off()
     @unsubscribe()
+    @observer.disconnect()
 
     @detachFromPaneView()
     @miniEditorView.destroy()
@@ -109,7 +118,6 @@ class MinimapView extends View
   detachFromPaneView: ->
     @paneView.removeClass('with-minimap')
     @detach()
-
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
@@ -137,9 +145,6 @@ class MinimapView extends View
   updateMinimapView: =>
     return unless @editorView
     return unless @indicator
-
-    # offset minimap
-    @offset top: (@offsetTop = @editorView.offset().top)
 
     {width, height} = @getMinimapClientRect()
     editorViewRect = @getEditorViewClientRect()
@@ -205,8 +210,13 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(0, @indicator.scroller.y+@indicator.y)
-    @miniEditorView.scrollTop @indicator.scroller.y * -1
+    @transform @miniVisibleArea[0], @translate(0, @indicator.y)
+    @miniEditorView.scrollTop(@indicator.scroller.y * -1)
+
+    @transform @miniEditorView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
+
+    @transform @miniUnderlayer[0], @translate(0, @indicator.scroller.y)
+    @transform @miniOverlayer[0], @translate(0, @indicator.scroller.y)
 
     @updateScrollerPosition()
 
