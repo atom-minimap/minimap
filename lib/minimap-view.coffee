@@ -61,6 +61,8 @@ class MinimapView extends View
     # Fix items movin to another pane.
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
+    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapSize
+
     # The mutation observer is required so that we can relocate the minimap
     # everytime the children of the pane changes.
     @observer = new MutationObserver (mutations) =>
@@ -142,9 +144,8 @@ class MinimapView extends View
 
   updateMinimapEditorView: => @miniEditorView.update()
 
-  updateMinimapView: =>
-    return unless @editorView
-    return unless @indicator
+  updateMinimapSize: =>
+    return unless @indicator?
 
     {width, height} = @getMinimapClientRect()
     editorViewRect = @getEditorViewClientRect()
@@ -180,8 +181,14 @@ class MinimapView extends View
     # Compute boundary
     @indicator.updateBoundary()
 
+
+  updateMinimapView: =>
+    return unless @editorView
+    return unless @indicator
+
     return if @frameRequested
 
+    @updateMinimapSize()
     @frameRequested = true
     requestAnimationFrame =>
       @updateScroll()
