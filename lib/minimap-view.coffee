@@ -54,9 +54,8 @@ class MinimapView extends View
 
   initialize: ->
     @on 'mousewheel', @onMouseWheel
-    @on 'mousedown', (e) =>
-      @onMouseDown(e)
-      @onDragStart(e)
+    @on 'mousedown', @onMouseDown
+    @miniVisibleArea.on 'mousedown', @onDragStart
 
     @subscribe @paneView.model.$activeItem, @onActiveItemChanged
     # Fix items movin to another pane.
@@ -206,12 +205,8 @@ class MinimapView extends View
     @trigger 'minimap:scroll'
 
   updatePositions: ->
-    @transform @miniVisibleArea[0], @translate(0, @indicator.y)
-    @miniEditorView.scrollTop(@indicator.scroller.y * -1)
-
-    @transform @miniEditorView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
-    @transform @miniUnderlayer[0], @translate(0, @indicator.scroller.y)
-    @transform @miniOverlayer[0], @translate(0, @indicator.scroller.y)
+    @transform @miniVisibleArea[0], @translate(0, @indicator.scroller.y+@indicator.y)
+    @miniEditorView.scrollTop @indicator.scroller.y * -1
 
     @updateScrollerPosition()
 
@@ -268,13 +263,29 @@ class MinimapView extends View
   onDragStart: (e) =>
     # Handle left-click only
     return if e.which isnt 1
+    @isClicked = true
+    e.preventDefault()
+    e.stopPropagation()
+    # compute distance between indicator top and where it has been grabbed
+    y = e.pageY - @offsetTop
+    @grabY = y - (@indicator.y + @indicator.scroller.y)
     @on 'mousemove.visible-area', @onMove
 
   onMove: (e) =>
     if e.which is 1
-      @onMouseDown e
+      @onDrag e
     else
+      @isClicked = false
       @off '.visible-area'
+
+  onDrag: (e) =>
+    # The logic for dragging the scroller is a bit different
+    # than for a single click.
+    # Here we have to compensate for the minimap scroll
+    y = e.pageY - @offsetTop
+    top = (y-@grabY) * (@indicator.scroller.height-@indicator.height) / (@indicator.wrapper.height-@indicator.height)
+    @editorView.scrollTop(top / @scaleY)
+
 
   # OTHER PRIVATE METHODS
 
