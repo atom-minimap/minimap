@@ -119,16 +119,12 @@ class MinimapEditorView extends ScrollView
     # return its color property, and remove the element from the DOM.
     # This is quite an expensive operation so results are cached in getTokenColor.
     # Note: it's probably not the best way to do that, but that's the simpler approach I found.
-    dummyNode = @editorView.find('#minimap-dummy-node')
-    if dummyNode[0]?
-      root = dummyNode[0]
-    else
-      root = document.createElement('span')
-      root.style.visibility = 'hidden'
-      root.id = 'minimap-dummy-node'
-      @editorView.append(root)
+    unless @dummyNode?
+      @dummyNode = document.createElement('span')
+      @dummyNode.style.visibility = 'hidden'
+      @editorView.append(@dummyNode)
 
-    parent = root
+    parent = @dummyNode
     for scope in token.scopes
       node = document.createElement('span')
       # css class is the token scope without the dots,
@@ -139,7 +135,7 @@ class MinimapEditorView extends ScrollView
       parent = node
 
     color = @transparentize(getComputedStyle(parent).getPropertyValue('color'), @getTextOpacity())
-    root.innerHTML = ''
+    @dummyNode.innerHTML = ''
     color
 
   getTokenColor: (token)->
