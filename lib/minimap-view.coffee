@@ -50,6 +50,10 @@ class MinimapView extends View
     @miniEditorView.minimapView = this
     @miniEditorView.setEditorView(@editorView)
 
+    range = @editor.getBuffer().rangeForRow(46)
+    marker = @editor.markBufferRange(range)
+    decoration = @decorateMarker(marker, type: 'line', scope: ".minimap .lines .git-line-added")
+
     @updateMinimapView()
 
   initialize: ->

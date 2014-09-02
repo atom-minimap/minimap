@@ -8,6 +8,8 @@ class DecorationManagement extends Mixin
     @decorationsByMarkerId = {}
     @decorationMarkerChangedSubscriptions = {}
     @decorationMarkerDestroyedSubscriptions = {}
+    @decorationUpdatedSubscriptions = {}
+    @decorationDestroyedSubscriptions = {}
 
   decorationForId: (id) ->
     @decorationsById[id]
@@ -38,12 +40,35 @@ class DecorationManagement extends Mixin
     @decorationsByMarkerId[marker.id] ?= []
     @decorationsByMarkerId[marker.id].push(decoration)
     @decorationsById[decoration.id] = decoration
+
+    @decorationUpdatedSubscriptions[decoration.id] ?= @subscribe decoration, 'updated', (event) =>
+      startScreenRow = decoration.marker.range.start.row
+      endScreenRow = decoration.marker.range.end.row
+      screenDelta = (@lastRenderedScreenRow - @firstRenderedScreenRow) - (endScreenRow - startScreenRow)
+
+      changeEvent =
+        start: startScreenRow
+        end: endScreenRow
+        screenDelta: screenDelta
+
+      @stackChanges changeEvent
+
+    @decorationDestroyedSubscriptions[decoration.id] ?= @subscribe decoration, 'destroyed', (event) =>
+      @removeDecoration(decoration)
+
     @trigger 'minimap:decoration-added', marker, decoration
     decoration
 
   removeDecoration: (decoration) ->
     {marker} = decoration
     return unless decorations = @decorationsByMarkerId[marker.id]
+
+    @decorationUpdatedSubscriptions[decoration.id].off()
+    @decorationDestroyedSubscriptions[decoration.id].off()
+
+    delete @decorationUpdatedSubscriptions[decoration.id]
+    delete @decorationDestroyedSubscriptions[decoration.id]
+
     index = decorations.indexOf(decoration)
 
     if index > -1

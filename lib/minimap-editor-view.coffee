@@ -14,6 +14,8 @@ class MinimapEditorView extends ScrollView
   @delegatesProperty 'firstRenderedScreenRow', toMethod: 'getFirstVisibleScreenRow'
   @delegatesProperty 'lastRenderedScreenRow', toMethod: 'getLastVisibleScreenRow'
 
+  @delegatesMethods 'getMarker', 'findMarkers', toProperty: 'editor'
+
   @content: ->
     @div class: 'minimap-editor editor editor-colors', =>
       @tag 'canvas', {
@@ -29,6 +31,7 @@ class MinimapEditorView extends ScrollView
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
     @tokenColorCache = {}
+    @initializeDecorations()
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -61,11 +64,14 @@ class MinimapEditorView extends ScrollView
     @displayBuffer = @editor.displayBuffer
 
     @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
-      @pendingChanges.push changes
-      @requestUpdate()
+      @stackChanges(changes)
 
     @subscribe @displayBuffer, 'tokenized.minimap', =>
       @requestUpdate()
+
+  stackChanges: (changes) ->
+    @pendingChanges.push changes
+    @requestUpdate()
 
   requestUpdate: ->
     return if @frameRequested
@@ -160,6 +166,7 @@ class MinimapEditorView extends ScrollView
     charWidth = @getCharWidth()
     context.lineWidth = charHeight
     displayCodeHighlights = @minimapView.displayCodeHighlights
+    decorations = @decorationsForScreenRowRange(firstRow, lastRow)
 
     for line, row in lines
       x = 0
