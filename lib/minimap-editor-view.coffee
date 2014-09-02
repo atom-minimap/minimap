@@ -1,12 +1,14 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
 Delegato = require 'delegato'
+DecorationManagement = require './mixins/decoration_management'
 Debug = require 'prolix'
 
 module.exports =
 class MinimapEditorView extends ScrollView
   Emitter.includeInto(this)
   Delegato.includeInto(this)
+  DecorationManagement.includeInto(this)
   Debug('minimap').includeInto(this)
 
   @delegatesProperty 'firstRenderedScreenRow', toMethod: 'getFirstVisibleScreenRow'
