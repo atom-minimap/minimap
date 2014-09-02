@@ -32,13 +32,13 @@ class DecorationManagement extends Mixin
       # in the change handler. Bookmarks does this.
       if decorations?
         for decoration in decorations
-          @emit 'decoration-changed', marker, decoration, event
+          @trigger 'minimap:decoration-changed', marker, decoration, event
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
     @decorationsByMarkerId[marker.id].push(decoration)
     @decorationsById[decoration.id] = decoration
-    @emit 'decoration-added', marker, decoration
+    @trigger 'minimap:decoration-added', marker, decoration
     decoration
 
   removeDecoration: (decoration) ->
@@ -49,13 +49,13 @@ class DecorationManagement extends Mixin
     if index > -1
       decorations.splice(index, 1)
       delete @decorationsById[decoration.id]
-      @emit 'decoration-removed', marker, decoration
+      @trigger 'minimap:decoration-removed', marker, decoration
       @removedAllMarkerDecorations(marker) if decorations.length is 0
 
   removeAllDecorationsForMarker: (marker) ->
     decorations = @decorationsByMarkerId[marker.id].slice()
     for decoration in decorations
-      @emit 'decoration-removed', marker, decoration
+      @trigger 'minimap:decoration-removed', marker, decoration
     @removedAllMarkerDecorations(marker)
 
   removedAllMarkerDecorations: (marker) ->
@@ -67,4 +67,4 @@ class DecorationManagement extends Mixin
     delete @decorationMarkerDestroyedSubscriptions[marker.id]
 
   decorationUpdated: (decoration) ->
-    @emit 'decoration-updated', decoration
+    @trigger 'minimap:decoration-updated', decoration
