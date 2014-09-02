@@ -114,29 +114,35 @@ class MinimapEditorView extends ScrollView
   getDefaultColor: ->
     @defaultColor ||= @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
-  retrieveTokenColorFromDom: (token)->
-    # This function insert a dummy token element in the DOM compute its style,
-    # return its color property, and remove the element from the DOM.
-    # This is quite an expensive operation so results are cached in getTokenColor.
-    # Note: it's probably not the best way to do that, but that's the simpler approach I found.
+  ensureDummyNodeExistence: ->
     unless @dummyNode?
       @dummyNode = document.createElement('span')
       @dummyNode.style.visibility = 'hidden'
       @editorView.append(@dummyNode)
 
+  # This function insert a dummy token element in the DOM to compute its style,
+  # return the specified property, and remove the element from the DOM.
+  retrieveStyleFromDom: (scopes, property) ->
+    @ensureDummyNodeExistence()
+
     parent = @dummyNode
-    for scope in token.scopes
+    for scope in scopes
       node = document.createElement('span')
-      # css class is the token scope without the dots,
+      # css class is the scope without the dots,
       # see pushScope @ atom/atom/src/lines-component.coffee
       node.className = scope.replace(/\.+/g, ' ')
-      if parent
-        parent.appendChild(node)
+      parent.appendChild(node) if parent?
       parent = node
 
-    color = @transparentize(getComputedStyle(parent).getPropertyValue('color'), @getTextOpacity())
+    value = getComputedStyle(parent).getPropertyValue(property)
     @dummyNode.innerHTML = ''
-    color
+
+    value
+
+  retrieveTokenColorFromDom: (token)->
+    # This is quite an expensive operation so results are cached in getTokenColor.
+    color = @retrieveStyleFromDom(token.scopes, 'color')
+    @transparentize(color, @getTextOpacity())
 
   getTokenColor: (token)->
     #Retrieve color from cache if available
