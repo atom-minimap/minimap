@@ -1,7 +1,7 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
 Delegato = require 'delegato'
-DecorationManagement = require './mixins/decoration_management'
+DecorationManagement = require './mixins/decoration-management'
 Debug = require 'prolix'
 
 module.exports =
