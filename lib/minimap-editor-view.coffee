@@ -179,11 +179,11 @@ class MinimapEditorView extends ScrollView
 
     out
 
-  getHighlightDecorationsForRow: (row, decorations) ->
+  getHighlightDecorationsForRow: (row, position, decorations) ->
     out = []
     for id, array of decorations
       for decoration in array
-        if decoration.params.type is 'highlight' and
+        if decoration.params.type is "highlight-#{position}" and
            decoration.getMarker().getScreenRange().intersectsRow(row)
           out.push decoration
 
@@ -210,6 +210,10 @@ class MinimapEditorView extends ScrollView
         context.fillStyle = @getDecorationColor(decoration)
         context.fillRect(0,y0,canvasWidth,lineHeight)
 
+      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, 'under', decorations)
+      for decoration in highlightDecorations
+        @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
+
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace() or token.hasInvisibleCharacters
@@ -235,7 +239,7 @@ class MinimapEditorView extends ScrollView
         else
           x += w * charWidth
 
-      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, decorations)
+      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, 'over', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
