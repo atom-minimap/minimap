@@ -179,6 +179,16 @@ class MinimapEditorView extends ScrollView
 
     out
 
+  getHighlightDecorationsForRow: (row, decorations) ->
+    out = []
+    for id, array of decorations
+      for decoration in array
+        if decoration.params.type is 'highlight' and
+           decoration.getMarker().getScreenRange().intersectsRow(row)
+          out.push decoration
+
+    out
+
   drawLines: (context, firstRow, lastRow, offsetRow) ->
     return if firstRow > lastRow
     lines = @editor.linesForScreenRows(firstRow, lastRow)
@@ -192,11 +202,12 @@ class MinimapEditorView extends ScrollView
     for line, row in lines
       x = 0
       y = offsetRow + row
+      screenRow = firstRow + row
       y0 = y*lineHeight
 
-      lineDecorations = @getLineDecorationsForRow(y, decorations)
+      lineDecorations = @getLineDecorationsForRow(screenRow, decorations)
       for decoration in lineDecorations
-        console.log context.fillStyle = @getDecorationColor(decoration)
+        context.fillStyle = @getDecorationColor(decoration)
         context.fillRect(0,y0,canvasWidth,lineHeight)
 
       for token in line.tokens
@@ -223,7 +234,30 @@ class MinimapEditorView extends ScrollView
             context.fillRect(x-chars, y0, chars*charWidth, charHeight)
         else
           x += w * charWidth
+
+      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, decorations)
+      for decoration in highlightDecorations
+        @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
+
+
     context.fill()
+
+  drawHighlightDecoration: (context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth) ->
+    context.fillStyle = @getDecorationColor(decoration)
+    range = decoration.getMarker().getScreenRange()
+    rowSpan = range.end.row - range.start.row
+
+    if rowSpan is 1
+      colSpan = range.end.column - range.start.column
+      context.fillRect(range.start.column*charWidth,y*lineHeight,colSpan*charWidth,lineHeight)
+    else
+      if screenRow is range.start.row
+        x = range.start.column * charWidth
+        context.fillRect(x,y*lineHeight,canvasWidth-x,lineHeight)
+      else if screenRow is range.end.row
+        context.fillRect(0,y*lineHeight,range.end.column * charWidth,lineHeight)
+      else
+        context.fillRect(0,y*lineHeight,canvasWidth,lineHeight)
 
   copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
     lineHeight = @getLineHeight()
