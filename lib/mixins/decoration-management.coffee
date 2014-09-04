@@ -22,7 +22,11 @@ class DecorationManagement extends Mixin
         if decorations = @decorationsByMarkerId[marker.id]
           decorationsByMarkerId[marker.id] = decorations
     catch e
-      console.warn "Unexpected error when finding markers for an editor"
+      console.warn """
+      Unexpected error when finding markers for an editor
+      start row = #{startScreenRow}
+      end row = #{endScreenRow}
+      """
 
     decorationsByMarkerId
 
@@ -63,7 +67,12 @@ class DecorationManagement extends Mixin
 
     startScreenRow = range.start.row
     endScreenRow = range.end.row
-    screenDelta = (@lastRenderedScreenRow - @firstRenderedScreenRow) - (endScreenRow - startScreenRow)
+    lastRenderedScreenRow  = @getLastVisibleScreenRow()
+    firstRenderedScreenRow = @getFirstVisibleScreenRow()
+    console.log firstRenderedScreenRow, lastRenderedScreenRow
+    lastRenderedScreenRow = @editor.getLastScreenRow() if isNaN(lastRenderedScreenRow)
+    firstRenderedScreenRow = 0 if isNaN(firstRenderedScreenRow)
+    screenDelta = (lastRenderedScreenRow - firstRenderedScreenRow) - (endScreenRow - startScreenRow)
 
     changeEvent =
       start: startScreenRow

@@ -347,6 +347,10 @@ class MinimapEditorView extends ScrollView
               domStart: range.domStart + change.end + 1 - range.start
             )
 
+        intactRange = newIntactRanges[newIntactRanges.length - 1]
+        if intactRange? and (isNaN(intactRange.end) or isNaN(intactRange.start))
+          debugger
+
       intactRanges = newIntactRanges
 
     @truncateIntactRanges(intactRanges, firstRow, lastRow)
