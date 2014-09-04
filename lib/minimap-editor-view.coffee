@@ -78,7 +78,7 @@ class MinimapEditorView extends ScrollView
     return if @frameRequested
     @frameRequested = true
 
-    setImmediate =>
+    requestAnimationFrame =>
       @startBench()
       @update()
       @endBench('minimap update')
