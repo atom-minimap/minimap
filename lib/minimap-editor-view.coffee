@@ -31,6 +31,7 @@ class MinimapEditorView extends ScrollView
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
     @tokenColorCache = {}
+    @decorationColorCache = {}
     @initializeDecorations()
 
     @offscreenCanvas = document.createElement('canvas')
@@ -85,6 +86,7 @@ class MinimapEditorView extends ScrollView
 
   forceUpdate: ->
     @tokenColorCache = {}
+    @decorationColorCache = {}
     @offscreenFirstRow = null
     @offscreenLastRow = null
     @requestUpdate()
@@ -158,19 +160,45 @@ class MinimapEditorView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
+  retrieveDecorationColorFromDom: (decoration)->
+    @retrieveStyleFromDom(decoration.params.scope.split(/\s+/), 'background-color')
+
+  getDecorationColor: (decoration) ->
+    if decoration.params.scope not of @decorationColorCache
+      color = @retrieveDecorationColorFromDom(decoration)
+      @decorationColorCache[decoration.params.scope] = color
+    @decorationColorCache[decoration.params.scope]
+
+  getLineDecorationsForRow: (row, decorations) ->
+    out = []
+    for id, array of decorations
+      for decoration in array
+        if decoration.params.type is 'line' and
+           decoration.getMarker().getScreenRange().intersectsRow(row)
+          out.push decoration
+
+    out
+
   drawLines: (context, firstRow, lastRow, offsetRow) ->
     return if firstRow > lastRow
     lines = @editor.linesForScreenRows(firstRow, lastRow)
     lineHeight = @getLineHeight()
     charHeight = @getCharHeight()
     charWidth = @getCharWidth()
-    context.lineWidth = charHeight
+    canvasWidth = @lineCanvas.width()
     displayCodeHighlights = @minimapView.displayCodeHighlights
     decorations = @decorationsForScreenRowRange(firstRow, lastRow)
 
     for line, row in lines
       x = 0
       y = offsetRow + row
+      y0 = y*lineHeight
+
+      lineDecorations = @getLineDecorationsForRow(y, decorations)
+      for decoration in lineDecorations
+        console.log context.fillStyle = @getDecorationColor(decoration)
+        context.fillRect(0,y0,canvasWidth,lineHeight)
+
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace() or token.hasInvisibleCharacters
@@ -180,7 +208,7 @@ class MinimapEditorView extends ScrollView
             @getDefaultColor()
 
           chars = 0
-          y0 = y*lineHeight
+
           for char in token.value
             if /\s/.test char
               if chars > 0
