@@ -66,7 +66,7 @@ class MinimapView extends View
     # The mutation observer is required so that we can relocate the minimap
     # everytime the children of the pane changes.
     @observer = new MutationObserver (mutations) =>
-      @offset top: (@offsetTop = @editorView.offset().top)
+      @adjustTopPosition()
 
     config = childList: true
     @observer.observe @paneView.element, config
@@ -97,6 +97,9 @@ class MinimapView extends View
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
+  adjustTopPosition: ->
+    @offset top: (@offsetTop = @editorView.offset().top)
+
   setDisplayCodeHighlights: (value) ->
     if value isnt @displayCodeHighlights
       @displayCodeHighlights = value
@@ -116,6 +119,7 @@ class MinimapView extends View
   attachToPaneView: ->
     @paneView.addClass('with-minimap')
     @paneView.append(this)
+    @adjustTopPosition()
 
   detachFromPaneView: ->
     @paneView.removeClass('with-minimap')
