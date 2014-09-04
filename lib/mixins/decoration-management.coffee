@@ -42,26 +42,34 @@ class DecorationManagement extends Mixin
     @decorationsById[decoration.id] = decoration
 
     @decorationUpdatedSubscriptions[decoration.id] ?= @subscribe decoration, 'updated', (event) =>
-      startScreenRow = decoration.marker.range.start.row
-      endScreenRow = decoration.marker.range.end.row
-      screenDelta = (@lastRenderedScreenRow - @firstRenderedScreenRow) - (endScreenRow - startScreenRow)
-
-      changeEvent =
-        start: startScreenRow
-        end: endScreenRow
-        screenDelta: screenDelta
-
-      @stackChanges changeEvent
+      @stackDecorationChanges(decoration)
 
     @decorationDestroyedSubscriptions[decoration.id] ?= @subscribe decoration, 'destroyed', (event) =>
       @removeDecoration(decoration)
 
+    @stackDecorationChanges(decoration)
     @trigger 'minimap:decoration-added', marker, decoration
     decoration
+
+  stackDecorationChanges: (decoration) ->
+    return unless decoration.marker.range?
+
+    startScreenRow = decoration.marker.range.start.row
+    endScreenRow = decoration.marker.range.end.row
+    screenDelta = (@lastRenderedScreenRow - @firstRenderedScreenRow) - (endScreenRow - startScreenRow)
+
+    changeEvent =
+      start: startScreenRow
+      end: endScreenRow
+      screenDelta: screenDelta
+
+    @stackChanges changeEvent
 
   removeDecoration: (decoration) ->
     {marker} = decoration
     return unless decorations = @decorationsByMarkerId[marker.id]
+
+    @stackDecorationChanges(decoration)
 
     @decorationUpdatedSubscriptions[decoration.id].off()
     @decorationDestroyedSubscriptions[decoration.id].off()
