@@ -25,6 +25,7 @@ class DecorationManagement extends Mixin
     marker = @getMarker(marker.id)
 
     @decorationMarkerDestroyedSubscriptions[marker.id] ?= @subscribe marker, 'destroyed', =>
+
       @removeAllDecorationsForMarker(marker)
 
     @decorationMarkerChangedSubscriptions[marker.id] ?= @subscribe marker, 'changed', (event) =>
@@ -52,10 +53,11 @@ class DecorationManagement extends Mixin
     decoration
 
   stackDecorationChanges: (decoration) ->
-    return unless decoration.marker.range?
+    range = decoration.marker.getScreenRange()
+    return unless range?
 
-    startScreenRow = decoration.marker.range.start.row
-    endScreenRow = decoration.marker.range.end.row
+    startScreenRow = range.start.row
+    endScreenRow = range.end.row
     screenDelta = (@lastRenderedScreenRow - @firstRenderedScreenRow) - (endScreenRow - startScreenRow)
 
     changeEvent =
