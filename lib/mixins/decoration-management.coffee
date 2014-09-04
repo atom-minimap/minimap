@@ -16,9 +16,14 @@ class DecorationManagement extends Mixin
 
   decorationsForScreenRowRange: (startScreenRow, endScreenRow) ->
     decorationsByMarkerId = {}
-    for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
-      if decorations = @decorationsByMarkerId[marker.id]
-        decorationsByMarkerId[marker.id] = decorations
+    
+    try
+      for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
+        if decorations = @decorationsByMarkerId[marker.id]
+          decorationsByMarkerId[marker.id] = decorations
+    catch e
+      console.warn "Unexpected error when finding markers for an editor"
+
     decorationsByMarkerId
 
   decorateMarker: (marker, decorationParams) ->
