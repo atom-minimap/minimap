@@ -38,11 +38,7 @@ class MinimapEditorView extends ScrollView
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
 
   initialize: ->
-    @lineOverdraw = atom.config.get('minimap.lineOverdraw')
     @lineCanvas.webkitImageSmoothingEnabled = false
-
-    atom.config.observe 'minimap.lineOverdraw', =>
-      @lineOverdraw = atom.config.get('minimap.lineOverdraw')
 
   pixelPositionForScreenPosition: (position) ->
     {row, column} = @buffer.constructor.Point.fromObject(position)

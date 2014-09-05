@@ -37,7 +37,6 @@ xdescribe "MinimapEditorView", ->
         minimapView.attachToPaneView()
         minimapView.computeScale()
         minimapView.height 5
-        minimapView.miniEditorView.lineOverdraw = 10
         minimapView.updatePositions = ->
 
         minimapEditorView = minimapView.miniEditorView
