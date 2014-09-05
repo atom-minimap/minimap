@@ -63,7 +63,7 @@ https://github.com/fundon/atom-minimap/graphs/contributors
 
 ### Plugins
 
-The minimap can be augmented with plugins, belows the list of available plugins so far:
+The minimap can be augmented with plugins, below is the list of available plugins so far:
 
   * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
