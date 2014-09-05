@@ -191,7 +191,10 @@ class MinimapEditorView extends ScrollView
 
   drawLines: (context, firstRow, lastRow, offsetRow) ->
     return if firstRow > lastRow
-    lines = @editor.tokenizedLinesForScreenRows(firstRow, lastRow)
+    if @editor.tokenizedLinesForScreenRows?
+      lines = @editor.tokenizedLinesForScreenRows(firstRow, lastRow)
+    else
+      lines = @editor.linesForScreenRows(firstRow, lastRow)
     lineHeight = @getLineHeight()
     charHeight = @getCharHeight()
     charWidth = @getCharWidth()
