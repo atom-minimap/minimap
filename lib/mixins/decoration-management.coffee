@@ -34,8 +34,8 @@ class DecorationManagement extends Mixin
     marker = @getMarker(marker.id)
 
     @decorationMarkerDestroyedSubscriptions[marker.id] ?= @subscribe marker, 'destroyed', =>
-
       @removeAllDecorationsForMarker(marker)
+      @stackRangeChanges(marker.getScreenRange())
 
     @decorationMarkerChangedSubscriptions[marker.id] ?= @subscribe marker, 'changed', (event) =>
       decorations = @decorationsByMarkerId[marker.id]
@@ -45,6 +45,8 @@ class DecorationManagement extends Mixin
       if decorations?
         for decoration in decorations
           @trigger 'minimap:decoration-changed', marker, decoration, event
+
+      @stackRangeChanges(marker.getScreenRange())
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
@@ -65,13 +67,13 @@ class DecorationManagement extends Mixin
     range = decoration.marker.getScreenRange()
     return unless range?
 
+    @stackRangeChanges(range)
+
+  stackRangeChanges: (range) ->
     startScreenRow = range.start.row
     endScreenRow = range.end.row
     lastRenderedScreenRow  = @getLastVisibleScreenRow()
     firstRenderedScreenRow = @getFirstVisibleScreenRow()
-    console.log firstRenderedScreenRow, lastRenderedScreenRow
-    lastRenderedScreenRow = @editor.getLastScreenRow() if isNaN(lastRenderedScreenRow)
-    firstRenderedScreenRow = 0 if isNaN(firstRenderedScreenRow)
     screenDelta = (lastRenderedScreenRow - firstRenderedScreenRow) - (endScreenRow - startScreenRow)
 
     changeEvent =
