@@ -18,12 +18,16 @@ apm install minimap
 ### Settings
 
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
-* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens.
+* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
-* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.**
-* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
+* `Line Height`: The height of a line in the minimap in pixels. (default=3)
+* `Char Height`: The height of a character in the minimap in pixels. (default=2)
+* `Char Width`: The width of a character in the minimap in pixels. (default=1)
+* `Text Opacity`: The opacity used to render the line text in the minimap. (default=0.6)
+* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.** (default=true)
+* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the minimap height is bigger than the editor view height. (default=true)
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
-* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used.
+* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
 
 ### Key Bindings
 

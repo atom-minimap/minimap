@@ -92,6 +92,10 @@ class Minimap
     displayPluginsControls: true
     minimapScrollIndicator: true
     useHardwareAcceleration: true
+    charWidth: 1
+    charHeight: 2
+    lineHeight: 3
+    textOpacity: 0.6
 
   # Internal: The activation state of the minimap package.
   active: false

@@ -40,6 +40,16 @@ class MinimapEditorView extends ScrollView
   initialize: ->
     @lineCanvas.webkitImageSmoothingEnabled = false
 
+    @lineHeight = atom.config.get 'minimap.lineHeight'
+    @charWidth = atom.config.get 'minimap.charWidth'
+    @charHeight = atom.config.get 'minimap.charHeight'
+    @textOpacity = atom.config.get 'minimap.textOpacity'
+
+    atom.config.observe 'minimap.lineHeight', (@lineHeight) => @forceUpdate()
+    atom.config.observe 'minimap.charWidth', (@charWidth) => @forceUpdate()
+    atom.config.observe 'minimap.charHeight', (@charHeight) => @forceUpdate()
+    atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
+
   pixelPositionForScreenPosition: (position) ->
     {row, column} = @buffer.constructor.Point.fromObject(position)
     actualRow = Math.floor(row)
@@ -95,10 +105,10 @@ class MinimapEditorView extends ScrollView
     @update()
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
-  getLineHeight: -> 3
-  getCharHeight: -> 2
-  getCharWidth: -> 1
-  getTextOpacity: -> 0.6
+  getLineHeight: -> @lineHeight
+  getCharHeight: -> @charHeight
+  getCharWidth: -> @charWidth
+  getTextOpacity: -> @textOpacity
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
