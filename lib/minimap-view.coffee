@@ -34,6 +34,8 @@ class MinimapView extends View
     @editor = @editorView.getEditor()
     @paneView = @editorView.getPane()
 
+    @paneView.addClass('with-minimap')
+
     super
 
     @computeScale()
@@ -107,6 +109,7 @@ class MinimapView extends View
       @miniEditorView.forceUpdate()
 
   destroy: ->
+    @paneView.removeClass('with-minimap')
     @off()
     @obsPane.dispose()
     @unsubscribe()
@@ -119,12 +122,10 @@ class MinimapView extends View
   # MINIMAP DISPLAY MANAGEMENT
 
   attachToPaneView: ->
-    @paneView.addClass('with-minimap')
     @paneView.append(this)
     @adjustTopPosition()
 
   detachFromPaneView: ->
-    @paneView.removeClass('with-minimap')
     @detach()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
@@ -250,7 +251,6 @@ class MinimapView extends View
       @miniEditorView.forceUpdate()
     else
       @detachFromPaneView() if @parent().length is 1
-      @paneView.addClass('with-minimap') if activeView?.hasClass('editor')
 
   onMouseWheel: (e) =>
     return if @isClicked
