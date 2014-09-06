@@ -65,6 +65,9 @@ class MinimapView extends View
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapSize
+    @subscribe @miniEditorView, 'minimap:scaleChanged', =>
+      @computeScale()
+      @updatePositions()
 
     # The mutation observer is required so that we can relocate the minimap
     # everytime the children of the pane changes.

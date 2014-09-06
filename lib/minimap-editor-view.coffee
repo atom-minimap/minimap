@@ -46,7 +46,9 @@ class MinimapEditorView extends ScrollView
     @charHeight = atom.config.get 'minimap.charHeight'
     @textOpacity = atom.config.get 'minimap.textOpacity'
 
-    atom.config.observe 'minimap.lineHeight', (@lineHeight) => @forceUpdate()
+    atom.config.observe 'minimap.lineHeight', (@lineHeight) =>
+      @emit 'minimap:scaleChanged'
+      @forceUpdate()
     atom.config.observe 'minimap.charWidth', (@charWidth) => @forceUpdate()
     atom.config.observe 'minimap.charHeight', (@charHeight) => @forceUpdate()
     atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
