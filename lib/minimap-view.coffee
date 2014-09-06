@@ -57,7 +57,7 @@ class MinimapView extends View
     @on 'mousedown', @onMouseDown
     @miniVisibleArea.on 'mousedown', @onDragStart
 
-    @paneView.model.observeActiveItem @onActiveItemChanged
+    @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
 
     # Fix items movin to another pane.
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
@@ -108,6 +108,7 @@ class MinimapView extends View
 
   destroy: ->
     @off()
+    @obsPane.dispose()
     @unsubscribe()
     @observer.disconnect()
 
