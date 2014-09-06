@@ -57,7 +57,8 @@ class MinimapView extends View
     @on 'mousedown', @onMouseDown
     @miniVisibleArea.on 'mousedown', @onDragStart
 
-    @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    @paneView.model.observeActiveItem @onActiveItemChanged
+
     # Fix items movin to another pane.
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
@@ -241,14 +242,11 @@ class MinimapView extends View
 
   # EVENT CALLBACKS
 
-  onActiveItemChanged: (item) =>
-    # Fix called twice when opening minimap!
-
-    activeView = @paneView.viewForItem(item)
-    if activeView is @editorView
+  onActiveItemChanged: (activeItem) =>
+    if activeItem is @editor
       @attachToPaneView() if @parent().length is 0
-      @updateMinimapEditorView()
       @updateMinimapView()
+      @miniEditorView.forceUpdate()
     else
       @detachFromPaneView() if @parent().length is 1
       @paneView.addClass('with-minimap') if activeView?.hasClass('editor')
