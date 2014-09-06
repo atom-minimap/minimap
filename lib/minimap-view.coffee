@@ -281,6 +281,7 @@ class MinimapView extends View
 
   onScrollViewResized: =>
     @miniEditorView.lineCanvas.height(@editorView.height())
+    @updateMinimapSize()
     @updateMinimapView()
     @miniEditorView.forceUpdate()
 
