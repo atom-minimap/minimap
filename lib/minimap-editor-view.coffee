@@ -301,9 +301,11 @@ class MinimapEditorView extends ScrollView
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
     @lineCanvas[0].height = @lineCanvas[0].offsetHeight
 
+    #is this scroll only or has content changed?
+    hasChanges = @pendingChanges.length > 0
+
     firstRow = @getFirstVisibleScreenRow()
     lastRow = @getLastVisibleScreenRow()
-
     intactRanges = @computeIntactRanges(firstRow, lastRow)
     if intactRanges.length is 0
       @drawLines(@context, firstRow, lastRow, 0)
@@ -319,7 +321,7 @@ class MinimapEditorView extends ScrollView
     @offscreenFirstRow = firstRow
     @offscreenLastRow = lastRow
 
-    @emit 'minimap:updated'
+    @emit 'minimap:updated' if hasChanges
 
   transparentize: (color, opacity=1) ->
     color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
