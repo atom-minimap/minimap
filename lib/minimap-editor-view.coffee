@@ -33,6 +33,7 @@ class MinimapEditorView extends ScrollView
     @tokenColorCache = {}
     @decorationColorCache = {}
     @initializeDecorations()
+    @tokenized = false
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -74,6 +75,7 @@ class MinimapEditorView extends ScrollView
       @stackChanges(changes)
 
     @subscribe @displayBuffer, 'tokenized.minimap', =>
+      @tokenized = true
       @requestUpdate()
 
   stackChanges: (changes) ->
@@ -291,7 +293,7 @@ class MinimapEditorView extends ScrollView
 
   update: =>
     return unless @editorView?
-    return unless @displayBuffer.tokenizedBuffer.fullyTokenized
+    return unless @tokenized
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
