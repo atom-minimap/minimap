@@ -174,6 +174,7 @@ class MinimapEditorView extends ScrollView
     @retrieveStyleFromDom(decoration.params.scope.split(/\s+/), 'background-color')
 
   getDecorationColor: (decoration) ->
+    return decoration.color if decoration.color?
     if decoration.params.scope not of @decorationColorCache
       color = @retrieveDecorationColorFromDom(decoration)
       @decorationColorCache[decoration.params.scope] = color
