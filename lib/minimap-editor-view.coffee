@@ -33,6 +33,7 @@ class MinimapEditorView extends ScrollView
     @tokenColorCache = {}
     @decorationColorCache = {}
     @initializeDecorations()
+    @tokenized = false
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -45,7 +46,9 @@ class MinimapEditorView extends ScrollView
     @charHeight = atom.config.get 'minimap.charHeight'
     @textOpacity = atom.config.get 'minimap.textOpacity'
 
-    atom.config.observe 'minimap.lineHeight', (@lineHeight) => @forceUpdate()
+    atom.config.observe 'minimap.lineHeight', (@lineHeight) =>
+      @emit 'minimap:scaleChanged'
+      @forceUpdate()
     atom.config.observe 'minimap.charWidth', (@charWidth) => @forceUpdate()
     atom.config.observe 'minimap.charHeight', (@charHeight) => @forceUpdate()
     atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
@@ -74,6 +77,7 @@ class MinimapEditorView extends ScrollView
       @stackChanges(changes)
 
     @subscribe @displayBuffer, 'tokenized.minimap', =>
+      @tokenized = true
       @requestUpdate()
 
   stackChanges: (changes) ->
@@ -291,15 +295,17 @@ class MinimapEditorView extends ScrollView
 
   update: =>
     return unless @editorView?
-    return unless @displayBuffer.tokenizedBuffer.fullyTokenized
+    return unless @tokenized
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
     @lineCanvas[0].height = @lineCanvas[0].offsetHeight
 
+    #is this scroll only or has content changed?
+    hasChanges = @pendingChanges.length > 0
+
     firstRow = @getFirstVisibleScreenRow()
     lastRow = @getLastVisibleScreenRow()
-
     intactRanges = @computeIntactRanges(firstRow, lastRow)
     if intactRanges.length is 0
       @drawLines(@context, firstRow, lastRow, 0)
@@ -315,7 +321,7 @@ class MinimapEditorView extends ScrollView
     @offscreenFirstRow = firstRow
     @offscreenLastRow = lastRow
 
-    @emit 'minimap:updated'
+    @emit 'minimap:updated' if hasChanges
 
   transparentize: (color, opacity=1) ->
     color.replace('rgb', 'rgba').replace(')', ", #{opacity})")

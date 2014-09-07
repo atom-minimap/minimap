@@ -34,6 +34,8 @@ class MinimapView extends View
     @editor = @editorView.getEditor()
     @paneView = @editorView.getPane()
 
+    @paneView.addClass('with-minimap')
+
     super
 
     @computeScale()
@@ -57,11 +59,15 @@ class MinimapView extends View
     @on 'mousedown', @onMouseDown
     @miniVisibleArea.on 'mousedown', @onDragStart
 
-    @subscribe @paneView.model.$activeItem, @onActiveItemChanged
+    @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
+
     # Fix items movin to another pane.
     @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
 
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapSize
+    @subscribe @miniEditorView, 'minimap:scaleChanged', =>
+      @computeScale()
+      @updatePositions()
 
     # The mutation observer is required so that we can relocate the minimap
     # everytime the children of the pane changes.
@@ -106,7 +112,9 @@ class MinimapView extends View
       @miniEditorView.forceUpdate()
 
   destroy: ->
+    @paneView.removeClass('with-minimap')
     @off()
+    @obsPane.dispose()
     @unsubscribe()
     @observer.disconnect()
 
@@ -117,12 +125,10 @@ class MinimapView extends View
   # MINIMAP DISPLAY MANAGEMENT
 
   attachToPaneView: ->
-    @paneView.addClass('with-minimap')
     @paneView.append(this)
     @adjustTopPosition()
 
   detachFromPaneView: ->
-    @paneView.removeClass('with-minimap')
     @detach()
 
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
@@ -241,17 +247,13 @@ class MinimapView extends View
 
   # EVENT CALLBACKS
 
-  onActiveItemChanged: (item) =>
-    # Fix called twice when opening minimap!
-
-    activeView = @paneView.viewForItem(item)
-    if activeView is @editorView
+  onActiveItemChanged: (activeItem) =>
+    if activeItem is @editor
       @attachToPaneView() if @parent().length is 0
-      @updateMinimapEditorView()
       @updateMinimapView()
+      @miniEditorView.forceUpdate()
     else
       @detachFromPaneView() if @parent().length is 1
-      @paneView.addClass('with-minimap') if activeView?.hasClass('editor')
 
   onMouseWheel: (e) =>
     return if @isClicked
@@ -279,7 +281,9 @@ class MinimapView extends View
 
   onScrollViewResized: =>
     @miniEditorView.lineCanvas.height(@editorView.height())
+    @updateMinimapSize()
     @updateMinimapView()
+    @miniEditorView.forceUpdate()
 
   onDragStart: (e) =>
     # Handle left-click only
