@@ -13,6 +13,8 @@ class MinimapView extends View
 
   @delegatesMethods 'getLineHeight', 'getCharHeight', 'getCharWidth', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'addLineClass', 'removeLineClass', 'removeAllLineClasses', 'pixelPositionForScreenPosition', 'decorateMarker', 'removeDecoration', 'decorationsForScreenRowRange', 'removeAllDecorationsForMarker', toProperty: 'miniEditorView'
 
+  @delegatesMethods 'getSelection', 'getSelections', 'getLastSelection', 'bufferRangeForBufferRow', 'getTextInBufferRange', 'getEofBufferPosition', 'scanInBufferRange', 'markBufferRange', toProperty: 'editor'
+
   @delegatesProperty 'lineHeight', toMethod: 'getLineHeight'
   @delegatesProperty 'charWidth', toMethod: 'getCharWidth'
 
