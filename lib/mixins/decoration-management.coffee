@@ -33,6 +33,10 @@ class DecorationManagement extends Mixin
   decorateMarker: (marker, decorationParams) ->
     marker = @getMarker(marker.id)
 
+    if !decorationParams.scope? and decorationParams.class?
+      cls = decorationParams.class.split(' ').join('.')
+      decorationParams.scope = ".minimap .#{cls}"
+
     @decorationMarkerDestroyedSubscriptions[marker.id] ?= @subscribe marker, 'destroyed', =>
       @removeAllDecorationsForMarker(marker)
       @stackRangeChanges(marker.getScreenRange())
