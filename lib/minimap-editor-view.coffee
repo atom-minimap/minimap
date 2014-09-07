@@ -264,7 +264,7 @@ class MinimapEditorView extends ScrollView
     range = decoration.getMarker().getScreenRange()
     rowSpan = range.end.row - range.start.row
 
-    if rowSpan is 1
+    if rowSpan is 0
       colSpan = range.end.column - range.start.column
       context.fillRect(range.start.column*charWidth,y*lineHeight,colSpan*charWidth,lineHeight)
     else
