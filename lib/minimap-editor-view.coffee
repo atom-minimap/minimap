@@ -179,21 +179,11 @@ class MinimapEditorView extends ScrollView
       @decorationColorCache[decoration.params.scope] = color
     @decorationColorCache[decoration.params.scope]
 
-  getLineDecorationsForRow: (row, decorations) ->
+  getDecorationsByTypesForRow: (row, types..., decorations) ->
     out = []
     for id, array of decorations
       for decoration in array
-        if decoration.params.type is 'line' and
-           decoration.getMarker().getScreenRange().intersectsRow(row)
-          out.push decoration
-
-    out
-
-  getHighlightDecorationsForRow: (row, position, decorations) ->
-    out = []
-    for id, array of decorations
-      for decoration in array
-        if decoration.params.type is "highlight-#{position}" and
+        if decoration.params.type in types and
            decoration.getMarker().getScreenRange().intersectsRow(row)
           out.push decoration
 
@@ -218,12 +208,12 @@ class MinimapEditorView extends ScrollView
       screenRow = firstRow + row
       y0 = y*lineHeight
 
-      lineDecorations = @getLineDecorationsForRow(screenRow, decorations)
+      lineDecorations = @getDecorationsByTypesForRow(screenRow, 'line', decorations)
       for decoration in lineDecorations
         context.fillStyle = @getDecorationColor(decoration)
         context.fillRect(0,y0,canvasWidth,lineHeight)
 
-      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, 'under', decorations)
+      highlightDecorations = @getDecorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
@@ -252,7 +242,7 @@ class MinimapEditorView extends ScrollView
         else
           x += w * charWidth
 
-      highlightDecorations = @getHighlightDecorationsForRow(firstRow + row, 'over', decorations)
+      highlightDecorations = @getDecorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
