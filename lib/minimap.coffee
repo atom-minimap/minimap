@@ -105,11 +105,11 @@ class Minimap
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
     if atom.config.get('minimap.displayPluginsControls')
-      atom.workspaceView.command 'minimap:open-quick-settings', =>
+      atom.workspaceView.command 'minimap:open-quick-settings', ->
         atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-quick-settings').mousedown()
 
     atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
-    atom.config.observe 'minimap.displayMinimapOnLeft', =>
+    atom.config.observe 'minimap.displayMinimapOnLeft', ->
       atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
 
     @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
@@ -139,7 +139,7 @@ class Minimap
   versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
 
   # Internal: Toggles the minimap activation state.
-  toggle: () ->
+  toggle: ->
     if @active
       @active = false
       @deactivate()

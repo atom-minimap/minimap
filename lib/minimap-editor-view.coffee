@@ -80,6 +80,9 @@ class MinimapEditorView extends ScrollView
       @tokenized = true
       @requestUpdate()
 
+    if @displayBuffer.tokenizedBuffer.fullyTokenized
+      @tokenized = true
+
   stackChanges: (changes) ->
     @pendingChanges.push changes
     @requestUpdate()
@@ -157,12 +160,12 @@ class MinimapEditorView extends ScrollView
 
     value
 
-  retrieveTokenColorFromDom: (token)->
+  retrieveTokenColorFromDom: (token) ->
     # This is quite an expensive operation so results are cached in getTokenColor.
     color = @retrieveStyleFromDom(token.scopes, 'color')
     @transparentize(color, @getTextOpacity())
 
-  getTokenColor: (token)->
+  getTokenColor: (token) ->
     #Retrieve color from cache if available
     flatScopes = token.scopes.join()
     if flatScopes not of @tokenColorCache
@@ -170,7 +173,7 @@ class MinimapEditorView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
-  retrieveDecorationColorFromDom: (decoration)->
+  retrieveDecorationColorFromDom: (decoration) ->
     @retrieveStyleFromDom(decoration.params.scope.split(/\s+/), 'background-color')
 
   getDecorationColor: (decoration) ->
