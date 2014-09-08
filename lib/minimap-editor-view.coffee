@@ -80,6 +80,9 @@ class MinimapEditorView extends ScrollView
       @tokenized = true
       @requestUpdate()
 
+    if @displayBuffer.tokenizedBuffer.fullyTokenized
+      @tokenized = true
+
   stackChanges: (changes) ->
     @pendingChanges.push changes
     @requestUpdate()
