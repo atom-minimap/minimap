@@ -64,7 +64,7 @@ class ViewManagement extends Mixin
       MinimapView ||= require '../minimap-view'
 
       editorId = editorView.editor.id
-      paneView = editorView.getPane()
+      paneView = editorView.getPaneView()
 
       view = new MinimapView(editorView)
 
