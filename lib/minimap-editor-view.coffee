@@ -11,9 +11,6 @@ class MinimapEditorView extends ScrollView
   DecorationManagement.includeInto(this)
   Debug('minimap').includeInto(this)
 
-  @delegatesProperty 'firstRenderedScreenRow', toMethod: 'getFirstVisibleScreenRow'
-  @delegatesProperty 'lastRenderedScreenRow', toMethod: 'getLastVisibleScreenRow'
-
   @delegatesMethods 'getMarker', 'findMarkers', toProperty: 'editor'
 
   @content: ->

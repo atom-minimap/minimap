@@ -54,6 +54,9 @@ class PluginManagement extends Mixin
       plugin.deactivatePlugin()
       @emit('plugin:deactivated', {name, plugin})
 
+  # Internal: When the `minimap.displayPluginsControls` setting is toggled,
+  # this function will register the commands and setting to manage the plugin
+  # activation from the minimap settings.
   registerPluginControls: (name, plugin) ->
     settingsKey = "minimap.plugins.#{name}"
     @configDefaults.plugins[name] = true
@@ -67,6 +70,9 @@ class PluginManagement extends Mixin
       atom.config.set settingsKey, not atom.config.get(settingsKey)
       @updatesPluginActivationState(name)
 
+  # Internal: When the `minimap.displayPluginsControls` setting is toggled,
+  # this function will unregister the commands and setting that was created
+  # previously.
   unregisterPluginControls: (name) ->
     atom.config.unobserve "minimap.plugins.#{name}"
     atom.workspaceView.off "minimap:toggle-#{name}"

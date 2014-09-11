@@ -316,7 +316,6 @@ class MinimapView extends View
 
   # OTHER PRIVATE METHODS
 
-  scale: (x=1,y=1) -> "scale(#{x}, #{y}) "
   translate: (x=0,y=0) ->
     if atom.config.get 'minimap.useHardwareAcceleration'
       "translate3d(#{x}px, #{y}px, 0)"

@@ -30,6 +30,9 @@ class ViewManagement extends Mixin
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
 
+  # Public: Returns the {MinimapView} of the active editor view.
+  #
+  # Returns a {MinimapView}
   getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveEditor())
 
   # Public: Calls `iterator` for each present and future minimap views.

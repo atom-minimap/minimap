@@ -1,6 +1,9 @@
 Mixin = require 'mixto'
-Decoration = require atom.config.resourcePath + '/src/decoration'
+path = require 'path'
+Decoration = require path.join(atom.config.resourcePath, 'src', 'decoration')
 
+# Public: The mixin that provides the decorations API to the minimap editor
+# view.
 module.exports =
 class DecorationManagement extends Mixin
   initializeDecorations: ->
@@ -17,16 +20,9 @@ class DecorationManagement extends Mixin
   decorationsForScreenRowRange: (startScreenRow, endScreenRow) ->
     decorationsByMarkerId = {}
 
-    try
-      for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
-        if decorations = @decorationsByMarkerId[marker.id]
-          decorationsByMarkerId[marker.id] = decorations
-    catch e
-      console.warn """
-      Unexpected error when finding markers for an editor
-      start row = #{startScreenRow}
-      end row = #{endScreenRow}
-      """
+    for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
+      if decorations = @decorationsByMarkerId[marker.id]
+        decorationsByMarkerId[marker.id] = decorations
 
     decorationsByMarkerId
 
