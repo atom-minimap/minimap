@@ -177,20 +177,21 @@ class MinimapEditorView extends ScrollView
     @tokenColorCache[flatScopes]
 
   retrieveDecorationColorFromDom: (decoration) ->
-    @retrieveStyleFromDom(decoration.params.scope.split(/\s+/), 'background-color')
+    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
 
   getDecorationColor: (decoration) ->
-    return decoration.params.color if decoration.params.color?
-    if decoration.params.scope not of @decorationColorCache
+    properties = decoration.getProperties()
+    return properties.color if properties.color?
+    if properties.scope not of @decorationColorCache
       color = @retrieveDecorationColorFromDom(decoration)
-      @decorationColorCache[decoration.params.scope] = color
-    @decorationColorCache[decoration.params.scope]
+      @decorationColorCache[properties.scope] = color
+    @decorationColorCache[properties.scope]
 
   getDecorationsByTypesForRow: (row, types..., decorations) ->
     out = []
     for id, array of decorations
       for decoration in array
-        if decoration.params.type in types and
+        if decoration.getProperties().type in types and
            decoration.getMarker().getScreenRange().intersectsRow(row)
           out.push decoration
 
