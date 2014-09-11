@@ -1,5 +1,6 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
+{CompositeDisposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
 Debug = require 'prolix'
@@ -34,6 +35,7 @@ class MinimapEditorView extends ScrollView
     @decorationColorCache = {}
     @initializeDecorations()
     @tokenized = false
+    @subscriptions = new CompositeDisposable
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -66,6 +68,7 @@ class MinimapEditorView extends ScrollView
 
   destroy: ->
     @unsubscribe()
+    @subscriptions.dispose()
     @editorView = null
 
   setEditorView: (@editorView) ->
@@ -73,10 +76,10 @@ class MinimapEditorView extends ScrollView
     @buffer = @editorView.getEditor().getBuffer()
     @displayBuffer = @editor.displayBuffer
 
-    @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
+    @subscriptions.add @editor.onDidChangeScreenLines (changes) =>
       @stackChanges(changes)
 
-    @subscribe @displayBuffer, 'tokenized.minimap', =>
+    @subscriptions.add @displayBuffer.onDidTokenize =>
       @tokenized = true
       @requestUpdate()
 
