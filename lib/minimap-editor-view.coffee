@@ -1,5 +1,6 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
+{CompositeDisposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
 Debug = require 'prolix'
@@ -31,6 +32,7 @@ class MinimapEditorView extends ScrollView
     @decorationColorCache = {}
     @initializeDecorations()
     @tokenized = false
+    @subscriptions = new CompositeDisposable
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -63,6 +65,7 @@ class MinimapEditorView extends ScrollView
 
   destroy: ->
     @unsubscribe()
+    @subscriptions.dispose()
     @editorView = null
 
   setEditorView: (@editorView) ->
@@ -70,12 +73,15 @@ class MinimapEditorView extends ScrollView
     @buffer = @editorView.getEditor().getBuffer()
     @displayBuffer = @editor.displayBuffer
 
-    @subscribe @editor, 'screen-lines-changed.minimap', (changes) =>
+    @subscriptions.add @editor.onDidChangeScreenLines (changes) =>
       @stackChanges(changes)
 
-    @subscribe @displayBuffer, 'tokenized.minimap', =>
+    @subscriptions.add @displayBuffer.onDidTokenize =>
       @tokenized = true
       @requestUpdate()
+
+    if @displayBuffer.tokenizedBuffer.fullyTokenized
+      @tokenized = true
 
   stackChanges: (changes) ->
     @pendingChanges.push changes
@@ -154,12 +160,12 @@ class MinimapEditorView extends ScrollView
 
     value
 
-  retrieveTokenColorFromDom: (token)->
+  retrieveTokenColorFromDom: (token) ->
     # This is quite an expensive operation so results are cached in getTokenColor.
     color = @retrieveStyleFromDom(token.scopes, 'color')
     @transparentize(color, @getTextOpacity())
 
-  getTokenColor: (token)->
+  getTokenColor: (token) ->
     #Retrieve color from cache if available
     flatScopes = token.scopes.join()
     if flatScopes not of @tokenColorCache
@@ -167,21 +173,22 @@ class MinimapEditorView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
-  retrieveDecorationColorFromDom: (decoration)->
-    @retrieveStyleFromDom(decoration.params.scope.split(/\s+/), 'background-color')
+  retrieveDecorationColorFromDom: (decoration) ->
+    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
 
   getDecorationColor: (decoration) ->
-    return decoration.params.color if decoration.params.color?
-    if decoration.params.scope not of @decorationColorCache
+    properties = decoration.getProperties()
+    return properties.color if properties.color?
+    if properties.scope not of @decorationColorCache
       color = @retrieveDecorationColorFromDom(decoration)
-      @decorationColorCache[decoration.params.scope] = color
-    @decorationColorCache[decoration.params.scope]
+      @decorationColorCache[properties.scope] = color
+    @decorationColorCache[properties.scope]
 
   getDecorationsByTypesForRow: (row, types..., decorations) ->
     out = []
     for id, array of decorations
       for decoration in array
-        if decoration.params.type in types and
+        if decoration.getProperties().type in types and
            decoration.getMarker().getScreenRange().intersectsRow(row)
           out.push decoration
 

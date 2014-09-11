@@ -1,6 +1,7 @@
 {$, View, EditorView} = require 'atom'
 Debug = require 'prolix'
 Delegato = require 'delegato'
+{CompositeDisposable} = require 'event-kit'
 
 MinimapEditorView = require './minimap-editor-view'
 MinimapIndicator = require './minimap-indicator'
@@ -38,6 +39,8 @@ class MinimapView extends View
 
     @paneView.addClass('with-minimap')
 
+    @subscriptions = new CompositeDisposable
+
     super
 
     @computeScale()
@@ -64,7 +67,7 @@ class MinimapView extends View
     @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
 
     # Fix items movin to another pane.
-    @subscribe @paneView.model, 'item-removed', (item) -> item.off? '.minimap'
+    @subscriptions.add @paneView.model.onDidRemoveItem (item) -> item.off? '.minimap'
 
     @subscribe @miniEditorView, 'minimap:updated', @updateMinimapSize
     @subscribe @miniEditorView, 'minimap:scaleChanged', =>

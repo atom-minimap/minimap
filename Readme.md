@@ -45,13 +45,9 @@ Customizing Key Bindings:
 
 ### Customizing Style
 
-If you want to use another font instead of the default [Redacted][] font or change any styles, edit your `style.less` (Open Your Stylesheet).
+If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet).
 
 ```css
-.minimap .lines {
-  font-family: Monaco;
-}
-
 // hide scrollbar
 .with-minimap .vertical-scrollbar {
   opacity: 0;
@@ -85,5 +81,3 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 ### License
 
 MIT
-
-[Redacted Font]: https://github.com/christiannaths/Redacted-Font
