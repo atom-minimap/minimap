@@ -207,6 +207,16 @@ class MinimapEditorView extends ScrollView
     displayCodeHighlights = @minimapView.displayCodeHighlights
     decorations = @decorationsForScreenRowRange(firstRow, lastRow)
 
+    line = lines[0]
+
+    if line.invisibles?
+      re = ///
+      #{line.invisibles.cr}|
+      #{line.invisibles.eol}|
+      #{line.invisibles.space}|
+      #{line.invisibles.tab}
+      ///g
+
     for line, row in lines
       x = 0
       y = offsetRow + row
@@ -224,7 +234,7 @@ class MinimapEditorView extends ScrollView
 
       for token in line.tokens
         w = token.screenDelta
-        unless token.isOnlyWhitespace() or token.hasInvisibleCharacters
+        unless token.isOnlyWhitespace()
           context.fillStyle = if displayCodeHighlights
             @getTokenColor(token)
           else
@@ -232,7 +242,10 @@ class MinimapEditorView extends ScrollView
 
           chars = 0
 
-          for char in token.value
+          value = token.value
+          value = value.replace(re, ' ') if re?
+
+          for char in value
             if /\s/.test char
               if chars > 0
                 context.fillRect(x-chars, y0, chars*charWidth, charHeight)
