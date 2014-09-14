@@ -78,10 +78,9 @@ class MinimapEditorView extends ScrollView
 
     @subscriptions.add @displayBuffer.onDidTokenize =>
       @tokenized = true
-      @requestUpdate()
+      @forceUpdate()
 
-    if @displayBuffer.tokenizedBuffer.fullyTokenized
-      @tokenized = true
+    @tokenized = true if @displayBuffer.tokenizedBuffer.fullyTokenized
 
   stackChanges: (changes) ->
     @pendingChanges.push changes
@@ -133,7 +132,7 @@ class MinimapEditorView extends ScrollView
     screenRow
 
   getDefaultColor: ->
-    @defaultColor ||= @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
+    @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
   ensureDummyNodeExistence: ->
     unless @dummyNode?
@@ -235,28 +234,15 @@ class MinimapEditorView extends ScrollView
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace()
-          context.fillStyle = if displayCodeHighlights
+          color = if displayCodeHighlights and @tokenized
             @getTokenColor(token)
           else
             @getDefaultColor()
 
-          chars = 0
-
           value = token.value
           value = value.replace(re, ' ') if re?
 
-          for char in value
-            if /\s/.test char
-              if chars > 0
-                context.fillRect(x-chars, y0, chars*charWidth, charHeight)
-              chars = 0
-            else
-              chars++
-
-            x += charWidth
-
-          if chars > 0
-            context.fillRect(x-chars, y0, chars*charWidth, charHeight)
+          x = @drawToken(context, value, color, x, y0, charWidth, charHeight)
         else
           x += w * charWidth
 
@@ -266,6 +252,23 @@ class MinimapEditorView extends ScrollView
 
 
     context.fill()
+
+  drawToken: (context, text, color, x, y, charWidth, charHeight) ->
+    context.fillStyle = color
+    chars = 0
+    for char in text
+      if /\s/.test char
+        if chars > 0
+          context.fillRect(x-chars, y, chars*charWidth, charHeight)
+        chars = 0
+      else
+        chars++
+
+      x += charWidth
+
+    context.fillRect(x-chars, y, chars*charWidth, charHeight) if chars > 0
+
+    x
 
   drawHighlightDecoration: (context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth) ->
     context.fillStyle = @getDecorationColor(decoration)
@@ -303,7 +306,7 @@ class MinimapEditorView extends ScrollView
 
   update: =>
     return unless @editorView?
-    return unless @tokenized
+    # return unless @tokenized
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
