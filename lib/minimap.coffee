@@ -80,10 +80,12 @@ class Minimap
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
-  # Public: The minimap package version
+  ### Public ###
+
+  # The minimap package version
   version: require('../package.json').version
 
-  # Public: The default minimap settings
+  # The default minimap settings
   configDefaults:
     plugins: {}
     autoToggle: false
@@ -100,7 +102,7 @@ class Minimap
   # Internal: The activation state of the minimap package.
   active: false
 
-  # Public: Activates the minimap package.
+  # Activates the minimap package.
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
     atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
@@ -114,22 +116,22 @@ class Minimap
 
     @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
 
-  # Public: Deactivates the minimap package.
+  # Deactivates the minimap package.
   deactivate: ->
     @destroyViews()
     @emit('deactivated')
 
-  # Public: Toggles the minimap activation state with debug turned on.
+  # Toggles the minimap activation state with debug turned on.
   toggleDebug: ->
     @getChannel().activate()
     @toggle()
 
-  # Public: Toggles the minimap activation state with debug turned off.
+  # Toggles the minimap activation state with debug turned off.
   toggleNoDebug: ->
     @getChannel().deactivate()
     @toggle()
 
-  # Public: Verifies that the passed-in version expression is satisfied by
+  # Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
   #
   # `expectedVersion` - A [semver](https://github.com/npm/node-semver)
