@@ -6,7 +6,7 @@ DecorationManagement = require './mixins/decoration-management'
 Debug = require 'prolix'
 
 module.exports =
-class MinimapEditorView extends ScrollView
+class MinimapRenderView extends ScrollView
   Emitter.includeInto(this)
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)

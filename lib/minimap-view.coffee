@@ -3,7 +3,7 @@ Debug = require 'prolix'
 Delegato = require 'delegato'
 {CompositeDisposable} = require 'event-kit'
 
-MinimapEditorView = require './minimap-editor-view'
+MinimapRenderView = require './minimap-render-view'
 MinimapIndicator = require './minimap-indicator'
 MinimapOpenQuickSettingsView = require './minimap-open-quick-settings-view'
 
@@ -25,7 +25,7 @@ class MinimapView extends View
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
-        @subview 'miniEditorView', new MinimapEditorView
+        @subview 'miniEditorView', new MinimapRenderView
         @div outlet: 'miniOverlayer', class: "minimap-overlayer", =>
           @div outlet: 'miniVisibleArea', class: "minimap-visible-area"
 
@@ -157,7 +157,7 @@ class MinimapView extends View
 
   # UPDATE METHODS
 
-  updateMinimapEditorView: => @miniEditorView.update()
+  updateMinimapRenderView: => @miniEditorView.update()
 
   updateMinimapSize: =>
     return unless @indicator?
