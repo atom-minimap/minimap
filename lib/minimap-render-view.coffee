@@ -109,13 +109,19 @@ class MinimapRenderView extends ScrollView
     @update()
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
+
   getLineHeight: -> @lineHeight
+
   getCharHeight: -> @charHeight
+
   getCharWidth: -> @charWidth
+
   getTextOpacity: -> @textOpacity
+
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
   getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
+
   getMinimapHeightInLines: -> Math.ceil(@getMinimapScreenHeight() / @getLineHeight())
 
   getFirstVisibleScreenRow: ->
