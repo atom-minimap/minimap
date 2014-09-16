@@ -35,7 +35,7 @@ class MinimapView extends View
 
   constructor: (@editorView) ->
     @editor = @editorView.getEditor()
-    @paneView = @editorView.getPane()
+    @paneView = @editorView.getPaneView()
 
     @paneView.addClass('with-minimap')
 
