@@ -33,11 +33,11 @@ class DecorationManagement extends Mixin
       cls = decorationParams.class.split(' ').join('.')
       decorationParams.scope = ".minimap .#{cls}"
 
-    @decorationMarkerDestroyedSubscriptions[marker.id] ?= @subscribe marker, 'destroyed', =>
+    @decorationMarkerDestroyedSubscriptions[marker.id] ?= marker.onDidDestroy =>
       @removeAllDecorationsForMarker(marker)
       @stackRangeChanges(marker.getScreenRange())
 
-    @decorationMarkerChangedSubscriptions[marker.id] ?= @subscribe marker, 'changed', (event) =>
+    @decorationMarkerChangedSubscriptions[marker.id] ?= marker.onDidChange (event) =>
       decorations = @decorationsByMarkerId[marker.id]
 
       # Why check existence? Markers may get destroyed or decorations removed
@@ -53,10 +53,10 @@ class DecorationManagement extends Mixin
     @decorationsByMarkerId[marker.id].push(decoration)
     @decorationsById[decoration.id] = decoration
 
-    @decorationUpdatedSubscriptions[decoration.id] ?= @subscribe decoration, 'updated', (event) =>
+    @decorationUpdatedSubscriptions[decoration.id] ?= decoration.onDidChangeProperties (event) =>
       @stackDecorationChanges(decoration)
 
-    @decorationDestroyedSubscriptions[decoration.id] ?= @subscribe decoration, 'destroyed', (event) =>
+    @decorationDestroyedSubscriptions[decoration.id] ?= decoration.onDidDestroy (event) =>
       @removeDecoration(decoration)
 
     @stackDecorationChanges(decoration)
@@ -89,8 +89,8 @@ class DecorationManagement extends Mixin
 
     @stackDecorationChanges(decoration)
 
-    @decorationUpdatedSubscriptions[decoration.id].off()
-    @decorationDestroyedSubscriptions[decoration.id].off()
+    @decorationUpdatedSubscriptions[decoration.id].dispose()
+    @decorationDestroyedSubscriptions[decoration.id].dispose()
 
     delete @decorationUpdatedSubscriptions[decoration.id]
     delete @decorationDestroyedSubscriptions[decoration.id]
@@ -110,8 +110,8 @@ class DecorationManagement extends Mixin
     @removedAllMarkerDecorations(marker)
 
   removedAllMarkerDecorations: (marker) ->
-    @decorationMarkerChangedSubscriptions[marker.id].off()
-    @decorationMarkerDestroyedSubscriptions[marker.id].off()
+    @decorationMarkerChangedSubscriptions[marker.id].dispose()
+    @decorationMarkerDestroyedSubscriptions[marker.id].dispose()
 
     delete @decorationsByMarkerId[marker.id]
     delete @decorationMarkerChangedSubscriptions[marker.id]
