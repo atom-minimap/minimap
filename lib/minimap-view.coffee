@@ -12,7 +12,8 @@ class MinimapView extends View
   Debug('minimap').includeInto(this)
   Delegato.includeInto(this)
 
-  @delegatesMethods 'getLineHeight', 'getCharHeight', 'getCharWidth', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'pixelPositionForScreenPosition', 'decorateMarker', 'removeDecoration', 'decorationsForScreenRowRange', 'removeAllDecorationsForMarker', toProperty: 'miniEditorView'
+
+  @delegatesMethods 'getLineHeight', 'getCharHeight', 'getCharWidth', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'pixelPositionForScreenPosition', 'decorateMarker', 'removeDecoration', 'decorationsForScreenRowRange', 'removeAllDecorationsForMarker', toProperty: 'renderView'
 
   @delegatesMethods 'getSelection', 'getSelections', 'getLastSelection', 'bufferRangeForBufferRow', 'getTextInBufferRange', 'getEofBufferPosition', 'scanInBufferRange', 'markBufferRange', toProperty: 'editor'
 
@@ -25,7 +26,7 @@ class MinimapView extends View
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
-        @subview 'miniEditorView', new MinimapRenderView
+        @subview 'renderView', new MinimapRenderView
         @div outlet: 'miniOverlayer', class: "minimap-overlayer", =>
           @div outlet: 'miniVisibleArea', class: "minimap-visible-area"
 
@@ -44,7 +45,7 @@ class MinimapView extends View
     super
 
     @computeScale()
-    @miniScrollView = @miniEditorView.scrollView
+    @miniScrollView = @renderView.scrollView
     @offsetLeft = 0
     @offsetTop = 0
     @indicator = new MinimapIndicator()
@@ -54,8 +55,8 @@ class MinimapView extends View
 
     @subscribeToEditor()
 
-    @miniEditorView.minimapView = this
-    @miniEditorView.setEditorView(@editorView)
+    @renderView.minimapView = this
+    @renderView.setEditorView(@editorView)
 
     @updateMinimapView()
 
@@ -69,8 +70,8 @@ class MinimapView extends View
     # Fix items movin to another pane.
     @subscriptions.add @paneView.model.onDidRemoveItem (item) -> item.off? '.minimap'
 
-    @subscribe @miniEditorView, 'minimap:updated', @updateMinimapSize
-    @subscribe @miniEditorView, 'minimap:scaleChanged', =>
+    @subscribe @renderView, 'minimap:updated', @updateMinimapSize
+    @subscribe @renderView, 'minimap:scaleChanged', =>
       @computeScale()
       @updatePositions()
 
@@ -114,7 +115,7 @@ class MinimapView extends View
   setDisplayCodeHighlights: (value) ->
     if value isnt @displayCodeHighlights
       @displayCodeHighlights = value
-      @miniEditorView.forceUpdate()
+      @renderView.forceUpdate()
 
   destroy: ->
     @paneView.removeClass('with-minimap')
@@ -124,7 +125,7 @@ class MinimapView extends View
     @observer.disconnect()
 
     @detachFromPaneView()
-    @miniEditorView.destroy()
+    @renderView.destroy()
     @remove()
 
   # MINIMAP DISPLAY MANAGEMENT
@@ -157,14 +158,14 @@ class MinimapView extends View
 
   # UPDATE METHODS
 
-  updateMinimapRenderView: => @miniEditorView.update()
+  updateMinimapRenderView: => @renderView.update()
 
   updateMinimapSize: =>
     return unless @indicator?
 
     {width, height} = @getMinimapClientRect()
     editorViewRect = @getEditorViewClientRect()
-    miniScrollViewRect = @miniEditorView.getClientRect()
+    miniScrollViewRect = @renderView.getClientRect()
 
     evw = editorViewRect.width
     evh = editorViewRect.height
@@ -233,9 +234,9 @@ class MinimapView extends View
 
   updatePositions: ->
     @transform @miniVisibleArea[0], @translate(0, @indicator.y)
-    @miniEditorView.scrollTop(@indicator.scroller.y * -1)
+    @renderView.scrollTop(@indicator.scroller.y * -1)
 
-    @transform @miniEditorView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
+    @transform @renderView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
 
     @transform @miniUnderlayer[0], @translate(0, @indicator.scroller.y)
     @transform @miniOverlayer[0], @translate(0, @indicator.scroller.y)
@@ -256,7 +257,7 @@ class MinimapView extends View
     if activeItem is @editor
       @attachToPaneView() if @parent().length is 0
       @updateMinimapView()
-      @miniEditorView.forceUpdate()
+      @renderView.forceUpdate()
     else
       @detachFromPaneView() if @parent().length is 1
 
@@ -285,10 +286,10 @@ class MinimapView extends View
     , 377
 
   onScrollViewResized: =>
-    @miniEditorView.lineCanvas.height(@editorView.height())
+    @renderView.lineCanvas.height(@editorView.height())
     @updateMinimapSize()
     @updateMinimapView()
-    @miniEditorView.forceUpdate()
+    @renderView.forceUpdate()
 
   onDragStart: (e) =>
     # Handle left-click only

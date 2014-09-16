@@ -39,7 +39,7 @@ xdescribe "MinimapRenderView", ->
         minimapView.height 5
         minimapView.updatePositions = ->
 
-        MinimapRenderView = minimapView.miniEditorView
+        MinimapRenderView = minimapView.renderView
 
     describe '::getMinimapHeight', ->
       it 'returns its content height based on its line-height', ->
