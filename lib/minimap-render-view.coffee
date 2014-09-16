@@ -58,11 +58,6 @@ class MinimapRenderView extends ScrollView
 
     {top: row * @getLineHeight(), left: column}
 
-  # This prevent plugins that relies on these methods to break
-  addLineClass: ->
-  removeLineClass: ->
-  removeAllLineClasses: ->
-
   destroy: ->
     @unsubscribe()
     @subscriptions.dispose()
