@@ -6,6 +6,8 @@ Decoration = require path.join(atom.config.resourcePath, 'src', 'decoration')
 # view.
 module.exports =
 class DecorationManagement extends Mixin
+  ### Public ###
+
   initializeDecorations: ->
     @decorationsById = {}
     @decorationsByMarkerId = {}

@@ -1,11 +1,14 @@
 {View} = require 'atom'
 MinimapQuickSettingsView = require './minimap-quick-settings-view'
 
+# Public:
 module.exports =
 class MinimapOpenQuickSettingsView extends View
   @content: ->
     @div class: 'open-minimap-quick-settings'
 
+  ### Public ###
+  
   dropdown: null
 
   initialize: ->
