@@ -13,20 +13,20 @@ class ViewManagement extends Mixin
     view.onScrollViewResized() for id,view of @minimapViews
 
   # Public: Returns the {MinimapView} object associated to the
-  # passed-in {EditorView}.
+  # passed-in `EditorView`.
   #
-  # editorView - An {EditorView} instance
+  # editorView - An `EditorView` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in {EditorView}.
+  # Returns the {MinimapView} object associated to the passed-in `EditorView`.
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
   # Public: Returns the {MinimapView} object associated to the
-  # passed-in {Editor}.
+  # passed-in `Editor`.
   #
-  # editorView - An {Editor} instance
+  # editorView - An `Editor` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in {Editor}.
+  # Returns the {MinimapView} object associated to the passed-in `Editor`.
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
 

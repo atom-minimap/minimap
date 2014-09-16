@@ -25,7 +25,7 @@ require '../vendor/resizeend'
 #
 # * `minimap-view:created` -
 #      Emitted synchronously when a {MinimapView} have been created for
-#      an active {PaneView}.
+#      an active `PaneView`.
 #      Your handler will be called with an object containing the following keys.
 #      * `view`: The {MinimapView} that was created
 #
