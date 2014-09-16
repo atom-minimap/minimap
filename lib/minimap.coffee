@@ -132,10 +132,11 @@ class Minimap
   # Public: Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
   #
-  # `expectedVersion` - A [semver]() compatible expression to match against
-  #                     the minimap version.
+  # `expectedVersion` - A [semver](https://github.com/npm/node-semver)
+  #                     compatible expression to match agains the minimap
+  #                     version.
   #
-  # Returns `true` if the version matches the expression, `false` otherwise.
+  # Returns a {Boolean}.
   versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
 
   # Internal: Toggles the minimap activation state.
