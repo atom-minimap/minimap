@@ -410,12 +410,19 @@ class MinimapRenderView extends ScrollView
   #    ##     ## ##    ##  ##     ## ##  ##  ##
   #    ########  ##     ## ##     ##  ###  ###
 
+  # Internal: Draws lines on the passed-in `context`.
+  #
+  # The lines range to draw is specified by the `firstRow` and `lastRow`
+  # parameters.
+  #
+  # context - The canvas context {Object} into which drawing the lines.
+  # firstRow - The starting row {Number} of the lines range to draw.
+  # endRow - The ending row {Number} of the lines range to draw.
+  # offsetRow - The offset {Number} to apply to rows index.
   drawLines: (context, firstRow, lastRow, offsetRow) ->
     return if firstRow > lastRow
-    if @editor.tokenizedLinesForScreenRows?
-      lines = @editor.tokenizedLinesForScreenRows(firstRow, lastRow)
-    else
-      lines = @editor.linesForScreenRows(firstRow, lastRow)
+
+    lines = @editor.tokenizedLinesForScreenRows(firstRow, lastRow)
     lineHeight = @getLineHeight()
     charHeight = @getCharHeight()
     charWidth = @getCharWidth()
@@ -425,6 +432,8 @@ class MinimapRenderView extends ScrollView
 
     line = lines[0]
 
+    # Whitespaces can be substituted by other characters so we need
+    # to replace them when that's the case.
     if line.invisibles?
       re = ///
       #{line.invisibles.cr}|
@@ -439,15 +448,18 @@ class MinimapRenderView extends ScrollView
       screenRow = firstRow + row
       y0 = y*lineHeight
 
+      # Line decorations are first drawn on the canvas.
       lineDecorations = @decorationsByTypesForRow(screenRow, 'line', decorations)
       for decoration in lineDecorations
         context.fillStyle = @getDecorationColor(decoration)
         context.fillRect(0,y0,canvasWidth,lineHeight)
 
+      # Then comes the highlight decoration with `highlight-under` type.
       highlightDecorations = @decorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
+      # Then the line tokens are drawn
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace()
@@ -463,12 +475,24 @@ class MinimapRenderView extends ScrollView
         else
           x += w * charWidth
 
+      # Finally the highlight over decorations are drawn.
       highlightDecorations = @decorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
     context.fill()
 
+  # Internal: Draws a single token on the given context.
+  #
+  # context - The canvas context {Object} onto which draw the token.
+  # text - The {String} text of the token.
+  # color - The {String} color of the token.
+  # x - The {Number} position on the x axis at which render the token.
+  # y - The {Number} position on the y axis at which render the token.
+  # charWidth - The char width {Number}.
+  # charHeight - The char height {Number}.
+  #
+  # Returns a {Number} that correspond to the new x position after the render.
   drawToken: (context, text, color, x, y, charWidth, charHeight) ->
     context.fillStyle = color
     chars = 0
