@@ -9,7 +9,6 @@
 # https://atom.io/docs/latest/advanced/keymaps
 '.workspace':
   'ctrl-k ctrl-m': 'minimap:toggle'
-  'ctrl-k ctrl-d': 'minimap:toggle-debug'
   'ctrl-k ctrl-s': 'minimap:open-quick-settings'
 
 '.minimap-quick-settings':

@@ -3,7 +3,6 @@
 {CompositeDisposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
-Debug = require 'prolix'
 
 # Public:
 module.exports =
@@ -11,7 +10,6 @@ class MinimapRenderView extends ScrollView
   Emitter.includeInto(this)
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)
-  Debug('minimap').includeInto(this)
 
   ### Public ###
 
@@ -89,9 +87,7 @@ class MinimapRenderView extends ScrollView
     @frameRequested = true
 
     requestAnimationFrame =>
-      @startBench()
       @update()
-      @endBench('minimap update')
       @frameRequested = false
 
   forceUpdate: ->

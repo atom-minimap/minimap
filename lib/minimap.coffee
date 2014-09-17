@@ -1,5 +1,4 @@
 {Emitter} = require 'emissary'
-Debug = require 'prolix'
 semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
@@ -76,7 +75,6 @@ require '../vendor/resizeend'
 # ```
 class Minimap
   Emitter.includeInto(this)
-  Debug('minimap').includeInto(this)
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
@@ -104,8 +102,7 @@ class Minimap
 
   # Activates the minimap package.
   activate: ->
-    atom.workspaceView.command 'minimap:toggle', => @toggleNoDebug()
-    atom.workspaceView.command 'minimap:toggle-debug', => @toggleDebug()
+    atom.workspaceView.command 'minimap:toggle', => @toggle()
     if atom.config.get('minimap.displayPluginsControls')
       atom.workspaceView.command 'minimap:open-quick-settings', ->
         atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-quick-settings').mousedown()
@@ -114,22 +111,12 @@ class Minimap
     atom.config.observe 'minimap.displayMinimapOnLeft', ->
       atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
 
-    @toggleNoDebug() if atom.config.get 'minimap.autoToggle'
+    @toggle() if atom.config.get 'minimap.autoToggle'
 
   # Deactivates the minimap package.
   deactivate: ->
     @destroyViews()
     @emit('deactivated')
-
-  # Toggles the minimap activation state with debug turned on.
-  toggleDebug: ->
-    @getChannel().activate()
-    @toggle()
-
-  # Toggles the minimap activation state with debug turned off.
-  toggleNoDebug: ->
-    @getChannel().deactivate()
-    @toggle()
 
   # Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
@@ -141,7 +128,7 @@ class Minimap
   # Returns a {Boolean}.
   versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
 
-  # Internal: Toggles the minimap activation state.
+  # Public: Toggles the minimap activation state.
   toggle: ->
     if @active
       @active = false

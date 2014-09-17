@@ -1,5 +1,4 @@
 {$, View, EditorView} = require 'atom'
-Debug = require 'prolix'
 Delegato = require 'delegato'
 {CompositeDisposable} = require 'event-kit'
 
@@ -41,7 +40,6 @@ MinimapOpenQuickSettingsView = require './minimap-open-quick-settings-view'
 # - markBufferRange
 module.exports =
 class MinimapView extends View
-  Debug('minimap').includeInto(this)
   Delegato.includeInto(this)
 
   @delegatesMethods 'getLineHeight', 'getCharHeight', 'getCharWidth', 'getLinesCount', 'getMinimapHeight', 'getMinimapScreenHeight', 'getMinimapHeightInLines', 'getFirstVisibleScreenRow', 'getLastVisibleScreenRow', 'pixelPositionForScreenPosition', 'decorateMarker', 'removeDecoration', 'decorationsForScreenRowRange', 'removeAllDecorationsForMarker', toProperty: 'renderView'
