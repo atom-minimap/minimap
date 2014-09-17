@@ -17,7 +17,7 @@ class ViewManagement extends Mixin
   #
   # editorView - An `EditorView` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in `EditorView`.
+  # Returns a {MinimapView}.
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
@@ -26,23 +26,25 @@ class ViewManagement extends Mixin
   #
   # editorView - An `Editor` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in `Editor`.
+  # Returns a {MinimapView}.
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
 
   # Public: Returns the {MinimapView} of the active editor view.
   #
-  # Returns a {MinimapView}
+  # Returns a {MinimapView}.
   getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveEditor())
 
   # Public: Calls `iterator` for each present and future minimap views.
+  # It returns a subscription {Object} with a `off` method so that
+  # it is possible to unsubscribe the iterator from being called
+  # for future views.
   #
   # iterator - A {Function} to call for each minimap view. It will receive
   #            an object with the following property:
   #            * view - The {MinimapView} instance
   #
-  # Returns a subscription object with a `off` method so that it is possible to
-  # unsubscribe the iterator from being called for future views.
+  # Returns an {Object}.
   eachMinimapView: (iterator) ->
     return unless iterator?
     iterator({view: minimapView}) for id,minimapView of @minimapViews
