@@ -31,8 +31,7 @@ apm install minimap
 
 ### Key Bindings
 
-* `ctrl-k ctrl-m`: Toggles the minimap without the logs.
-* `ctrl-k ctrl-d`: Toggles the minimap with the logs.
+* `ctrl-k ctrl-m`: Toggles the minimap.
 * `ctrl-k ctrl-s`: Toggles the minimap plugins quick settings dropdown.
 
 Customizing Key Bindings:
@@ -40,7 +39,6 @@ Customizing Key Bindings:
 ```cson
 '.editor':
   'cmd-m': 'minimap:toggle'
-  'cmd-d': 'minimap:toggle-debug'
 ```
 
 ### Customizing Style
