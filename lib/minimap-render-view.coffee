@@ -102,7 +102,6 @@ class MinimapRenderView extends ScrollView
   # Performs an update of the minimap.
   update: =>
     return unless @editorView?
-    # return unless @tokenized
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth
@@ -152,7 +151,6 @@ class MinimapRenderView extends ScrollView
     @offscreenLastRow = null
     @requestUpdate()
 
-
   # Registers changes in the minimap for the next render call.
   #
   # Registering changes on an instance will trigger an update request.
@@ -188,33 +186,88 @@ class MinimapRenderView extends ScrollView
   #    ##        ##    ##  ##     ## ##        ##    ##
   #    ##        ##     ##  #######  ##         ######
 
+  # Returns the height of the minimap in pixels. Note that the returned
+  # height is not the actual height of the minimap canvas but rather
+  # the computation of the minimap height if all the lines were
+  # rendered.
+  #
+  # This function is used when comparing the minimap to its editor
+  # to compute the scale factor.
+  #
+  # Returns a {Number}.
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
 
+  # Returns the height in pixels of the minimap lines.
+  #
+  # The height of the minimap lines can be changed using the
+  # `minimap.lineHeight` setting.
+  #
+  # Returns a {Number}.
   getLineHeight: -> @lineHeight
 
+  # Returns the height in pixels of a character rendered in the minimap.
+  #
+  # The height of the minimap characters can be changed using the
+  # `minimap.charHeight` setting.
+  #
+  # The characters height is dissociated from the line height in order
+  # to allow for some spacing between lines when rendering the minimap.
+  #
+  # Returns a {Number}.
   getCharHeight: -> @charHeight
 
+  # Returns the width in pixels of a character rendered in the minimap.
+  #
+  # The width of the minimap characters can be changed using the
+  # `minimap.charWidth` setting.
+  #
+  # Returns a {Number}.
   getCharWidth: -> @charWidth
 
+  # Returns the opacity at which the text are rendered in the minimap.
+  #
+  # Returns a {Number}.
   getTextOpacity: -> @textOpacity
 
+  # Returns the number of lines in the `Editor`.
+  #
+  # Returns a {Number}
   getLinesCount: -> @editorView.getEditor().getScreenLineCount()
 
-  getMinimapScreenHeight: -> @minimapView.height() #/ @minimapView.scaleY
+  # Returns the height of the minimap on screen.
+  #
+  # It differs from {::getMinimapHeight} in that the former returns
+  # the height of the whole minimap when this method returns the height
+  # of the visible part.
+  #
+  # Returns a {Number}.
+  getMinimapScreenHeight: -> @minimapView.height()
 
+  # Returns the number of lines the visible area of the minimap covers.
+  #
+  # Returns a {Number}.
   getMinimapHeightInLines: -> Math.ceil(@getMinimapScreenHeight() / @getLineHeight())
 
+  # Returns the index of the first visible row.
+  #
+  # Returns a {Number}.
   getFirstVisibleScreenRow: ->
     screenRow = Math.floor(@scrollTop() / @getLineHeight())
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
+  # Returns the index of the last visible row.
+  #
+  # Returns a {Number}.
   getLastVisibleScreenRow: ->
     calculatedRow = Math.ceil((@scrollTop() + @getMinimapScreenHeight()) / @getLineHeight()) - 1
     screenRow = Math.max(0, Math.min(@editor.getScreenLineCount() - 1, calculatedRow))
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
+  # Returns the bounds of the whole minimap.
+  #
+  # Returns an {Object}.
   getClientRect: ->
     canvas = @lineCanvas[0]
     {
@@ -222,6 +275,16 @@ class MinimapRenderView extends ScrollView
       height: @getMinimapHeight()
     }
 
+  # Returns a pixel position corresponding to a character's screen
+  # position.
+  #
+  # position - A screen position {Object} with the following properties:
+  #            :row - The row {Number} of the character.
+  #            :column - The column {Number} of the character.
+  #
+  # Returns an {Object} with the following properties:
+  # :top - The position {Number} from top.
+  # :left - The position {Number} from left.
   pixelPositionForScreenPosition: (position) ->
     {row, column} = @buffer.constructor.Point.fromObject(position)
     actualRow = Math.floor(row)
