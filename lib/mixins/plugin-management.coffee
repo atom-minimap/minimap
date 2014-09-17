@@ -18,8 +18,9 @@ class PluginManagement extends Mixin
 
   # Public: Registers a minimap `plugin` with the given `name`.
   #
-  # name - The identifying name of the plugin. It will be used as activation
-  #        settings name as well as the key to unregister the module.
+  # name - The identifying {String} name of the plugin.
+  #        It will be used as activation settings name as well
+  #        as the key to unregister the module.
   # plugin - The plugin {Object} to register.
   registerPlugin: (name, plugin) ->
     @plugins[name] = plugin
@@ -32,7 +33,7 @@ class PluginManagement extends Mixin
 
   # Public: Unregisters a plugin from the minimap.
   #
-  # name - The identifying name of the plugin to unregister.
+  # name - The identifying {String} name of the plugin to unregister.
   unregisterPlugin: (name) ->
     plugin = @plugins[name]
     @unregisterPluginControls(name) if atom.config.get('minimap.displayPluginsControls')
@@ -41,6 +42,8 @@ class PluginManagement extends Mixin
 
   # Internal: Updates the plugin activation state according to the current
   # config.
+  #
+  # name - The identifying {String} name of the plugin.
   updatesPluginActivationState: (name) ->
     plugin = @plugins[name]
 
@@ -57,6 +60,9 @@ class PluginManagement extends Mixin
   # Internal: When the `minimap.displayPluginsControls` setting is toggled,
   # this function will register the commands and setting to manage the plugin
   # activation from the minimap settings.
+  #
+  # name - The identifying {String} name of the plugin.
+  # plugin - The plugin {Object}.
   registerPluginControls: (name, plugin) ->
     settingsKey = "minimap.plugins.#{name}"
     @configDefaults.plugins[name] = true
@@ -73,6 +79,8 @@ class PluginManagement extends Mixin
   # Internal: When the `minimap.displayPluginsControls` setting is toggled,
   # this function will unregister the commands and setting that was created
   # previously.
+  #
+  # name - The identifying {String} name of the plugin.
   unregisterPluginControls: (name) ->
     atom.config.unobserve "minimap.plugins.#{name}"
     atom.workspaceView.off "minimap:toggle-#{name}"
