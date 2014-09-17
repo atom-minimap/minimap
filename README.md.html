@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <link rel='stylesheet' href='assets/biscotto.css' type='text/css'>
+  <script src='assets/biscotto.js'></script>
+  <script src='assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path=''></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='README.md.html' title='Biscotto'>Biscotto</a>
+    &raquo;
+    <a href='class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>README.md</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='class_list.html'>Classes</a>
+      <a id='method_list_link' href='method_list.html'>Methods</a>
+      <a id='extra_list_link' href='extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <nav class='toc'>
+        <p class='title'>
+          <a class='hide_toc' href='#'>
+            <strong>Table of Contents</strong>
+          </a>
+          <small>
+            (<a class='float_toc' href='#'>left</a>)
+          </small>
+        </p>
+      </nav>
+      <div id='filecontents'>
+        <h1 id="minimap-package-build-status-https-travis-ci-org-fundon-atom-minimap-svg-branch-master-https-travis-ci-org-fundon-atom-minimap-">Minimap package <a href="https://travis-ci.org/fundon/atom-minimap"><img src="https://travis-ci.org/fundon/atom-minimap.svg?branch=master" alt="Build Status"></a></h1><p>A preview of the full source code.</p><p><img src="https://github.com/fundon/atom-minimap/blob/master/screenshot.png?raw=true" alt="Minimap Screenshot"></p><h3 id="installation">Installation</h3>
+<pre><code>apm install minimap
+</code></pre><h3 id="features">Features</h3>
+<ul>
+<li>Mouse wheel and click-to-scroll <em>(no animation)</em></li>
+<li>Drag-to-scroll</li>
+</ul>
+<h3 id="settings">Settings</h3>
+<ul>
+<li><code>Auto Toggle</code>: If checked the minimap is toggled on at startup. (default=false)</li>
+<li><code>Display Code Highlights</code>: If checked the code will be highlighted using the grammar tokens. (default=true)</li>
+<li><code>Display Minimap On Left</code>: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)</li>
+<li><code>Line Height</code>: The height of a line in the minimap in pixels. (default=3)</li>
+<li><code>Char Height</code>: The height of a character in the minimap in pixels. (default=2)</li>
+<li><code>Char Width</code>: The width of a character in the minimap in pixels. (default=1)</li>
+<li><code>Text Opacity</code>: The opacity used to render the line text in the minimap. (default=0.6)</li>
+<li><code>Display Plugins Controls</code>: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. <strong>You need to restart Atom for this setting to be effective.</strong> (default=true)</li>
+<li><code>Minimap Scroll Indicator</code>: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the minimap height is bigger than the editor view height. (default=true)</li>
+<li><code>Plugins *</code>: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.</li>
+<li><code>Use Hardware Acceleration</code>: If checked the minimap scroll is done using a <code>translate3d</code> transform, otherwise the <code>translate</code> transform is used. (default=true)</li>
+</ul>
+<h3 id="key-bindings">Key Bindings</h3>
+<ul>
+<li><code>ctrl-k ctrl-m</code>: Toggles the minimap without the logs.</li>
+<li><code>ctrl-k ctrl-d</code>: Toggles the minimap with the logs.</li>
+<li><code>ctrl-k ctrl-s</code>: Toggles the minimap plugins quick settings dropdown.</li>
+</ul><p>Customizing Key Bindings:</p><pre><code class="lang-cson">&#39;.editor&#39;:
+  &#39;cmd-m&#39;: &#39;minimap:toggle&#39;
+  &#39;cmd-d&#39;: &#39;minimap:toggle-debug&#39;
+</code></pre>
+<h3 id="customizing-style">Customizing Style</h3><p>If you want to hide the default editor scrollbar, edit your <code>style.less</code> (Open Your Stylesheet).</p><pre><code class="lang-css">// hide scrollbar
+.with-minimap .vertical-scrollbar {
+  opacity: 0;
+  width: 0;
+}
+</code></pre>
+<h3 id="contributors">Contributors</h3><p><a href="https://github.com/fundon/atom-minimap/graphs/contributors">https://github.com/fundon/atom-minimap/graphs/contributors</a></p><h3 id="plugins">Plugins</h3><p>The minimap can be augmented with plugins, below is the list of available plugins so far:</p><ul>
+<li><a href="https://atom.io/packages/minimap-find-and-replace">Find And Replace</a></li>
+<li><a href="https://atom.io/packages/minimap-git-diff">Git Diff</a></li>
+<li><a href="https://atom.io/packages/minimap-color-highlight">Color Highlight</a></li>
+<li><a href="https://atom.io/packages/minimap-highlight-selected">Highlight Selected</a></li>
+<li><a href="https://atom.io/packages/minimap-selection">Selection</a></li>
+</ul><p>When the <code>displayPluginsControls</code> setting is toggled on, plugins activation can be managed directly from the minimap package settings or by using the quick settings dropdown available on the mimimap itself:</p><p><img src="https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true" alt="Minimap Screenshot"></p><h3 id="wiki">Wiki</h3>
+<ul>
+<li><a href="https://github.com/fundon/atom-minimap/wiki/Plugin">How to create a minimap plugin?</a></li>
+<li><a href="https://github.com/fundon/atom-minimap/wiki/Decorations">Minimap&#39;s Decorations API</a></li>
+</ul>
+<h3 id="license">License</h3><p>MIT</p>
+      </div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Sep 17 2014 23:21:44 GMT+0200 (CEST)
+  by
+  <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
+  v2.2.4
+  (Node.js v0.10.21).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+</div>
+  </body>
+</html>
