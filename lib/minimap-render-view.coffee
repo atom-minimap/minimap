@@ -4,14 +4,14 @@
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
 
-# Public:
+# Public: The {MinimapRenderView} class is responsible to render the minimap
+# onto its canvas.
 module.exports =
 class MinimapRenderView extends ScrollView
   Emitter.includeInto(this)
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)
 
-  ### Public ###
 
   @delegatesMethods 'getMarker', 'findMarkers', toProperty: 'editor'
 
@@ -25,6 +25,17 @@ class MinimapRenderView extends ScrollView
 
   frameRequested: false
 
+  ### Public ###
+
+  #    #### ##    ## #### ########
+  #     ##  ###   ##  ##     ##
+  #     ##  ####  ##  ##     ##
+  #     ##  ## ## ##  ##     ##
+  #     ##  ##  ####  ##     ##
+  #     ##  ##   ###  ##     ##
+  #    #### ##    ## ####    ##
+
+  # Creates a new {MinimapRenderView}.
   constructor: ->
     super
     @pendingChanges = []
@@ -38,6 +49,8 @@ class MinimapRenderView extends ScrollView
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
 
+  # Internal: Initializes the {MinimapRenderView} by registering to events
+  # and retrieving its base configuration.
   initialize: ->
     @lineCanvas.webkitImageSmoothingEnabled = false
 
@@ -53,17 +66,17 @@ class MinimapRenderView extends ScrollView
     atom.config.observe 'minimap.charHeight', (@charHeight) => @forceUpdate()
     atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
 
-  pixelPositionForScreenPosition: (position) ->
-    {row, column} = @buffer.constructor.Point.fromObject(position)
-    actualRow = Math.floor(row)
-
-    {top: row * @getLineHeight(), left: column}
-
+  # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
+  # events and releases its resources.
   destroy: ->
     @unsubscribe()
     @subscriptions.dispose()
     @editorView = null
 
+  # Sets the `EditorView` for which the {MinimapRenderView} instance
+  # is displayed.
+  #
+  # editorView - The `EditorView` instance.
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
     @buffer = @editorView.getEditor().getBuffer()
@@ -78,10 +91,49 @@ class MinimapRenderView extends ScrollView
 
     @tokenized = true if @displayBuffer.tokenizedBuffer.fullyTokenized
 
-  stackChanges: (changes) ->
-    @pendingChanges.push changes
-    @requestUpdate()
+  #    ##     ## ########  ########     ###    ######## ########
+  #    ##     ## ##     ## ##     ##   ## ##      ##    ##
+  #    ##     ## ##     ## ##     ##  ##   ##     ##    ##
+  #    ##     ## ########  ##     ## ##     ##    ##    ######
+  #    ##     ## ##        ##     ## #########    ##    ##
+  #    ##     ## ##        ##     ## ##     ##    ##    ##
+  #     #######  ##        ########  ##     ##    ##    ########
 
+  # Performs an update of the minimap.
+  update: =>
+    return unless @editorView?
+    # return unless @tokenized
+
+    #reset canvas virtual width/height
+    @lineCanvas[0].width = @lineCanvas[0].offsetWidth
+    @lineCanvas[0].height = @lineCanvas[0].offsetHeight
+
+    #is this scroll only or has content changed?
+    hasChanges = @pendingChanges.length > 0
+
+    firstRow = @getFirstVisibleScreenRow()
+    lastRow = @getLastVisibleScreenRow()
+    intactRanges = @computeIntactRanges(firstRow, lastRow)
+    if intactRanges.length is 0
+      @drawLines(@context, firstRow, lastRow, 0)
+    else
+      for intact in intactRanges
+        @copyBitmapPart(@context, @offscreenCanvas, intact.domStart, intact.start-firstRow, intact.end-intact.start)
+      @fillGapsBetweenIntactRanges(@context, intactRanges, firstRow, lastRow)
+
+    # copy displayed canvas to offscreen canvas
+    @offscreenCanvas.width = @lineCanvas[0].width
+    @offscreenCanvas.height = @lineCanvas[0].height
+    @offscreenCtxt.drawImage(@lineCanvas[0], 0, 0)
+    @offscreenFirstRow = firstRow
+    @offscreenLastRow = lastRow
+
+    @emit 'minimap:updated' if hasChanges
+
+  # Requests a render of the minimap to be performed on the next frame.
+  #
+  # Only one update can be performed by frame, so calling several time this
+  # method during a single frame won't trigger several render.
   requestUpdate: ->
     return if @frameRequested
     @frameRequested = true
@@ -90,6 +142,9 @@ class MinimapRenderView extends ScrollView
       @update()
       @frameRequested = false
 
+  # Forces a render of the whole minimap.
+  #
+  # All the caches are cleared when calling this method.
   forceUpdate: ->
     @tokenColorCache = {}
     @decorationColorCache = {}
@@ -97,12 +152,41 @@ class MinimapRenderView extends ScrollView
     @offscreenLastRow = null
     @requestUpdate()
 
-  scrollTop: (scrollTop, options={}) ->
+
+  # Registers changes in the minimap for the next render call.
+  #
+  # Registering changes on an instance will trigger an update request.
+  #
+  # changes - An {Object} with the following properties:
+  #           :start - The start row {Number} for the change.
+  #           :end - The end row {Number} for the change.
+  #           :screenDelta - The delta {Number} of the change. It corresponds
+  #                          to the number of visible lines affected
+  #                          by the change
+  stackChanges: (changes) ->
+    @pendingChanges.push changes
+    @requestUpdate()
+
+  # Changes the scroll top position of the minimap.
+  # When called, the minimap is automatically updated.
+  #
+  # scrollTop - The scroll top {Number}.
+  #
+  # Returns the scroll top {Number}.
+  scrollTop: (scrollTop) ->
     return @cachedScrollTop or 0 unless scrollTop?
     return if scrollTop is @cachedScrollTop
 
     @cachedScrollTop = scrollTop
     @update()
+
+  #    ########  ########   #######  ########   ######
+  #    ##     ## ##     ## ##     ## ##     ## ##    ##
+  #    ##     ## ##     ## ##     ## ##     ## ##
+  #    ########  ########  ##     ## ########   ######
+  #    ##        ##   ##   ##     ## ##              ##
+  #    ##        ##    ##  ##     ## ##        ##    ##
+  #    ##        ##     ##  #######  ##         ######
 
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
 
@@ -131,14 +215,45 @@ class MinimapRenderView extends ScrollView
     screenRow = 0 if isNaN(screenRow)
     screenRow
 
+  getClientRect: ->
+    canvas = @lineCanvas[0]
+    {
+      width: canvas.scrollWidth,
+      height: @getMinimapHeight()
+    }
+
+  pixelPositionForScreenPosition: (position) ->
+    {row, column} = @buffer.constructor.Point.fromObject(position)
+    actualRow = Math.floor(row)
+
+    {top: row * @getLineHeight(), left: column}
+
+  #     ######   #######  ##        #######  ########   ######
+  #    ##    ## ##     ## ##       ##     ## ##     ## ##    ##
+  #    ##       ##     ## ##       ##     ## ##     ## ##
+  #    ##       ##     ## ##       ##     ## ########   ######
+  #    ##       ##     ## ##       ##     ## ##   ##         ##
+  #    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
+  #     ######   #######  ########  #######  ##     ##  ######
+
   getDefaultColor: ->
     @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
-  ensureDummyNodeExistence: ->
-    unless @dummyNode?
-      @dummyNode = document.createElement('span')
-      @dummyNode.style.visibility = 'hidden'
-      @editorView.append(@dummyNode)
+  getTokenColor: (token) ->
+    #Retrieve color from cache if available
+    flatScopes = token.scopes.join()
+    if flatScopes not of @tokenColorCache
+      color = @retrieveTokenColorFromDom(token)
+      @tokenColorCache[flatScopes] = color
+    @tokenColorCache[flatScopes]
+
+  getDecorationColor: (decoration) ->
+    properties = decoration.getProperties()
+    return properties.color if properties.color?
+    if properties.scope not of @decorationColorCache
+      color = @retrieveDecorationColorFromDom(decoration)
+      @decorationColorCache[properties.scope] = color
+    @decorationColorCache[properties.scope]
 
   # This function insert a dummy token element in the DOM to compute its style,
   # return the specified property, and remove the element from the DOM.
@@ -164,27 +279,25 @@ class MinimapRenderView extends ScrollView
     color = @retrieveStyleFromDom(token.scopes, 'color')
     @transparentize(color, @getTextOpacity())
 
-  getTokenColor: (token) ->
-    #Retrieve color from cache if available
-    flatScopes = token.scopes.join()
-    if flatScopes not of @tokenColorCache
-      color = @retrieveTokenColorFromDom(token)
-      @tokenColorCache[flatScopes] = color
-    @tokenColorCache[flatScopes]
-
   retrieveDecorationColorFromDom: (decoration) ->
     @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
 
-  getDecorationColor: (decoration) ->
-    properties = decoration.getProperties()
-    return properties.color if properties.color?
-    if properties.scope not of @decorationColorCache
-      color = @retrieveDecorationColorFromDom(decoration)
-      @decorationColorCache[properties.scope] = color
-    @decorationColorCache[properties.scope]
+  ensureDummyNodeExistence: ->
+    unless @dummyNode?
+      @dummyNode = document.createElement('span')
+      @dummyNode.style.visibility = 'hidden'
+      @editorView.append(@dummyNode)
 
+  transparentize: (color, opacity=1) ->
+    color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
 
-    out
+  #    ########  ########     ###    ##      ##
+  #    ##     ## ##     ##   ## ##   ##  ##  ##
+  #    ##     ## ##     ##  ##   ##  ##  ##  ##
+  #    ##     ## ########  ##     ## ##  ##  ##
+  #    ##     ## ##   ##   ######### ##  ##  ##
+  #    ##     ## ##    ##  ##     ## ##  ##  ##
+  #    ########  ##     ## ##     ##  ###  ###
 
   drawLines: (context, firstRow, lastRow, offsetRow) ->
     return if firstRow > lastRow
@@ -243,7 +356,6 @@ class MinimapRenderView extends ScrollView
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
-
     context.fill()
 
   drawToken: (context, text, color, x, y, charWidth, charHeight) ->
@@ -288,6 +400,14 @@ class MinimapRenderView extends ScrollView
         0, destRow * lineHeight,
         bitmapCanvas.width, rowCount * lineHeight)
 
+  #    ########     ###    ##    ##  ######   ########  ######
+  #    ##     ##   ## ##   ###   ## ##    ##  ##       ##    ##
+  #    ##     ##  ##   ##  ####  ## ##        ##       ##
+  #    ########  ##     ## ## ## ## ##   #### ######    ######
+  #    ##   ##   ######### ##  #### ##    ##  ##             ##
+  #    ##    ##  ##     ## ##   ### ##    ##  ##       ##    ##
+  #    ##     ## ##     ## ##    ##  ######   ########  ######
+
   fillGapsBetweenIntactRanges: (context, intactRanges, firstRow, lastRow) ->
     currentRow = firstRow
     # intactRanges is sorted, we can safely fill between ranges
@@ -296,46 +416,6 @@ class MinimapRenderView extends ScrollView
       currentRow = intact.end
     if currentRow <= lastRow
       @drawLines(context, currentRow, lastRow, currentRow-firstRow)
-
-  update: =>
-    return unless @editorView?
-    # return unless @tokenized
-
-    #reset canvas virtual width/height
-    @lineCanvas[0].width = @lineCanvas[0].offsetWidth
-    @lineCanvas[0].height = @lineCanvas[0].offsetHeight
-
-    #is this scroll only or has content changed?
-    hasChanges = @pendingChanges.length > 0
-
-    firstRow = @getFirstVisibleScreenRow()
-    lastRow = @getLastVisibleScreenRow()
-    intactRanges = @computeIntactRanges(firstRow, lastRow)
-    if intactRanges.length is 0
-      @drawLines(@context, firstRow, lastRow, 0)
-    else
-      for intact in intactRanges
-        @copyBitmapPart(@context, @offscreenCanvas, intact.domStart, intact.start-firstRow, intact.end-intact.start)
-      @fillGapsBetweenIntactRanges(@context, intactRanges, firstRow, lastRow)
-
-    # copy displayed canvas to offscreen canvas
-    @offscreenCanvas.width = @lineCanvas[0].width
-    @offscreenCanvas.height = @lineCanvas[0].height
-    @offscreenCtxt.drawImage(@lineCanvas[0], 0, 0)
-    @offscreenFirstRow = firstRow
-    @offscreenLastRow = lastRow
-
-    @emit 'minimap:updated' if hasChanges
-
-  transparentize: (color, opacity=1) ->
-    color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
-
-  getClientRect: ->
-    canvas = @lineCanvas[0]
-    {
-      width: canvas.scrollWidth,
-      height: @getMinimapHeight()
-    }
 
   computeIntactRanges: (firstRow, lastRow) ->
     return [] if !@offscreenFirstRow? and !@offscreenLastRow?
