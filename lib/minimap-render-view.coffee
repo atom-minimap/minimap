@@ -484,7 +484,7 @@ class MinimapRenderView extends ScrollView
 
   # Internal: Draws a single token on the given context.
   #
-  # context - The canvas context {Object} onto which draw the token.
+  # context - The canvas context object onto which draw the token.
   # text - The {String} text of the token.
   # color - The {String} color of the token.
   # x - The {Number} position on the x axis at which render the token.
@@ -510,6 +510,18 @@ class MinimapRenderView extends ScrollView
 
     x
 
+  # Internal: Draws a highlight decoration on the passed-in context.
+  #
+  # It renders only the part of the highlight corresponding to the specified
+  # row.
+  #
+  # context - The canvas context object.
+  # decoration - The `Decoration` object to render.
+  # y - The {Number} position on the y axis at which render the decoration.
+  # screenRow - The row {Number} corresponding to the rendered row.
+  # lineHeight - The {Number} for the line height.
+  # charWidth - The {Number} for the character width.
+  # canvasWidth - The {Number} of the canvas width.
   drawHighlightDecoration: (context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth) ->
     context.fillStyle = @getDecorationColor(decoration)
     range = decoration.getMarker().getScreenRange()
@@ -527,6 +539,14 @@ class MinimapRenderView extends ScrollView
       else
         context.fillRect(0,y*lineHeight,canvasWidth,lineHeight)
 
+  # Internal: Copy a part of the offscreen bitmap into the onscreen one to
+  # reduce the amount of rendered lines during scroll.
+  #
+  # context - The canvas context object.
+  # bitmapCanvas - The source bitmap.
+  # srcRow - The row {Number} on the source bitmap.
+  # destRow - The row {Number} on the destination bitmap.
+  # rowCount - The {Number} of rows to copy.
   copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
     lineHeight = @getLineHeight()
     context.drawImage(bitmapCanvas,
@@ -543,6 +563,15 @@ class MinimapRenderView extends ScrollView
   #    ##    ##  ##     ## ##   ### ##    ##  ##       ##    ##
   #    ##     ## ##     ## ##    ##  ######   ########  ######
 
+  ### Internal ###
+
+  # Renders the lines between the intact ranges when an update has pending
+  # changes.
+  #
+  # context - The canvas context object.
+  # intactRanges - The {Array} of intact ranges.
+  # firstRow - The first visible row index {Number}.
+  # lastRow - The last visible row index {Number}.
   fillGapsBetweenIntactRanges: (context, intactRanges, firstRow, lastRow) ->
     currentRow = firstRow
     # intactRanges is sorted, we can safely fill between ranges
@@ -552,6 +581,12 @@ class MinimapRenderView extends ScrollView
     if currentRow <= lastRow
       @drawLines(context, currentRow, lastRow, currentRow-firstRow)
 
+  # Computes the ranges that are not affected by the current pending changes.
+  #
+  # firstRow - The first visible row index {Number}.
+  # lastRow - The last visible row index {Number}.
+  #
+  # Returns an {Array} of ranges.
   computeIntactRanges: (firstRow, lastRow) ->
     return [] if !@offscreenFirstRow? and !@offscreenLastRow?
 
@@ -593,6 +628,14 @@ class MinimapRenderView extends ScrollView
 
     intactRanges
 
+  # Truncates the intact ranges so that they doesn't expand past the visible
+  # area of the minimap.
+  #
+  # intactRanges - The {Array} of ranges to truncate.
+  # firstRow - The first visible row index {Number}.
+  # lastRow - The last visible row index {Number}.
+  #
+  # Returns an {Array} of ranges.
   truncateIntactRanges: (intactRanges, firstRow, lastRow) ->
     i = 0
     while i < intactRanges.length
