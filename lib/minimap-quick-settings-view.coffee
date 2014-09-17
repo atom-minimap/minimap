@@ -3,7 +3,6 @@ $ = View.__super__.constructor
 
 Minimap = require './minimap'
 
-# Public:
 module.exports =
 class MinimapQuickSettingsView extends View
   @content: ->
@@ -14,8 +13,6 @@ class MinimapQuickSettingsView extends View
         @li class: (if atom.config.get('minimap.displayCodeHighlights') then 'active' else ''), outlet: 'codeHighlights', 'code-highlights'
 
   selectedItem: null
-
-  ### Public ###
 
   initialize: (@minimapView) ->
     @plugins = {}
