@@ -345,13 +345,13 @@ class MinimapView extends View
 
   ### Internal ###
 
-  # Internal: Subscribes from the `Editor events`.
+  # Subscribes from the `Editor events`.
   subscribeToEditor: ->
     @subscribe @editor, 'scroll-top-changed.minimap', @updateScrollY
     # Hacked scroll-left
     @subscribe @scrollView, 'scroll.minimap', @updateScrollX
 
-  # Internal: Unsubscribes from the `Editor events`.
+  # Unsubscribes from the `Editor events`.
   unsubscribeFromEditor: ->
     @unsubscribe @editor, '.minimap' if @editor?
     @unsubscribe @scrollView, '.minimap' if @scrollView?
@@ -368,6 +368,8 @@ class MinimapView extends View
     else
       @detachFromPaneView() if @parent().length is 1
 
+  # Receives the mouse wheel event on the minimap itself and scrolls
+  # the editor by the corresponding amount.
   onMouseWheel: (e) =>
     return if @isClicked
     {wheelDeltaX, wheelDeltaY} = e.originalEvent
@@ -376,6 +378,8 @@ class MinimapView extends View
     if wheelDeltaY
       @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
 
+  # Receives the mouse down event on the minimap and scrolls the
+  # editor accordingly to the mouse location.
   onMouseDown: (e) =>
     # Handle left-click only
     return if e.which isnt 1
@@ -392,12 +396,16 @@ class MinimapView extends View
       @isClicked = false
     , 377
 
+  # Receives the `resize:end` event and updates the minimap size and position
+  # accordingly.
   onScrollViewResized: =>
     @renderView.lineCanvas.height(@editorView.height())
     @updateMinimapSize()
     @updateMinimapView()
     @renderView.forceUpdate()
 
+  # Receives the mouse down event on the minimap visible area div and initiates
+  # the drag gesture.
   onDragStart: (e) =>
     # Handle left-click only
     return if e.which isnt 1
@@ -409,6 +417,7 @@ class MinimapView extends View
     @grabY = y - (@indicator.y + @indicator.scroller.y)
     @on 'mousemove.visible-area', @onMove
 
+  # Receives the mouse move and performs the drag gesture.
   onMove: (e) =>
     if e.which is 1
       @onDrag e
@@ -416,6 +425,7 @@ class MinimapView extends View
       @isClicked = false
       @off '.visible-area'
 
+  # Performs the changes on scrolling based on the drag gesture.
   onDrag: (e) =>
     # The logic for dragging the scroller is a bit different
     # than for a single click.
@@ -427,11 +437,21 @@ class MinimapView extends View
 
   # OTHER PRIVATE METHODS
 
+  # Returns a {String} containing a css transform translation.
+  #
+  # x - The {Number} for the x axis translation.
+  # y - The {Number} for the y axis translation.
+  #
+  # Returns a {String}.
   translate: (x=0,y=0) ->
     if atom.config.get 'minimap.useHardwareAcceleration'
       "translate3d(#{x}px, #{y}px, 0)"
     else
       "translate(#{x}px, #{y}px)"
 
+  # Applies a css transformation to a DOM element.
+  #
+  # el - The DOM node onto apply the transformation.
+  # transform - The css transformation {String}.
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
