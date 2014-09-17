@@ -19,6 +19,17 @@ class DecorationManagement extends Mixin
   decorationForId: (id) ->
     @decorationsById[id]
 
+  decorationsByTypesForRow: (row, types..., decorations) ->
+    out = []
+    for id, array of decorations
+      for decoration in array
+        if decoration.getProperties().type in types and
+           decoration.getMarker().getScreenRange().intersectsRow(row)
+          out.push decoration
+
+    out
+
+
   decorationsForScreenRowRange: (startScreenRow, endScreenRow) ->
     decorationsByMarkerId = {}
 

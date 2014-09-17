@@ -183,13 +183,6 @@ class MinimapRenderView extends ScrollView
       @decorationColorCache[properties.scope] = color
     @decorationColorCache[properties.scope]
 
-  getDecorationsByTypesForRow: (row, types..., decorations) ->
-    out = []
-    for id, array of decorations
-      for decoration in array
-        if decoration.getProperties().type in types and
-           decoration.getMarker().getScreenRange().intersectsRow(row)
-          out.push decoration
 
     out
 
@@ -222,12 +215,12 @@ class MinimapRenderView extends ScrollView
       screenRow = firstRow + row
       y0 = y*lineHeight
 
-      lineDecorations = @getDecorationsByTypesForRow(screenRow, 'line', decorations)
+      lineDecorations = @decorationsByTypesForRow(screenRow, 'line', decorations)
       for decoration in lineDecorations
         context.fillStyle = @getDecorationColor(decoration)
         context.fillRect(0,y0,canvasWidth,lineHeight)
 
-      highlightDecorations = @getDecorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
+      highlightDecorations = @decorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
@@ -246,7 +239,7 @@ class MinimapRenderView extends ScrollView
         else
           x += w * charWidth
 
-      highlightDecorations = @getDecorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
+      highlightDecorations = @decorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
       for decoration in highlightDecorations
         @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
