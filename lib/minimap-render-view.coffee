@@ -299,9 +299,23 @@ class MinimapRenderView extends ScrollView
   #    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
   #     ######   #######  ########  #######  ##     ##  ######
 
+  # Returns the default text color for an editor content.
+  #
+  # The color value is directly read from the `EditorView` computed
+  # styles.
+  #
+  # Returns a {String}.
   getDefaultColor: ->
     @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
 
+  # Returns the text color for the passed-in `token` object.
+  #
+  # The color value is read from the DOM by creating a node structure
+  # that match the token `scope` property.
+  #
+  # token - A token {Object}.
+  #
+  # Returns a {String}.
   getTokenColor: (token) ->
     #Retrieve color from cache if available
     flatScopes = token.scopes.join()
@@ -310,6 +324,15 @@ class MinimapRenderView extends ScrollView
       @tokenColorCache[flatScopes] = color
     @tokenColorCache[flatScopes]
 
+  # Returns the background color for the passed-in `decoration` object.
+  #
+  # The color value is read from the DOM by creating a node structure
+  # that match the decoration `scope` property unless the decoration
+  # provides its own `color` property.
+  #
+  # decoration - A `Decoration` object.
+  #
+  # Returns a {String}.
   getDecorationColor: (decoration) ->
     properties = decoration.getProperties()
     return properties.color if properties.color?
@@ -318,8 +341,32 @@ class MinimapRenderView extends ScrollView
       @decorationColorCache[properties.scope] = color
     @decorationColorCache[properties.scope]
 
-  # This function insert a dummy token element in the DOM to compute its style,
-  # return the specified property, and remove the element from the DOM.
+  # Internal: Returns the text color for the passed-in token.
+  #
+  # token - A token {Object}.
+  #
+  # Returns a {String}.
+  retrieveTokenColorFromDom: (token) ->
+    # This is quite an expensive operation so results are cached in getTokenColor.
+    color = @retrieveStyleFromDom(token.scopes, 'color')
+    @transparentize(color, @getTextOpacity())
+
+  # Internal: Returns the background color for the passed-in decoration.
+  #
+  # decoration - A `Decoration` object.
+  #
+  # Returns a {String}.
+  retrieveDecorationColorFromDom: (decoration) ->
+    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
+
+  # Internal: This function insert a dummy element in the DOM to compute
+  # its style, return the specified property, and remove the element
+  # from the DOM.
+  #
+  # scopes - An {Array} of {String} reprensenting the scope to reproduce.
+  # property - The property {String} name.
+  #
+  # Returns a {String} of the property value.
   retrieveStyleFromDom: (scopes, property) ->
     @ensureDummyNodeExistence()
 
@@ -337,22 +384,23 @@ class MinimapRenderView extends ScrollView
 
     value
 
-  retrieveTokenColorFromDom: (token) ->
-    # This is quite an expensive operation so results are cached in getTokenColor.
-    color = @retrieveStyleFromDom(token.scopes, 'color')
-    @transparentize(color, @getTextOpacity())
-
-  retrieveDecorationColorFromDom: (decoration) ->
-    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
-
+  # Internal: Creates a DOM node container for all the operations that
+  # need to read styles properties from DOM.
   ensureDummyNodeExistence: ->
     unless @dummyNode?
       @dummyNode = document.createElement('span')
       @dummyNode.style.visibility = 'hidden'
       @editorView.append(@dummyNode)
 
+  # Internal: Converts a `rgb(...)` color into a `rgba(...)` color
+  # with the specified opacity.
+  #
+  # color - The {String} of the color to modify.
+  # opacity - The opacity {Number} to apply to the color.
+  #
+  # Returns a {String}.
   transparentize: (color, opacity=1) ->
-    color.replace('rgb', 'rgba').replace(')', ", #{opacity})")
+    color.replace('rgb(', 'rgba(').replace(')', ", #{opacity})")
 
   #    ########  ########     ###    ##      ##
   #    ##     ## ##     ##   ## ##   ##  ##  ##
