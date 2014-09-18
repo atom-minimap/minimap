@@ -2,7 +2,7 @@
 <html>
   <head>
   <meta charset='UTF-8'>
-  <title>CoffeeScript API Documentation</title>
+  <title>Minimap API Documentation</title>
   <link rel='stylesheet' href='..&#47;assets/biscotto.css' type='text/css'>
   <script src='..&#47;assets/biscotto.js'></script>
   <script src='..&#47;assets/search_data.js'></script>
@@ -11,7 +11,7 @@
     <div id='base' data-path='..&#47;'></div>
 <div id='header'>
   <div id='menu'>
-    <a href='..&#47;README.md.html' title='Biscotto'>Biscotto</a>
+    <a href='..&#47;README.md.html' title='Minimap'>Minimap</a>
     &raquo;
     <a href='..&#47;class_index.html' title='Index'>Index</a>
     &raquo;
@@ -116,65 +116,7 @@
       <h2>Overview</h2>
       <div class='docstring'>
   <p>The <code>Minimap</code> package provides an eagle-eye view of text buffers.</p><p>It also provides API for plugin packages that want to interact with the
-minimap and be available to the user through the minimap settings.</p><h2 id="events">Events</h2>
-<ul>
-<li><p><code>activated</code> -
-   Emitted synchronously when the package is activated. By suscribing
-   to this event other packages can be notified of the activation of the
-   minimap. At that point the minimap views have been created.</p></li>
-<li><p><code>deactivated</code> -
-   Emitted synchronously when the package have been deactivated. The views
-   are no longer available at that point.</p></li>
-<li><p><code>minimap-view:created</code> -
-   Emitted synchronously when a <a href='../classes/MinimapView.html'>MinimapView</a> have been created for
-   an active <code>PaneView</code>.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>view</code>: The <a href='../classes/MinimapView.html'>MinimapView</a> that was created</li>
-</ul>
-</li>
-<li><p><code>minimap-view:will-be-destroyed</code> -
-   Emitted synchronously when a <a href='../classes/MinimapView.html'>MinimapView</a> is about to be destroyed.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>view</code>: The <a href='../classes/MinimapView.html'>MinimapView</a> that was created</li>
-</ul>
-</li>
-<li><p><code>minimap-view:destroyed</code> -
-   Emitted synchronously when a <a href='../classes/MinimapView.html'>MinimapView</a> was destroyed, at that point
-   the view have been removed from the DOM.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>view</code>: The <a href='../classes/MinimapView.html'>MinimapView</a> that was created</li>
-</ul>
-</li>
-<li><p><code>plugin:added</code> -
-   Emitted synchronously when a minimap plugin was registered.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>name</code> - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name used to register the plugin</li>
-<li><code>plugin</code> - The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> that was registered</li>
-</ul>
-</li>
-<li><p><code>plugin:removed</code> -
-   Emitted synchronously when a minimap plugin was unregistered.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>name</code> - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name used to register the plugin</li>
-<li><code>plugin</code> - The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> that was unregistered</li>
-</ul>
-</li>
-<li><p><code>plugin:activated</code> -
-   Emitted synchronously when a minimap plugin was activated.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>name</code> - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name used to register the plugin</li>
-<li><code>plugin</code> - The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> that was activated</li>
-</ul>
-</li>
-<li><p><code>plugin:deactivated</code> -
-   Emitted synchronously when a minimap plugin was deactivated.
-   Your handler will be called with an object containing the following keys.</p><ul>
-<li><code>name</code> - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name used to register the plugin</li>
-<li><code>plugin</code> - The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> that was deactivated</li>
-</ul>
-</li>
-</ul>
-<h2 id="plugins-interface">Plugins Interface</h2><p>Plugins should conform to the following interface:</p><pre><code class="lang-coffee">class Plugin
+minimap and be available to the user through the minimap settings.</p><h2 id="plugins-interface">Plugins Interface</h2><p>Plugins should conform to the following interface:</p><pre><code class="lang-coffee">class Plugin
   void activatePlugin: -&gt;
   void deactivatePlugin: -&gt;
   bool isActive: -&gt;
@@ -207,6 +149,96 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
   </li>
   <li>
     <span class='signature'>
+      <a href='#onDidActivate-instance'>
+        ::<strong>onDidActivate</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when the minimap package have been activated.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidActivatePlugin-instance'>
+        ::<strong>onDidActivatePlugin</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a plugin have been activated.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidAddPlugin-instance'>
+        ::<strong>onDidAddPlugin</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a plugin have been registered.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidCreateMinimap-instance'>
+        ::<strong>onDidCreateMinimap</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a minimap have been created.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidDeactivate-instance'>
+        ::<strong>onDidDeactivate</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when the minimap package have been deactivated.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidDeactivatePlugin-instance'>
+        ::<strong>onDidDeactivatePlugin</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a plugin have been deactivated.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidDestroyMinimap-instance'>
+        ::<strong>onDidDestroyMinimap</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a minimap have been destroyed.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidRemovePlugin-instance'>
+        ::<strong>onDidRemovePlugin</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a plugin have been unregistered.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onWillDestroyMinimap-instance'>
+        ::<strong>onWillDestroyMinimap</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when a minimap is about to be destroyed.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#toggle-instance'>
         ::<strong>toggle</strong>()
       </a>
@@ -233,7 +265,7 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
       ::<strong>activate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
 &#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L102'>Source</a>
+/lib&#47;minimap.coffee#L56'>Source</a>
     </p>
     <div class='docstring'>
   <p>Activates the minimap package.</p>
@@ -246,7 +278,7 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
       ::<strong>deactivate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
 &#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L115'>Source</a>
+/lib&#47;minimap.coffee#L69'>Source</a>
     </p>
     <div class='docstring'>
   <p>Deactivates the minimap package.</p>
@@ -255,11 +287,352 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='onDidActivate-instance'>
+      ::<strong>onDidActivate</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L100'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when the minimap package have been activated.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidActivatePlugin-instance'>
+      ::<strong>onDidActivatePlugin</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L171'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a plugin have been activated.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(String)</span>
+        <span class='name'>name</span>
+        &mdash;
+        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+      </li>
+      <li>
+        <span class='type'>(Object)</span>
+        <span class='name'>plugin</span>
+        &mdash;
+        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidAddPlugin-instance'>
+      ::<strong>onDidAddPlugin</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L149'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a plugin have been registered.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(String)</span>
+        <span class='name'>name</span>
+        &mdash;
+        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+      </li>
+      <li>
+        <span class='type'>(Object)</span>
+        <span class='name'>plugin</span>
+        &mdash;
+        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidCreateMinimap-instance'>
+      ::<strong>onDidCreateMinimap</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L118'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a minimap have been created.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(MinimapView)</span>
+        <span class='name'>view</span>
+        &mdash;
+        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that was created.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidDeactivate-instance'>
+      ::<strong>onDidDeactivate</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L108'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when the minimap package have been deactivated.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidDeactivatePlugin-instance'>
+      ::<strong>onDidDeactivatePlugin</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L182'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a plugin have been deactivated.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(String)</span>
+        <span class='name'>name</span>
+        &mdash;
+        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+      </li>
+      <li>
+        <span class='type'>(Object)</span>
+        <span class='name'>plugin</span>
+        &mdash;
+        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidDestroyMinimap-instance'>
+      ::<strong>onDidDestroyMinimap</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L138'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a minimap have been destroyed.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(MinimapView)</span>
+        <span class='name'>view</span>
+        &mdash;
+        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that was destroyed.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidRemovePlugin-instance'>
+      ::<strong>onDidRemovePlugin</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L160'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a plugin have been unregistered.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(String)</span>
+        <span class='name'>name</span>
+        &mdash;
+        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+      </li>
+      <li>
+        <span class='type'>(Object)</span>
+        <span class='name'>plugin</span>
+        &mdash;
+        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onWillDestroyMinimap-instance'>
+      ::<strong>onWillDestroyMinimap</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v2.3.3
+/lib&#47;minimap.coffee#L128'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Calls the <code>callback</code> when a minimap is about to be destroyed.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(MinimapView)</span>
+        <span class='name'>view</span>
+        &mdash;
+        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that will be destroyed.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='toggle-instance'>
       ::<strong>toggle</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
 &#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L130'>Source</a>
+/lib&#47;minimap.coffee#L85'>Source</a>
     </p>
     <div class='docstring'>
   <p>Toggles the minimap activation state.</p>
@@ -272,7 +645,7 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
       Boolean ::<strong>versionMatch</strong>(expectedVersion)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
 &#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L127'>Source</a>
+/lib&#47;minimap.coffee#L82'>Source</a>
     </p>
     <div class='docstring'>
   <p>Verifies that the passed-in version expression is satisfied by the current minimap version.</p><p><code>expectedVersion</code> - A <a href="https://github.com/npm/node-semver">semver</a>
@@ -295,7 +668,7 @@ minimap and be available to the user through the minimap settings.</p><h2 id="ev
     </div>
     <div id='footer'>
   Generated on
-  Wed Sep 17 2014 23:36:30 GMT+0200 (CEST)
+  Thu Sep 18 2014 21:46:27 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

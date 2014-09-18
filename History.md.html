@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Minimap API Documentation</title>
+  <link rel='stylesheet' href='assets/biscotto.css' type='text/css'>
+  <script src='assets/biscotto.js'></script>
+  <script src='assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path=''></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='README.md.html' title='Minimap'>Minimap</a>
+    &raquo;
+    <a href='class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>History.md</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='class_list.html'>Classes</a>
+      <a id='method_list_link' href='method_list.html'>Methods</a>
+      <a id='extra_list_link' href='extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <nav class='toc'>
+        <p class='title'>
+          <a class='hide_toc' href='#'>
+            <strong>Table of Contents</strong>
+          </a>
+          <small>
+            (<a class='float_toc' href='#'>left</a>)
+          </small>
+        </p>
+      </nav>
+      <div id='filecontents'>
+        <h1 id="2-3-3-2014-08-27">2.3.3 / 2014-08-27</h1>
+<ul>
+<li>handle properly the changes in the atom editors classes</li>
+</ul>
+<h1 id="2-3-2-2014-08-22">2.3.2 / 2014-08-22</h1>
+<ul>
+<li>re-enable the minimap to work with legacy EditorView class</li>
+</ul>
+<h1 id="2-3-1-2014-08-19">2.3.1 / 2014-08-19</h1>
+<ul>
+<li>fix a bug with removeAtKeyPath method in tests</li>
+</ul>
+<h1 id="2-3-0-2014-08-19">2.3.0 / 2014-08-19</h1>
+<ul>
+<li>add a setting to completely turn off the plugin controls from the minimap settings.</li>
+<li>add a new entry in the quick settings dropdown to toggle the minimap highlights on a per-editor basis.</li>
+</ul>
+<h1 id="2-2-2-2014-08-17">2.2.2 / 2014-08-17</h1>
+<ul>
+<li>fix a whitespace issue with Redacted font</li>
+</ul>
+<h1 id="2-2-1-2014-08-17">2.2.1 / 2014-08-17</h1>
+<ul>
+<li>fix error raised when tokenized line doesn&#39;t have an <code>invisibles</code> property</li>
+</ul>
+<h1 id="2-2-0-2014-08-17">2.2.0 / 2014-08-17</h1>
+<ul>
+<li>add option to toggle code highlights in the minimap</li>
+</ul>
+<h1 id="2-1-1-2014-08-17">2.1.1 / 2014-08-17</h1>
+<ul>
+<li>fix minimap editor background hiding the underlayer</li>
+</ul>
+<h1 id="2-1-0-2014-08-17">2.1.0 / 2014-08-17</h1>
+<ul>
+<li>add a quick access dropdown to toggle activation of minimap plugins</li>
+</ul>
+<h1 id="2-0-0-2014-08-16">2.0.0 / 2014-08-16</h1>
+<ul>
+<li>remove the use of css scaling to render the minimap</li>
+<li>add new API allowing to replace an <code>EditorView</code> with a <code>MinimapView</code> for screen position computation in plugins that need to display markers over the minimap</li>
+<li>add click-then-drag support on the minimap <em>track</em></li>
+<li>fix broken minimap in atom v0.123.0</li>
+<li>fix broken tests</li>
+</ul>
+<h1 id="1-6-0-2014-07-09">1.6.0 / 2014-07-09</h1>
+<ul>
+<li>add a <code>Use Hardware Acceleration</code> option that allow to choose between <code>translate</code> or <code>translate3d</code> for the minimap scroll offset</li>
+<li>fix a weird rendering issue where many update of the minimap were done with various offset</li>
+</ul>
+<h1 id="1-5-2-2014-07-09">1.5.2 / 2014-07-09</h1>
+<ul>
+<li>fix an unexpected offset on the right side of the editor contents</li>
+</ul>
+<h1 id="1-5-1-2014-07-09">1.5.1 / 2014-07-09</h1>
+<ul>
+<li>fix with-minimap decoration removed on tab change when react editor is enabled</li>
+<li>fix pane styles with minimap and react editor enabled</li>
+<li>fix minimap line-height with react editor enabled</li>
+<li>fix error raised when closing the last tab in a pane</li>
+</ul>
+<h1 id="1-5-0-2014-07-07">1.5.0 / 2014-07-07</h1>
+<ul>
+<li>add support for react editor mode</li>
+</ul>
+<h1 id="1-4-0-2014-06-28">1.4.0 / 2014-06-28</h1>
+<ul>
+<li>fix error on line classlist access</li>
+</ul>
+<h1 id="1-3-0-2014-05-21">1.3.0 / 2014-05-21</h1>
+<ul>
+<li>fix broken minimap when <code>useReactEditor</code> is enabled</li>
+<li>🐎  remove forced hardware acceleration on minimap</li>
+</ul>
+<h1 id="1-2-0-2014-05-20">1.2.0 / 2014-05-20</h1>
+<ul>
+<li>add a <code>Display Minimap On Left</code> setting allowing for the minimap to be placed on the left of the editor view</li>
+<li>add a line on the right edge of the minimap indicating how much of the buffer is displayed by the minimap. This line is only displayed if the minimap can scroll.</li>
+<li>add a <code>lineOverdraw</code> setting that allow to change the number of additional lines to render in the minimap. Bigger values will increase render time but will reduce the number of redraws during scrolling.</li>
+</ul>
+<h1 id="1-1-0-2014-05-16">1.1.0 / 2014-05-16</h1>
+<ul>
+<li>removes obsolete minimap contextual menu</li>
+</ul>
+<h1 id="1-0-2-2014-05-15">1.0.2 / 2014-05-15</h1>
+<ul>
+<li>fix inconsistent arguments passed to <code>eachMinimapView</code> callbacks for already existing minimaps</li>
+</ul>
+<h1 id="1-0-1-2014-05-12">1.0.1 / 2014-05-12</h1>
+<ul>
+<li>fix with-minimap class removed from pane on tab close</li>
+</ul>
+<h1 id="1-0-0-2014-05-11">1.0.0 / 2014-05-11</h1>
+<ul>
+<li>minimap views are now created for each editor and not for each pane</li>
+<li>add a <code>eachMinimapView</code> subscription method in <code>Minimap</code> class</li>
+<li>add a view aware minimap rendering, it speeds up rendering and updates for large files</li>
+<li>add delegation of <code>MinimapRenderView</code> methods in <code>MinimapView</code>, allowing to manipulate most of its API directory from a minimap view</li>
+<li>add a lines API on <code>MinimapRenderView</code> allowing to decorates lines with classes even when they are not rendered yet</li>
+</ul>
+<h1 id="0-10-0-2014-05-11">0.10.0 / 2014-05-11</h1>
+<ul>
+<li>add Minimap.versionMatch method allowing plugins to test against minimap version</li>
+</ul>
+<h1 id="0-9-8-2014-05-08">0.9.8 / 2014-05-08</h1>
+<ul>
+<li>add Customizing Style to Readme</li>
+</ul>
+<h1 id="0-9-7-2014-05-08">0.9.7 / 2014-05-08</h1>
+<ul>
+<li>better rendering for ASCII characters, fix #69</li>
+</ul>
+<h1 id="0-9-6-2014-05-07">0.9.6 / 2014-05-07</h1>
+<ul>
+<li>fix error on closing an image view pane</li>
+<li>add Travis CI</li>
+</ul>
+<h1 id="0-9-5-2014-05-04">0.9.5 / 2014-05-04</h1>
+<ul>
+<li>add reference to the new highlight-selected plugin</li>
+</ul>
+<h1 id="0-9-4-2014-05-01">0.9.4 / 2014-05-01</h1>
+<ul>
+<li>fix item move to other pane, both panes&#39;s minimap updates #65</li>
+</ul>
+<h1 id="0-9-3-2014-04-25">0.9.3 / 2014-04-25</h1>
+<ul>
+<li>Properly stick to the editor line height</li>
+</ul>
+<h1 id="0-9-1-2014-04-13">0.9.1 / 2014-04-13</h1>
+<ul>
+<li>fix minimap doesn&#39;t update on active view changes when auto-toggle is true, #59</li>
+</ul>
+<h1 id="0-9-0-2014-04-11">0.9.0 / 2014-04-11</h1>
+<ul>
+<li>add minimap indicator</li>
+<li>split updateScrollX and updateScrollY</li>
+</ul>
+<h1 id="0-8-0-2014-04-10">0.8.0 / 2014-04-10</h1>
+<ul>
+<li>minimap api</li>
+<li>minimap plugin manager</li>
+</ul>
+<h1 id="0-7-0-2014-04-05">0.7.0 / 2014-04-05</h1>
+<ul>
+<li>use <code>prolix</code> mixin for debug</li>
+<li>add plugins list</li>
+<li><code>find-and-replace</code> and <code>git-diff</code> now available!</li>
+</ul>
+<h1 id="0-6-0-2014-04-04">0.6.0 / 2014-04-04</h1>
+<ul>
+<li>fix broken minimap activation on non editor view, #46</li>
+<li>move resizeend to main file</li>
+</ul>
+<h1 id="0-5-0-2014-04-03">0.5.0 / 2014-04-03</h1>
+<ul>
+<li>drag-to-scroll</li>
+<li>using <code>ctrl-k ctrl-m</code> toggle the minimap without the logs</li>
+<li>using <code>ctrl-k ctrl-d</code> toggle the minimap with the logs</li>
+</ul>
+<h1 id="0-4-0-2014-04-02">0.4.0 / 2014-04-02</h1>
+<ul>
+<li>update redacted font, fixed instead of regular</li>
+<li>expose an instance of a Minimap class</li>
+<li>refactor view to have the same structure ad editor view</li>
+<li>move resizeend.js to vendor dir</li>
+<li>store pane id as a local variable to minimize bloats</li>
+<li>fix scrolling when on Vim mode or in Find pane</li>
+<li>disalbed syncing scroll when <code>scroll-left-changed</code> of editor</li>
+</ul>
+<h1 id="0-3-0-2014-03-31">0.3.0 / 2014-03-31</h1>
+<ul>
+<li>add <code>minimap-wrapper</code> container, wrapped <code>minimap-editor</code> and <code>minimap-overlayer</code></li>
+<li>add <code>with-minimap</code> css class to pane, #16</li>
+<li>responsive support for minimap and tweaks css styles</li>
+<li><code>minimap-overlayer</code> displayed by default, #25</li>
+<li>add test cases, #28</li>
+<li>refactor minimap views, #32</li>
+<li>feature minimap partial update, performance improvement #35</li>
+<li>subscribe <code>screen-lines-changed</code> of editor and syncing</li>
+</ul>
+<h1 id="0-2-2-2014-03-20">0.2.2 / 2014-03-20</h1>
+<ul>
+<li>fix <code>@miniScrollView.data(&#39;top&#39;)</code> doesn&#39;t reset to 0 after switch with files</li>
+</ul>
+<h1 id="0-2-1-2014-03-20">0.2.1 / 2014-03-20</h1>
+<ul>
+<li>supports window resize</li>
+<li>improve style</li>
+</ul>
+<h1 id="0-2-0-2014-03-19">0.2.0 / 2014-03-19</h1>
+<ul>
+<li>supports to multi <code>paneViews</code>, by @abe33</li>
+<li>add simple <code>click-to-scroll</code>, no animation</li>
+<li>use css3 transform instead of left/top</li>
+<li>fix minimap obscured when tree view to toggled to right side of window, #9, by @Orangetronic</li>
+<li>fix not display empty line</li>
+</ul>
+<h1 id="0-1-4-2014-03-17">0.1.4 / 2014-03-17</h1>
+<ul>
+<li>add Redacted font, improves styles, by @abe33</li>
+<li>refactors updateMinimapView</li>
+<li>add a config.js, defualts config</li>
+<li>add scrollLeft and scrollTop on minimap, sync to editor</li>
+<li>fix #10, js erors when opening image files</li>
+</ul>
+<h1 id="0-0-4-2014-03-16">0.0.4 / 2014-03-16</h1>
+<ul>
+<li>add gray overlayer, toggle display over/leave</li>
+<li>support mousewheel, sync editor and minimap scrollTop</li>
+</ul>
+<h1 id="0-0-3-2014-03-14">0.0.3 / 2014-03-14</h1>
+<ul>
+<li>fix #2, minimap is appearing on the right when opening settings tab</li>
+<li>fix #3, opening settings tab breaks when minimap is use</li>
+</ul>
+<h1 id="0-0-2-2014-03-13">0.0.2 / 2014-03-13</h1>
+<ul>
+<li>add minimap-editor-view</li>
+<li>add monitor tab-bar and file-tree</li>
+</ul>
+
+      </div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Thu Sep 18 2014 21:46:27 GMT+0200 (CEST)
+  by
+  <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
+  v2.2.4
+  (Node.js v0.10.21).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+</div>
+  </body>
+</html>
