@@ -13,58 +13,6 @@ require '../vendor/resizeend'
 # It also provides API for plugin packages that want to interact with the
 # minimap and be available to the user through the minimap settings.
 #
-# ## Events
-#
-# * `activated` -
-#      Emitted synchronously when the package is activated. By suscribing
-#      to this event other packages can be notified of the activation of the
-#      minimap. At that point the minimap views have been created.
-#
-# * `deactivated` -
-#      Emitted synchronously when the package have been deactivated. The views
-#      are no longer available at that point.
-#
-# * `minimap-view:created` -
-#      Emitted synchronously when a {MinimapView} have been created for
-#      an active `PaneView`.
-#      Your handler will be called with an object containing the following keys.
-#      * `view`: The {MinimapView} that was created
-#
-# * `minimap-view:will-be-destroyed` -
-#      Emitted synchronously when a {MinimapView} is about to be destroyed.
-#      Your handler will be called with an object containing the following keys.
-#      * `view`: The {MinimapView} that was created
-#
-# * `minimap-view:destroyed` -
-#      Emitted synchronously when a {MinimapView} was destroyed, at that point
-#      the view have been removed from the DOM.
-#      Your handler will be called with an object containing the following keys.
-#      * `view`: The {MinimapView} that was created
-#
-# * `plugin:added` -
-#      Emitted synchronously when a minimap plugin was registered.
-#      Your handler will be called with an object containing the following keys.
-#      * `name` - The {String} name used to register the plugin
-#      * `plugin` - The plugin {Object} that was registered
-#
-# * `plugin:removed` -
-#      Emitted synchronously when a minimap plugin was unregistered.
-#      Your handler will be called with an object containing the following keys.
-#      * `name` - The {String} name used to register the plugin
-#      * `plugin` - The plugin {Object} that was unregistered
-#
-# * `plugin:activated` -
-#      Emitted synchronously when a minimap plugin was activated.
-#      Your handler will be called with an object containing the following keys.
-#      * `name` - The {String} name used to register the plugin
-#      * `plugin` - The plugin {Object} that was activated
-#
-# * `plugin:deactivated` -
-#      Emitted synchronously when a minimap plugin was deactivated.
-#      Your handler will be called with an object containing the following keys.
-#      * `name` - The {String} name used to register the plugin
-#      * `plugin` - The plugin {Object} that was deactivated
-#
 # ## Plugins Interface
 #
 # Plugins should conform to the following interface:
@@ -145,33 +93,97 @@ class Minimap
       @emit('activated')
       @emitter.emit('did-activate')
 
+  # Public: Calls the `callback` when the minimap package have been activated.
+  #
+  # callback - The callback {Function}.
+  #
+  # Returns a `Disposable`.
   onDidActivate: (callback) ->
     @emitter.on 'did-activate', callback
 
+  # Public: Calls the `callback` when the minimap package have been deactivated.
+  #
+  # callback - The callback {Function}.
+  #
+  # Returns a `Disposable`.
   onDidDeactivate: (callback) ->
     @emitter.on 'did-deactivate', callback
 
+  # Public: Calls the `callback` when a minimap have been created.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :view - The {MinimapView} that was created.
+  #
+  # Returns a `Disposable`.
   onDidCreateMinimap: (callback) ->
     @emitter.on 'did-create-minimap', callback
 
+  # Public: Calls the `callback` when a minimap is about to be destroyed.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :view - The {MinimapView} that will be destroyed.
+  #
+  # Returns a `Disposable`.
   onWillDestroyMinimap: (callback) ->
     @emitter.on 'will-destroy-minimap', callback
 
+  # Public: Calls the `callback` when a minimap have been destroyed.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :view - The {MinimapView} that was destroyed.
+  #
+  # Returns a `Disposable`.
   onDidDestroyMinimap: (callback) ->
     @emitter.on 'did-destroy-minimap', callback
 
+  # Public: Calls the `callback` when a plugin have been registered.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :name - The plugin name {String}.
+  #            :plugin - The plugin {Object}.
+  #
+  # Returns a `Disposable`.
   onDidAddPlugin: (callback) ->
     @emitter.on 'did-add-plugin', callback
 
+  # Public: Calls the `callback` when a plugin have been unregistered.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :name - The plugin name {String}.
+  #            :plugin - The plugin {Object}.
+  #
+  # Returns a `Disposable`.
   onDidRemovePlugin: (callback) ->
     @emitter.on 'did-remove-plugin', callback
 
+  # Public: Calls the `callback` when a plugin have been activated.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :name - The plugin name {String}.
+  #            :plugin - The plugin {Object}.
+  #
+  # Returns a `Disposable`.
   onDidActivatePlugin: (callback) ->
     @emitter.on 'did-activate-plugin', callback
 
+  # Public: Calls the `callback` when a plugin have been deactivated.
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            have the following properties:
+  #            :name - The plugin name {String}.
+  #            :plugin - The plugin {Object}.
+  #
+  # Returns a `Disposable`.
   onDidDeactivatePlugin: (callback) ->
     @emitter.on 'did-deactivate-plugin', callback
 
+  # Internal: Used only for old events deprecation.
   on: (eventName) ->
     switch eventName
       when 'activated'
