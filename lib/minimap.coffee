@@ -50,6 +50,7 @@ class Minimap
   # Internal: The activation state of the minimap package.
   active: false
 
+  # Internal: Used only at export time.
   constructor: ->
     @emitter = new Emitter
 
