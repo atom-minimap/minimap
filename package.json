@@ -25,6 +25,7 @@
     "mixto": "1.x",
     "delegato": "1.x",
     "semver": "~2.3.0",
-    "event-kit": "0.7.x"
+    "event-kit": "0.7.x",
+    "grim": "0.12.x"
   }
 }

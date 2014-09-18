@@ -1,4 +1,6 @@
-{Emitter} = require 'emissary'
+{deprecate} = require 'grim'
+EmitterMixin = require('emissary').Emitter
+{Emitter} = require 'event-kit'
 semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
@@ -74,7 +76,7 @@ require '../vendor/resizeend'
 #   bool isActive: ->
 # ```
 class Minimap
-  Emitter.includeInto(this)
+  EmitterMixin.includeInto(this)
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
@@ -100,6 +102,9 @@ class Minimap
   # Internal: The activation state of the minimap package.
   active: false
 
+  constructor: ->
+    @emitter = new Emitter
+
   # Activates the minimap package.
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggle()
@@ -117,6 +122,7 @@ class Minimap
   deactivate: ->
     @destroyViews()
     @emit('deactivated')
+    @emitter.emit('did-deactivate')
 
   # Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
@@ -137,6 +143,57 @@ class Minimap
       @createViews()
       @active = true
       @emit('activated')
+      @emitter.emit('did-activate')
+
+  onDidActivate: (callback) ->
+    @emitter.on 'did-activate', callback
+
+  onDidDeactivate: (callback) ->
+    @emitter.on 'did-deactivate', callback
+
+  onDidCreateMinimap: (callback) ->
+    @emitter.on 'did-create-minimap', callback
+
+  onWillDestroyMinimap: (callback) ->
+    @emitter.on 'will-destroy-minimap', callback
+
+  onDidDestroyMinimap: (callback) ->
+    @emitter.on 'did-destroy-minimap', callback
+
+  onDidAddPlugin: (callback) ->
+    @emitter.on 'did-add-plugin', callback
+
+  onDidRemovePlugin: (callback) ->
+    @emitter.on 'did-remove-plugin', callback
+
+  onDidActivatePlugin: (callback) ->
+    @emitter.on 'did-activate-plugin', callback
+
+  onDidDeactivatePlugin: (callback) ->
+    @emitter.on 'did-deactivate-plugin', callback
+
+  on: (eventName) ->
+    switch eventName
+      when 'activated'
+        deprecate("Use Minimap::onDidActivate instead.")
+      when 'deactivated'
+        deprecate("Use Minimap::onDidDeactivate instead.")
+      when 'minimap-view:created'
+        deprecate("Use Minimap::onDidCreateMinimap instead.")
+      when 'minimap-view:destroyed'
+        deprecate("Use Minimap::onDidDestroyMinimap instead.")
+      when 'minimap-view:will-be-destroyed'
+        deprecate("Use Minimap::onWillDestroyMinimap instead.")
+      when 'plugin:added'
+        deprecate("Use Minimap::onDidAddPlugin instead.")
+      when 'plugin:removed'
+        deprecate("Use Minimap::onDidRemovePlugin instead.")
+      when 'plugin:activated'
+        deprecate("Use Minimap::onDidActivatePlugin instead.")
+      when 'plugin:deactivated'
+        deprecate("Use Minimap::onDidDeactivatePlugin instead.")
+
+    EmitterMixin::on.apply(this, arguments)
 
 # The minimap module is an instance of the {Minimap} class.
 module.exports = new Minimap()

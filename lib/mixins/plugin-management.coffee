@@ -25,7 +25,9 @@ class PluginManagement extends Mixin
   registerPlugin: (name, plugin) ->
     @plugins[name] = plugin
 
-    @emit('plugin:added', {name, plugin})
+    event = {name, plugin}
+    @emit('plugin:added', event)
+    @emitter.emit('did-add-plugin', event)
 
     @registerPluginControls(name, plugin) if atom.config.get('minimap.displayPluginsControls')
 
@@ -38,7 +40,11 @@ class PluginManagement extends Mixin
     plugin = @plugins[name]
     @unregisterPluginControls(name) if atom.config.get('minimap.displayPluginsControls')
     delete @plugins[name]
-    @emit('plugin:removed', {name, plugin})
+
+    event = {name, plugin}
+    @emit('plugin:removed', event)
+    @emitter.emit('did-remove-plugin', event)
+
 
   # Internal: Updates the plugin activation state according to the current
   # config.
@@ -50,12 +56,16 @@ class PluginManagement extends Mixin
     pluginActive = plugin.isActive()
     settingActive = atom.config.get("minimap.plugins.#{name}")
 
+    event = {name, plugin}
+
     if settingActive and not pluginActive
       plugin.activatePlugin()
-      @emit('plugin:activated', {name, plugin})
+      @emit('plugin:activated', event)
+      @emitter.emit('did-activate-plugin', event)
     else if pluginActive and not settingActive
       plugin.deactivatePlugin()
-      @emit('plugin:deactivated', {name, plugin})
+      @emit('plugin:deactivated', event)
+      @emitter.emit('did-deactivate-plugin', event)
 
   # Internal: When the `minimap.displayPluginsControls` setting is toggled,
   # this function will register the commands and setting to manage the plugin

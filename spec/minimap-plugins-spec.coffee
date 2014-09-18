@@ -31,7 +31,7 @@ describe "Minimap Plugins", ->
   describe 'registered before activation', ->
 
     beforeEach ->
-      Minimap.on 'plugin:added', @registerHandler
+      Minimap.onDidAddPlugin @registerHandler
       Minimap.registerPlugin 'dummy', @plugin
 
     it 'should be available in the minimap', ->
