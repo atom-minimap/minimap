@@ -49,8 +49,8 @@ class ViewManagement extends Mixin
     return unless iterator?
     iterator({view: minimapView}) for id,minimapView of @minimapViews
     createdCallback = (minimapView) -> iterator(minimapView)
-    @on('minimap-view:created', createdCallback)
-    off: => @off('minimap-view:created', createdCallback)
+    disposable = @onDidCreateMinimap(createdCallback)
+    off: => disposable.dispose()
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
@@ -91,7 +91,7 @@ class ViewManagement extends Mixin
 
           view.destroy()
           delete @minimapViews[editorId]
-          
+
           @emit('minimap-view:destroyed', {view})
           @emitter.emit('did-destroy-minimap', event)
 
