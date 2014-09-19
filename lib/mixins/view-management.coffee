@@ -13,37 +13,44 @@ class ViewManagement extends Mixin
     view.onScrollViewResized() for id,view of @minimapViews
 
   # Public: Returns the {MinimapView} object associated to the
-  # passed-in {EditorView}.
+  # passed-in `EditorView`.
   #
-  # editorView - An {EditorView} instance
+  # editorView - An `EditorView` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in {EditorView}.
+  # Returns a {MinimapView}.
   minimapForEditorView: (editorView) ->
     @minimapForEditor(editorView?.getEditor())
 
   # Public: Returns the {MinimapView} object associated to the
-  # passed-in {Editor}.
+  # passed-in `Editor`.
   #
-  # editorView - An {Editor} instance
+  # editorView - An `Editor` instance
   #
-  # Returns the {MinimapView} object associated to the passed-in {Editor}.
+  # Returns a {MinimapView}.
   minimapForEditor: (editor) ->
     @minimapViews[editor.id] if editor?
 
+  # Public: Returns the {MinimapView} of the active editor view.
+  #
+  # Returns a {MinimapView}.
+  getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveEditor())
+
   # Public: Calls `iterator` for each present and future minimap views.
+  # It returns a subscription {Object} with a `off` method so that
+  # it is possible to unsubscribe the iterator from being called
+  # for future views.
   #
   # iterator - A {Function} to call for each minimap view. It will receive
   #            an object with the following property:
   #            * view - The {MinimapView} instance
   #
-  # Returns a subscription object with a `off` method so that it is possible to
-  # unsubscribe the iterator from being called for future views.
+  # Returns an {Object}.
   eachMinimapView: (iterator) ->
     return unless iterator?
     iterator({view: minimapView}) for id,minimapView of @minimapViews
     createdCallback = (minimapView) -> iterator(minimapView)
-    @on('minimap-view:created', createdCallback)
-    off: => @off('minimap-view:created', createdCallback)
+    disposable = @onDidCreateMinimap(createdCallback)
+    off: => disposable.dispose()
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
@@ -62,23 +69,30 @@ class ViewManagement extends Mixin
       MinimapView ||= require '../minimap-view'
 
       editorId = editorView.editor.id
-      paneView = editorView.getPane()
+      paneView = editorView.getPaneView()
 
       view = new MinimapView(editorView)
 
       @minimapViews[editorId] = view
-      @emit('minimap-view:created', {view})
 
-      view.updateMinimapEditorView()
+      event = {view}
+      @emit('minimap-view:created', event)
+      @emitter.emit('did-create-minimap', event)
+
+      view.updateMinimapRenderView()
 
       editorView.editor.on 'destroyed', =>
         view = @minimapViews[editorId]
 
+        event = {view}
         if view?
-          @emit('minimap-view:will-be-destroyed', {view})
+          @emit('minimap-view:will-be-destroyed', event)
+          @emitter.emit('will-destroy-minimap', event)
 
           view.destroy()
           delete @minimapViews[editorId]
+
           @emit('minimap-view:destroyed', {view})
+          @emitter.emit('did-destroy-minimap', event)
 
           paneView.addClass('with-minimap') if paneView.activeView?.hasClass('editor')

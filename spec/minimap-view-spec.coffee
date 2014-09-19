@@ -28,7 +28,7 @@ describe "MinimapView", ->
       atom.workspaceView.trigger 'minimap:toggle'
 
   describe 'once the package is toggled', ->
-    it 'should have retrieved the editor content', ->
+    xit 'should have retrieved the editor content', ->
 
       waitsFor ->
         atom.workspaceView.find('.minimap .line').length > 0

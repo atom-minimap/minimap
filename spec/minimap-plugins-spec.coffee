@@ -31,7 +31,7 @@ describe "Minimap Plugins", ->
   describe 'registered before activation', ->
 
     beforeEach ->
-      Minimap.on 'plugin:added', @registerHandler
+      Minimap.onDidAddPlugin @registerHandler
       Minimap.registerPlugin 'dummy', @plugin
 
     it 'should be available in the minimap', ->
@@ -86,7 +86,7 @@ describe "Minimap Plugins", ->
         atom.config.set 'minimap.plugins.dummy', false
 
       it 'should have received a deactivation call', ->
-          expect(@plugin.deactivatePlugin).toHaveBeenCalled()
+        expect(@plugin.deactivatePlugin).toHaveBeenCalled()
 
   describe 'on minimap activation', ->
     beforeEach ->

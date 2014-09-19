@@ -18,19 +18,20 @@ apm install minimap
 ### Settings
 
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
-* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens.
+* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
-* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.**
-* `Line Overdraw`: The amount of lines that are rendered past the bounds of the editor view. Smaller values may result in more updates but with less lines rendered each time while larger values will reduce the latency between a scroll and the display of the previously hidden lines at the cost of a bigger update time.
-* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the
+* `Line Height`: The height of a line in the minimap in pixels. (default=3)
+* `Char Height`: The height of a character in the minimap in pixels. (default=2)
+* `Char Width`: The width of a character in the minimap in pixels. (default=1)
+* `Text Opacity`: The opacity used to render the line text in the minimap. (default=0.6)
+* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.** (default=true)
+* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the minimap height is bigger than the editor view height. (default=true)
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
-* `Scale`: The scale of the minimap.
-* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used.
+* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
 
 ### Key Bindings
 
-* `ctrl-k ctrl-m`: Toggles the minimap without the logs.
-* `ctrl-k ctrl-d`: Toggles the minimap with the logs.
+* `ctrl-k ctrl-m`: Toggles the minimap.
 * `ctrl-k ctrl-s`: Toggles the minimap plugins quick settings dropdown.
 
 Customizing Key Bindings:
@@ -38,18 +39,13 @@ Customizing Key Bindings:
 ```cson
 '.editor':
   'cmd-m': 'minimap:toggle'
-  'cmd-d': 'minimap:toggle-debug'
 ```
 
 ### Customizing Style
 
-If you want to use another font instead of the default [Redacted][] font or change any styles, edit your `style.less` (Open Your Stylesheet).
+If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet).
 
 ```css
-.minimap .lines {
-  font-family: Monaco;
-}
-
 // hide scrollbar
 .with-minimap .vertical-scrollbar {
   opacity: 0;
@@ -63,7 +59,7 @@ https://github.com/fundon/atom-minimap/graphs/contributors
 
 ### Plugins
 
-The minimap can be augmented with plugins, belows the list of available plugins so far:
+The minimap can be augmented with plugins, below is the list of available plugins so far:
 
   * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
@@ -75,12 +71,12 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 
 ![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true)
 
-### Wiki
+### Documentation
 
+* [Minimap API Documentation](http://fangduncai.com/atom-minimap/)
 * [How to create a minimap plugin?](https://github.com/fundon/atom-minimap/wiki/Plugin)
+* [Minimap's Decorations API](https://github.com/fundon/atom-minimap/wiki/Decorations)
 
 ### License
 
 MIT
-
-[Redacted Font]: https://github.com/christiannaths/Redacted-Font

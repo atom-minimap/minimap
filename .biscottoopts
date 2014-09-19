@@ -1,0 +1,7 @@
+lib
+--name "Minimap"
+--title "Minimap API Documentation"
+--output-dir pages
+-
+LICENSE
+History.md

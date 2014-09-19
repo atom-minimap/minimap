@@ -5,7 +5,7 @@ module.exports =
 class MinimapOpenQuickSettingsView extends View
   @content: ->
     @div class: 'open-minimap-quick-settings'
-
+  
   dropdown: null
 
   initialize: ->
