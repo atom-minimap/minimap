@@ -1,3 +1,7 @@
+3.0.1 / 2014-09-19
+
+* fix bug with text drawing when charWidth != 1
+
 3.0.0 / 2014-09-19
 
 * :racehorse: improved performances by switching to a canvas-based rendering
