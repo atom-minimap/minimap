@@ -125,6 +125,11 @@ class MinimapView extends View
     config = childList: true
     @observer.observe @paneView.element, config
 
+    # Update the minimap whenever theme is reloaded
+    @subscriptions.add atom.themes.onDidReloadAll =>
+      @adjustTopPosition()
+      @updateMinimapView()
+
     # The resize:end event is dispatched at the end of an animated resize
     # to not flood the cpu with updates.
     @subscribe $(window), 'resize:end', @onScrollViewResized
