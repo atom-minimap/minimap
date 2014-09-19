@@ -1,0 +1,14 @@
+{
+  "name": "sample-minimap-plugin",
+  "main": "./lib/sample-minimap-plugin",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "repository": "https://github.com/atom/sample-minimap-plugin",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "event-kit": ">= 0.7.2"
+  }
+}
