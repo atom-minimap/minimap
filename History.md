@@ -1,3 +1,7 @@
+3.0.3 / 2014-09-19
+
+* fix issue with renamed event in Atom nightly
+
 3.0.2 / 2014-09-19
 
 * fix the case where the minimap is positioned incorrectly when a user style alters the tab bar height
