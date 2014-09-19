@@ -82,8 +82,11 @@ class MinimapRenderView extends ScrollView
     @buffer = @editorView.getEditor().getBuffer()
     @displayBuffer = @editor.displayBuffer
 
-    @subscriptions.add @editor.onDidChangeScreenLines (changes) =>
-      @stackChanges(changes)
+    if @editor.onDidChangeScreenLines?
+      @subscriptions.add @editor.onDidChangeScreenLines (changes) =>
+        @stackChanges(changes)
+    else
+      @subscriptions.add @editor.onDidChange (changes) => @stackChanges(changes)
 
     @subscriptions.add @displayBuffer.onDidTokenize =>
       @tokenized = true
