@@ -1,9 +1,9 @@
 {View} = require 'atom'
 
 module.exports =
-class SampleMinimapPluginView extends View
+class __PackageName__View extends View
   @content: ->
-    @div class: 'sample-minimap-plugin text-info', 'Sample Minimap Plugin View'
+    @div class: '__package-name__ text-info', "The __PackageName__ plugin is Alive! It's ALIVE!"
 
   initialize: (@minimapView) ->
 

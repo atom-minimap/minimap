@@ -1,5 +1,5 @@
 {CompositeDisposable} = require 'event-kit'
-SampleMinimapPluginView = require './sample-minimap-plugin-view'
+__PackageName__View = require './__package-name__-view'
 
 module.exports =
   active: false
@@ -15,10 +15,10 @@ module.exports =
     return @deactivate() unless @minimap.versionMatch('3.x')
 
     @subscriptions = new CompositeDisposable
-    @minimap.registerPlugin 'sample-minimap-plugin', this
+    @minimap.registerPlugin '__package-name__', this
 
   deactivate: ->
-    @minimap.unregisterPlugin 'sample-minimap-plugin'
+    @minimap.unregisterPlugin '__package-name__'
     @minimap = null
 
   activatePlugin: ->
@@ -41,7 +41,7 @@ module.exports =
 
   createViews: ->
     @subscription = @minimap.eachMinimapView ({view}) =>
-      pluginView = new SampleMinimapPluginView(view)
+      pluginView = new __PackageName__View(view)
       @views[view.editor.id] = pluginView
 
       pluginView.attach()

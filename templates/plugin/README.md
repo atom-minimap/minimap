@@ -1,4 +1,4 @@
-# sample-minimap-plugin package
+# __package-name__ package
 
 A short description of your package.
 

@@ -1,12 +1,12 @@
 {WorkspaceView} = require 'atom'
-SampleMinimapPlugin = require '../lib/sample-minimap-plugin'
+__PackageName__ = require '../lib/__package-name__'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe "SampleMinimapPlugin", ->
+describe "__PackageName__", ->
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
@@ -27,8 +27,8 @@ describe "SampleMinimapPlugin", ->
       atom.workspaceView.trigger 'minimap:toggle'
 
     waitsForPromise ->
-      atom.packages.activatePackage('sample-minimap-plugin')
+      atom.packages.activatePackage('__package-name__')
 
   describe "with an open editor that have a minimap", ->
     it "creates and attaches the view to the minimap", ->
-      expect(atom.workspaceView.find('.minimap .sample-minimap-plugin')).toExist()
+      expect(atom.workspaceView.find('.minimap .__package-name__')).toExist()

@@ -4,5 +4,5 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
-.sample-minimap-plugin {
+.__package-name__ {
 }
