@@ -99,7 +99,6 @@ class DecorationManagement extends Mixin
 
     @decorationMarkerDestroyedSubscriptions[marker.id] ?= marker.onDidDestroy =>
       @removeAllDecorationsForMarker(marker)
-      @stackRangeChanges(marker.getScreenRange())
 
     @decorationMarkerChangedSubscriptions[marker.id] ?= marker.onDidChange (event) =>
       decorations = @decorationsByMarkerId[marker.id]
@@ -184,6 +183,8 @@ class DecorationManagement extends Mixin
     decorations = @decorationsByMarkerId[marker.id].slice()
     for decoration in decorations
       @trigger 'minimap:decoration-removed', marker, decoration
+      @stackDecorationChanges(decoration)
+
     @removedAllMarkerDecorations(marker)
 
   # Internal: Performs the removal of a decoration for a given marker.

@@ -1,0 +1,3 @@
+class Dummy
+  constructor: ->
+    @property = {}
