@@ -1,3 +1,10 @@
+3.0.0 / 2014-09-19
+
+* :racehorse: improved performances by switching to a canvas-based rendering
+* :sparkles: add decoration API using the same interface than the Atom one
+* implements a new event model based on the Atom one. Previous events re now deprecated.
+* add new API documentation availaible at http://fangduncai.com/atom-minimap/
+
 2.3.3 / 2014-08-27
 ==================
 
