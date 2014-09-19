@@ -1,3 +1,7 @@
+3.0.2 / 2014-09-19
+
+* fix the case where the minimap is positioned incorrectly when a user style alters the tab bar height
+
 3.0.1 / 2014-09-19
 
 * fix bug with text drawing when charWidth != 1
