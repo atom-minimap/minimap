@@ -499,14 +499,14 @@ class MinimapRenderView extends ScrollView
     for char in text
       if /\s/.test char
         if chars > 0
-          context.fillRect(x-chars, y, chars*charWidth, charHeight)
+          context.fillRect(x-(chars * charWidth), y, chars*charWidth, charHeight)
         chars = 0
       else
         chars++
 
       x += charWidth
 
-    context.fillRect(x-chars, y, chars*charWidth, charHeight) if chars > 0
+    context.fillRect(x-(chars * charWidth), y, chars*charWidth, charHeight) if chars > 0
 
     x
 
