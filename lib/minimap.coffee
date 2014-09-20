@@ -96,6 +96,7 @@ class Minimap
       @emit('activated')
       @emitter.emit('did-activate')
 
+  # Public: Opens the plugin generation view.
   generatePlugin: ->
     view = new MinimapPluginGeneratorView()
 
