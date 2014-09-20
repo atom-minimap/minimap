@@ -5,6 +5,7 @@ semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
+MinimapPluginGeneratorView = require './minimap-plugin-generator-view'
 
 require '../vendor/resizeend'
 
@@ -57,6 +58,7 @@ class Minimap
   # Activates the minimap package.
   activate: ->
     atom.workspaceView.command 'minimap:toggle', => @toggle()
+    atom.workspaceView.command "minimap:generate-plugin", => @generatePlugin()
     if atom.config.get('minimap.displayPluginsControls')
       atom.workspaceView.command 'minimap:open-quick-settings', ->
         atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-quick-settings').mousedown()
@@ -93,6 +95,9 @@ class Minimap
       @active = true
       @emit('activated')
       @emitter.emit('did-activate')
+
+  generatePlugin: ->
+    view = new MinimapPluginGeneratorView()
 
   # Public: Calls the `callback` when the minimap package have been activated.
   #
