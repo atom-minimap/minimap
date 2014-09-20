@@ -149,6 +149,16 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
   </li>
   <li>
     <span class='signature'>
+      <a href='#generatePlugin-instance'>
+        ::<strong>generatePlugin</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#onDidActivate-instance'>
         ::<strong>onDidActivate</strong>(callback)
       </a>
@@ -264,8 +274,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='activate-instance'>
       ::<strong>activate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L56'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L57'>Source</a>
     </p>
     <div class='docstring'>
   <p>Activates the minimap package.</p>
@@ -277,8 +287,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='deactivate-instance'>
       ::<strong>deactivate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L69'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L71'>Source</a>
     </p>
     <div class='docstring'>
   <p>Deactivates the minimap package.</p>
@@ -287,11 +297,21 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='generatePlugin-instance'>
+      ::<strong>generatePlugin</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L98'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='onDidActivate-instance'>
       ::<strong>onDidActivate</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L100'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L105'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when the minimap package have been activated.</p>
@@ -319,8 +339,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidActivatePlugin-instance'>
       ::<strong>onDidActivatePlugin</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L171'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L176'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a plugin have been activated.</p>
@@ -362,8 +382,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidAddPlugin-instance'>
       ::<strong>onDidAddPlugin</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L149'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L154'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a plugin have been registered.</p>
@@ -405,8 +425,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidCreateMinimap-instance'>
       ::<strong>onDidCreateMinimap</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L118'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L123'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a minimap have been created.</p>
@@ -442,8 +462,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidDeactivate-instance'>
       ::<strong>onDidDeactivate</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L108'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L113'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when the minimap package have been deactivated.</p>
@@ -471,8 +491,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidDeactivatePlugin-instance'>
       ::<strong>onDidDeactivatePlugin</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L182'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L187'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a plugin have been deactivated.</p>
@@ -514,8 +534,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidDestroyMinimap-instance'>
       ::<strong>onDidDestroyMinimap</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L138'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L143'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a minimap have been destroyed.</p>
@@ -551,8 +571,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onDidRemovePlugin-instance'>
       ::<strong>onDidRemovePlugin</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L160'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L165'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a plugin have been unregistered.</p>
@@ -594,8 +614,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='onWillDestroyMinimap-instance'>
       ::<strong>onWillDestroyMinimap</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L128'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L133'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls the <code>callback</code> when a minimap is about to be destroyed.</p>
@@ -631,8 +651,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='toggle-instance'>
       ::<strong>toggle</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L85'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L87'>Source</a>
     </p>
     <div class='docstring'>
   <p>Toggles the minimap activation state.</p>
@@ -644,8 +664,8 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     <p class='signature' id='versionMatch-instance'>
       Boolean ::<strong>versionMatch</strong>(expectedVersion)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v2.3.3
-/lib&#47;minimap.coffee#L82'>Source</a>
+&#47;blob&#47;v3.0.3
+/lib&#47;minimap.coffee#L84'>Source</a>
     </p>
     <div class='docstring'>
   <p>Verifies that the passed-in version expression is satisfied by the current minimap version.</p><p><code>expectedVersion</code> - A <a href="https://github.com/npm/node-semver">semver</a>
@@ -668,7 +688,7 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
     </div>
     <div id='footer'>
   Generated on
-  Thu Sep 18 2014 21:46:27 GMT+0200 (CEST)
+  Sat Sep 20 2014 14:05:58 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
