@@ -1,16 +1,29 @@
+3.1.0 / 2014-09-22
+==================
+
+* add command to generate a plugin package
+* fix remaining deprecated calls
+* update documentation with old wiki pages
+* set autoToggle true by default
+* replace lineHeight by interline in settings
+
 3.0.3 / 2014-09-19
+==================
 
 * fix issue with renamed event in Atom nightly
 
 3.0.2 / 2014-09-19
+==================
 
 * fix the case where the minimap is positioned incorrectly when a user style alters the tab bar height
 
 3.0.1 / 2014-09-19
+==================
 
 * fix bug with text drawing when charWidth != 1
 
 3.0.0 / 2014-09-19
+==================
 
 * :racehorse: improved performances by switching to a canvas-based rendering
 * :sparkles: add decoration API using the same interface than the Atom one
