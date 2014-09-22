@@ -1,4 +1,5 @@
 {View} = require 'atom'
+{CompositeDisposable} = require 'event-kit'
 $ = View.__super__.constructor
 
 Minimap = require './minimap'
@@ -15,14 +16,15 @@ class MinimapQuickSettingsView extends View
   selectedItem: null
 
   initialize: (@minimapView) ->
+    @subscriptions = new CompositeDisposable
     @plugins = {}
-    @subscribe Minimap, 'plugin:added', ({name, plugin}) =>
+    @subscriptions.add Minimap.onDidAddPlugin ({name, plugin}) =>
       @addItemFor(name, plugin)
-    @subscribe Minimap, 'plugin:removed', ({name, plugin}) =>
+    @subscriptions.add Minimap.onDidRemovePlugin ({name, plugin}) =>
       @removeItemFor(name, plugin)
-    @subscribe Minimap, 'plugin:activated', ({name, plugin}) =>
+    @subscriptions.add Minimap.onDidActivatePlugin ({name, plugin}) =>
       @activateItem(name, plugin)
-    @subscribe Minimap, 'plugin:deactivated', ({name, plugin}) =>
+    @subscriptions.add Minimap.onDidDeactivatePlugin ({name, plugin}) =>
       @deactivateItem(name, plugin)
 
     @on 'core:move-up', @selectPreviousItem
@@ -30,7 +32,7 @@ class MinimapQuickSettingsView extends View
     @on 'core:cancel', @destroy
     @on 'core:validate', @toggleSelectedItem
 
-    @subscribe @codeHighlights, 'mousedown', (e) =>
+    @codeHighlights.on 'mousedown', (e) =>
       e.preventDefault()
       @minimapView.setDisplayCodeHighlights(!@minimapView.displayCodeHighlights)
       @codeHighlights.toggleClass('active', @minimapView.displayCodeHighlights)
@@ -47,7 +49,8 @@ class MinimapQuickSettingsView extends View
     @trigger('minimap:quick-settings-destroyed')
     @off()
     @hiddenInput.off()
-    @unsubscribe()
+    @codeHighlights.off()
+    @subscriptions.dispose()
     @detach()
 
   initList: ->
