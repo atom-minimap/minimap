@@ -6,6 +6,7 @@ describe "Minimap", ->
 
     runs ->
       atom.workspaceView = new WorkspaceView
+      atom.config.set 'minimap.autoToggle', false
 
     waitsForPromise ->
       atom.workspaceView.open('sample.js')
@@ -16,18 +17,14 @@ describe "Minimap", ->
 
   describe "when the minimap:toggle event is triggered", ->
     beforeEach ->
-      waitsForPromise ->
-        promise = atom.packages.activatePackage('minimap')
-        expect(atom.workspaceView.find('.minimap')).not.toExist()
-        atom.workspaceView.trigger 'minimap:toggle'
-        promise
+      waitsForPromise -> atom.packages.activatePackage('minimap')
 
     it "attaches and then detaches the view", ->
-      expect(atom.workspaceView.find('.minimap')).toExist()
-      atom.workspaceView.trigger 'minimap:toggle'
       expect(atom.workspaceView.find('.minimap')).not.toExist()
+      atom.workspaceView.trigger 'minimap:toggle'
+      expect(atom.workspaceView.find('.minimap')).toExist()
 
     it 'decorates the pane view with a with-minimap class', ->
-      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(1)
-      atom.workspaceView.trigger 'minimap:toggle'
       expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(0)
+      atom.workspaceView.trigger 'minimap:toggle'
+      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(1)
