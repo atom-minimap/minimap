@@ -121,7 +121,10 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>A <code>MinimapView</code> instance is created for every <code>Editor</code> opened in Atom. It provides delegation to many <code>Editor</code> and <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> methods so that in most case you can just substitute a <a href='../classes/MinimapView.html'>MinimapView</a> instance instead of an <code>Editor</code>.</p><p>The following methods are delegated to the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance:</p><ul>
+  <p> Public: A <code>MinimapView</code> instance is created for every <code>Editor</code> opened in Atom.
+It provides delegation to many <code>Editor</code> and <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> methods so
+that in most case you can just substitute a <a href='../classes/MinimapView.html'>MinimapView</a> instance
+instead of an <code>Editor</code>.</p><p>The following methods are delegated to the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance:</p><ul>
 <li><a href='../classes/MinimapRenderView.html#getLineHeight-instance'>getLineHeight</a></li>
 <li><a href='../classes/MinimapRenderView.html#getCharHeight-instance'>getCharHeight</a></li>
 <li><a href='../classes/MinimapRenderView.html#getCharWidth-instance'>getCharWidth</a></li>
@@ -235,7 +238,7 @@
 /lib&#47;minimap-view.coffee#L69'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Creates a new <a href='../classes/MinimapView.html'>MinimapView</a>.</p>
+  <p> Public: Creates a new <a href='../classes/MinimapView.html'>MinimapView</a>.</p><p>editorView - The <code>EditorView</code> for which displaying a minimap. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -259,7 +262,7 @@
 /lib&#47;minimap-view.coffee#L156'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Destroys this view and release all its subobjects.</p>
+  <p>Public: Destroys this view and release all its subobjects. </p>
 </div>
 <div class='tags'>
 </div>
@@ -272,7 +275,7 @@
 /lib&#47;minimap-view.coffee#L203'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the bounds of the minimap.</p>
+  <p> Public: Returns the bounds of the minimap.</p><p>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -294,7 +297,7 @@
 /lib&#47;minimap-view.coffee#L188'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns <code>true</code> when the minimap is actually attached to the DOM.</p>
+  <p> Public: Returns <code>true</code> when the minimap is actually attached to the DOM.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -316,7 +319,7 @@
 /lib&#47;minimap-view.coffee#L171'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Toggles the display of the code highlights rendering.</p>
+  <p> Public: Toggles the display of the code highlights rendering.</p><p>value - A <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a> of whether to render the code highlights or not. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -339,7 +342,7 @@
 /lib&#47;minimap-view.coffee#L224'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Calls the <code>update</code> method of the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a>.</p>
+  <p>Public: Calls the <code>update</code> method of the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a>. </p>
 </div>
 <div class='tags'>
 </div>
@@ -353,7 +356,7 @@
 /lib&#47;minimap-view.coffee#L211'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Updates the minimap view.</p><p>The size, scrolling and view area are updated as well as the
+  <p> Public: Updates the minimap view.</p><p>The size, scrolling and view area are updated as well as the
 <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> if the minimap own scrolling is changed during
 the update. </p>
 </div>
@@ -364,7 +367,7 @@ the update. </p>
     </div>
     <div id='footer'>
   Generated on
-  Sat Sep 20 2014 14:05:58 GMT+0200 (CEST)
+  Mon Sep 22 2014 14:11:27 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

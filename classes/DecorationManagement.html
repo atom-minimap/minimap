@@ -121,7 +121,8 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The mixin that provides the decorations API to the minimap editor view.</p>
+  <p> Public: The mixin that provides the decorations API to the minimap editor
+view. </p>
 </div>
 <div class='tags'>
 </div>
@@ -208,15 +209,32 @@
 /lib&#47;mixins&#47;decoration-management.coffee#L92'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Adds a decoration that tracks a <code>Marker</code>. When the marker moves, is invalidated, or is destroyed, the decoration will be updated to reflect the marker&#39;s state.</p><p>There are three types of supported decorations:</p><ul>
+  <p> Public: Adds a decoration that tracks a <code>Marker</code>. When the marker moves,
+is invalidated, or is destroyed, the decoration will be updated to reflect
+the marker&#39;s state.</p><p>There are three types of supported decorations:</p><ul>
 <li><strong>line</strong>: Fills the line background with the decoration color.</li>
 <li><strong>highlight</strong>: Renders a colored rectangle on the minimap. The highlight
 is rendered above the line&#39;s text.</li>
 <li><strong>highlight-over</strong>: Same as <strong>highlight</strong>.</li>
 <li><strong>highlight-under</strong>: Renders a colored rectangle on the minimap. The
 highlight is rendered below the line&#39;s text.</li>
-</ul>
-
+</ul><p>marker - A <code>Marker</code> you want this decoration to follow.
+decorationParams - An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> representing the decoration eg.
+                  <code>{type: &#39;gutter&#39;, class: &#39;linter-error&#39;}</code>.
+                  The object can have the following properties:
+                  :type - The type <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>. There are a few supported
+                          decoration types: <code>line</code>, <code>highlight</code>,
+                          <code>highlight-over</code> and <code>highlight-under</code>
+                  :class - This CSS class <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> will be used to retrieve
+                           the background color of the decoration by
+                           building a scope corresponding to <code>.minimap
+                           .editor &lt;your-class&gt;</code>.
+                  :scope - The scope <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> to use to retrieve the
+                           decoration background. Note that if the <code>scope</code>
+                           property is set, the <code>class</code> won&#39;t be used.
+                  :color - The color <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> to use to render the
+                           decoration. When set, neither <code>scope</code> nor <code>class</code>
+                           are used.</p><p>Returns a <code>Decoration</code> object. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -276,7 +294,7 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L24'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the decoration with the passed-in id.</p>
+  <p> Public: Returns the decoration with the passed-in id.</p><p>id - The decoration id <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</p><p>Returns a <code>Decoration</code>. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -305,7 +323,10 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L35'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns all the decorations of the given type that intersect the passed-in row.</p>
+  <p> Public: Returns all the decorations of the given type that intersect the passed-in
+row.</p><p>row - The row <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.
+types - A list of decoration types <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.
+decorations - An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array'>Array</a> of decorations.</p><p>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array'>Array</a> of decorations. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -348,7 +369,8 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L51'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns all the decorations that intersect the passed-in row range.</p>
+  <p> Public: Returns all the decorations that intersect the passed-in row range.</p><p>startScreenRow - The index <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the starting screen row.
+endScreenRow - The index <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the ending screen row.</p><p>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array'>Array</a> of decorations. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -385,7 +407,7 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L11'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Initializes the decorations related properties.</p>
+  <p>Public: Initializes the decorations related properties. </p>
 </div>
 <div class='tags'>
 </div>
@@ -398,7 +420,7 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L179'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Removes all the decorations registered for the passed-in marker.</p>
+  <p> Public: Removes all the decorations registered for the passed-in marker.</p><p>marker - The <code>marker</code> for which removing decorations. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -419,7 +441,7 @@ highlight is rendered below the line&#39;s text.</li>
 /lib&#47;mixins&#47;decoration-management.coffee#L156'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Removes a <code>Decoration</code> from this minimap.</p>
+  <p> Public: Removes a <code>Decoration</code> from this minimap.</p><p>decoration - The <code>Decoration</code> to remove. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -436,7 +458,7 @@ highlight is rendered below the line&#39;s text.</li>
     </div>
     <div id='footer'>
   Generated on
-  Sat Sep 20 2014 14:05:58 GMT+0200 (CEST)
+  Mon Sep 22 2014 14:11:27 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

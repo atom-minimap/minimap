@@ -121,7 +121,8 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> class is responsible to render the minimap onto its canvas.</p>
+  <p> Public: The <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> class is responsible to render the minimap
+onto its canvas. </p>
 </div>
 <div class='tags'>
 </div>
@@ -369,7 +370,7 @@
 /lib&#47;minimap-render-view.coffee#L32'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Creates a new <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a>.</p>
+  <p>Public: Creates a new <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a>. </p>
 </div>
 <div class='tags'>
 </div>
@@ -385,7 +386,8 @@
 /lib&#47;minimap-render-view.coffee#L64'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Destroys the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance, unsubscribes from the listened events and releases its resources.</p>
+  <p> Public: Destroys the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance, unsubscribes from the listened
+events and releases its resources. </p>
 </div>
 <div class='tags'>
 </div>
@@ -398,7 +400,7 @@
 /lib&#47;minimap-render-view.coffee#L135'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Forces a render of the whole minimap.</p><p>All the caches are cleared when calling this method. </p>
+  <p> Public: Forces a render of the whole minimap.</p><p>All the caches are cleared when calling this method. </p>
 </div>
 <div class='tags'>
 </div>
@@ -411,9 +413,9 @@
 /lib&#47;minimap-render-view.coffee#L197'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the height in pixels of a character rendered in the minimap.</p><p>The height of the minimap characters can be changed using the
+  <p> Public: Returns the height in pixels of a character rendered in the minimap.</p><p>The height of the minimap characters can be changed using the
 <code>minimap.charHeight</code> setting.</p><p>The characters height is dissociated from the line height in order
-to allow for some spacing between lines when rendering the minimap.</p>
+to allow for some spacing between lines when rendering the minimap.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -435,8 +437,8 @@ to allow for some spacing between lines when rendering the minimap.</p>
 /lib&#47;minimap-render-view.coffee#L205'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the width in pixels of a character rendered in the minimap.</p><p>The width of the minimap characters can be changed using the
-<code>minimap.charWidth</code> setting.</p>
+  <p> Public: Returns the width in pixels of a character rendered in the minimap.</p><p>The width of the minimap characters can be changed using the
+<code>minimap.charWidth</code> setting.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -458,7 +460,7 @@ to allow for some spacing between lines when rendering the minimap.</p>
 /lib&#47;minimap-render-view.coffee#L251'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the bounds of the whole minimap.</p>
+  <p> Public: Returns the bounds of the whole minimap.</p><p>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -480,9 +482,9 @@ to allow for some spacing between lines when rendering the minimap.</p>
 /lib&#47;minimap-render-view.coffee#L309'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the background color for the passed-in <code>decoration</code> object.</p><p>The color value is read from the DOM by creating a node structure
+  <p> Public: Returns the background color for the passed-in <code>decoration</code> object.</p><p>The color value is read from the DOM by creating a node structure
 that match the decoration <code>scope</code> property unless the decoration
-provides its own <code>color</code> property.</p>
+provides its own <code>color</code> property.</p><p>decoration - A <code>Decoration</code> object.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -512,8 +514,8 @@ provides its own <code>color</code> property.</p>
 /lib&#47;minimap-render-view.coffee#L281'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the default text color for an editor content.</p><p>The color value is directly read from the <code>EditorView</code> computed
-styles.</p>
+  <p> Public: Returns the default text color for an editor content.</p><p>The color value is directly read from the <code>EditorView</code> computed
+styles.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -535,7 +537,7 @@ styles.</p>
 /lib&#47;minimap-render-view.coffee#L234'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the index of the first visible row.</p>
+  <p> Public: Returns the index of the first visible row.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -557,7 +559,7 @@ styles.</p>
 /lib&#47;minimap-render-view.coffee#L242'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the index of the last visible row.</p>
+  <p> Public: Returns the index of the last visible row.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -579,8 +581,8 @@ styles.</p>
 /lib&#47;minimap-render-view.coffee#L186'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the height in pixels of the minimap lines.</p><p>The height of the minimap lines can be changed using the
-<code>minimap.lineHeight</code> setting.</p>
+  <p> Public: Returns the height in pixels of the minimap lines.</p><p>The height of the minimap lines can be changed using the
+<code>minimap.lineHeight</code> setting.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -602,7 +604,7 @@ styles.</p>
 /lib&#47;minimap-render-view.coffee#L215'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the number of lines in the <code>Editor</code>.</p>
+  <p> Public: Returns the number of lines in the <code>Editor</code>.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -624,8 +626,11 @@ styles.</p>
 /lib&#47;minimap-render-view.coffee#L178'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the height of the minimap in pixels. Note that the returned height is not the actual height of the minimap canvas but rather the computation of the minimap height if all the lines were rendered.</p><p>This function is used when comparing the minimap to its editor
-to compute the scale factor.</p>
+  <p> Public: Returns the height of the minimap in pixels. Note that the returned
+height is not the actual height of the minimap canvas but rather
+the computation of the minimap height if all the lines were
+rendered.</p><p>This function is used when comparing the minimap to its editor
+to compute the scale factor.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -647,7 +652,7 @@ to compute the scale factor.</p>
 /lib&#47;minimap-render-view.coffee#L229'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the number of lines the visible area of the minimap covers.</p>
+  <p> Public: Returns the number of lines the visible area of the minimap covers.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -669,9 +674,9 @@ to compute the scale factor.</p>
 /lib&#47;minimap-render-view.coffee#L224'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the height of the minimap on screen.</p><p>It differs from <a href='../classes/MinimapRenderView.html#getMinimapHeight-instance'>::getMinimapHeight</a> in that the former returns
+  <p> Public: Returns the height of the minimap on screen.</p><p>It differs from <a href='../classes/MinimapRenderView.html#getMinimapHeight-instance'>::getMinimapHeight</a> in that the former returns
 the height of the whole minimap when this method returns the height
-of the visible part.</p>
+of the visible part.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -693,7 +698,7 @@ of the visible part.</p>
 /lib&#47;minimap-render-view.coffee#L210'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the opacity at which the text are rendered in the minimap.</p>
+  <p> Public: Returns the opacity at which the text are rendered in the minimap.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -715,8 +720,8 @@ of the visible part.</p>
 /lib&#47;minimap-render-view.coffee#L292'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the text color for the passed-in <code>token</code> object.</p><p>The color value is read from the DOM by creating a node structure
-that match the token <code>scope</code> property.</p>
+  <p> Public: Returns the text color for the passed-in <code>token</code> object.</p><p>The color value is read from the DOM by creating a node structure
+that match the token <code>scope</code> property.</p><p>token - A token <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</p><p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -747,7 +752,12 @@ that match the token <code>scope</code> property.</p>
 /lib&#47;minimap-render-view.coffee#L268'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns a pixel position corresponding to a character&#39;s screen position.</p>
+  <p> Public: Returns a pixel position corresponding to a character&#39;s screen
+position.</p><p>position - A screen position <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+           :row - The row <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the character.
+           :column - The column <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the character.</p><p>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+:top - The position <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> from top.
+:left - The position <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> from left. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -806,7 +816,7 @@ that match the token <code>scope</code> property.</p>
 /lib&#47;minimap-render-view.coffee#L123'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Requests a render of the minimap to be performed on the next frame.</p><p>Only one update can be performed by frame, so calling several time this
+  <p> Public: Requests a render of the minimap to be performed on the next frame.</p><p>Only one update can be performed by frame, so calling several time this
 method during a single frame won&#39;t trigger several render. </p>
 </div>
 <div class='tags'>
@@ -820,7 +830,8 @@ method during a single frame won&#39;t trigger several render. </p>
 /lib&#47;minimap-render-view.coffee#L161'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Changes the scroll top position of the minimap. When called, the minimap is automatically updated.</p>
+  <p> Public: Changes the scroll top position of the minimap.
+When called, the minimap is automatically updated.</p><p>scrollTop - The scroll top <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</p><p>Returns the scroll top <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -851,7 +862,8 @@ method during a single frame won&#39;t trigger several render. </p>
 /lib&#47;minimap-render-view.coffee#L73'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Sets the <code>EditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance is displayed.</p>
+  <p> Public: Sets the <code>EditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance
+is displayed.</p><p>editorView - The <code>EditorView</code> instance. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -872,7 +884,12 @@ method during a single frame won&#39;t trigger several render. </p>
 /lib&#47;minimap-render-view.coffee#L151'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Registers changes in the minimap for the next render call.</p><p>Registering changes on an instance will trigger an update request.</p>
+  <p> Public: Registers changes in the minimap for the next render call.</p><p>Registering changes on an instance will trigger an update request.</p><p>changes - An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+          :start - The start row <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> for the change.
+          :end - The end row <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> for the change.
+          :screenDelta - The delta <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the change. It corresponds
+                         to the number of visible lines affected
+                         by the change </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -915,7 +932,7 @@ method during a single frame won&#39;t trigger several render. </p>
 /lib&#47;minimap-render-view.coffee#L92'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Performs an update of the minimap.</p>
+  <p>Public: Performs an update of the minimap. </p>
 </div>
 <div class='tags'>
 </div>
@@ -924,7 +941,7 @@ method during a single frame won&#39;t trigger several render. </p>
     </div>
     <div id='footer'>
   Generated on
-  Sat Sep 20 2014 14:05:58 GMT+0200 (CEST)
+  Mon Sep 22 2014 14:11:27 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

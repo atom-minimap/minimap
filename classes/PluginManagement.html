@@ -121,7 +121,7 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Provides methods to manage minimap plugins.</p><p>Minimap plugins are Atom packages that will augment the minimap.
+  <p> Public: Provides methods to manage minimap plugins.</p><p>Minimap plugins are Atom packages that will augment the minimap.
 They have a secondary activation cycle going on constrained by the minimap
 package activation. A minimap plugin life cycle will generally look like this:</p><ol>
 <li>The plugin module is activated by Atom through the <code>activate</code> method</li>
@@ -167,7 +167,10 @@ from the minimap using the <code>unregisterPlugin</code>. </li>
 /lib&#47;mixins&#47;plugin-management.coffee#L24'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Registers a minimap <code>plugin</code> with the given <code>name</code>.</p>
+  <p> Public: Registers a minimap <code>plugin</code> with the given <code>name</code>.</p><p>name - The identifying <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name of the plugin.
+       It will be used as activation settings name as well
+       as the key to unregister the module.
+plugin - The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> to register. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -195,7 +198,7 @@ from the minimap using the <code>unregisterPlugin</code>. </li>
 /lib&#47;mixins&#47;plugin-management.coffee#L38'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Unregisters a plugin from the minimap.</p>
+  <p> Public: Unregisters a plugin from the minimap.</p><p>name - The identifying <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name of the plugin to unregister. </p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -213,7 +216,7 @@ from the minimap using the <code>unregisterPlugin</code>. </li>
     </div>
     <div id='footer'>
   Generated on
-  Sat Sep 20 2014 14:05:58 GMT+0200 (CEST)
+  Mon Sep 22 2014 14:11:27 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
