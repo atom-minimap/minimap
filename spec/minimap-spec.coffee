@@ -6,7 +6,7 @@ describe "Minimap", ->
 
     runs ->
       atom.workspaceView = new WorkspaceView
-      atom.config.set 'minimap.autoToggle', false
+      atom.config.set 'minimap.autoToggle', true
 
     waitsForPromise ->
       atom.workspaceView.open('sample.js')
