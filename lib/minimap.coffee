@@ -37,7 +37,7 @@ class Minimap
   # The default minimap settings
   configDefaults:
     plugins: {}
-    autoToggle: false
+    autoToggle: true
     displayMinimapOnLeft: false
     displayCodeHighlights: true
     displayPluginsControls: true

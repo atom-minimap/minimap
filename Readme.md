@@ -17,7 +17,7 @@ apm install minimap
 
 ### Settings
 
-* `Auto Toggle`: If checked the minimap is toggled on at startup. (default=false)
+* `Auto Toggle`: If checked the minimap is toggled on at startup. (default=true)
 * `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
 * `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
 * `Line Height`: The height of a line in the minimap in pixels. (default=3)
