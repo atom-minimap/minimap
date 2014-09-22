@@ -45,7 +45,7 @@ class Minimap
     useHardwareAcceleration: true
     charWidth: 1
     charHeight: 2
-    lineHeight: 3
+    interline: 1
     textOpacity: 0.6
 
   # Internal: The activation state of the minimap package.

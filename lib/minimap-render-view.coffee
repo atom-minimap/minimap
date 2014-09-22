@@ -54,12 +54,12 @@ class MinimapRenderView extends ScrollView
   initialize: ->
     @lineCanvas.webkitImageSmoothingEnabled = false
 
-    @lineHeight = atom.config.get 'minimap.lineHeight'
+    @interline = atom.config.get 'minimap.interline'
     @charWidth = atom.config.get 'minimap.charWidth'
     @charHeight = atom.config.get 'minimap.charHeight'
     @textOpacity = atom.config.get 'minimap.textOpacity'
 
-    atom.config.observe 'minimap.lineHeight', (@lineHeight) =>
+    atom.config.observe 'minimap.interline', (@interline) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
     atom.config.observe 'minimap.charWidth', (@charWidth) => @forceUpdate()
@@ -200,13 +200,13 @@ class MinimapRenderView extends ScrollView
   # Returns a {Number}.
   getMinimapHeight: -> @getLinesCount() * @getLineHeight()
 
-  # Returns the height in pixels of the minimap lines.
+  # Returns the amount of pixels between lines.
   #
-  # The height of the minimap lines can be changed using the
-  # `minimap.lineHeight` setting.
+  # The space between the minimap lines can be changed using the
+  # `minimap.interline` setting.
   #
   # Returns a {Number}.
-  getLineHeight: -> @lineHeight
+  getLineHeight: -> @charHeight + @interline
 
   # Returns the height in pixels of a character rendered in the minimap.
   #

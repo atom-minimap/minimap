@@ -18,7 +18,7 @@ describe "MinimapRenderView", ->
 
       atom.workspaceView.simulateDomAttachment()
 
-      atom.config.set 'minimap.lineHeight', 3
+      atom.config.set 'minimap.interline', 3
       atom.config.set 'minimap.charHeight', 2
       atom.config.set 'minimap.charWidth', 1
 
@@ -46,10 +46,11 @@ describe "MinimapRenderView", ->
 
     describe '::getMinimapHeight', ->
       it 'returns its content height based on its line-height', ->
-        lineHeight = atom.config.get 'minimap.lineHeight'
+        interline = atom.config.get 'minimap.interline'
+        charHeight = atom.config.get 'minimap.charHeight'
         linesCount = editorView.editor.buffer.getLines().length
 
-        height = lineHeight * linesCount
+        height = (interline + charHeight) * linesCount
 
         expect(MinimapRenderView.getMinimapHeight()).toEqual(height)
 
