@@ -62,8 +62,12 @@ class MinimapRenderView extends ScrollView
     atom.config.observe 'minimap.interline', (@interline) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    atom.config.observe 'minimap.charWidth', (@charWidth) => @forceUpdate()
-    atom.config.observe 'minimap.charHeight', (@charHeight) => @forceUpdate()
+    atom.config.observe 'minimap.charWidth', (@charWidth) =>
+      @emit 'minimap:scaleChanged'
+      @forceUpdate()
+    atom.config.observe 'minimap.charHeight', (@charHeight) =>
+      @emit 'minimap:scaleChanged'
+      @forceUpdate()
     atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
 
   # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
