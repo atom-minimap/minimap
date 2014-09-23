@@ -1,6 +1,6 @@
 {EditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
 
