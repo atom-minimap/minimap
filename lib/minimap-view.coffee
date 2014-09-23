@@ -449,13 +449,13 @@ class MinimapView extends View
     @editorView.scrollTop(top / @scaleY)
 
 
-  #    ########  ########  #### ##     ##    ###    ######## ########
-  #    ##     ## ##     ##  ##  ##     ##   ## ##      ##    ##
-  #    ##     ## ##     ##  ##  ##     ##  ##   ##     ##    ##
-  #    ########  ########   ##  ##     ## ##     ##    ##    ######
-  #    ##        ##   ##    ##   ##   ##  #########    ##    ##
-  #    ##        ##    ##   ##    ## ##   ##     ##    ##    ##
-  #    ##        ##     ## ####    ###    ##     ##    ##    ########
+  #     #######  ######## ##     ## ######## ########
+  #    ##     ##    ##    ##     ## ##       ##     ##
+  #    ##     ##    ##    ##     ## ##       ##     ##
+  #    ##     ##    ##    ######### ######   ########
+  #    ##     ##    ##    ##     ## ##       ##   ##
+  #    ##     ##    ##    ##     ## ##       ##    ##
+  #     #######     ##    ##     ## ######## ##     ##
 
   # Returns a {String} containing a css transform translation.
   #
@@ -476,4 +476,10 @@ class MinimapView extends View
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
 
+  # Convert a subscription on the deprecated model with a `::off` method into a
+  # `Disposable`.
+  #
+  # subscription - The subscription {Object} to wrap in a `Disposable`.
+  #
+  # Returns a `Disposable`.
   asDisposable: (subscription) -> new Disposable -> subscription.off()
