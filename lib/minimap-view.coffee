@@ -1,6 +1,6 @@
 {$, View, EditorView} = require 'atom'
 Delegato = require 'delegato'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'event-kit'
 
 MinimapRenderView = require './minimap-render-view'
 MinimapIndicator = require './minimap-indicator'
@@ -139,14 +139,14 @@ class MinimapView extends View
 
     @displayCodeHighlights = atom.config.get('minimap.displayCodeHighlights')
 
-    atom.config.observe 'minimap.minimapScrollIndicator', =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.minimapScrollIndicator', =>
       @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
       @miniScroller.toggleClass 'visible', @miniScrollVisible
 
-    atom.config.observe 'minimap.useHardwareAcceleration', =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.useHardwareAcceleration', =>
       @updateScroll() if @ScrollView?
 
-    atom.config.observe 'minimap.displayCodeHighlights', =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.displayCodeHighlights', =>
       newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
       @setDisplayCodeHighlights(newOptionValue)
 
@@ -440,7 +440,13 @@ class MinimapView extends View
     @editorView.scrollTop(top / @scaleY)
 
 
-  # OTHER PRIVATE METHODS
+  #    ########  ########  #### ##     ##    ###    ######## ########
+  #    ##     ## ##     ##  ##  ##     ##   ## ##      ##    ##
+  #    ##     ## ##     ##  ##  ##     ##  ##   ##     ##    ##
+  #    ########  ########   ##  ##     ## ##     ##    ##    ######
+  #    ##        ##   ##    ##   ##   ##  #########    ##    ##
+  #    ##        ##    ##   ##    ## ##   ##     ##    ##    ##
+  #    ##        ##     ## ####    ###    ##     ##    ##    ########
 
   # Returns a {String} containing a css transform translation.
   #
@@ -460,3 +466,5 @@ class MinimapView extends View
   # transform - The css transformation {String}.
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
+
+  asDisposable: (subscription) -> new Disposable -> subscription.off()
