@@ -37,6 +37,7 @@ class MinimapRenderView extends ScrollView
 
   # Creates a new {MinimapRenderView}.
   constructor: ->
+    @subscriptions = new CompositeDisposable
     super
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
@@ -44,7 +45,6 @@ class MinimapRenderView extends ScrollView
     @decorationColorCache = {}
     @initializeDecorations()
     @tokenized = false
-    @subscriptions = new CompositeDisposable
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
