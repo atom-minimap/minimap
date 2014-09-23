@@ -150,6 +150,15 @@ class MinimapView extends View
       newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
       @setDisplayCodeHighlights(newOptionValue)
 
+    @subscriptions.add @asDisposable atom.config.observe 'editor.lineHeight', =>
+      @updateMinimapView()
+
+    @subscriptions.add @asDisposable atom.config.observe 'editor.fontSize', =>
+      @updateMinimapView()
+
+    @subscriptions.add @asDisposable atom.config.observe 'editor.softWrap', =>
+      @updateMinimapView()
+
   # Internal: Computes the scale of the minimap display relatively to the
   # corresponding editor view.
   # The scale factor are used to map scrolling and offset from the minimap
