@@ -59,16 +59,17 @@ class MinimapRenderView extends ScrollView
     @charHeight = atom.config.get 'minimap.charHeight'
     @textOpacity = atom.config.get 'minimap.textOpacity'
 
-    atom.config.observe 'minimap.interline', (@interline) =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.interline', (@interline) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    atom.config.observe 'minimap.charWidth', (@charWidth) =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.charWidth', (@charWidth) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    atom.config.observe 'minimap.charHeight', (@charHeight) =>
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.charHeight', (@charHeight) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    atom.config.observe 'minimap.textOpacity', (@textOpacity) => @forceUpdate()
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
+      @forceUpdate()
 
   # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
   # events and releases its resources.
@@ -656,3 +657,19 @@ class MinimapRenderView extends ScrollView
         intactRanges.splice(i--, 1)
       i++
     intactRanges.sort (a, b) -> a.domStart - b.domStart
+
+  #     #######  ######## ##     ## ######## ########
+  #    ##     ##    ##    ##     ## ##       ##     ##
+  #    ##     ##    ##    ##     ## ##       ##     ##
+  #    ##     ##    ##    ######### ######   ########
+  #    ##     ##    ##    ##     ## ##       ##   ##
+  #    ##     ##    ##    ##     ## ##       ##    ##
+  #     #######     ##    ##     ## ######## ##     ##
+
+  # Convert a subscription on the deprecated model with a `::off` method into a
+  # `Disposable`.
+  #
+  # subscription - The subscription {Object} to wrap in a `Disposable`.
+  #
+  # Returns a `Disposable`.
+  asDisposable: (subscription) -> new Disposable -> subscription.off()
