@@ -1,3 +1,10 @@
+3.1.1 / 2014-09-24
+==================
+
+* add config observers for editor settings that affect the minimap display
+* fix various leak with config observers
+* fix missing render view event dispatch on settings change
+
 3.1.0 / 2014-09-22
 ==================
 
