@@ -333,7 +333,12 @@ class MinimapView extends View
     @transform @miniVisibleArea[0], @translate(0, @indicator.y)
     @renderView.scrollTop(@indicator.scroller.y * -1)
 
-    @transform @renderView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
+    if devicePixelRatio isnt 1
+      scale = @scale(1 / devicePixelRatio)
+    else
+      scale = ''
+
+    @transform @renderView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight()) + scale
 
     @transform @miniUnderlayer[0], @translate(0, @indicator.scroller.y)
     @transform @miniOverlayer[0], @translate(0, @indicator.scroller.y)
@@ -468,6 +473,13 @@ class MinimapView extends View
       "translate3d(#{x}px, #{y}px, 0)"
     else
       "translate(#{x}px, #{y}px)"
+
+  # Returns a {String} containing a css transform scale.
+  #
+  # scale - The scale {Number}.
+  #
+  # Returns a {String}.
+  scale: (scale) -> " scale(#{scale}, #{scale})"
 
   # Applies a css transformation to a DOM element.
   #
