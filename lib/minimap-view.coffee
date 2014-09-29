@@ -333,12 +333,7 @@ class MinimapView extends View
     @transform @miniVisibleArea[0], @translate(0, @indicator.y)
     @renderView.scrollTop(@indicator.scroller.y * -1)
 
-    if devicePixelRatio isnt 1
-      scale = @scale(1 / devicePixelRatio)
-    else
-      scale = ''
-
-    @transform @renderView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight()) + scale
+    @transform @renderView[0], @translate(0, @indicator.scroller.y + @getFirstVisibleScreenRow() * @getLineHeight())
 
     @transform @miniUnderlayer[0], @translate(0, @indicator.scroller.y)
     @transform @miniOverlayer[0], @translate(0, @indicator.scroller.y)
