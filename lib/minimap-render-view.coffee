@@ -112,8 +112,8 @@ class MinimapRenderView extends ScrollView
     return unless @editorView?
 
     #reset canvas virtual width/height
-    @lineCanvas[0].width = @lineCanvas[0].offsetWidth
-    @lineCanvas[0].height = @lineCanvas[0].offsetHeight
+    @lineCanvas[0].width = @lineCanvas[0].offsetWidth * devicePixelRatio
+    @lineCanvas[0].height = @lineCanvas[0].offsetHeight * devicePixelRatio
 
     #is this scroll only or has content changed?
     hasChanges = @pendingChanges.length > 0
@@ -297,7 +297,10 @@ class MinimapRenderView extends ScrollView
     {row, column} = @buffer.constructor.Point.fromObject(position)
     actualRow = Math.floor(row)
 
-    {top: row * @getLineHeight(), left: column}
+    {
+      top: row * @getLineHeight() * devicePixelRatio
+      left: column * devicePixelRatio
+    }
 
   #     ######   #######  ##        #######  ########   ######
   #    ##    ## ##     ## ##       ##     ## ##     ## ##    ##
@@ -431,9 +434,9 @@ class MinimapRenderView extends ScrollView
     return if firstRow > lastRow
 
     lines = @editor.tokenizedLinesForScreenRows(firstRow, lastRow)
-    lineHeight = @getLineHeight()
-    charHeight = @getCharHeight()
-    charWidth = @getCharWidth()
+    lineHeight = @getLineHeight() * devicePixelRatio
+    charHeight = @getCharHeight() * devicePixelRatio
+    charWidth = @getCharWidth() * devicePixelRatio
     canvasWidth = @lineCanvas.width()
     displayCodeHighlights = @minimapView.displayCodeHighlights
     decorations = @decorationsForScreenRowRange(firstRow, lastRow)
@@ -556,7 +559,7 @@ class MinimapRenderView extends ScrollView
   # destRow - The row {Number} on the destination bitmap.
   # rowCount - The {Number} of rows to copy.
   copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
-    lineHeight = @getLineHeight()
+    lineHeight = @getLineHeight() * devicePixelRatio
     context.drawImage(bitmapCanvas,
         0, srcRow * lineHeight,
         bitmapCanvas.width, rowCount * lineHeight,
