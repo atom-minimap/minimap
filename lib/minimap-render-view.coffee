@@ -240,7 +240,7 @@ class MinimapRenderView extends ScrollView
   # Returns the number of lines in the `Editor`.
   #
   # Returns a {Number}
-  getLinesCount: -> @editorView.getEditor().getScreenLineCount()
+  getLinesCount: -> @editor.getScreenLineCount()
 
   # Returns the height of the minimap on screen.
   #
