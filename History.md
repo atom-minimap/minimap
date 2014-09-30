@@ -1,7 +1,12 @@
+3.1.3 / 2014-09-30
+==================
+
+* fix broken access to editor in getLinesCount when changing an editor setting
+
 3.1.2 / 2014-09-29
 ==================
 
-* Fix render on retina display
+* fix render on retina display
 
 3.1.1 / 2014-09-24
 ==================
