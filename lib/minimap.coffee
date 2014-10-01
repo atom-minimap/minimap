@@ -35,18 +35,50 @@ class Minimap
   version: require('../package.json').version
 
   # The default minimap settings
-  configDefaults:
-    plugins: {}
-    autoToggle: true
-    displayMinimapOnLeft: false
-    displayCodeHighlights: true
-    displayPluginsControls: true
-    minimapScrollIndicator: true
-    useHardwareAcceleration: true
-    charWidth: 1
-    charHeight: 2
-    interline: 1
-    textOpacity: 0.6
+  config:
+    plugins:
+      type: 'object'
+      properties: {}
+    autoToggle:
+      type: 'boolean'
+      default: true
+    displayMinimapOnLeft:
+      type: 'boolean'
+      default: false
+    displayCodeHighlights:
+      type: 'boolean'
+      default: true
+      description: 'Toggles the render of the buffer tokens in the minimap.'
+    displayPluginsControls:
+      type: 'boolean'
+      default: true
+      description: 'You need to restart Atom for this setting to be effective.'
+    minimapScrollIndicator:
+      type: 'boolean'
+      default: true
+      description: 'Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. This side line will only appear if the minimap is taller than the editor view height.'
+    useHardwareAcceleration:
+      type: 'boolean'
+      default: true
+    charWidth:
+      type: 'integer'
+      default: 1
+      minimum: 1
+    charHeight:
+      type: 'integer'
+      default: 2
+      minimum: 1
+    interline:
+      type: 'integer'
+      default: 1
+      minimum: 1
+      description: 'The space between lines in the minimap in pixels.'
+    textOpacity:
+      type: 'number'
+      default: 0.6
+      minimum: 0
+      maximum: 1
+      description: "The opacity used to render the line's text in the minimap."
 
   # Internal: The activation state of the minimap package.
   active: false
