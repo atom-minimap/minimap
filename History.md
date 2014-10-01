@@ -1,3 +1,9 @@
+3.2.0 / 2014-09-30
+==================
+
+* use new config schema
+* fix bug with line decoration and retina display
+
 3.1.4 / 2014-09-30
 ==================
 
