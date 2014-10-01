@@ -1,6 +1,6 @@
 path = require 'path'
 _ = require 'underscore-plus'
-{$, BufferedProcess, EditorView, View} = require 'atom'
+{$, BufferedProcess, TextEditorView, View} = require 'atom'
 fs = require 'fs-plus'
 
 module.exports =
@@ -10,7 +10,7 @@ class MinimapPluginGeneratorView extends View
 
   @content: ->
     @div class: 'minimap-plugin-generator overlay from-top', =>
-      @subview 'miniEditor', new EditorView(mini: true)
+      @subview 'miniEditor', new TextEditorView(mini: true)
       @div class: 'error', outlet: 'error'
       @div class: 'message', outlet: 'message'
 

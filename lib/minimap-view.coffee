@@ -1,4 +1,4 @@
-{$, View, EditorView} = require 'atom'
+{$, View, TextEditorView} = require 'atom'
 Delegato = require 'delegato'
 {CompositeDisposable, Disposable} = require 'event-kit'
 
@@ -73,7 +73,7 @@ class MinimapView extends View
 
   # Creates a new {MinimapView}.
   #
-  # editorView - The `EditorView` for which displaying a minimap.
+  # editorView - The `TextEditorView` for which displaying a minimap.
   constructor: (@editorView) ->
     @editor = @editorView.getEditor()
     @paneView = @editorView.getPaneView()
@@ -219,7 +219,7 @@ class MinimapView extends View
   # Returns a {Boolean}.
   minimapIsAttached: -> @paneView.find('.minimap').length is 1
 
-  # Internal: Returns the bounds of the `EditorView`.
+  # Internal: Returns the bounds of the `TextEditorView`.
   #
   # Returns an {Object}.
   getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()

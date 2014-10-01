@@ -1,4 +1,4 @@
-{EditorView} = require 'atom'
+{TextEditorView} = require 'atom'
 Mixin = require 'mixto'
 MinimapView = null
 
@@ -13,9 +13,9 @@ class ViewManagement extends Mixin
     view.onScrollViewResized() for id,view of @minimapViews
 
   # Public: Returns the {MinimapView} object associated to the
-  # passed-in `EditorView`.
+  # passed-in `TextEditorView`.
   #
-  # editorView - An `EditorView` instance
+  # editorView - An `TextEditorView` instance
   #
   # Returns a {MinimapView}.
   minimapForEditorView: (editorView) ->

@@ -1,4 +1,4 @@
-{EditorView, ScrollView, $} = require 'atom'
+{TextEditorView, ScrollView, $} = require 'atom'
 {Emitter} = require 'emissary'
 {CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
@@ -78,10 +78,10 @@ class MinimapRenderView extends ScrollView
     @subscriptions.dispose()
     @editorView = null
 
-  # Sets the `EditorView` for which the {MinimapRenderView} instance
+  # Sets the `TextEditorView` for which the {MinimapRenderView} instance
   # is displayed.
   #
-  # editorView - The `EditorView` instance.
+  # editorView - The `TextEditorView` instance.
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
     @buffer = @editorView.getEditor().getBuffer()
@@ -312,7 +312,7 @@ class MinimapRenderView extends ScrollView
 
   # Returns the default text color for an editor content.
   #
-  # The color value is directly read from the `EditorView` computed
+  # The color value is directly read from the `TextEditorView` computed
   # styles.
   #
   # Returns a {String}.
