@@ -42,7 +42,7 @@ describe "Minimap Plugins", ->
       expect(@registerHandler).toHaveBeenCalled()
 
     it 'should have created a default config for the plugin', ->
-      expect(Minimap.configDefaults.plugins.dummy).toBeDefined()
+      expect(Minimap.config.plugins.properties.dummy).toBeDefined()
 
     it 'should have set the corresponding config', ->
       expect(atom.config.get 'minimap.plugins.dummy').toBeDefined()
@@ -61,7 +61,7 @@ describe "Minimap Plugins", ->
       it 'should have been removed', ->
         expect(Minimap.plugins['dummy']).toBeUndefined()
 
-      xdescribe 'when the config is modified', ->
+      describe 'when the config is modified', ->
         beforeEach ->
           atom.config.set 'minimap.plugins.dummy', false
 

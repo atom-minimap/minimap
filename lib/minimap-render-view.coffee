@@ -437,7 +437,7 @@ class MinimapRenderView extends ScrollView
     lineHeight = @getLineHeight() * devicePixelRatio
     charHeight = @getCharHeight() * devicePixelRatio
     charWidth = @getCharWidth() * devicePixelRatio
-    canvasWidth = @lineCanvas.width()
+    canvasWidth = @lineCanvas.width() * devicePixelRatio
     displayCodeHighlights = @minimapView.displayCodeHighlights
     decorations = @decorationsForScreenRowRange(firstRow, lastRow)
 
