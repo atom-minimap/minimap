@@ -151,9 +151,11 @@ class MinimapView extends View
       @setDisplayCodeHighlights(newOptionValue)
 
     @subscriptions.add @asDisposable atom.config.observe 'editor.lineHeight', =>
+      @computeScale()
       @updateMinimapView()
 
     @subscriptions.add @asDisposable atom.config.observe 'editor.fontSize', =>
+      @computeScale()
       @updateMinimapView()
 
     @subscriptions.add @asDisposable atom.config.observe 'editor.softWrap', =>
