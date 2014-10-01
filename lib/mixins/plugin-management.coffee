@@ -75,7 +75,9 @@ class PluginManagement extends Mixin
   # plugin - The plugin {Object}.
   registerPluginControls: (name, plugin) ->
     settingsKey = "minimap.plugins.#{name}"
-    @configDefaults.plugins[name] = true
+    @config.plugins.properties[name] =
+      type: 'boolean'
+      default: true
 
     atom.config.set(settingsKey, true) unless atom.config.get(settingsKey)?
 
@@ -94,4 +96,4 @@ class PluginManagement extends Mixin
   unregisterPluginControls: (name) ->
     atom.config.unobserve "minimap.plugins.#{name}"
     atom.workspaceView.off "minimap:toggle-#{name}"
-    delete @configDefaults.plugins[name]
+    delete @config.plugins.properties[name]
