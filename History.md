@@ -1,3 +1,9 @@
+3.1.4 / 2014-09-30
+==================
+
+* fix broken update on editor settings changes
+
+
 3.1.3 / 2014-09-30
 ==================
 
