@@ -109,7 +109,12 @@ class DecorationManagement extends Mixin
         for decoration in decorations
           @trigger 'minimap:decoration-changed', marker, decoration, event
 
-      @stackRangeChanges(start: event.oldTailScreenPosition, end: event.oldHeadScreenPosition)
+      start = event.oldTailScreenPosition
+      end = event.oldHeadScreenPosition
+
+      [start, end] = [end, start] if start.row > end.row
+
+      @stackRangeChanges({start, end})
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
