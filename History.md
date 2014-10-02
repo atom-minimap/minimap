@@ -1,4 +1,9 @@
-3.2.0 / 2014-09-30
+3.2.1 / 2014-10-02
+==================
+
+* fix invalid decoration change range registered when head and tail of a marker are inversed
+
+3.2.0 / 2014-10-01
 ==================
 
 * use new config schema
