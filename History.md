@@ -1,3 +1,8 @@
+3.3.0 / 2014-10-03
+==================
+
+* add option to set a max width to minimap when soft wrap is enabled
+
 3.2.1 / 2014-10-02
 ==================
 
