@@ -159,7 +159,11 @@ class MinimapView extends View
       @updateMinimapView()
 
     @subscriptions.add @asDisposable atom.config.observe 'editor.softWrap', =>
+      @updateMinimapSize()
       @updateMinimapView()
+
+    @subscriptions.add @asDisposable atom.config.observe 'editor.preferredLineLength', =>
+      @updateMinimapSize()
 
   # Internal: Computes the scale of the minimap display relatively to the
   # corresponding editor view.
