@@ -307,6 +307,8 @@ class MinimapView extends View
     # Compute boundary
     @indicator.updateBoundary()
 
+  # Internal: Updates the width of the minimap based on the soft-wrap
+  # and preferred line length settings.
   updateMinimapWidthWithWrap: ->
     @resetMinimapWidthWithWrap()
 
@@ -325,6 +327,8 @@ class MinimapView extends View
         @editorView.find('.editor-contents').css paddingRight: maxWidth
         @editorView.find('.vertical-scrollbar').css right: maxWidth
 
+  # Internal: Resets the styles modified when the minimap width is adjusted
+  # based on the soft-wrap.
   resetMinimapWidthWithWrap: ->
     @css maxWidth: ''
     @editorView.find('.editor-contents').css paddingRight: ''
