@@ -289,6 +289,8 @@ class MinimapView extends View
 
       @css maxWidth: maxWidth
       @editorView.find('.editor-contents').css paddingRight: maxWidth
+      @editorView.find('.vertical-scrollbar').css right: maxWidth
+
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
 
