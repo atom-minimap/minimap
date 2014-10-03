@@ -288,8 +288,7 @@ class MinimapView extends View
       maxWidth = size * @getCharWidth()
 
       @css maxWidth: maxWidth
-      @paneView.css paddingRight: maxWidth
-    
+      @editorView.find('.editor-contents').css paddingRight: maxWidth
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
 
