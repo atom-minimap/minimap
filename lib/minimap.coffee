@@ -60,6 +60,10 @@ class Minimap
     useHardwareAcceleration:
       type: 'boolean'
       default: true
+    adjustMinimapWidthToSoftWrap:
+      type: 'boolean'
+      default: true
+      description: 'If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value.'
     charWidth:
       type: 'integer'
       default: 1

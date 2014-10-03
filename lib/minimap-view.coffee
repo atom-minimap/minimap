@@ -150,6 +150,12 @@ class MinimapView extends View
       newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
       @setDisplayCodeHighlights(newOptionValue)
 
+    @subscriptions.add @asDisposable atom.config.observe 'minimap.adjustMinimapWidthToSoftWrap', (value) =>
+      if value
+        @updateMinimapSize()
+      else
+        @resetMinimapWidthWithWrap()
+
     @subscriptions.add @asDisposable atom.config.observe 'editor.lineHeight', =>
       @computeScale()
       @updateMinimapView()
@@ -287,14 +293,7 @@ class MinimapView extends View
       width : width / @scaleX
       height: evh * @scaleY
 
-    size = atom.config.get('editor.preferredLineLength')
-    wraps = atom.config.get('editor.softWrap')
-    if wraps and size
-      maxWidth = (size * @getCharWidth()) + 'px'
-
-      @css maxWidth: maxWidth
-      @editorView.find('.editor-contents').css paddingRight: maxWidth
-      @editorView.find('.vertical-scrollbar').css right: maxWidth
+    @updateMinimapWidthWithWrap()
 
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
@@ -307,6 +306,30 @@ class MinimapView extends View
 
     # Compute boundary
     @indicator.updateBoundary()
+
+  updateMinimapWidthWithWrap: ->
+    @resetMinimapWidthWithWrap()
+
+    size = atom.config.get('editor.preferredLineLength')
+    wraps = atom.config.get('editor.softWrap')
+    adjustWidth = atom.config.get('minimap.adjustMinimapWidthToSoftWrap')
+    displayLeft = atom.config.get('minimap.displayMinimapOnLeft')
+
+    if wraps and adjustWidth and size
+      maxWidth = (size * @getCharWidth()) + 'px'
+
+      @css maxWidth: maxWidth
+      if displayLeft
+        @editorView.find('.editor-contents').css paddingLeft: maxWidth
+      else
+        @editorView.find('.editor-contents').css paddingRight: maxWidth
+        @editorView.find('.vertical-scrollbar').css right: maxWidth
+
+  resetMinimapWidthWithWrap: ->
+    @css maxWidth: ''
+    @editorView.find('.editor-contents').css paddingRight: ''
+    @editorView.find('.editor-contents').css paddingLeft: ''
+    @editorView.find('.vertical-scrollbar').css right: ''
 
   # Internal: Updates the vertical scrolling of the minimap.
   #
