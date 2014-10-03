@@ -284,7 +284,8 @@ class MinimapView extends View
       height: evh * @scaleY
 
     size = atom.config.get('editor.preferredLineLength')
-    if size
+    wraps = atom.config.get('editor.softWrap')
+    if wraps and size
       maxWidth = (size * @getCharWidth()) + 'px'
 
       @css maxWidth: maxWidth
