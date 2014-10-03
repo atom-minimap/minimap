@@ -2,8 +2,7 @@
 
 
 .pane.with-minimap {
-  :not(.minimap-editor) > .editor-contents,
-  :not(.minimap-editor) > .editor:not(.react) {
+  :not(.minimap-editor):not(.mini) > .editor-contents {
     padding-right: 10%;
   }
   .vertical-scrollbar {
@@ -67,8 +66,7 @@
 
 .minimap-on-left {
   .pane.with-minimap {
-    :not(.minimap-editor) > .editor-contents,
-    :not(.minimap-editor) > .editor:not(.react) {
+    :not(.minimap-editor):not(.mini) > .editor-contents{
       padding-right: 0;
       padding-left: 10%;
     }
