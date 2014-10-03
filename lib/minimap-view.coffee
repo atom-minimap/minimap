@@ -285,7 +285,7 @@ class MinimapView extends View
 
     size = atom.config.get('editor.preferredLineLength')
     if size
-      maxWidth = size * @getCharWidth()
+      maxWidth = (size * @getCharWidth()) + 'px'
 
       @css maxWidth: maxWidth
       @editorView.find('.editor-contents').css paddingRight: maxWidth
