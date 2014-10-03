@@ -120,14 +120,14 @@ class MinimapView extends View
     # The mutation observer is required so that we can relocate the minimap
     # everytime the children of the pane changes.
     @observer = new MutationObserver (mutations) =>
-      @adjustTopPosition()
+      @updateTopPosition()
 
     config = childList: true
     @observer.observe @paneView.element, config
 
     # Update the minimap whenever theme is reloaded
     @subscriptions.add atom.themes.onDidReloadAll =>
-      @adjustTopPosition()
+      @updateTopPosition()
       @updateMinimapView()
 
     # The resize:end event is dispatched at the end of an animated resize
@@ -171,12 +171,6 @@ class MinimapView extends View
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
-  # Internal: Adjusts the position of the minimap so that it sticks to the
-  # editor view offset. This is needed as the minimap is positioned absolutely
-  # and the tree-view, or other packages, may affect the editor view position.
-  adjustTopPosition: ->
-    @offset top: (@offsetTop = @editorView.offset().top)
-
   # Destroys this view and release all its subobjects.
   destroy: ->
     @paneView.removeClass('with-minimap')
@@ -208,7 +202,7 @@ class MinimapView extends View
   # Internal: Attaches the minimap view to the DOM.
   attachToPaneView: ->
     @paneView.append(this)
-    @adjustTopPosition()
+    @updateTopPosition()
 
   # Internal: Detaches the minimap view to the DOM.
   detachFromPaneView: ->
@@ -289,6 +283,13 @@ class MinimapView extends View
       width : width / @scaleX
       height: evh * @scaleY
 
+    size = atom.config.get('editor.preferredLineLength')
+    if size
+      maxWidth = size * @getCharWidth()
+
+      @css maxWidth: maxWidth
+      @paneView.css paddingRight: maxWidth
+    
     msvw = miniScrollViewRect.width || 0
     msvh = miniScrollViewRect.height || 0
 
@@ -350,6 +351,12 @@ class MinimapView extends View
     scrollRange = totalHeight - height
 
     @transform @miniScroller[0], @translate(0, @indicator.ratioY * scrollRange)
+
+  # Internal: Adjusts the position of the minimap so that it sticks to the
+  # editor view offset. This is needed as the minimap is positioned absolutely
+  # and the tree-view, or other packages, may affect the editor view position.
+  updateTopPosition: ->
+    @offset top: (@offsetTop = @editorView.offset().top)
 
   #    ######## ##     ## ######## ##    ## ########  ######
   #    ##       ##     ## ##       ###   ##    ##    ##    ##
