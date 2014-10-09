@@ -74,9 +74,8 @@ class MinimapView extends View
   # Creates a new {MinimapView}.
   #
   # editorView - The `TextEditorView` for which displaying a minimap.
-  constructor: (@editorView) ->
-    @editor = @editorView.getEditor()
-    @paneView = @editorView.getPaneView()
+  constructor: (editorView) ->
+    @setEditorView(editorView)
 
     @paneView.addClass('with-minimap')
 
@@ -109,8 +108,9 @@ class MinimapView extends View
 
     @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
 
-    # Fix items movin to another pane.
-    @subscriptions.add @paneView.model.onDidRemoveItem (item) -> item.off? '.minimap'
+    # Fix items moving to another pane.
+    # @subscriptions.add @paneView.model.onDidRemoveItem ({item}) =>
+    #   @destroy() if item is @editor
 
     @subscribe @renderView, 'minimap:updated', @updateMinimapSize
     @subscribe @renderView, 'minimap:scaleChanged', =>
@@ -192,6 +192,11 @@ class MinimapView extends View
     @detachFromPaneView()
     @renderView.destroy()
     @remove()
+
+  setEditorView: (@editorView) ->
+    @editor = @editorView.getEditor()
+    @paneView = @editorView.getPaneView()
+    @renderView?.setEditorView(@editorView)
 
   #    ########  ####  ######  ########  ##          ###    ##    ##
   #    ##     ##  ##  ##    ## ##     ## ##         ## ##    ##  ##
