@@ -1,7 +1,12 @@
+3.3.2 / 2014-10-10
+==================
+
+* fix minimap height not filling the whole editor height at startup
+
 3.3.1 / 2014-10-10
 ==================
 
-* fix duplication of minimap when dragging tabs between panes 
+* fix duplication of minimap when dragging tabs between panes
 
 3.3.0 / 2014-10-03
 ==================
