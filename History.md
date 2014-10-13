@@ -1,3 +1,8 @@
+3.3.3 / 2014-10-13
+==================
+
+* fix invalid engine version since config changes
+
 3.3.2 / 2014-10-10
 ==================
 
