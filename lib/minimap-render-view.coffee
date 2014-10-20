@@ -329,7 +329,7 @@ class MinimapRenderView extends ScrollView
   # Returns a {String}.
   getTokenColor: (token) ->
     #Retrieve color from cache if available
-    flatScopes = token.scopes.join()
+    flatScopes = token.scopeDescriptor.join()
     if flatScopes not of @tokenColorCache
       color = @retrieveTokenColorFromDom(token)
       @tokenColorCache[flatScopes] = color
@@ -359,7 +359,7 @@ class MinimapRenderView extends ScrollView
   # Returns a {String}.
   retrieveTokenColorFromDom: (token) ->
     # This is quite an expensive operation so results are cached in getTokenColor.
-    color = @retrieveStyleFromDom(token.scopes, 'color')
+    color = @retrieveStyleFromDom(token.scopeDescriptor, 'color')
     @transparentize(color, @getTextOpacity())
 
   # Internal: Returns the background color for the passed-in decoration.
