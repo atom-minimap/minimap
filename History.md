@@ -1,3 +1,9 @@
+3.3.4 / 2014-10-22
+==================
+
+* fix access to deprecated scopes property of tokens
+
+
 3.3.3 / 2014-10-13
 ==================
 
