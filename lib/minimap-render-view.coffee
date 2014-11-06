@@ -360,7 +360,6 @@ class MinimapRenderView extends ScrollView
   retrieveTokenColorFromDom: (token) ->
     # This is quite an expensive operation so results are cached in getTokenColor.
     scopes = (token.scopeDescriptor or token.scopes)
-    scopes.unshift('.editor')
     color = @retrieveStyleFromDom(scopes, 'color')
     @transparentize(color, @getTextOpacity())
 
