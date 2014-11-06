@@ -350,7 +350,7 @@ class MinimapView extends View
       overlayY = top
     else
       scrollViewOffset = @scrollView.offset().top
-      overlayerOffset = @scrollView.find('.overlayer').offset().top
+      overlayerOffset = @scrollView.find('.lines').offset().top
       overlayY = -overlayerOffset + scrollViewOffset
 
     @indicator.setY(overlayY * @scaleY)
