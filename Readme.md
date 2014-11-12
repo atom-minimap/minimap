@@ -77,9 +77,9 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 
 ### Documentation
 
-* [Minimap API Documentation](http://fangduncai.com/atom-minimap/)
-* [How to create a minimap plugin?](http://fangduncai.com/atom-minimap/docs/Plugins.md.html)
-* [Minimap's Decorations API](http://fangduncai.com/atom-minimap/docs/Decorations.md.html)
+* [Minimap API Documentation](http://abe33.github.io/atom-minimap/)
+* [How to create a minimap plugin?](http://abe33.github.io/atom-minimap/docs/Plugins.md.html)
+* [Minimap's Decorations API](http://abe33.github.io/atom-minimap/docs/Decorations.md.html)
 
 ### License
 
