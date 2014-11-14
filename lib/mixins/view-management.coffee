@@ -71,6 +71,8 @@ class ViewManagement extends Mixin
       editorId = editorView.editor.id
       paneView = editorView.getPaneView()
 
+      return unless paneView?
+
       if (view = @minimapViews[editorId])?
         view.setEditorView editorView
         view.detachFromPaneView()
