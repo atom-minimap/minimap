@@ -186,6 +186,7 @@ class MinimapView extends View
     @paneView.removeClass('with-minimap')
     @off()
     @obsPane.dispose()
+    @subscriptions.dispose()
     @unsubscribe()
     @observer.disconnect()
 
@@ -194,9 +195,14 @@ class MinimapView extends View
     @remove()
 
   setEditorView: (@editorView) ->
+
     @editor = @editorView.getEditor()
     @paneView = @editorView.getPaneView()
     @renderView?.setEditorView(@editorView)
+
+    if @obsPane?
+      @obsPane.dispose()
+      @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
 
   #    ########  ####  ######  ########  ##          ###    ##    ##
   #    ##     ##  ##  ##    ## ##     ## ##         ## ##    ##  ##
