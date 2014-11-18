@@ -1,11 +1,10 @@
-{deprecate} = require 'grim'
 EmitterMixin = require('emissary').Emitter
 {Emitter} = require 'event-kit'
-semver = require 'semver'
 
 ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
-MinimapPluginGeneratorView = require './minimap-plugin-generator-view'
+
+[MinimapPluginGeneratorView, deprecate, semver] = []
 
 require '../vendor/resizeend'
 
@@ -119,7 +118,9 @@ class Minimap
   #                     version.
   #
   # Returns a {Boolean}.
-  versionMatch: (expectedVersion) -> semver.satisfies(@version, expectedVersion)
+  versionMatch: (expectedVersion) ->
+    semver ?= require 'semver'
+    semver.satisfies(@version, expectedVersion)
 
   # Public: Toggles the minimap activation state.
   toggle: ->
@@ -134,6 +135,7 @@ class Minimap
 
   # Public: Opens the plugin generation view.
   generatePlugin: ->
+    MinimapPluginGeneratorView ?= require './minimap-plugin-generator-view'
     view = new MinimapPluginGeneratorView()
 
   # Public: Calls the `callback` when the minimap package have been activated.
@@ -228,6 +230,7 @@ class Minimap
 
   # Internal: Used only for old events deprecation.
   on: (eventName) ->
+    deprecate ?= require('grim').deprecate
     switch eventName
       when 'activated'
         deprecate("Use Minimap::onDidActivate instead.")
