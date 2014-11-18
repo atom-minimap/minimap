@@ -1,4 +1,3 @@
-{TextEditorView} = require 'atom'
 Mixin = require 'mixto'
 MinimapView = null
 

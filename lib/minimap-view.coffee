@@ -1,4 +1,4 @@
-{$, View, TextEditorView} = require 'atom'
+{$, View} = require 'atom'
 Delegato = require 'delegato'
 {CompositeDisposable, Disposable} = require 'event-kit'
 
