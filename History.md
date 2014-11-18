@@ -1,3 +1,8 @@
+3.3.9 / 2014-11-18
+==================
+
+* fix pane and editor styles when shadow dom is enabled
+
 3.3.8 / 2014-11-14
 ==================
 
