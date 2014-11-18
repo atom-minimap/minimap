@@ -1,3 +1,8 @@
+3.3.10 / 2014-11-18
+==================
+
+* fix minimap removed when the active item of a previous owner changed
+
 3.3.9 / 2014-11-18
 ==================
 
