@@ -50,10 +50,9 @@ class MinimapView extends View
   @delegatesProperty 'charWidth', toMethod: 'getCharWidth'
 
   @content: ({minimapView}) ->
-    console.log arguments
     @div class: 'minimap', =>
       if atom.config.get('minimap.displayPluginsControls')
-        @subview 'openQuickSettings', new MinimapOpenQuickSettingsView(minimapView) 
+        @subview 'openQuickSettings', new MinimapOpenQuickSettingsView(minimapView)
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
