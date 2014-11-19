@@ -184,6 +184,7 @@ class MinimapView extends View
 
   # Destroys this view and release all its subobjects.
   destroy: ->
+    @resetMinimapWidthWithWrap()
     @paneView.removeClass('with-minimap')
     @off()
     @obsPane.dispose()
