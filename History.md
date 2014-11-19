@@ -1,4 +1,10 @@
-3.3.11 / 2014-11-18
+3.3.12 / 2014-11-19
+==================
+
+* remove forgotten logging
+
+
+3.3.11 / 2014-11-19
 ==================
 
 * fix access to minimap view in quick settings
