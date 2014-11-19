@@ -7,9 +7,9 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
-'.workspace':
-  'ctrl-k ctrl-m': 'minimap:toggle'
-  'ctrl-k ctrl-s': 'minimap:open-quick-settings'
+# '.workspace':
+#   'ctrl-k ctrl-m': 'minimap:toggle'
+#   'ctrl-k ctrl-s': 'minimap:open-quick-settings'
 
 '.minimap-quick-settings':
   'space': 'core:validate'
