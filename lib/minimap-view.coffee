@@ -49,9 +49,11 @@ class MinimapView extends View
   @delegatesProperty 'lineHeight', toMethod: 'getLineHeight'
   @delegatesProperty 'charWidth', toMethod: 'getCharWidth'
 
-  @content: ->
+  @content: ({minimapView}) ->
+    console.log arguments
     @div class: 'minimap', =>
-      @subview 'openQuickSettings', new MinimapOpenQuickSettingsView if atom.config.get('minimap.displayPluginsControls')
+      if atom.config.get('minimap.displayPluginsControls')
+        @subview 'openQuickSettings', new MinimapOpenQuickSettingsView(minimapView) 
       @div outlet: 'miniScroller', class: "minimap-scroller"
       @div outlet: 'miniWrapper', class: "minimap-wrapper", =>
         @div outlet: 'miniUnderlayer', class: "minimap-underlayer"
@@ -81,7 +83,7 @@ class MinimapView extends View
 
     @subscriptions = new CompositeDisposable
 
-    super
+    super({minimapView: this, editorView})
 
     @computeScale()
     @miniScrollView = @renderView.scrollView
