@@ -1,8 +1,13 @@
+3.3.13 / 2014-11-20
+==================
+
+* fix minimap styles persisting after minimap deactivation
+* remove key bindings for toggling command
+
 3.3.12 / 2014-11-19
 ==================
 
 * remove forgotten logging
-
 
 3.3.11 / 2014-11-19
 ==================
