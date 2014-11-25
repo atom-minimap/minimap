@@ -420,10 +420,22 @@ class MinimapView extends View
     # Hacked scroll-left
     @subscribe @scrollView, 'scroll.minimap', @updateScrollX
 
+    # We can't really know when a tab is dragged from a pane to
+    # another one, but as it regains the focus after that we can
+    # test if the parent view is still the same or is different.
+    @subscribe @editorView, 'focus', =>
+      if @editorView.getPaneView() isnt @paneView
+        @detachFromPaneView()
+        @paneView = @editorView.getPaneView()
+        @attachToPaneView()
+
+      true
+
   # Unsubscribes from the `Editor events`.
   unsubscribeFromEditor: ->
-    @unsubscribe @editor, '.minimap' if @editor?
-    @unsubscribe @scrollView, '.minimap' if @scrollView?
+    @unsubscribe @editor if @editor?
+    @unsubscribe @editorView if @editorView?
+    @unsubscribe @scrollView if @scrollView?
 
   # Event callbacks called when the active editor of a pane view
   # is changed.
