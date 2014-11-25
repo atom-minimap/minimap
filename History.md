@@ -1,3 +1,8 @@
+3.3.14 / 2014-11-25
+==================
+
+* fix minimap disappearing on tabs drag and drop
+
 3.3.13 / 2014-11-20
 ==================
 
