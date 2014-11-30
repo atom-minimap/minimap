@@ -136,6 +136,7 @@ class DecorationManagement extends Mixin
   #
   # decoration - The `Decoration` to register changes for.
   stackDecorationChanges: (decoration) ->
+    return if decoration.marker.displayBuffer.isDestroyed()
     range = decoration.marker.getScreenRange()
     return unless range?
 
