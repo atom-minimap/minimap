@@ -110,6 +110,7 @@ class MinimapRenderView extends ScrollView
   # Performs an update of the minimap.
   update: =>
     return unless @editorView?
+    return if @buffer.isDestroyed()
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth * devicePixelRatio
