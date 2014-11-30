@@ -1,4 +1,4 @@
-{TextEditorView, ScrollView, $} = require 'atom'
+{ScrollView} = require 'atom-space-pen-views'
 {Emitter} = require 'emissary'
 {CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
@@ -11,7 +11,6 @@ class MinimapRenderView extends ScrollView
   Emitter.includeInto(this)
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)
-
 
   @delegatesMethods 'getMarker', 'findMarkers', toProperty: 'editor'
 
@@ -54,27 +53,21 @@ class MinimapRenderView extends ScrollView
   initialize: ->
     @lineCanvas.webkitImageSmoothingEnabled = false
 
-    @interline = atom.config.get 'minimap.interline'
-    @charWidth = atom.config.get 'minimap.charWidth'
-    @charHeight = atom.config.get 'minimap.charHeight'
-    @textOpacity = atom.config.get 'minimap.textOpacity'
-
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.interline', (@interline) =>
+    @subscriptions.add atom.config.observe 'minimap.interline', (@interline) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.charWidth', (@charWidth) =>
+    @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.charHeight', (@charHeight) =>
+    @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
       @emit 'minimap:scaleChanged'
       @forceUpdate()
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
+    @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
       @forceUpdate()
 
   # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
   # events and releases its resources.
   destroy: ->
-    @unsubscribe()
     @subscriptions.dispose()
     @editorView = null
 
@@ -662,19 +655,3 @@ class MinimapRenderView extends ScrollView
         intactRanges.splice(i--, 1)
       i++
     intactRanges.sort (a, b) -> a.domStart - b.domStart
-
-  #     #######  ######## ##     ## ######## ########
-  #    ##     ##    ##    ##     ## ##       ##     ##
-  #    ##     ##    ##    ##     ## ##       ##     ##
-  #    ##     ##    ##    ######### ######   ########
-  #    ##     ##    ##    ##     ## ##       ##   ##
-  #    ##     ##    ##    ##     ## ##       ##    ##
-  #     #######     ##    ##     ## ######## ##     ##
-
-  # Convert a subscription on the deprecated model with a `::off` method into a
-  # `Disposable`.
-  #
-  # subscription - The subscription {Object} to wrap in a `Disposable`.
-  #
-  # Returns a `Disposable`.
-  asDisposable: (subscription) -> new Disposable -> subscription.off()

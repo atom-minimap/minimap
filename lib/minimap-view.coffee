@@ -140,36 +140,36 @@ class MinimapView extends View
 
     @displayCodeHighlights = atom.config.get('minimap.displayCodeHighlights')
 
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.minimapScrollIndicator', =>
+    @subscriptions.add atom.config.observe 'minimap.minimapScrollIndicator', =>
       @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
       @miniScroller.toggleClass 'visible', @miniScrollVisible
 
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.useHardwareAcceleration', =>
+    @subscriptions.add atom.config.observe 'minimap.useHardwareAcceleration', =>
       @updateScroll() if @ScrollView?
 
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.displayCodeHighlights', =>
+    @subscriptions.add atom.config.observe 'minimap.displayCodeHighlights', =>
       newOptionValue = atom.config.get 'minimap.displayCodeHighlights'
       @setDisplayCodeHighlights(newOptionValue)
 
-    @subscriptions.add @asDisposable atom.config.observe 'minimap.adjustMinimapWidthToSoftWrap', (value) =>
+    @subscriptions.add atom.config.observe 'minimap.adjustMinimapWidthToSoftWrap', (value) =>
       if value
         @updateMinimapSize()
       else
         @resetMinimapWidthWithWrap()
 
-    @subscriptions.add @asDisposable atom.config.observe 'editor.lineHeight', =>
+    @subscriptions.add atom.config.observe 'editor.lineHeight', =>
       @computeScale()
       @updateMinimapView()
 
-    @subscriptions.add @asDisposable atom.config.observe 'editor.fontSize', =>
+    @subscriptions.add atom.config.observe 'editor.fontSize', =>
       @computeScale()
       @updateMinimapView()
 
-    @subscriptions.add @asDisposable atom.config.observe 'editor.softWrap', =>
+    @subscriptions.add atom.config.observe 'editor.softWrap', =>
       @updateMinimapSize()
       @updateMinimapView()
 
-    @subscriptions.add @asDisposable atom.config.observe 'editor.preferredLineLength', =>
+    @subscriptions.add atom.config.observe 'editor.preferredLineLength', =>
       @updateMinimapSize()
 
   # Internal: Computes the scale of the minimap display relatively to the
@@ -549,11 +549,3 @@ class MinimapView extends View
   # transform - The css transformation {String}.
   transform: (el, transform) ->
     el.style.webkitTransform = el.style.transform = transform
-
-  # Convert a subscription on the deprecated model with a `::off` method into a
-  # `Disposable`.
-  #
-  # subscription - The subscription {Object} to wrap in a `Disposable`.
-  #
-  # Returns a `Disposable`.
-  asDisposable: (subscription) -> new Disposable -> subscription.off()
