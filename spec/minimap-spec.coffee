@@ -20,11 +20,13 @@ describe "Minimap", ->
       waitsForPromise -> atom.packages.activatePackage('minimap')
 
     it "attaches and then detaches the view", ->
+      expect(atom.workspaceView.find('.minimap')).not.toExist()
+      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(0)
+
+      atom.workspaceView.trigger 'minimap:toggle'
       expect(atom.workspaceView.find('.minimap')).toExist()
+      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(1)
+
       atom.workspaceView.trigger 'minimap:toggle'
       expect(atom.workspaceView.find('.minimap')).not.toExist()
-
-    it 'decorates the pane view with a with-minimap class', ->
-      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(1)
-      atom.workspaceView.trigger 'minimap:toggle'
       expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(0)
