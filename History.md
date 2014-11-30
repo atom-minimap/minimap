@@ -1,26 +1,31 @@
+3.3.15 / 2014-11-30
+===================
+
+* fix error raised when trying to remove a decoration for a destroyed buffer
+
 3.3.14 / 2014-11-25
-==================
+===================
 
 * fix minimap disappearing on tabs drag and drop
 
 3.3.13 / 2014-11-20
-==================
+===================
 
 * fix minimap styles persisting after minimap deactivation
 * remove key bindings for toggling command
 
 3.3.12 / 2014-11-19
-==================
+===================
 
 * remove forgotten logging
 
 3.3.11 / 2014-11-19
-==================
+===================
 
 * fix access to minimap view in quick settings
 
 3.3.10 / 2014-11-18
-==================
+===================
 
 * fix minimap removed when the active item of a previous owner changed
 
