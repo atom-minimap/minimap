@@ -1,3 +1,8 @@
+3.3.16 / 2014-12-01
+===================
+
+* fix code-highlights status in quick-settings menu
+
 3.3.15 / 2014-11-30
 ===================
 
