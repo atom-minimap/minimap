@@ -11,7 +11,7 @@ class MinimapQuickSettingsView extends View
       @input type: 'text', class: 'hidden-input', outlet: 'hiddenInput'
       @ol class: 'list-group mark-active', outlet: 'list', =>
         @li class: 'separator', outlet: 'separator'
-        @li class: (if atom.config.get('minimap.displayCodeHighlights') then 'active' else ''), outlet: 'codeHighlights', 'code-highlights'
+        @li class: '', outlet: 'codeHighlights', 'code-highlights'
 
   selectedItem: null
 
@@ -32,6 +32,7 @@ class MinimapQuickSettingsView extends View
     @on 'core:cancel', @destroy
     @on 'core:validate', @toggleSelectedItem
 
+    @codeHighlights.toggleClass('active', @minimapView.displayCodeHighlights)
     @codeHighlights.on 'mousedown', (e) =>
       e.preventDefault()
       @minimapView.setDisplayCodeHighlights(!@minimapView.displayCodeHighlights)
