@@ -3,19 +3,22 @@ Mixin = require 'mixto'
 module.exports =
 class DOMStylesReader extends Mixin
   @domStylesCache: {}
-  
+
   # Internal: This function insert a dummy element in the DOM to compute
   # its style, return the specified property, and remove the element
   # from the DOM.
   #
   # scopes - An {Array} of {String} reprensenting the scope to reproduce.
   # property - The property {String} name.
+  # shadowRoot - A {Boolean} of whether to evaluate the styles in the editor
+  #              shadow DOM or not.
+  # cache - A {Boolean} of whether to use the cache or not.
   #
   # Returns a {String} of the property value.
-  retrieveStyleFromDom: (scopes, property, shadowRoot=true) ->
+  retrieveStyleFromDom: (scopes, property, shadowRoot=true, cache=true) ->
     key = scopes.join(' ')
 
-    if @constructor.domStylesCache[key]?[property]?
+    if cache and @constructor.domStylesCache[key]?[property]?
       return @constructor.domStylesCache[key][property]
 
     @ensureDummyNodeExistence(shadowRoot)
@@ -48,3 +51,9 @@ class DOMStylesReader extends Mixin
 
   invalidateCache: ->
     @constructor.domStylesCache = {}
+
+  invalidateIfFirstTokenization: ->
+    return if @constructor.hasTokenizedOnce
+
+    @invalidateCache()
+    @constructor.hasTokenizedOnce = true

@@ -47,7 +47,6 @@ class MinimapRenderView extends ScrollView
     @tokenColorCache = {}
     @decorationColorCache = {}
     @initializeDecorations()
-    @tokenized = false
 
     @offscreenCanvas = document.createElement('canvas')
     @offscreenCtxt = @offscreenCanvas.getContext('2d')
@@ -57,17 +56,33 @@ class MinimapRenderView extends ScrollView
   initialize: ->
     @lineCanvas.webkitImageSmoothingEnabled = false
 
-    @subscriptions.add atom.config.observe 'minimap.interline', (@interline) =>
-      @emitter.emit 'did-change-scale'
-      @forceUpdate()
-    @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
-      @emitter.emit 'did-change-scale'
-      @forceUpdate()
-    @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
-      @emitter.emit 'did-change-scale'
-      @forceUpdate()
-    @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
+    subs = @subscriptions
+
+    subs.add atom.styles.onDidAddStyleElement =>
       @invalidateCache()
+      @forceUpdate()
+
+    subs.add atom.styles.onDidRemoveStyleElement =>
+      @invalidateCache()
+      @forceUpdate()
+
+    subs.add atom.styles.onDidUpdateStyleElement =>
+      @invalidateCache()
+      @forceUpdate()
+
+    subs.add atom.config.observe 'minimap.interline', (@interline) =>
+      @emitter.emit 'did-change-scale'
+      @forceUpdate()
+
+    subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
+      @emitter.emit 'did-change-scale'
+      @forceUpdate()
+
+    subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
+      @emitter.emit 'did-change-scale'
+      @forceUpdate()
+
+    subs.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
       @forceUpdate()
 
   # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
@@ -110,11 +125,8 @@ class MinimapRenderView extends ScrollView
       @subscriptions.add @editor.onDidChange (changes) => @stackChanges(changes)
 
     @subscriptions.add @displayBuffer.onDidTokenize =>
-      @tokenized = true
-      @invalidateCache()
+      @invalidateIfFirstTokenization()
       @forceUpdate()
-
-    @tokenized = true if @displayBuffer.tokenizedBuffer.fullyTokenized
 
   #    ##     ## ########  ########     ###    ######## ########
   #    ##     ## ##     ## ##     ##   ## ##      ##    ##
@@ -335,7 +347,7 @@ class MinimapRenderView extends ScrollView
   #
   # Returns a {String}.
   getDefaultColor: ->
-    color = @retrieveStyleFromDom(['.dummy'], 'color')
+    color = @retrieveStyleFromDom(['.editor'], 'color', false, false)
     @transparentize(color, @getTextOpacity())
 
   # Returns the text color for the passed-in `token` object.
@@ -455,7 +467,7 @@ class MinimapRenderView extends ScrollView
       for token in line.tokens
         w = token.screenDelta
         unless token.isOnlyWhitespace()
-          color = if displayCodeHighlights and @tokenized
+          color = if displayCodeHighlights
             @getTokenColor(token)
           else
             @getDefaultColor()
