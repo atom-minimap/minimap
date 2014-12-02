@@ -1,5 +1,4 @@
 MinimapIndicator = require '../lib/minimap-indicator'
-{WorkspaceView} = require 'atom'
 
 indicator = new MinimapIndicator()
 
@@ -32,17 +31,6 @@ SCROLLER_HEIGHT = 1000
 #
 
 describe "Minimap Indicator", ->
-  beforeEach ->
-    runs ->
-      atom.workspaceView = new WorkspaceView
-
-    waitsForPromise ->
-      atom.workspaceView.open('sample.js')
-
-    runs ->
-      atom.workspaceView.simulateDomAttachment()
-      editorView = atom.workspaceView.getActiveView()
-
   describe 'set indicator size', ->
     beforeEach ->
       indicator.width = INDICATOR_WIDTH

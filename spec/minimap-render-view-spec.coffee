@@ -2,8 +2,6 @@ path = require 'path'
 MinimapRenderView = require '../lib/minimap-render-view'
 MinimapView = require '../lib/minimap-view'
 Minimap = require '../lib/minimap'
-{WorkspaceView} = require 'atom'
-
 
 describe "MinimapRenderView", ->
   [minimapView, MinimapRenderView, editorView, updateCallback, workspaceElement, editor] = []
