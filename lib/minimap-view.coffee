@@ -135,8 +135,8 @@ class MinimapView extends View
     # The resize:end event is dispatched at the end of an animated resize
     # to not flood the cpu with updates.
     @subscriptions.add new Disposable =>
-      $(window).off 'resize:end', @onScrollViewResized
-    $(window).on 'resize:end', @onScrollViewResized
+      window.removeEventListener 'resize:end', @onScrollViewResized
+    window.addEventListener 'resize:end', @onScrollViewResized
 
     @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
     @miniScroller.toggleClass 'visible', @miniScrollVisible
