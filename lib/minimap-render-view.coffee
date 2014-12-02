@@ -77,7 +77,7 @@ class MinimapRenderView extends ScrollView
   # editorView - The `TextEditorView` instance.
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
-    @buffer = @editorView.getEditor().getBuffer()
+    @buffer = @editor.getBuffer()
     @displayBuffer = @editor.displayBuffer
 
     if @editor.onDidChangeScreenLines?

@@ -1,32 +1,35 @@
 Minimap = require '../lib/minimap'
-{WorkspaceView} = require 'atom'
 
 describe "Minimap", ->
+  [workspaceElement, editor, editorView] = []
+
   beforeEach ->
-
-    runs ->
-      atom.workspaceView = new WorkspaceView
-      atom.config.set 'minimap.autoToggle', true
-
     waitsForPromise ->
-      atom.workspaceView.open('sample.js')
+      atom.workspace.open('sample.js')
 
     runs ->
-      atom.workspaceView.simulateDomAttachment()
-      editorView = atom.workspaceView.getActiveView()
+      workspaceElement = atom.views.getView(atom.workspace)
+      jasmine.attachToDOM(workspaceElement)
+      atom.config.set 'minimap.autoToggle', false
+
+    waitsFor ->
+      editor = atom.workspace.getActiveEditor()
+
+    runs ->
+      editorView = atom.views.getView(editor)
 
   describe "when the minimap:toggle event is triggered", ->
     beforeEach ->
       waitsForPromise -> atom.packages.activatePackage('minimap')
 
     it "attaches and then detaches the view", ->
-      expect(atom.workspaceView.find('.minimap')).not.toExist()
-      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(0)
+      expect(workspaceElement.querySelector('.minimap')).toBeNull()
+      expect(workspaceElement.querySelector('.pane.with-minimap')).toBeNull()
 
-      atom.workspaceView.trigger 'minimap:toggle'
-      expect(atom.workspaceView.find('.minimap')).toExist()
-      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(1)
+      atom.commands.dispatch workspaceElement, 'minimap:toggle'
+      expect(workspaceElement.querySelector('.minimap')).toBeDefined()
+      expect(workspaceElement.querySelector('.pane.with-minimap')).toBeDefined()
 
-      atom.workspaceView.trigger 'minimap:toggle'
-      expect(atom.workspaceView.find('.minimap')).not.toExist()
-      expect(atom.workspaceView.find('.pane.with-minimap').length).toEqual(0)
+      atom.commands.dispatch workspaceElement, 'minimap:toggle'
+      expect(workspaceElement.querySelector('.minimap')).toBeNull()
+      expect(workspaceElement.querySelector('.pane.with-minimap')).toBeNull()

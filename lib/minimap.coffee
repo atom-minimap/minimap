@@ -1,5 +1,5 @@
 EmitterMixin = require('emissary').Emitter
-{Emitter} = require 'event-kit'
+{Emitter, CompositeDisposable} = require 'event-kit'
 
 ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
@@ -89,18 +89,24 @@ class Minimap
   # Internal: Used only at export time.
   constructor: ->
     @emitter = new Emitter
+    @subscriptions = new CompositeDisposable
 
   # Activates the minimap package.
   activate: ->
-    atom.workspaceView.command 'minimap:toggle', => @toggle()
-    atom.workspaceView.command "minimap:generate-plugin", => @generatePlugin()
-    if atom.config.get('minimap.displayPluginsControls')
-      atom.workspaceView.command 'minimap:open-quick-settings', ->
-        atom.workspaceView.getActivePaneView().find('.minimap .open-minimap-quick-settings').mousedown()
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'minimap:toggle': => @toggle()
+      'minimap:generate-plugin': => @generatePlugin()
 
-    atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
-    atom.config.observe 'minimap.displayMinimapOnLeft', ->
-      atom.workspaceView.toggleClass 'minimap-on-left', atom.config.get('minimap.displayMinimapOnLeft')
+    workspaceElement = atom.views.getView(atom.workspace)
+
+    if atom.config.get('minimap.displayPluginsControls')
+      @subscriptions.add atom.commands.add 'atom-workspace',
+        'minimap:open-quick-settings': ->
+          editor = atom.workspace.getActiveEditor()
+          @minimapForEditor(editor).openQuickSettings.mousedown()
+
+    @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (value) ->
+      workspaceElement.classList.toggle 'minimap-on-left', value
 
     @toggle() if atom.config.get 'minimap.autoToggle'
 

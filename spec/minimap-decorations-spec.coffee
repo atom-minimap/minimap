@@ -2,7 +2,6 @@ path = require 'path'
 MinimapRenderView = require '../lib/minimap-render-view'
 MinimapView = require '../lib/minimap-view'
 Minimap = require '../lib/minimap'
-{WorkspaceView} = require 'atom'
 
 describe "MinimapRenderView", ->
   [minimapView, MinimapRenderView, editorView, updateCallback, marker, decoration] = []
@@ -12,10 +11,12 @@ describe "MinimapRenderView", ->
   beforeEach ->
     atom.config.set 'minimap', Minimap.configDefaults
 
-    runs ->
-      atom.workspaceView = new WorkspaceView
+    waitsForPromise ->
+      atom.workspace.open('sample.coffee')
 
-      atom.workspaceView.simulateDomAttachment()
+    runs ->
+      workspaceElement = atom.views.getView(atom.workspace)
+      jasmine.attachToDOM(workspaceElement)
 
       atom.config.set 'minimap.lineHeight', 3
       atom.config.set 'minimap.charHeight', 2
@@ -26,11 +27,9 @@ describe "MinimapRenderView", ->
     waitsForPromise ->
       promise = atom.packages.activatePackage('minimap')
 
-    waitsForPromise ->
-      atom.workspaceView.open('sample.coffee')
-
     runs ->
-      editorView = atom.workspaceView.getActiveView()
+      editor = atom.workspace.getActiveEditor()
+      editorView = atom.views.getView(editor)
       minimapView = new MinimapView editorView
       minimapView.attachToPaneView()
       minimapView.computeScale()

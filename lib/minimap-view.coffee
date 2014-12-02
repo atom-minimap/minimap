@@ -78,7 +78,7 @@ class MinimapView extends View
   constructor: (editorView) ->
     @setEditorView(editorView)
 
-    @paneView.addClass('with-minimap')
+    @paneView.classList.add('with-minimap')
 
     @subscriptions = new CompositeDisposable
 
@@ -90,8 +90,10 @@ class MinimapView extends View
     @offsetTop = 0
     @indicator = new MinimapIndicator()
 
-    @scrollView = @editorView.scrollView
-    @scrollViewLines = @scrollView.find('.lines')
+    console.log @editorView
+
+    @scrollView = @editorView.shadowRoot.querySelector('.scroll-view')
+    @scrollViewLines = @scrollView.querySelector('.lines')
 
     @subscribeToEditor()
 
@@ -124,7 +126,7 @@ class MinimapView extends View
       @updateTopPosition()
 
     config = childList: true
-    @observer.observe @paneView.element, config
+    @observer.observe @paneView, config
 
     # Update the minimap whenever theme is reloaded
     @subscriptions.add atom.themes.onDidReloadAll =>
@@ -177,15 +179,19 @@ class MinimapView extends View
   # The scale factor are used to map scrolling and offset from the minimap
   # to the editor and vice versa.
   computeScale: ->
-    originalLineHeight = parseInt(@editorView.find('.lines').css('line-height'))
+    originalLineHeight = @getEditorLineHeight()
     computedLineHeight = @getLineHeight()
 
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
+  getEditorLineHeight: ->
+    lineHeight = window.getComputedStyle(@editorView.querySelector('.lines'), 'line-height')
+    parseInt(lineHeight)
+
   # Destroys this view and release all its subobjects.
   destroy: ->
     @resetMinimapWidthWithWrap()
-    @paneView.removeClass('with-minimap')
+    @paneView.classList.remove('with-minimap')
     @off()
     @obsPane.dispose()
     @subscriptions.dispose()
@@ -197,9 +203,9 @@ class MinimapView extends View
     @remove()
 
   setEditorView: (@editorView) ->
-
-    @editor = @editorView.getEditor()
-    @paneView = @editorView.getPaneView()
+    @editor = @editorView.getModel()
+    pane = atom.workspace.paneForItem(@editor)
+    @paneView = atom.views.getView(pane)
     @renderView?.setEditorView(@editorView)
 
     if @obsPane?
@@ -224,7 +230,7 @@ class MinimapView extends View
 
   # Internal: Attaches the minimap view to the DOM.
   attachToPaneView: ->
-    @paneView.append(this)
+    @paneView.appendChild(@element)
     @updateTopPosition()
 
   # Internal: Detaches the minimap view to the DOM.
@@ -239,17 +245,17 @@ class MinimapView extends View
   # Internal: Returns the bounds of the `TextEditorView`.
   #
   # Returns an {Object}.
-  getEditorViewClientRect: -> @scrollView[0].getBoundingClientRect()
+  getEditorViewClientRect: -> @scrollView.getBoundingClientRect()
 
   # Internal: Returns the bounds of the editor `ScrollView`.
   #
   # returns an {Object}.
-  getScrollViewClientRect: -> @scrollViewLines[0].getBoundingClientRect()
+  getScrollViewClientRect: -> @scrollViewLines.getBoundingClientRect()
 
   # Returns the bounds of the minimap.
   #
   # Returns an {Object}
-  getMinimapClientRect: -> @[0].getBoundingClientRect()
+  getMinimapClientRect: -> @element.getBoundingClientRect()
 
   #    ##     ## ########  ########     ###    ######## ########
   #    ##     ## ##     ## ##     ##   ## ##      ##    ##
@@ -345,8 +351,9 @@ class MinimapView extends View
   # based on the soft-wrap.
   resetMinimapWidthWithWrap: ->
     @css maxWidth: ''
-    @editorView.css paddingRight: '', paddingLeft: ''
-    @editorView.find('.vertical-scrollbar').css right: ''
+    @editorView.style.paddingRight = ''
+    @editorView.style.paddingLeft = ''
+    @editorView.shadowRoot.querySelector('.vertical-scrollbar').style.right = ''
 
   # Internal: Updates the vertical scrolling of the minimap.
   #
@@ -357,8 +364,8 @@ class MinimapView extends View
     if top?
       overlayY = top
     else
-      scrollViewOffset = @scrollView.offset().top
-      overlayerOffset = @scrollView.find('.lines').offset().top
+      scrollViewOffset = @getEditorViewClientRect().top
+      overlayerOffset = @getScrollViewClientRect().top
       overlayY = -overlayerOffset + scrollViewOffset
 
     @indicator.setY(overlayY * @scaleY)
@@ -366,13 +373,13 @@ class MinimapView extends View
 
   # Internal: Updates the horizontal scrolling of the minimap.
   updateScrollX: =>
-    @indicator.setX(@scrollView[0].scrollLeft)
+    @indicator.setX(@scrollView.scrollLeft)
     @updatePositions()
 
   # Internal: Updates the scroll of the minimap both horizontally and
   # vertically.
   updateScroll: =>
-    @indicator.setX(@scrollView[0].scrollLeft)
+    @indicator.setX(@scrollView.scrollLeft)
     @updateScrollY()
     @trigger 'minimap:scroll'
 
@@ -402,7 +409,7 @@ class MinimapView extends View
   # editor view offset. This is needed as the minimap is positioned absolutely
   # and the tree-view, or other packages, may affect the editor view position.
   updateTopPosition: ->
-    @offset top: (@offsetTop = @editorView.offset().top)
+    @offset top: (@offsetTop = @editorView.getBoundingClientRect().top)
 
   #    ######## ##     ## ######## ##    ## ########  ######
   #    ##       ##     ## ##       ###   ##    ##    ##    ##
@@ -416,26 +423,27 @@ class MinimapView extends View
 
   # Subscribes from the `Editor events`.
   subscribeToEditor: ->
-    @subscribe @editor, 'scroll-top-changed.minimap', @updateScrollY
+    @subscriptions.add @editor.onDidChangeScrollTop @updateScrollY
     # Hacked scroll-left
-    @subscribe @scrollView, 'scroll.minimap', @updateScrollX
+    @subscriptions.add @editor.onDidChangeScrollLeft @updateScrollX
 
     # We can't really know when a tab is dragged from a pane to
     # another one, but as it regains the focus after that we can
     # test if the parent view is still the same or is different.
-    @subscribe @editorView, 'focus', =>
-      if @editorView.getPaneView() isnt @paneView
+    @subscriptions.add new Disposable => @editorView.removeEventListener 'focus'
+    @editorView.addEventListener 'focus', =>
+      pane = atom.workspace.paneForItem(@editor)
+      paneView = atom.views.getView(pane)
+      if paneView isnt @paneView
         @detachFromPaneView()
-        @paneView = @editorView.getPaneView()
+        @paneView = paneView
         @attachToPaneView()
 
       true
 
   # Unsubscribes from the `Editor events`.
   unsubscribeFromEditor: ->
-    @unsubscribe @editor if @editor?
-    @unsubscribe @editorView if @editorView?
-    @unsubscribe @scrollView if @scrollView?
+    @subscriptions.dispose()
 
   # Event callbacks called when the active editor of a pane view
   # is changed.

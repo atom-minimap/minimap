@@ -1,4 +1,5 @@
 Mixin = require 'mixto'
+{CompositeDisposable} = require 'event-kit'
 MinimapView = null
 
 # Public: Provides methods to manage minimap views per pane.
@@ -64,11 +65,13 @@ class ViewManagement extends Mixin
     # the `eacheditorView` method. It returns a subscription object so we'll
     # store it and it will be used in the `deactivate` method to removes
     # the callback.
-    @eachEditorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
+    @eachEditorViewSubscription = atom.workspace.observeTextEditors (editor) =>
+      editorView = atom.views.getView(editor)
       MinimapView ||= require '../minimap-view'
 
-      editorId = editorView.editor.id
-      paneView = editorView.getPaneView()
+      editorId = editor.id
+      pane = atom.workspace.paneForItem(editor)
+      paneView = atom.views.getView(pane)
 
       return unless paneView?
 
@@ -88,7 +91,8 @@ class ViewManagement extends Mixin
 
       view.updateMinimapRenderView()
 
-      editorView.editor.on 'destroyed', =>
+      subscriptions = new CompositeDisposable
+      subscriptions.add editor.onDidDestroy =>
         view = @minimapViews[editorId]
 
         event = {view}
@@ -102,4 +106,5 @@ class ViewManagement extends Mixin
           @emit('minimap-view:destroyed', {view})
           @emitter.emit('did-destroy-minimap', event)
 
-          paneView.addClass('with-minimap') if paneView.activeView?.hasClass('editor')
+          if paneView.getActiveView()?.classList.contains('editor')
+            paneView.classList.add('with-minimap')
