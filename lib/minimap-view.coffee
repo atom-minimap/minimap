@@ -104,11 +104,16 @@ class MinimapView extends View
   # Internal: Initializes the minimap view by registering to various events and
   # by retrieving the base configuration.
   initialize: ->
-    @on 'mousewheel', @onMouseWheel
-    @on 'mousedown', @onMouseDown
-    @miniVisibleArea.on 'mousedown', @onDragStart
+    @element.addEventListener 'mousewheel', @onMouseWheel
+    @element.addEventListener 'mousedown', @onMouseDown
+    @miniVisibleArea[0].addEventListener 'mousedown', @onDragStart
 
-    @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
+    @subscriptions.add new Disposable =>
+      @element.removeEventListener 'mousewheel', @onMouseWheel
+      @element.removeEventListener 'mousedown', @onMouseDown
+      @miniVisibleArea[0].removeEventListener 'mousedown', @onDragStart
+
+    @obsPane = @pane.observeActiveItem @onActiveItemChanged
 
     # Fix items moving to another pane.
     # @subscriptions.add @paneView.model.onDidRemoveItem ({item}) =>
@@ -189,7 +194,7 @@ class MinimapView extends View
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
   getEditorLineHeight: ->
-    lineHeight = window.getComputedStyle(@editorView.querySelector('.lines'), 'line-height')
+    lineHeight = window.getComputedStyle(@editorView.shadowRoot.querySelector('.lines')).getPropertyValue('line-height')
     parseInt(lineHeight)
 
   # Destroys this view and release all its subobjects.
@@ -207,13 +212,13 @@ class MinimapView extends View
 
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
-    pane = atom.workspace.paneForItem(@editor)
-    @paneView = atom.views.getView(pane)
+    @pane = atom.workspace.paneForItem(@editor)
+    @paneView = atom.views.getView(@pane)
     @renderView?.setEditorView(@editorView)
 
     if @obsPane?
       @obsPane.dispose()
-      @obsPane = @paneView.model.observeActiveItem @onActiveItemChanged
+      @obsPane = @pane.observeActiveItem @onActiveItemChanged
 
   #    ########  ####  ######  ########  ##          ###    ##    ##
   #    ##     ##  ##  ##    ## ##     ## ##         ## ##    ##  ##
@@ -234,6 +239,7 @@ class MinimapView extends View
   # Internal: Attaches the minimap view to the DOM.
   attachToPaneView: ->
     @paneView.appendChild(@element)
+    @computeScale()
     @updateTopPosition()
 
   # Internal: Detaches the minimap view to the DOM.
@@ -248,7 +254,7 @@ class MinimapView extends View
   # Internal: Returns the bounds of the `TextEditorView`.
   #
   # Returns an {Object}.
-  getEditorViewClientRect: -> @scrollView.getBoundingClientRect()
+  getEditorViewClientRect: -> @editorView.getBoundingClientRect()
 
   # Internal: Returns the bounds of the editor `ScrollView`.
   #
@@ -345,10 +351,10 @@ class MinimapView extends View
 
       @css maxWidth: maxWidth
       if displayLeft
-        @editorView.css paddingLeft: maxWidth
+        @editorView.style.paddingLeft = maxWidth
       else
-        @editorView.css paddingRight: maxWidth
-        @editorView.find('.vertical-scrollbar').css right: maxWidth
+        @editorView.style.paddingRight = maxWidth
+        @editorView.shadowRoot.querySelector('.vertical-scrollbar').style.right = maxWidth
 
   # Internal: Resets the styles modified when the minimap width is adjusted
   # based on the soft-wrap.
@@ -376,13 +382,13 @@ class MinimapView extends View
 
   # Internal: Updates the horizontal scrolling of the minimap.
   updateScrollX: =>
-    @indicator.setX(@scrollView.scrollLeft)
+    @indicator.setX(@editor.getScrollLeft())
     @updatePositions()
 
   # Internal: Updates the scroll of the minimap both horizontally and
   # vertically.
   updateScroll: =>
-    @indicator.setX(@scrollView.scrollLeft)
+    @indicator.setX(@editor.getScrollTop())
     @updateScrollY()
     @emitter.emit 'did-scroll'
 
@@ -464,11 +470,11 @@ class MinimapView extends View
   # the editor by the corresponding amount.
   onMouseWheel: (e) =>
     return if @isClicked
-    {wheelDeltaX, wheelDeltaY} = e.originalEvent
+    {wheelDeltaX, wheelDeltaY} = e
     if wheelDeltaX
-      @editorView.scrollLeft(@editorView.scrollLeft() - wheelDeltaX)
+      @editor.setScrollLeft(@editor.getScrollLeft() - wheelDeltaX)
     if wheelDeltaY
-      @editorView.scrollTop(@editorView.scrollTop() - wheelDeltaY)
+      @editor.setScrollTop(@editor.getScrollTop() - wheelDeltaY)
 
   # Receives the mouse down event on the minimap and scrolls the
   # editor accordingly to the mouse location.
@@ -482,7 +488,7 @@ class MinimapView extends View
     y = e.pageY - @offsetTop
     top = @indicator.computeFromCenterY(y) / @scaleY
     # @note: currently, no animation.
-    @editorView.scrollTop(top)
+    @editor.scrollToScreenPosition({top, left: 0})
     # Fix trigger `mousewheel` event.
     setTimeout =>
       @isClicked = false
@@ -491,7 +497,7 @@ class MinimapView extends View
   # Receives the `resize:end` event and updates the minimap size and position
   # accordingly.
   onScrollViewResized: =>
-    @renderView.lineCanvas.height(@editorView.height())
+    @renderView.lineCanvas.height(@editorView.clientHeight)
     @updateMinimapSize()
     @updateMinimapView()
     @renderView.forceUpdate()
@@ -524,7 +530,7 @@ class MinimapView extends View
     # Here we have to compensate for the minimap scroll
     y = e.pageY - @offsetTop
     top = (y-@grabY) * (@indicator.scroller.height-@indicator.height) / (@indicator.wrapper.height-@indicator.height)
-    @editorView.scrollTop(top / @scaleY)
+    @editor.setScrollTop(top / @scaleY)
 
 
   #     #######  ######## ##     ## ######## ########

@@ -127,7 +127,9 @@ class MinimapRenderView extends ScrollView
 
     #reset canvas virtual width/height
     @lineCanvas[0].width = @lineCanvas[0].offsetWidth * devicePixelRatio
-    @lineCanvas[0].height = @lineCanvas[0].offsetHeight * devicePixelRatio
+    @lineCanvas[0].height = @editorView.offsetHeight * devicePixelRatio
+    # Not sure why, but the style height of the canvas end up being 0
+    @lineCanvas[0].style.height = ''
 
     #is this scroll only or has content changed?
     hasChanges = @pendingChanges.length > 0
