@@ -91,6 +91,7 @@ class DecorationManagement extends Mixin
   #
   # Returns a `Decoration` object.
   decorateMarker: (marker, decorationParams) ->
+    return unless marker?
     marker = @getMarker(marker.id)
 
     if !decorationParams.scope? and decorationParams.class?
@@ -163,6 +164,7 @@ class DecorationManagement extends Mixin
   #
   # decoration - The `Decoration` to remove.
   removeDecoration: (decoration) ->
+    return unless decoration?
     {marker} = decoration
     return unless decorations = @decorationsByMarkerId[marker.id]
 
@@ -186,6 +188,7 @@ class DecorationManagement extends Mixin
   #
   # marker - The `marker` for which removing decorations.
   removeAllDecorationsForMarker: (marker) ->
+    return unless marker?
     decorations = @decorationsByMarkerId[marker.id].slice()
     for decoration in decorations
       @emitter.emit 'did-remove-decoration', {marker, decoration}
@@ -197,6 +200,7 @@ class DecorationManagement extends Mixin
   #
   # marker - The `marker` for which removing decorations.
   removedAllMarkerDecorations: (marker) ->
+    return unless marker?
     @decorationMarkerChangedSubscriptions[marker.id].dispose()
     @decorationMarkerDestroyedSubscriptions[marker.id].dispose()
 
