@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'atom-space-pen-views'
 MinimapQuickSettingsView = require './minimap-quick-settings-view'
 
 module.exports =

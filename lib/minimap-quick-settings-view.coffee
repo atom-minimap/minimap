@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'atom-space-pen-views'
 {CompositeDisposable} = require 'event-kit'
 $ = View.__super__.constructor
 
