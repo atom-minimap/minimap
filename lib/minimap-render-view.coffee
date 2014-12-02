@@ -386,7 +386,7 @@ class MinimapRenderView extends ScrollView
   #
   # Returns a {String}.
   retrieveDecorationColorFromDom: (decoration) ->
-    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color')
+    @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color', false)
 
   # Internal: This function insert a dummy element in the DOM to compute
   # its style, return the specified property, and remove the element
@@ -396,8 +396,8 @@ class MinimapRenderView extends ScrollView
   # property - The property {String} name.
   #
   # Returns a {String} of the property value.
-  retrieveStyleFromDom: (scopes, property) ->
-    @ensureDummyNodeExistence()
+  retrieveStyleFromDom: (scopes, property, shadowRoot=true) ->
+    @ensureDummyNodeExistence(shadowRoot)
 
     parent = @dummyNode
     for scope in scopes
@@ -415,11 +415,14 @@ class MinimapRenderView extends ScrollView
 
   # Internal: Creates a DOM node container for all the operations that
   # need to read styles properties from DOM.
-  ensureDummyNodeExistence: ->
+  ensureDummyNodeExistence: (shadowRoot) ->
     unless @dummyNode?
       @dummyNode = document.createElement('span')
       @dummyNode.style.visibility = 'hidden'
+    if shadowRoot
       @editorView.shadowRoot.appendChild(@dummyNode)
+    else
+      @editorView.appendChild(@dummyNode)
 
   # Internal: Converts a `rgb(...)` color into a `rgba(...)` color
   # with the specified opacity.
