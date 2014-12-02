@@ -107,7 +107,7 @@ class DecorationManagement extends Mixin
       # in the change handler. Bookmarks does this.
       if decorations?
         for decoration in decorations
-          @trigger 'minimap:decoration-changed', marker, decoration, event
+          @emitter.emit 'did-change-decoration', {marker, decoration, event}
 
       start = event.oldTailScreenPosition
       end = event.oldHeadScreenPosition
@@ -128,7 +128,7 @@ class DecorationManagement extends Mixin
       @removeDecoration(decoration)
 
     @stackDecorationChanges(decoration)
-    @trigger 'minimap:decoration-added', marker, decoration
+    @emitter.emit 'did-add-decoration', {marker, decoration}
     decoration
 
   # Internal: Registers a change in the {MinimapRenderView} pending changes
@@ -179,7 +179,7 @@ class DecorationManagement extends Mixin
     if index > -1
       decorations.splice(index, 1)
       delete @decorationsById[decoration.id]
-      @trigger 'minimap:decoration-removed', marker, decoration
+      @emitter.emit 'did-remove-decoration', {marker, decoration}
       @removedAllMarkerDecorations(marker) if decorations.length is 0
 
   # Removes all the decorations registered for the passed-in marker.
@@ -188,7 +188,7 @@ class DecorationManagement extends Mixin
   removeAllDecorationsForMarker: (marker) ->
     decorations = @decorationsByMarkerId[marker.id].slice()
     for decoration in decorations
-      @trigger 'minimap:decoration-removed', marker, decoration
+      @emitter.emit 'did-remove-decoration', {marker, decoration}
       @stackDecorationChanges(decoration)
 
     @removedAllMarkerDecorations(marker)
@@ -209,4 +209,4 @@ class DecorationManagement extends Mixin
   #
   # decoration - The updated `Decoration`.
   decorationUpdated: (decoration) ->
-    @trigger 'minimap:decoration-updated', decoration
+    @emitter.emit 'did-update-decoration', decoration

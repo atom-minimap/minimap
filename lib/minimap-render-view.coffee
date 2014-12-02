@@ -3,6 +3,7 @@
 {CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
+[deprecate] = []
 
 # Public: The {MinimapRenderView} class is responsible to render the minimap
 # onto its canvas.
@@ -37,7 +38,7 @@ class MinimapRenderView extends ScrollView
   constructor: ->
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
-    
+
     super
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
@@ -77,6 +78,18 @@ class MinimapRenderView extends ScrollView
 
   onDidChangeScale: (callback) ->
     @emitter.on 'did-change-scale', callback
+
+  onDidAddDecoration: (callback) ->
+    @emitter.on 'did-add-decoration', callback
+
+  onDidRemoveDecoration: (callback) ->
+    @emitter.on 'did-remove-decoration', callback
+
+  onDidChangeDecoration: (callback) ->
+    @emitter.on 'did-change-decoration', callback
+
+  onDidUpdateDecoration: (callback) ->
+    @emitter.on 'did-update-decoration', callback
 
   # Sets the `TextEditorView` for which the {MinimapRenderView} instance
   # is displayed.
