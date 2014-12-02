@@ -331,7 +331,8 @@ class MinimapRenderView extends ScrollView
   #
   # Returns a {String}.
   getDefaultColor: ->
-    @transparentize(@minimapView.editorView.css('color'), @getTextOpacity())
+    color = @retrieveStyleFromDom(['.dummy'], 'color')
+    @transparentize(color, @getTextOpacity())
 
   # Returns the text color for the passed-in `token` object.
   #
@@ -416,7 +417,7 @@ class MinimapRenderView extends ScrollView
     unless @dummyNode?
       @dummyNode = document.createElement('span')
       @dummyNode.style.visibility = 'hidden'
-      @editorView.append(@dummyNode)
+      @editorView.shadowRoot.appendChild(@dummyNode)
 
   # Internal: Converts a `rgb(...)` color into a `rgba(...)` color
   # with the specified opacity.
