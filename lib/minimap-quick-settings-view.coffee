@@ -1,5 +1,5 @@
 {View} = require 'atom-space-pen-views'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Emitter} = require 'event-kit'
 $ = View.__super__.constructor
 
 Minimap = require './minimap'
@@ -16,6 +16,7 @@ class MinimapQuickSettingsView extends View
   selectedItem: null
 
   initialize: (@minimapView) ->
+    @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @plugins = {}
     @subscriptions.add Minimap.onDidAddPlugin ({name, plugin}) =>
@@ -27,10 +28,11 @@ class MinimapQuickSettingsView extends View
     @subscriptions.add Minimap.onDidDeactivatePlugin ({name, plugin}) =>
       @deactivateItem(name, plugin)
 
-    @on 'core:move-up', @selectPreviousItem
-    @on 'core:move-down', @selectNextItem
-    @on 'core:cancel', @destroy
-    @on 'core:validate', @toggleSelectedItem
+    @subscriptions.add atom.commands.add this,
+      'core:move-up': => @selectPreviousItem()
+      'core:move-down': => @selectNextItem()
+      'core:cancel': => @destroy()
+      'core:validate': => @toggleSelectedItem()
 
     @codeHighlights.toggleClass('active', @minimapView.displayCodeHighlights)
     @codeHighlights.on 'mousedown', (e) =>
@@ -42,12 +44,15 @@ class MinimapQuickSettingsView extends View
 
     @initList()
 
+  onDidDestroy: (callback) ->
+    @emitter.on 'did-destroy', callback
+
   attach: ->
     atom.workspaceView.append this
     @hiddenInput.focus()
 
   destroy: =>
-    @trigger('minimap:quick-settings-destroyed')
+    @emitter.emit('did-destroy')
     @off()
     @hiddenInput.off()
     @codeHighlights.off()

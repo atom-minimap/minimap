@@ -27,6 +27,6 @@ class MinimapOpenQuickSettingsView extends View
 
         @dropdown.css(css).attach()
 
-        @dropdown.on 'minimap:quick-settings-destroyed', =>
+        @dropdown.onDidDestroy =>
           @dropdown.off()
           @dropdown = null
