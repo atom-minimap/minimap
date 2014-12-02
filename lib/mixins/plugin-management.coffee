@@ -1,4 +1,5 @@
 Mixin = require 'mixto'
+{CompositeDisposable} = require 'event-kit'
 
 # Public: Provides methods to manage minimap plugins.
 #
@@ -15,6 +16,7 @@ module.exports =
 class PluginManagement extends Mixin
   # Internal: Stores the minimap plugin with their identifying name as key.
   plugins: {}
+  pluginsSubscriptions: {}
 
   # Public: Registers a minimap `plugin` with the given `name`.
   #
@@ -24,6 +26,7 @@ class PluginManagement extends Mixin
   # plugin - The plugin {Object} to register.
   registerPlugin: (name, plugin) ->
     @plugins[name] = plugin
+    @pluginsSubscriptions[name] = new CompositeDisposable
 
     event = {name, plugin}
     @emit('plugin:added', event)
@@ -81,12 +84,15 @@ class PluginManagement extends Mixin
 
     atom.config.set(settingsKey, true) unless atom.config.get(settingsKey)?
 
-    atom.config.observe settingsKey, =>
+    @pluginsSubscriptions[name].add atom.config.observe settingsKey, =>
       @updatesPluginActivationState(name)
 
-    atom.workspaceView.command "minimap:toggle-#{name}", =>
+    commands = {}
+    commands["minimap:toggle-#{name}"] = =>
       atom.config.set settingsKey, not atom.config.get(settingsKey)
       @updatesPluginActivationState(name)
+
+    @pluginsSubscriptions[name].add atom.commands.add 'atom-workspace', commands
 
   # Internal: When the `minimap.displayPluginsControls` setting is toggled,
   # this function will unregister the commands and setting that was created
@@ -94,6 +100,6 @@ class PluginManagement extends Mixin
   #
   # name - The identifying {String} name of the plugin.
   unregisterPluginControls: (name) ->
-    atom.config.unobserve "minimap.plugins.#{name}"
-    atom.workspaceView.off "minimap:toggle-#{name}"
+    @pluginsSubscriptions[name].dispose()
+    delete @pluginsSubscriptions[name]
     delete @config.plugins.properties[name]
