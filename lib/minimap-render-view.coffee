@@ -3,6 +3,7 @@
 {CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
+DOMStylesReader = require './mixins/dom-styles-reader'
 [deprecate] = []
 
 # Public: The {MinimapRenderView} class is responsible to render the minimap
@@ -11,6 +12,7 @@ module.exports =
 class MinimapRenderView extends ScrollView
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)
+  DOMStylesReader.includeInto(this)
 
   @delegatesMethods 'getMarker', 'findMarkers', toProperty: 'editor'
 
@@ -65,6 +67,7 @@ class MinimapRenderView extends ScrollView
       @emitter.emit 'did-change-scale'
       @forceUpdate()
     @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
+      @invalidateCache()
       @forceUpdate()
 
   # Destroys the {MinimapRenderView} instance, unsubscribes from the listened
@@ -108,6 +111,7 @@ class MinimapRenderView extends ScrollView
 
     @subscriptions.add @displayBuffer.onDidTokenize =>
       @tokenized = true
+      @invalidateCache()
       @forceUpdate()
 
     @tokenized = true if @displayBuffer.tokenizedBuffer.fullyTokenized
@@ -169,8 +173,6 @@ class MinimapRenderView extends ScrollView
   #
   # All the caches are cleared when calling this method.
   forceUpdate: ->
-    @tokenColorCache = {}
-    @decorationColorCache = {}
     @offscreenFirstRow = null
     @offscreenLastRow = null
     @requestUpdate()
@@ -347,10 +349,7 @@ class MinimapRenderView extends ScrollView
   getTokenColor: (token) ->
     #Retrieve color from cache if available
     flatScopes = (token.scopeDescriptor or token.scopes).join()
-    if flatScopes not of @tokenColorCache
-      color = @retrieveTokenColorFromDom(token)
-      @tokenColorCache[flatScopes] = color
-    @tokenColorCache[flatScopes]
+    @retrieveTokenColorFromDom(token)
 
   # Returns the background color for the passed-in `decoration` object.
   #
@@ -364,10 +363,7 @@ class MinimapRenderView extends ScrollView
   getDecorationColor: (decoration) ->
     properties = decoration.getProperties()
     return properties.color if properties.color?
-    if properties.scope not of @decorationColorCache
-      color = @retrieveDecorationColorFromDom(decoration)
-      @decorationColorCache[properties.scope] = color
-    @decorationColorCache[properties.scope]
+    @retrieveDecorationColorFromDom(decoration)
 
   # Internal: Returns the text color for the passed-in token.
   #
@@ -387,42 +383,6 @@ class MinimapRenderView extends ScrollView
   # Returns a {String}.
   retrieveDecorationColorFromDom: (decoration) ->
     @retrieveStyleFromDom(decoration.getProperties().scope.split(/\s+/), 'background-color', false)
-
-  # Internal: This function insert a dummy element in the DOM to compute
-  # its style, return the specified property, and remove the element
-  # from the DOM.
-  #
-  # scopes - An {Array} of {String} reprensenting the scope to reproduce.
-  # property - The property {String} name.
-  #
-  # Returns a {String} of the property value.
-  retrieveStyleFromDom: (scopes, property, shadowRoot=true) ->
-    @ensureDummyNodeExistence(shadowRoot)
-
-    parent = @dummyNode
-    for scope in scopes
-      node = document.createElement('span')
-      # css class is the scope without the dots,
-      # see pushScope @ atom/atom/src/lines-component.coffee
-      node.className = scope.replace(/\.+/g, ' ')
-      parent.appendChild(node) if parent?
-      parent = node
-
-    value = getComputedStyle(parent).getPropertyValue(property)
-    @dummyNode.innerHTML = ''
-
-    value
-
-  # Internal: Creates a DOM node container for all the operations that
-  # need to read styles properties from DOM.
-  ensureDummyNodeExistence: (shadowRoot) ->
-    unless @dummyNode?
-      @dummyNode = document.createElement('span')
-      @dummyNode.style.visibility = 'hidden'
-    if shadowRoot
-      @editorView.shadowRoot.appendChild(@dummyNode)
-    else
-      @editorView.appendChild(@dummyNode)
 
   # Internal: Converts a `rgb(...)` color into a `rgba(...)` color
   # with the specified opacity.
