@@ -1,6 +1,6 @@
 {$, View} = require 'atom-space-pen-views'
 Delegato = require 'delegato'
-{CompositeDisposable, Disposable} = require 'event-kit'
+{CompositeDisposable, Disposable, Emitter} = require 'event-kit'
 
 MinimapRenderView = require './minimap-render-view'
 MinimapIndicator = require './minimap-indicator'
@@ -76,6 +76,7 @@ class MinimapView extends View
   #
   # editorView - The `TextEditorView` for which displaying a minimap.
   constructor: (editorView) ->
+    @emitter = new Emitter
     @setEditorView(editorView)
 
     @paneView.classList.add('with-minimap')
@@ -173,6 +174,9 @@ class MinimapView extends View
 
     @subscriptions.add atom.config.observe 'editor.preferredLineLength', =>
       @updateMinimapSize()
+
+  onDidScroll: (callback) ->
+    @emitter.on 'did-scroll', callback
 
   # Internal: Computes the scale of the minimap display relatively to the
   # corresponding editor view.
@@ -380,7 +384,7 @@ class MinimapView extends View
   updateScroll: =>
     @indicator.setX(@scrollView.scrollLeft)
     @updateScrollY()
-    @trigger 'minimap:scroll'
+    @emitter.emit 'did-scroll'
 
   # Internal: Updates the position of the various elements of the minimap
   # after a scroll changes.
