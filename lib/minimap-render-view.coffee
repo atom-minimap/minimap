@@ -1,5 +1,5 @@
 {ScrollView} = require 'atom-space-pen-views'
-{Emitter} = require 'emissary'
+{Emitter} = require 'event-kit'
 {CompositeDisposable, Disposable} = require 'event-kit'
 Delegato = require 'delegato'
 DecorationManagement = require './mixins/decoration-management'
@@ -8,7 +8,6 @@ DecorationManagement = require './mixins/decoration-management'
 # onto its canvas.
 module.exports =
 class MinimapRenderView extends ScrollView
-  Emitter.includeInto(this)
   Delegato.includeInto(this)
   DecorationManagement.includeInto(this)
 
@@ -37,6 +36,8 @@ class MinimapRenderView extends ScrollView
   # Creates a new {MinimapRenderView}.
   constructor: ->
     @subscriptions = new CompositeDisposable
+    @emitter = new Emitter
+    
     super
     @pendingChanges = []
     @context = @lineCanvas[0].getContext('2d')
@@ -54,13 +55,13 @@ class MinimapRenderView extends ScrollView
     @lineCanvas.webkitImageSmoothingEnabled = false
 
     @subscriptions.add atom.config.observe 'minimap.interline', (@interline) =>
-      @emit 'minimap:scaleChanged'
+      @emitter.emit 'did-change-scale'
       @forceUpdate()
     @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
-      @emit 'minimap:scaleChanged'
+      @emitter.emit 'did-change-scale'
       @forceUpdate()
     @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
-      @emit 'minimap:scaleChanged'
+      @emitter.emit 'did-change-scale'
       @forceUpdate()
     @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
       @forceUpdate()
@@ -70,6 +71,12 @@ class MinimapRenderView extends ScrollView
   destroy: ->
     @subscriptions.dispose()
     @editorView = null
+
+  onDidUpdate: (callback) ->
+    @emitter.on 'did-update', callback
+
+  onDidChangeScale: (callback) ->
+    @emitter.on 'did-change-scale', callback
 
   # Sets the `TextEditorView` for which the {MinimapRenderView} instance
   # is displayed.
@@ -129,7 +136,7 @@ class MinimapRenderView extends ScrollView
     @offscreenFirstRow = firstRow
     @offscreenLastRow = lastRow
 
-    @emit 'minimap:updated' if hasChanges
+    @emitter.emit 'did-update' if hasChanges
 
   # Requests a render of the minimap to be performed on the next frame.
   #

@@ -1,4 +1,4 @@
-{$, View} = require 'atom'
+{$, View} = require 'atom-space-pen-views'
 Delegato = require 'delegato'
 {CompositeDisposable, Disposable} = require 'event-kit'
 
@@ -90,8 +90,6 @@ class MinimapView extends View
     @offsetTop = 0
     @indicator = new MinimapIndicator()
 
-    console.log @editorView
-
     @scrollView = @editorView.shadowRoot.querySelector('.scroll-view')
     @scrollViewLines = @scrollView.querySelector('.lines')
 
@@ -115,8 +113,8 @@ class MinimapView extends View
     # @subscriptions.add @paneView.model.onDidRemoveItem ({item}) =>
     #   @destroy() if item is @editor
 
-    @subscribe @renderView, 'minimap:updated', @updateMinimapSize
-    @subscribe @renderView, 'minimap:scaleChanged', =>
+    @subscriptions.add @renderView.onDidUpdate @updateMinimapSize
+    @subscriptions.add @renderView.onDidChangeScale =>
       @computeScale()
       @updatePositions()
 
@@ -135,7 +133,9 @@ class MinimapView extends View
 
     # The resize:end event is dispatched at the end of an animated resize
     # to not flood the cpu with updates.
-    @subscribe $(window), 'resize:end', @onScrollViewResized
+    @subscriptions.add new Disposable =>
+      $(window).off 'resize:end', @onScrollViewResized
+    $(window).on 'resize:end', @onScrollViewResized
 
     @miniScrollVisible = atom.config.get('minimap.minimapScrollIndicator')
     @miniScroller.toggleClass 'visible', @miniScrollVisible
@@ -195,7 +195,6 @@ class MinimapView extends View
     @off()
     @obsPane.dispose()
     @subscriptions.dispose()
-    @unsubscribe()
     @observer.disconnect()
 
     @detachFromPaneView()
