@@ -22,7 +22,7 @@ describe "MinimapRenderView", ->
       atom.config.set 'minimap.charHeight', 2
       atom.config.set 'minimap.charWidth', 1
 
-      atom.project.setPath(path.join(__dirname, 'fixtures'))
+      atom.project.setPaths([path.join(__dirname, 'fixtures')])
 
     waitsFor ->
       editor = atom.workspace.getActiveEditor()
