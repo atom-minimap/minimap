@@ -79,7 +79,7 @@ class ViewManagement extends Mixin
       paneSubscriptions.add pane.onDidDestroy ->
         @updateAllViews()
         paneSubscriptions.dispose()
-      
+
       paneSubscriptions.add pane.observeItems (item) =>
         if item instanceof TextEditor
           requestAnimationFrame => @onEditorAdded(item, pane)
