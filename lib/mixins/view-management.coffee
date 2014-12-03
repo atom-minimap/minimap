@@ -76,9 +76,9 @@ class ViewManagement extends Mixin
     # the callback.
     @observePaneSubscription = atom.workspace.observePanes (pane) =>
       paneSubscriptions = new CompositeDisposable
-      paneSubscriptions.add pane.onDidDestroy ->
-        @updateAllViews()
+      paneSubscriptions.add pane.onDidDestroy =>
         paneSubscriptions.dispose()
+        requestAnimationFrame => @updateAllViews()
 
       paneSubscriptions.add pane.observeItems (item) =>
         if item instanceof TextEditor

@@ -345,10 +345,9 @@ class MinimapView extends View
     adjustWidth = atom.config.get('minimap.adjustMinimapWidthToSoftWrap')
     displayLeft = atom.config.get('minimap.displayMinimapOnLeft')
 
-
-    if wraps and adjustWidth and size
-      maxWidth = (size * @getCharWidth()) + 'px'
-
+    maxWidth = (size * @getCharWidth())
+    if wraps and adjustWidth and size and @width() > maxWidth
+      maxWidth = maxWidth + 'px'
       @css maxWidth: maxWidth
       if displayLeft
         @editorView.style.paddingLeft = maxWidth
@@ -500,6 +499,7 @@ class MinimapView extends View
     @renderView.lineCanvas.height(@editorView.clientHeight)
     @updateMinimapSize()
     @updateMinimapView()
+    @updateMinimapWidthWithWrap()
     @renderView.forceUpdate()
 
   # Receives the mouse down event on the minimap visible area div and initiates
