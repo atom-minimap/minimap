@@ -93,6 +93,7 @@ class DecorationManagement extends Mixin
   decorateMarker: (marker, decorationParams) ->
     return unless marker?
     marker = @getMarker(marker.id)
+    return unless marker?
 
     if !decorationParams.scope? and decorationParams.class?
       cls = decorationParams.class.split(' ').join('.')
