@@ -190,7 +190,8 @@ class DecorationManagement extends Mixin
   # marker - The `marker` for which removing decorations.
   removeAllDecorationsForMarker: (marker) ->
     return unless marker?
-    decorations = @decorationsByMarkerId[marker.id].slice()
+    decorations = @decorationsByMarkerId[marker.id]?.slice()
+    return unless decorations
     for decoration in decorations
       @emitter.emit 'did-remove-decoration', {marker, decoration}
       @stackDecorationChanges(decoration)
