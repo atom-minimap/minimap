@@ -1,4 +1,3 @@
-EmitterMixin = require('emissary').Emitter
 {Emitter, CompositeDisposable} = require 'event-kit'
 
 ViewManagement = require './mixins/view-management'
@@ -24,7 +23,6 @@ require '../vendor/resizeend'
 #   bool isActive: ->
 # ```
 class Minimap
-  EmitterMixin.includeInto(this)
   ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
@@ -113,7 +111,6 @@ class Minimap
   # Deactivates the minimap package.
   deactivate: ->
     @destroyViews()
-    @emit('deactivated')
     @emitter.emit('did-deactivate')
 
   # Verifies that the passed-in version expression is satisfied by
@@ -136,7 +133,6 @@ class Minimap
     else
       @createViews()
       @active = true
-      @emit('activated')
       @emitter.emit('did-activate')
 
   # Public: Opens the plugin generation view.
@@ -233,31 +229,6 @@ class Minimap
   # Returns a `Disposable`.
   onDidDeactivatePlugin: (callback) ->
     @emitter.on 'did-deactivate-plugin', callback
-
-  # Internal: Used only for old events deprecation.
-  on: (eventName) ->
-    deprecate ?= require('grim').deprecate
-    switch eventName
-      when 'activated'
-        deprecate("Use Minimap::onDidActivate instead.")
-      when 'deactivated'
-        deprecate("Use Minimap::onDidDeactivate instead.")
-      when 'minimap-view:created'
-        deprecate("Use Minimap::onDidCreateMinimap instead.")
-      when 'minimap-view:destroyed'
-        deprecate("Use Minimap::onDidDestroyMinimap instead.")
-      when 'minimap-view:will-be-destroyed'
-        deprecate("Use Minimap::onWillDestroyMinimap instead.")
-      when 'plugin:added'
-        deprecate("Use Minimap::onDidAddPlugin instead.")
-      when 'plugin:removed'
-        deprecate("Use Minimap::onDidRemovePlugin instead.")
-      when 'plugin:activated'
-        deprecate("Use Minimap::onDidActivatePlugin instead.")
-      when 'plugin:deactivated'
-        deprecate("Use Minimap::onDidDeactivatePlugin instead.")
-
-    EmitterMixin::on.apply(this, arguments)
 
 # The minimap module is an instance of the {Minimap} class.
 module.exports = new Minimap()

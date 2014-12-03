@@ -29,7 +29,6 @@ class PluginManagement extends Mixin
     @pluginsSubscriptions[name] = new CompositeDisposable
 
     event = {name, plugin}
-    @emit('plugin:added', event)
     @emitter.emit('did-add-plugin', event)
 
     @registerPluginControls(name, plugin) if atom.config.get('minimap.displayPluginsControls')
@@ -45,7 +44,6 @@ class PluginManagement extends Mixin
     delete @plugins[name]
 
     event = {name, plugin}
-    @emit('plugin:removed', event)
     @emitter.emit('did-remove-plugin', event)
 
 
@@ -63,11 +61,9 @@ class PluginManagement extends Mixin
 
     if settingActive and not pluginActive
       plugin.activatePlugin()
-      @emit('plugin:activated', event)
       @emitter.emit('did-activate-plugin', event)
     else if pluginActive and not settingActive
       plugin.deactivatePlugin()
-      @emit('plugin:deactivated', event)
       @emitter.emit('did-deactivate-plugin', event)
 
   # Internal: When the `minimap.displayPluginsControls` setting is toggled,

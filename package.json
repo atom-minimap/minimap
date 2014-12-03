@@ -21,7 +21,6 @@
     "atom": ">0.133.0"
   },
   "dependencies": {
-    "emissary": "1.x",
     "mixto": "1.x",
     "delegato": "1.x",
     "semver": "~2.3.0",

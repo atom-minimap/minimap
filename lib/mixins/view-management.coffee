@@ -107,7 +107,6 @@ class ViewManagement extends Mixin
     @minimapViews[editorId] = view
 
     event = {view}
-    @emit('minimap-view:created', event)
     @emitter.emit('did-create-minimap', event)
 
     view.updateMinimapRenderView()
@@ -118,13 +117,11 @@ class ViewManagement extends Mixin
 
       event = {view}
       if view?
-        @emit('minimap-view:will-be-destroyed', event)
         @emitter.emit('will-destroy-minimap', event)
 
         view.destroy()
         delete @minimapViews[editorId]
 
-        @emit('minimap-view:destroyed', {view})
         @emitter.emit('did-destroy-minimap', event)
 
         if paneView.getActiveView()?.classList.contains('editor')
