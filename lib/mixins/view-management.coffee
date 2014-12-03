@@ -1,5 +1,6 @@
 Mixin = require 'mixto'
 {CompositeDisposable} = require 'event-kit'
+{deprecate} = require 'grim'
 MinimapView = null
 
 # Public: Provides methods to manage minimap views per pane.
@@ -45,12 +46,19 @@ class ViewManagement extends Mixin
   #            * view - The {MinimapView} instance
   #
   # Returns an {Object}.
-  eachMinimapView: (iterator) ->
+  observeMinimaps: (iterator) ->
     return unless iterator?
     iterator({view: minimapView}) for id,minimapView of @minimapViews
     createdCallback = (minimapView) -> iterator(minimapView)
     disposable = @onDidCreateMinimap(createdCallback)
-    off: => disposable.dispose()
+    disposable.off = ->
+      deprecate('Use Disposable::dispose instead')
+      disposable.dispose()
+    disposable
+
+  eachMinimapView: (iterator) ->
+    deprecate('Use Minimap::observeMinimaps instead')
+    @observeMinimaps(iterator)
 
   # Internal: Destroys all views currently in use.
   destroyViews: ->
