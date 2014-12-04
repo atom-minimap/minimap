@@ -36,7 +36,8 @@ class DOMStylesReader extends Mixin
     value = getComputedStyle(parent).getPropertyValue(property)
     @dummyNode.innerHTML = ''
 
-    @constructor.domStylesCache[key][property] = value
+    @constructor.domStylesCache[key][property] = value unless value is ""
+    value
 
   # Internal: Creates a DOM node container for all the operations that
   # need to read styles properties from DOM.
