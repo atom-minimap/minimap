@@ -1,3 +1,10 @@
+<a name="v3.4.3"></a>
+# v3.4.3 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Fix broken actions and navigation in quick settings ([b2114b34](https://github.com/fundon/atom-minimap/commit/b2114b348d0a66a077a27dd6ec7be121944efee6))
+
 <a name="v3.4.2"></a>
 # v3.4.2 (2014-12-05)
 
