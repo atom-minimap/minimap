@@ -28,11 +28,11 @@ class MinimapQuickSettingsView extends View
     @subscriptions.add Minimap.onDidDeactivatePlugin ({name, plugin}) =>
       @deactivateItem(name, plugin)
 
-    @subscriptions.add atom.commands.add this,
+    @subscriptions.add atom.commands.add '.minimap-quick-settings',
       'core:move-up': => @selectPreviousItem()
       'core:move-down': => @selectNextItem()
       'core:cancel': => @destroy()
-      'core:validate': => @toggleSelectedItem()
+      'core:confirm': => @toggleSelectedItem()
 
     @codeHighlights.toggleClass('active', @minimapView.displayCodeHighlights)
     @codeHighlights.on 'mousedown', (e) =>
@@ -88,7 +88,8 @@ class MinimapQuickSettingsView extends View
     item = $("<li class='#{cls}'>#{name}</li>")
     item.on 'mousedown', (e) =>
       e.preventDefault()
-      @trigger "minimap:toggle-#{name}"
+      atom.commands.dispatch item[0], "minimap:toggle-#{name}"
+
     @plugins[name] = item
     @separator.before item
     unless @selectedItem?
