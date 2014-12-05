@@ -1,3 +1,25 @@
+<a name="v3.4.0"></a>
+# v3.4.0 (2014-12-05)
+
+## :sparkles: Features
+
+- Add an observeMinimaps method replacing eachMinimapView ([98c81307](https://github.com/fundon/atom-minimap/commit/98c8130705c6ffbf1ce4f0cf43f8654d5f5d7615))
+- Add more defensive code if a marker can't be retrieved ([600e5bb1](https://github.com/fundon/atom-minimap/commit/600e5bb1ba3c855eac0312a9573d47b605b30ed5))
+- Add defensive code on decorations methods ([6104fe17](https://github.com/fundon/atom-minimap/commit/6104fe17625e30af5d4f9d211d393167830f18aa))
+
+## :bug: Bug Fixes
+
+- Prevent removal of inexistant decorations ([a8e21c27](https://github.com/fundon/atom-minimap/commit/a8e21c277e308f6b1de44bac0da39ee4f04f0618))
+- Fix broken quick settings button in minimap ([da1986a9](https://github.com/fundon/atom-minimap/commit/da1986a9510ca6410d60a7e8e5f8ff932ea2f47b))
+- Fix missing decorations caused by shadow root ([f8b4ae03](https://github.com/fundon/atom-minimap/commit/f8b4ae03af85b0d4c3a10fc80490d4e11f447038))
+- Fix bugs with minimap scrolling and height ([6327de96](https://github.com/fundon/atom-minimap/commit/6327de966f12a513641a59af3ac5f3321747c9c6))
+- Fix retrieval of the dom colors ([b8c11bb3](https://github.com/fundon/atom-minimap/commit/b8c11bb31733d2bfbab4ed024769db4d6e1869f6))
+- Fix last remaining deprecations ([0a6ea03e](https://github.com/fundon/atom-minimap/commit/0a6ea03ef278237216fe9ef66f68c0299d460e98))
+
+## :racehorse: Performances
+
+- Speed up rendering by sharing cache between instances ([6fd00fa6](https://github.com/fundon/atom-minimap/commit/6fd00fa6faa5dcf1d903ac663b8c7a00925391e8))
+
 3.3.16 / 2014-12-01
 ===================
 
