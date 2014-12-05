@@ -46,7 +46,7 @@ class DOMStylesReader extends Mixin
       @dummyNode = document.createElement('span')
       @dummyNode.style.visibility = 'hidden'
     if shadowRoot
-      @editorView.shadowRoot.appendChild(@dummyNode)
+      @minimapView.getEditorViewRoot().appendChild(@dummyNode)
     else
       @editorView.appendChild(@dummyNode)
 

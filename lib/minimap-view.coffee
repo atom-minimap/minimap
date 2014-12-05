@@ -91,7 +91,8 @@ class MinimapView extends View
     @offsetTop = 0
     @indicator = new MinimapIndicator()
 
-    @scrollView = @editorView.shadowRoot.querySelector('.scroll-view')
+    @scrollView = @getEditorViewRoot().querySelector('.scroll-view')
+
     @scrollViewLines = @scrollView.querySelector('.lines')
 
     @subscribeToEditor()
@@ -194,7 +195,7 @@ class MinimapView extends View
     @scaleX = @scaleY = computedLineHeight / originalLineHeight
 
   getEditorLineHeight: ->
-    lineHeight = window.getComputedStyle(@editorView.shadowRoot.querySelector('.lines')).getPropertyValue('line-height')
+    lineHeight = window.getComputedStyle(@getEditorViewRoot().querySelector('.lines')).getPropertyValue('line-height')
     parseInt(lineHeight)
 
   # Destroys this view and release all its subobjects.
@@ -219,6 +220,9 @@ class MinimapView extends View
     if @obsPane?
       @obsPane.dispose()
       @obsPane = @pane.observeActiveItem @onActiveItemChanged
+
+  getEditorViewRoot: ->
+    @editorView.shadowRoot ? @editorView
 
   #    ########  ####  ######  ########  ##          ###    ##    ##
   #    ##     ##  ##  ##    ## ##     ## ##         ## ##    ##  ##
@@ -353,7 +357,7 @@ class MinimapView extends View
         @editorView.style.paddingLeft = maxWidth
       else
         @editorView.style.paddingRight = maxWidth
-        @editorView.shadowRoot.querySelector('.vertical-scrollbar').style.right = maxWidth
+        @getEditorViewRoot().querySelector('.vertical-scrollbar').style.right = maxWidth
 
   # Internal: Resets the styles modified when the minimap width is adjusted
   # based on the soft-wrap.
@@ -361,7 +365,7 @@ class MinimapView extends View
     @css maxWidth: ''
     @editorView.style.paddingRight = ''
     @editorView.style.paddingLeft = ''
-    @editorView.shadowRoot.querySelector('.vertical-scrollbar').style.right = ''
+    @getEditorViewRoot().querySelector('.vertical-scrollbar').style.right = ''
 
   # Internal: Updates the vertical scrolling of the minimap.
   #
