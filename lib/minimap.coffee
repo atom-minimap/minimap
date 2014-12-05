@@ -110,6 +110,7 @@ class Minimap
 
   # Deactivates the minimap package.
   deactivate: ->
+    @active = false
     @destroyViews()
     @emitter.emit('did-deactivate')
 
