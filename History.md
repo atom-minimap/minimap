@@ -1,3 +1,10 @@
+<a name="v3.4.2"></a>
+# v3.4.2 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Should fix non-activation in post update hook ([659ffc63](https://github.com/fundon/atom-minimap/commit/659ffc63d7530ab340ca18054e22e708f1a9b1bf))
+
 <a name="v3.4.1"></a>
 # v3.4.1 (2014-12-05)
 
