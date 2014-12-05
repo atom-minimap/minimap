@@ -365,7 +365,9 @@ class MinimapView extends View
     @css maxWidth: ''
     @editorView.style.paddingRight = ''
     @editorView.style.paddingLeft = ''
-    @getEditorViewRoot().querySelector('.vertical-scrollbar').style.right = ''
+    # When called in destroy with shadow DOM disabled, the vertical scrollbar
+    # is no longer reachable.
+    @getEditorViewRoot().querySelector('.vertical-scrollbar')?.style.right = ''
 
   # Internal: Updates the vertical scrolling of the minimap.
   #
