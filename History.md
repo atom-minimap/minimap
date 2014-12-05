@@ -1,3 +1,10 @@
+<a name="v3.4.4"></a>
+# v3.4.4 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Fix broken minimap when shadowRoot isn't enabled ([f5f6e779](https://github.com/fundon/atom-minimap/commit/f5f6e7792bd8ef471d2f122dabfc34e3f2adcb88))
+
 <a name="v3.4.3"></a>
 # v3.4.3 (2014-12-05)
 
