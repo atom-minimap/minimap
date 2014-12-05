@@ -1,3 +1,10 @@
+<a name="v3.4.1"></a>
+# v3.4.1 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Fix atom-space-pen-views version in package.son ([90aa4588](https://github.com/fundon/atom-minimap/commit/90aa4588e8137a6f74d2883d1d10b73786b12fb4))
+
 <a name="v3.4.0"></a>
 # v3.4.0 (2014-12-05)
 
