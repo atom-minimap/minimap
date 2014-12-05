@@ -1,3 +1,10 @@
+<a name="v3.4.5"></a>
+# v3.4.5 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Fix broken view destruction with shadow DOM disabled ([7d062ec6](https://github.com/fundon/atom-minimap/commit/7d062ec601b0c63cedd2ef55f6990c96ab57f483), [#166](https://github.com/fundon/atom-minimap/issues/166))
+
 <a name="v3.4.4"></a>
 # v3.4.4 (2014-12-05)
 
