@@ -1,3 +1,11 @@
+<a name="v3.4.6"></a>
+# v3.4.6 (2014-12-10)
+
+## :bug: Bug Fixes
+
+- :guardsman: Try to use the already retrieve pane when possible ([33dd8cf6](https://github.com/fundon/atom-minimap/commit/33dd8cf6bc3f9bf51d3a4cdc4b1c2dcd842a9001))
+- Fix editor styles with minimap in zen mode ([6496aa92](https://github.com/fundon/atom-minimap/commit/6496aa92e05f96a5d45d0ec7d77888fd4d8cebed))
+
 <a name="v3.4.5"></a>
 # v3.4.5 (2014-12-05)
 
