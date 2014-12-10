@@ -75,7 +75,7 @@ class MinimapView extends View
   # Creates a new {MinimapView}.
   #
   # editorView - The `TextEditorView` for which displaying a minimap.
-  constructor: (editorView) ->
+  constructor: (editorView, @paneView) ->
     @emitter = new Emitter
     @setEditorView(editorView)
 
@@ -213,8 +213,12 @@ class MinimapView extends View
 
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
-    @pane = atom.workspace.paneForItem(@editor)
-    @paneView = atom.views.getView(@pane)
+    if @paneView?
+      @pane = @paneView.getModel()
+    else
+      @pane = atom.workspace.paneForItem(@editor)
+      @paneView = atom.views.getView(@pane)
+
     @renderView?.setEditorView(@editorView)
 
     if @obsPane?

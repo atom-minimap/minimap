@@ -87,22 +87,22 @@ class ViewManagement extends Mixin
       @updateAllViews()
 
   onEditorAdded: (editor, pane) ->
-    editorView = atom.views.getView(editor)
-
     MinimapView ||= require '../minimap-view'
 
     editorId = editor.id
+    editorView = atom.views.getView(editor)
     paneView = atom.views.getView(pane)
 
-    return unless paneView?
+    return unless editorView? and paneView?
 
     if (view = @minimapViews[editorId])?
+      view.paneView = paneView
       view.setEditorView editorView
       view.detachFromPaneView()
       view.attachToPaneView()
       return
 
-    view = new MinimapView(editorView)
+    view = new MinimapView(editorView, paneView)
 
     @minimapViews[editorId] = view
 
