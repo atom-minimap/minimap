@@ -1,3 +1,10 @@
+<a name="v3.4.7"></a>
+# v3.4.7 (2014-12-10)
+
+## :bug: Bug Fixes
+
+- Fix broken scroll when clicking the minimap ([e9c501c9](https://github.com/fundon/atom-minimap/commit/e9c501c908b160cc4a86df9eebe911866fae6c0a), [#171](https://github.com/fundon/atom-minimap/issues/171))
+
 <a name="v3.4.6"></a>
 # v3.4.6 (2014-12-10)
 
