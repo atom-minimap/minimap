@@ -493,11 +493,13 @@ class MinimapView extends View
     @isClicked = true
     e.preventDefault()
     e.stopPropagation()
-    # VisibleArea's center-y
+
     y = e.pageY - @offsetTop
-    top = @indicator.computeFromCenterY(y) / @scaleY
-    # @note: currently, no animation.
-    @editor.scrollToScreenPosition({top, left: 0})
+    top = (y + @renderView.scrollTop()) / @scaleY
+
+    position = @editor.displayBuffer.screenPositionForPixelPosition({top, left: 0})
+    @editor.scrollToScreenPosition(position, center: true)
+
     # Fix trigger `mousewheel` event.
     setTimeout =>
       @isClicked = false
