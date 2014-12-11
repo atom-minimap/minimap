@@ -72,7 +72,7 @@ class Minimap
     interline:
       type: 'integer'
       default: 1
-      minimum: 1
+      minimum: 0
       description: 'The space between lines in the minimap in pixels.'
     textOpacity:
       type: 'number'
