@@ -25,7 +25,7 @@ describe "MinimapRenderView", ->
       atom.project.setPaths([path.join(__dirname, 'fixtures')])
 
     waitsFor ->
-      editor = atom.workspace.getActiveEditor()
+      editor = atom.workspace.getActiveTextEditor()
 
     runs ->
       editorView = atom.views.getView(editor)

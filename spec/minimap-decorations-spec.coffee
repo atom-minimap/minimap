@@ -28,7 +28,7 @@ describe "MinimapRenderView", ->
       promise = atom.packages.activatePackage('minimap')
 
     runs ->
-      editor = atom.workspace.getActiveEditor()
+      editor = atom.workspace.getActiveTextEditor()
       editorView = atom.views.getView(editor)
       minimapView = new MinimapView editorView
       minimapView.attachToPaneView()

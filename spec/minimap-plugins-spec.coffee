@@ -11,7 +11,7 @@ describe "Minimap Plugins", ->
       workspaceElement = atom.views.getView(atom.workspace)
       jasmine.attachToDOM(workspaceElement)
 
-      editor = atom.workspace.getActiveEditor()
+      editor = atom.workspace.getActiveTextEditor()
       editorView = atom.views.getView(editor)
 
       atom.config.set 'minimap.displayPluginsControls', true

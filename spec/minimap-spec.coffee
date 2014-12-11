@@ -13,7 +13,7 @@ describe "Minimap", ->
       atom.config.set 'minimap.autoToggle', false
 
     waitsFor ->
-      editor = atom.workspace.getActiveEditor()
+      editor = atom.workspace.getActiveTextEditor()
 
     runs ->
       editorView = atom.views.getView(editor)
