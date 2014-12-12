@@ -74,9 +74,22 @@ describe 'Minimap', ->
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
 
+    it 'computes the first visible row in the minimap', ->
+      expect(minimap.getFirstVisibleRow()).toEqual(Math.floor(99))
+
+    it 'computes the last visible row in the minimap', ->
+      expect(minimap.getLastVisibleRow()).toEqual(110)
+
     describe 'down to the bottom', ->
-      it 'computes an offset that scrolls the minimap to the bottom edge', ->
+      beforeEach ->
         editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
         editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
 
+      it 'computes an offset that scrolls the minimap to the bottom edge', ->
         expect(minimap.getMinimapScrollTop()).toEqual(minimap.getMinimapMaxScrollTop())
+
+      it 'computes the first visible row in the minimap', ->
+        expect(minimap.getFirstVisibleRow()).toEqual(largeLineCount - 10)
+
+      it 'computes the last visible row in the minimap', ->
+        expect(minimap.getLastVisibleRow()).toEqual(largeLineCount)
