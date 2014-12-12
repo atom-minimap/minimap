@@ -43,10 +43,10 @@ describe 'Minimap', ->
     expect(minimap.canScroll()).toBeTruthy()
 
   it 'computes the first visible row in the minimap', ->
-    expect(minimap.getFirstVisibleRow()).toEqual(0)
+    expect(minimap.getFirstVisibleScreenRow()).toEqual(0)
 
   it 'computes the last visible row in the minimap', ->
-    expect(minimap.getLastVisibleRow()).toEqual(10)
+    expect(minimap.getLastVisibleScreenRow()).toEqual(10)
 
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
@@ -75,10 +75,10 @@ describe 'Minimap', ->
       expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
-      expect(minimap.getFirstVisibleRow()).toEqual(Math.floor(99))
+      expect(minimap.getFirstVisibleScreenRow()).toEqual(Math.floor(99))
 
     it 'computes the last visible row in the minimap', ->
-      expect(minimap.getLastVisibleRow()).toEqual(110)
+      expect(minimap.getLastVisibleScreenRow()).toEqual(110)
 
     describe 'down to the bottom', ->
       beforeEach ->
@@ -89,7 +89,7 @@ describe 'Minimap', ->
         expect(minimap.getMinimapScrollTop()).toEqual(minimap.getMinimapMaxScrollTop())
 
       it 'computes the first visible row in the minimap', ->
-        expect(minimap.getFirstVisibleRow()).toEqual(largeLineCount - 10)
+        expect(minimap.getFirstVisibleScreenRow()).toEqual(largeLineCount - 10)
 
       it 'computes the last visible row in the minimap', ->
         expect(minimap.getLastVisibleRow()).toEqual(largeLineCount)
