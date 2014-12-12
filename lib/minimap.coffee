@@ -21,8 +21,14 @@ class Minimap
 
   getLineHeight: -> @charHeight + @interline
 
+  getFirstVisibleRow: ->
+    Math.floor(@getMinimapScrollTop() / @getLineHeight())
+
+  getLastVisibleRow: ->
+    Math.ceil((@getMinimapScrollTop() + @textEditor.getHeight()) / @getLineHeight())
+
   getMinimapScrollTop: ->
-    @getTextEditorScrollRatio() * @getMinimapMaxScrollTop()
+    Math.abs(@getTextEditorScrollRatio() * @getMinimapMaxScrollTop())
 
   getMinimapMaxScrollTop: -> Math.max(0, @getHeight() - @textEditor.getHeight())
 

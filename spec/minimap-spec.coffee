@@ -42,9 +42,15 @@ describe 'Minimap', ->
     expect(minimap.getMinimapMaxScrollTop()).toEqual(largeLineCount * 5 - 50)
     expect(minimap.canScroll()).toBeTruthy()
 
+  it 'computes the first visible row in the minimap', ->
+    expect(minimap.getFirstVisibleRow()).toEqual(0)
+
+  it 'computes the last visible row in the minimap', ->
+    expect(minimap.getLastVisibleRow()).toEqual(10)
+
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
-      expect(minimap.getMinimapScrollTop()).toBeCloseTo(0)
+      expect(minimap.getMinimapScrollTop()).toEqual(0)
 
     it 'returns 0 when measuring the available minimap scroll', ->
       editor.setText(smallSample)
