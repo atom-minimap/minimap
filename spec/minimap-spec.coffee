@@ -26,7 +26,8 @@ describe 'Minimap', ->
     expect(minimap.getHeight()).toEqual(20)
 
     editor.setText(largeSample)
-    expect(minimap.getHeight()).toEqual(editor.getLineCount() * 5)
+    largeLineCount = editor.getLineCount()
+    expect(minimap.getHeight()).toEqual(largeLineCount * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
     expect(minimap.getScaleFactor()).toEqual(0.5)
