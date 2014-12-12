@@ -1,6 +1,6 @@
 {
   "name": "minimap",
-  "main": "./lib/minimap",
+  "main": "./lib/main",
   "version": "3.4.7",
   "private": true,
   "description": "A preview of the full source code.",
