@@ -41,3 +41,18 @@ describe 'Minimap', ->
     editor.setScrollTop(1000)
 
     expect(minimap.getTextEditorScroll()).toEqual(500)
+
+  it 'measures the available minimap scroll', ->
+    editor.setText(largeSample)
+    largeLineCount = editor.getLineCount()
+
+    expect(minimap.getMinimapScrollHeight()).toEqual(largeLineCount * 5 - 50)
+    expect(minimap.canScroll()).toBeTruthy()
+
+  describe 'when there is no scrolling needed to display the whole minimap', ->
+    describe 'measuring the available minimap scroll', ->
+      it 'returns 0', ->
+        editor.setText(smallSample)
+
+        expect(minimap.getMinimapScrollHeight()).toEqual(0)
+        expect(minimap.canScroll()).toBeFalsy()

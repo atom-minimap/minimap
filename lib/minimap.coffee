@@ -18,6 +18,10 @@ class Minimap
 
   getLineHeight: -> @charHeight + @interline
 
+  getMinimapScrollHeight: -> Math.max(0, @getHeight() - @textEditor.getHeight())
+
+  canScroll: -> @getMinimapScrollHeight() > 0
+
   subscribeToConfig: ->
     @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
     @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
