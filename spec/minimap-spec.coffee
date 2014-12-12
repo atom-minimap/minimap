@@ -26,8 +26,7 @@ describe 'Minimap', ->
     expect(minimap.getHeight()).toEqual(20)
 
     editor.setText(largeSample)
-    largeLineCount = editor.getLineCount()
-    expect(minimap.getHeight()).toEqual(largeLineCount * 5)
+    expect(minimap.getHeight()).toEqual(editor.getLineCount() * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
     expect(minimap.getScaleFactor()).toEqual(0.5)
@@ -36,23 +35,43 @@ describe 'Minimap', ->
     editor.setText(largeSample)
     expect(minimap.getTextEditorHeight()).toEqual(25)
 
-  it 'scales the editor scroll based on the minimap scale factor', ->
-    editor.setText(largeSample)
-    editor.setScrollTop(1000)
-
-    expect(minimap.getTextEditorScroll()).toEqual(500)
-
   it 'measures the available minimap scroll', ->
     editor.setText(largeSample)
     largeLineCount = editor.getLineCount()
 
-    expect(minimap.getMinimapScrollHeight()).toEqual(largeLineCount * 5 - 50)
+    expect(minimap.getMinimapMaxScrollTop()).toEqual(largeLineCount * 5 - 50)
     expect(minimap.canScroll()).toBeTruthy()
 
   describe 'when there is no scrolling needed to display the whole minimap', ->
-    describe 'measuring the available minimap scroll', ->
-      it 'returns 0', ->
-        editor.setText(smallSample)
+    it 'returns 0 when computing the minimap scroll', ->
+      console.log minimap.getMinimapScrollTop()
+      expect(minimap.getMinimapScrollTop()).toBeCloseTo(0)
 
-        expect(minimap.getMinimapScrollHeight()).toEqual(0)
-        expect(minimap.canScroll()).toBeFalsy()
+    it 'returns 0 when measuring the available minimap scroll', ->
+      editor.setText(smallSample)
+
+      expect(minimap.getMinimapMaxScrollTop()).toEqual(0)
+      expect(minimap.canScroll()).toBeFalsy()
+
+  describe 'when the editor is scrolled', ->
+    [largeLineCount, editorHeight, editorScrollRatio] = []
+
+    beforeEach ->
+      editor.setText(largeSample)
+      editor.setScrollTop(1000)
+      largeLineCount = editor.getLineCount()
+      editorHeight = largeLineCount * editor.getLineHeightInPixels()
+      editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
+
+    it 'scales the editor scroll based on the minimap scale factor', ->
+      expect(minimap.getTextEditorScrollTop()).toEqual(500)
+
+    it 'computes the offset to apply based on the editor scroll top', ->
+      expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
+
+    describe 'down to the bottom', ->
+      it 'computes an offset that scrolls the minimap to the bottom edge', ->
+        editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
+        editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
+
+        expect(minimap.getMinimapScrollTop()).toEqual(minimap.getMinimapMaxScrollTop())

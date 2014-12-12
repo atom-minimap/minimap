@@ -10,7 +10,10 @@ class Minimap
 
   getTextEditorHeight: -> @textEditor.getHeight() * @getScaleFactor()
 
-  getTextEditorScroll: -> @textEditor.getScrollTop() * @getScaleFactor()
+  getTextEditorScrollTop: -> @textEditor.getScrollTop() * @getScaleFactor()
+
+  getTextEditorScrollRatio: ->
+    @textEditor.getScrollTop() / @textEditor.displayBuffer.getMaxScrollTop()
 
   getHeight: -> @textEditor.getLineCount() * @getLineHeight()
 
@@ -18,9 +21,12 @@ class Minimap
 
   getLineHeight: -> @charHeight + @interline
 
-  getMinimapScrollHeight: -> Math.max(0, @getHeight() - @textEditor.getHeight())
+  getMinimapScrollTop: ->
+    @getTextEditorScrollRatio() * @getMinimapMaxScrollTop()
 
-  canScroll: -> @getMinimapScrollHeight() > 0
+  getMinimapMaxScrollTop: -> Math.max(0, @getHeight() - @textEditor.getHeight())
+
+  canScroll: -> @getMinimapMaxScrollTop() > 0
 
   subscribeToConfig: ->
     @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
