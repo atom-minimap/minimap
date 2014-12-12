@@ -76,13 +76,24 @@ class ViewManagement extends Mixin
     # the callback.
     @observePaneSubscription = atom.workspace.observePanes (pane) =>
       paneSubscriptions = new CompositeDisposable
+      paneView = atom.views.getView(pane)
+
       paneSubscriptions.add pane.onDidDestroy =>
         paneSubscriptions.dispose()
         requestAnimationFrame => @updateAllViews()
 
+      paneSubscriptions.add pane.observeActiveItem (item) =>
+        if item instanceof TextEditor
+          paneView.classList.add('with-minimap')
+        else
+          paneView.classList.remove('with-minimap')
+
       paneSubscriptions.add pane.observeItems (item) =>
         if item instanceof TextEditor
-          requestAnimationFrame => @onEditorAdded(item, pane)
+          @onEditorAdded(item, pane)
+          paneView.classList.add('with-minimap')
+        else
+          paneView.classList.remove('with-minimap')
 
       @updateAllViews()
 
