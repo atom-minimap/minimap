@@ -14,11 +14,9 @@ class Minimap
     subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
     subs.add atom.config.observe 'minimap.interline', (@interline) =>
 
-    subs.add @textEditor.onDidChange (changes) =>
-      @emitChanges(changes)
+    subs.add @textEditor.onDidChange (changes) => @emitChanges(changes)
 
-  onDidChange: (callback) ->
-    @emitter.on 'did-change', callback
+  onDidChange: (callback) -> @emitter.on 'did-change', callback
 
   getTextEditor: -> @textEditor
 
@@ -52,7 +50,6 @@ class Minimap
 
   markBufferRange: (range) -> @textEditor.markBufferRange(range)
 
-  emitChanges: (changes) ->
-    @emitter.emit('did-change', changes)
+  emitChanges: (changes) -> @emitter.emit('did-change', changes)
 
   stackChanges: (changes) -> @emitChanges(changes)
