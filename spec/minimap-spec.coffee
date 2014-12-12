@@ -48,6 +48,14 @@ describe 'Minimap', ->
   it 'computes the last visible row in the minimap', ->
     expect(minimap.getLastVisibleScreenRow()).toEqual(10)
 
+  it 'relays every change event from the text editor', ->
+    changeSpy = jasmine.createSpy('didChange')
+    minimap.onDidChange(changeSpy)
+
+    editor.setText('foo')
+
+    expect(changeSpy).toHaveBeenCalled()
+
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
       expect(minimap.getMinimapScrollTop()).toEqual(0)

@@ -7,9 +7,15 @@ class Minimap
 
   constructor: ({@textEditor}) ->
     @emitter = new Emitter
-    @subscriptions = new CompositeDisposable
-    @subscribeToConfig()
+    @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
+
+    subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
+    subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
+    subs.add atom.config.observe 'minimap.interline', (@interline) =>
+
+    subs.add @textEditor.onDidChange (changes) =>
+      @emitChanges(changes)
 
   onDidChange: (callback) ->
     @emitter.on 'did-change', callback
@@ -46,11 +52,7 @@ class Minimap
 
   markBufferRange: (range) -> @textEditor.markBufferRange(range)
 
-  subscribeToConfig: ->
-    @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
-    @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
   emitChanges: (changes) ->
     @emitter.emit('did-change', changes)
 
-    @subscriptions.add atom.config.observe 'minimap.interline', (@interline) =>
   stackChanges: (changes) -> @emitChanges(changes)
