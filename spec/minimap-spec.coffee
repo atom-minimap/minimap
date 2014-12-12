@@ -106,8 +106,8 @@ describe 'Minimap', ->
     [marker, decoration, changeSpy] = []
 
     beforeEach ->
-      changeSpy = jasmine.createSpy('didChangeScreenLines')
-      minimap.onDidChangeScreenLines(changeSpy)
+      changeSpy = jasmine.createSpy('didChange')
+      minimap.onDidChange(changeSpy)
 
       marker = minimap.markBufferRange [[0,6], [0,11]]
       decoration = minimap.decorateMarker marker, type: 'highlight', class: 'dummy'

@@ -11,8 +11,8 @@ class Minimap
     @subscribeToConfig()
     @initializeDecorations()
 
-  onDidChangeScreenLines: (callback) ->
-    @emitter.on 'did-change-screen-lines', callback
+  onDidChange: (callback) ->
+    @emitter.on 'did-change', callback
 
   getTextEditor: -> @textEditor
 
@@ -46,11 +46,11 @@ class Minimap
 
   markBufferRange: (range) -> @textEditor.markBufferRange(range)
 
-  stackChanges: (changes) ->
-    @emitter.emit('did-change-screen-lines', changes)
-
   subscribeToConfig: ->
     @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
     @subscriptions.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
+  emitChanges: (changes) ->
+    @emitter.emit('did-change', changes)
 
     @subscriptions.add atom.config.observe 'minimap.interline', (@interline) =>
+  stackChanges: (changes) -> @emitChanges(changes)
