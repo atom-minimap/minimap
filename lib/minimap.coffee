@@ -1,10 +1,18 @@
-{CompositeDisposable} = require 'event-kit'
+{Emitter, CompositeDisposable} = require 'event-kit'
+DecorationManagement = require './mixins/decoration-management'
 
 module.exports =
 class Minimap
+  DecorationManagement.includeInto(this)
+
   constructor: ({@textEditor}) ->
+    @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @subscribeToConfig()
+    @initializeDecorations()
+
+  onDidChangeScreenLines: (callback) ->
+    @emitter.on 'did-change-screen-lines', callback
 
   getTextEditor: -> @textEditor
 
@@ -33,6 +41,13 @@ class Minimap
   getMinimapMaxScrollTop: -> Math.max(0, @getHeight() - @textEditor.getHeight())
 
   canScroll: -> @getMinimapMaxScrollTop() > 0
+
+  getMarker: (id) -> @textEditor.getMarker(id)
+
+  markBufferRange: (range) -> @textEditor.markBufferRange(range)
+
+  stackChanges: (changes) ->
+    @emitter.emit('did-change-screen-lines', changes)
 
   subscribeToConfig: ->
     @subscriptions.add atom.config.observe 'minimap.charHeight', (@charHeight) =>

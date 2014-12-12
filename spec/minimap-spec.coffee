@@ -92,4 +92,63 @@ describe 'Minimap', ->
         expect(minimap.getFirstVisibleScreenRow()).toEqual(largeLineCount - 10)
 
       it 'computes the last visible row in the minimap', ->
-        expect(minimap.getLastVisibleRow()).toEqual(largeLineCount)
+        expect(minimap.getLastVisibleScreenRow()).toEqual(largeLineCount)
+
+  #    ########  ########  ######   #######
+  #    ##     ## ##       ##    ## ##     ##
+  #    ##     ## ##       ##       ##     ##
+  #    ##     ## ######   ##       ##     ##
+  #    ##     ## ##       ##       ##     ##
+  #    ##     ## ##       ##    ## ##     ##
+  #    ########  ########  ######   #######
+
+  describe '::decorateMarker', ->
+    [marker, decoration, changeSpy] = []
+
+    beforeEach ->
+      changeSpy = jasmine.createSpy('didChangeScreenLines')
+      minimap.onDidChangeScreenLines(changeSpy)
+
+      marker = minimap.markBufferRange [[0,6], [0,11]]
+      decoration = minimap.decorateMarker marker, type: 'highlight', class: 'dummy'
+
+    it 'creates a decoration for the given marker', ->
+      expect(minimap.decorationsByMarkerId[marker.id]).toBeDefined()
+
+    it 'creates a change corresponding to the marker range', ->
+      expect(changeSpy).toHaveBeenCalled()
+      expect(changeSpy.calls[0].args[0].start).toEqual(0)
+      expect(changeSpy.calls[0].args[0].end).toEqual(0)
+
+    describe 'destroying the marker', ->
+      beforeEach ->
+        marker.destroy()
+
+      it 'removes the decoration from the render view', ->
+        expect(minimap.decorationsByMarkerId[marker.id]).toBeUndefined()
+
+      it 'creates a change corresponding to the marker range', ->
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(0)
+
+    describe 'destroying the decoration', ->
+      beforeEach ->
+        decoration.destroy()
+
+      it 'removes the decoration from the render view', ->
+        expect(minimap.decorationsByMarkerId[marker.id]).toBeUndefined()
+
+      it 'creates a change corresponding to the marker range', ->
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(0)
+
+    describe 'destroying all the decorations for the marker', ->
+      beforeEach ->
+        minimap.removeAllDecorationsForMarker(marker)
+
+      it 'removes the decoration from the render view', ->
+        expect(minimap.decorationsByMarkerId[marker.id]).toBeUndefined()
+
+      it 'creates a change corresponding to the marker range', ->
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(0)
