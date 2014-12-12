@@ -44,7 +44,6 @@ describe 'Minimap', ->
 
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
-      console.log minimap.getMinimapScrollTop()
       expect(minimap.getMinimapScrollTop()).toBeCloseTo(0)
 
     it 'returns 0 when measuring the available minimap scroll', ->
