@@ -1,5 +1,6 @@
 Mixin = require 'mixto'
 path = require 'path'
+{Emitter} = require 'event-kit'
 Decoration = require path.join(atom.config.resourcePath, 'src', 'decoration')
 
 # Public: The mixin that provides the decorations API to the minimap editor
@@ -10,12 +11,25 @@ class DecorationManagement extends Mixin
 
   # Initializes the decorations related properties.
   initializeDecorations: ->
+    @emitter ?= new Emitter
     @decorationsById = {}
     @decorationsByMarkerId = {}
     @decorationMarkerChangedSubscriptions = {}
     @decorationMarkerDestroyedSubscriptions = {}
     @decorationUpdatedSubscriptions = {}
     @decorationDestroyedSubscriptions = {}
+
+  onDidAddDecoration: (callback) ->
+    @emitter.on 'did-add-decoration', callback
+
+  onDidRemoveDecoration: (callback) ->
+    @emitter.on 'did-remove-decoration', callback
+
+  onDidChangeDecoration: (callback) ->
+    @emitter.on 'did-change-decoration', callback
+
+  onDidUpdateDecoration: (callback) ->
+    @emitter.on 'did-update-decoration', callback
 
   # Returns the decoration with the passed-in id.
   #
