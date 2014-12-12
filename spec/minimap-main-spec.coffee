@@ -1,5 +1,3 @@
-Minimap = require '../lib/minimap'
-
 xdescribe "Minimap", ->
   [workspaceElement, editor, editorView] = []
 
