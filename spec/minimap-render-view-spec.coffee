@@ -3,7 +3,7 @@ MinimapRenderView = require '../lib/minimap-render-view'
 MinimapView = require '../lib/minimap-view'
 Minimap = require '../lib/minimap'
 
-describe "MinimapRenderView", ->
+xdescribe "MinimapRenderView", ->
   [minimapView, MinimapRenderView, editorView, updateCallback, workspaceElement, editor] = []
 
   afterEach -> minimapView?.detach()

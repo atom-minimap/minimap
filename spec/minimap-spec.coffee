@@ -1,6 +1,6 @@
 Minimap = require '../lib/minimap'
 
-describe "Minimap", ->
+xdescribe "Minimap", ->
   [workspaceElement, editor, editorView] = []
 
   beforeEach ->

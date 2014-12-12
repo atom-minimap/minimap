@@ -1,6 +1,6 @@
 Minimap = require '../lib/minimap'
 
-describe "Minimap Plugins", ->
+xdescribe "Minimap Plugins", ->
   [plugin, editor, editorView, workspaceElement, registerHandler, unregisterHandler] = []
 
   beforeEach ->
