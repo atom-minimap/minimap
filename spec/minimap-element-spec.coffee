@@ -45,7 +45,7 @@ describe 'MinimapElement', ->
     expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
 
   describe 'when attached to the text editor element', ->
-    [nextAnimationFrame, canvas] = []
+    [nextAnimationFrame, canvas, visibleArea] = []
 
     beforeEach ->
       spyOn(window, "setInterval").andCallFake window.fakeSetInterval
@@ -84,3 +84,15 @@ describe 'MinimapElement', ->
     it 'resizes the canvas to fit the minimap', ->
       expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight)
       expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
+
+    it 'requests an update', ->
+      expect(minimapElement.frameRequested).toBeTruthy()
+
+    describe 'when the update is performed', ->
+      beforeEach ->
+        nextAnimationFrame()
+        visibleArea = minimapElement.shadowRoot.querySelector('.minimap-visible-area')
+
+      it 'sets the visible area width and height', ->
+        expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
+        expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)

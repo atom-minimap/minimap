@@ -8,6 +8,7 @@ class MinimapElement extends HTMLElement
 
   attachedCallback: ->
     @measureHeightAndWidth()
+    @requestUpdate()
 
   detachedCallback: ->
 
@@ -21,7 +22,11 @@ class MinimapElement extends HTMLElement
     @shadowRoot = @createShadowRoot()
 
     @canvas = document.createElement('canvas')
+    @context = @canvas.getContext('2d')
     @shadowRoot.appendChild(@canvas)
+
+    @offscreenCanvas = document.createElement('canvas')
+    @offscreenContext = @offscreenCanvas.getContext('2d')
 
     @visibleArea = document.createElement('div')
     @visibleArea.classList.add('minimap-visible-area')
@@ -33,8 +38,8 @@ class MinimapElement extends HTMLElement
     height = @clientHeight
 
     if width isnt @canvas.width or height isnt @canvas.height
-      @canvas.width = width
-      @canvas.height = height
+      @canvas.width = width * devicePixelRatio
+      @canvas.height = height * devicePixelRatio
 
   getTextEditorElement: ->
     @editorElement ?= atom.views.getView(@minimap.getTextEditor())
@@ -43,6 +48,26 @@ class MinimapElement extends HTMLElement
     editorElement = @getTextEditorElement()
 
     editorElement.shadowRoot ? editorElement
+
+  requestUpdate: ->
+    return if @frameRequested
+
+    @frameRequested = true
+    requestAnimationFrame =>
+      @update()
+      @frameRequested = false
+
+  update: ->
+    @visibleArea.style.width = @clientWidth + 'px'
+    @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
+
+#    ######## ##       ######## ##     ## ######## ##    ## ########
+#    ##       ##       ##       ###   ### ##       ###   ##    ##
+#    ##       ##       ##       #### #### ##       ####  ##    ##
+#    ######   ##       ######   ## ### ## ######   ## ## ##    ##
+#    ##       ##       ##       ##     ## ##       ##  ####    ##
+#    ##       ##       ##       ##     ## ##       ##   ###    ##
+#    ######## ######## ######## ##     ## ######## ##    ##    ##
 
 module.exports = MinimapElement = document.registerElement 'atom-text-editor-minimap', prototype: MinimapElement.prototype
 
