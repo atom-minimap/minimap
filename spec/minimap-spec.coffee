@@ -21,6 +21,9 @@ describe 'Minimap', ->
   it 'has an associated editor', ->
     expect(minimap.getTextEditor()).toEqual(editor)
 
+  it 'raise an exceptiono if created without a text editor', ->
+    expect(-> new Minimap).toThrow()
+
   it 'measures the minimap size based on the current editor content', ->
     editor.setText(smallSample)
     expect(minimap.getHeight()).toEqual(20)

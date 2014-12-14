@@ -5,7 +5,10 @@ module.exports =
 class Minimap
   DecorationManagement.includeInto(this)
 
-  constructor: ({@textEditor}) ->
+  constructor: ({@textEditor}={}) ->
+    unless @textEditor?
+      throw new Error('Cannot create a minimap without an editor')
+
     @emitter = new Emitter
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
