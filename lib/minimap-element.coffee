@@ -9,10 +9,19 @@ class MinimapElement extends HTMLElement
 
   attributeChangedCallback: (attrName, oldValue, newValue) ->
 
-  setModel: (model) ->
+  getModel: -> @minimap
+
+  setModel: (@minimap) -> @minimap
 
   initializeContent: ->
     @shadowRoot = @createShadowRoot()
+
+    @canvas = document.createElement('canvas')
+    @shadowRoot.appendChild(@canvas)
+
+    @visibleArea = document.createElement('div')
+    @visibleArea.classList.add('minimap-visible-area')
+    @shadowRoot.appendChild(@visibleArea)
 
 module.exports = MinimapElement = document.registerElement 'atom-text-editor-minimap', prototype: MinimapElement.prototype
 

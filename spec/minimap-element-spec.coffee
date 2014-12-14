@@ -26,3 +26,12 @@ describe 'MinimapElement', ->
 
   it 'has been registered in the view registry', ->
     expect(minimapElement).toExist()
+
+  it 'has stored the minimap as its model', ->
+    expect(minimapElement.getModel()).toBe(minimap)
+
+  it 'has a canvas in a shadow DOM', ->
+    expect(minimapElement.shadowRoot.querySelector('canvas')).toExist()
+
+  it 'has a div representing the visible area', ->
+    expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
