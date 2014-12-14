@@ -7,8 +7,23 @@ atom-notifications:empty {
 atom-text-editor::shadow, atom-text-editor {
   atom-text-editor-minimap {
     display: block;
-    max-width: 10%;
+    width: 10%;
+    height: 100%;
     overflow: hidden;
+    position: relative;
+
+    &::shadow {
+      canvas {
+
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .minimap-visible-area {
+        position: absolute;
+      }
+    }
   }
 }
 

@@ -7,7 +7,7 @@ class MinimapElement extends HTMLElement
     @getTextEditorElementRoot().appendChild(this)
 
   attachedCallback: ->
-    @measureTextEditorHeightAndWidth()
+    @measureHeightAndWidth()
 
   detachedCallback: ->
 
@@ -27,11 +27,14 @@ class MinimapElement extends HTMLElement
     @visibleArea.classList.add('minimap-visible-area')
     @shadowRoot.appendChild(@visibleArea)
 
-  measureTextEditorHeightAndWidth: ->
+  measureHeightAndWidth: ->
     editorElement = @getTextEditorElement()
-    if editorElement.offsetHeight isnt @height
-      @height = editorElement.offsetHeight
-      @style.height = @height + 'px'
+    width = @clientWidth
+    height = @clientHeight
+
+    if width isnt @canvas.width or height isnt @canvas.height
+      @canvas.width = width
+      @canvas.height = height
 
   getTextEditorElement: ->
     @editorElement ?= atom.views.getView(@minimap.getTextEditor())

@@ -45,7 +45,7 @@ describe 'MinimapElement', ->
     expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
 
   describe 'when attached to the text editor element', ->
-    [nextAnimationFrame] = []
+    [nextAnimationFrame, canvas] = []
 
     beforeEach ->
       spyOn(window, "setInterval").andCallFake window.fakeSetInterval
@@ -68,11 +68,19 @@ describe 'MinimapElement', ->
       jasmineContent.appendChild(styleNode)
 
     beforeEach ->
+      canvas = minimapElement.shadowRoot.querySelector('canvas')
       editorElement.style.width = '200px'
       editorElement.style.height = '50px'
       jasmineContent.appendChild(editorElement)
       minimapElement.attach()
 
     it 'takes the height of the editor', ->
-      expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
-      expect(minimapElement.offsetWidth).toEqual(editorElement.offsetWidth / 10)
+      expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
+
+      # Actually, when in a flex display of 200px width, 10% gives 18px
+      # and not 20px
+      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 10, -1)
+
+    it 'resizes the canvas to fit the minimap', ->
+      expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight)
+      expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
