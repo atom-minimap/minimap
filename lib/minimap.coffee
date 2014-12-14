@@ -1,14 +1,16 @@
+{Model} = require 'theorist'
 {Emitter, CompositeDisposable} = require 'event-kit'
 DecorationManagement = require './mixins/decoration-management'
 
 module.exports =
-class Minimap
+class Minimap extends Model
   DecorationManagement.includeInto(this)
 
   constructor: ({@textEditor}={}) ->
     unless @textEditor?
       throw new Error('Cannot create a minimap without an editor')
 
+    super
     @emitter = new Emitter
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
