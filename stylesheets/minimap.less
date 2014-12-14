@@ -4,6 +4,14 @@ atom-notifications:empty {
   pointer-events: none
 }
 
+atom-text-editor::shadow, atom-text-editor {
+  atom-text-editor-minimap {
+    display: block;
+    max-width: 10%;
+    overflow: hidden;
+  }
+}
+
 .pane.with-minimap {
   .editor, :host, atom-text-editor, atom-text-editor::shadow {
 

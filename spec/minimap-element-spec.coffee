@@ -1,12 +1,18 @@
 fs = require 'fs-plus'
+path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
+
+stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
+stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
 describe 'MinimapElement', ->
   [editor, minimap, largeSample, smallSample, jasmineContent, editorElement, minimapElement] = []
 
   beforeEach ->
+    jasmineContent = document.body.querySelector('#jasmine-content')
+
     atom.config.set 'minimap.charHeight', 4
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
@@ -20,6 +26,8 @@ describe 'MinimapElement', ->
     minimap = new Minimap({textEditor: editor})
     largeSample = fs.readFileSync(atom.project.resolve('large-file.coffee')).toString()
     smallSample = fs.readFileSync(atom.project.resolve('sample.coffee')).toString()
+
+    editor.setText largeSample
 
     editorElement = atom.views.getView(editor)
     minimapElement = atom.views.getView(minimap)
@@ -35,3 +43,36 @@ describe 'MinimapElement', ->
 
   it 'has a div representing the visible area', ->
     expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
+
+  describe 'when attached to the text editor element', ->
+    [nextAnimationFrame] = []
+
+    beforeEach ->
+      spyOn(window, "setInterval").andCallFake window.fakeSetInterval
+      spyOn(window, "clearInterval").andCallFake window.fakeClearInterval
+
+      noAnimationFrame = -> throw new Error('No animation frame requested')
+      nextAnimationFrame = noAnimationFrame
+
+      requestAnimationFrameSafe = window.requestAnimationFrame
+      spyOn(window, 'requestAnimationFrame').andCallFake (fn) ->
+        nextAnimationFrame = ->
+          nextAnimationFrame = noAnimationFrame
+          fn()
+
+      styleNode = document.createElement('style')
+      styleNode.textContent = """
+        #{stylesheet}
+      """
+
+      jasmineContent.appendChild(styleNode)
+
+    beforeEach ->
+      editorElement.style.width = '200px'
+      editorElement.style.height = '50px'
+      jasmineContent.appendChild(editorElement)
+      minimapElement.attach()
+
+    it 'takes the height of the editor', ->
+      expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
+      expect(minimapElement.offsetWidth).toEqual(editorElement.offsetWidth / 10)
