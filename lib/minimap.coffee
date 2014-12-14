@@ -15,8 +15,12 @@ class Minimap
     subs.add atom.config.observe 'minimap.interline', (@interline) =>
 
     subs.add @textEditor.onDidChange (changes) => @emitChanges(changes)
+    subs.add @textEditor.onDidChangeScrollTop (scrollTop) =>
+      @emitter.emit('did-change-scroll-top', scrollTop)
 
   onDidChange: (callback) -> @emitter.on 'did-change', callback
+  onDidChangeScrollTop: (callback) ->
+    @emitter.on 'did-change-scroll-top', callback
 
   getTextEditor: -> @textEditor
 
