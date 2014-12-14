@@ -22,6 +22,7 @@ class Minimap
       @emitter.emit('did-change-scroll-top', scrollTop)
 
   onDidChange: (callback) -> @emitter.on 'did-change', callback
+
   onDidChangeScrollTop: (callback) ->
     @emitter.on 'did-change-scroll-top', callback
 
