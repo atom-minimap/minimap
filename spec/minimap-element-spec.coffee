@@ -128,3 +128,22 @@ describe 'MinimapElement', ->
         it 'updates the visible area', ->
           expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
           expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+
+      describe 'when the editor is resized to a greater size', ->
+        beforeEach ->
+          height = editor.getHeight()
+          editorElement.style.width = '300px'
+          editorElement.style.height = '300px'
+
+          waitsFor -> editor.getHeight() isnt height
+
+          runs ->
+            advanceClock(150)
+            nextAnimationFrame()
+
+        it 'detect the resize and adjust itself', ->
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
+          expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
+
+          expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
+          expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())

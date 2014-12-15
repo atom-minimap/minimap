@@ -1,3 +1,4 @@
+{debounce} = require 'underscore-plus'
 {CompositeDisposable} = require 'event-kit'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
@@ -5,6 +6,10 @@ CanvasDrawer = require './mixins/canvas-drawer'
 class MinimapElement extends HTMLElement
   DOMStylesReader.includeInto(this)
   CanvasDrawer.includeInto(this)
+
+  domPollingInterval: 100
+  domPollingIntervalId: null
+  domPollingPaused: false
 
   createdCallback: ->
     @subscriptions = new CompositeDisposable
@@ -14,6 +19,7 @@ class MinimapElement extends HTMLElement
     @getTextEditorElementRoot().appendChild(this)
 
   attachedCallback: ->
+    @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()
     @requestUpdate()
 
@@ -39,6 +45,23 @@ class MinimapElement extends HTMLElement
     @visibleArea = document.createElement('div')
     @visibleArea.classList.add('minimap-visible-area')
     @shadowRoot.appendChild(@visibleArea)
+
+  pauseDOMPolling: ->
+    @domPollingPaused = true
+    @resumeDOMPollingAfterDelay ?= debounce(@resumeDOMPolling, 100)
+    @resumeDOMPollingAfterDelay()
+
+  resumeDOMPolling: ->
+    @domPollingPaused = false
+
+  resumeDOMPollingAfterDelay: null
+
+  pollDOM: ->
+    return if @domPollingPaused or @updateRequested
+
+    if @width isnt @clientWidth or @height isnt @clientHeight
+      @measureHeightAndWidth()
+      @requestUpdate()
 
   measureHeightAndWidth: ->
     @width = @clientWidth
