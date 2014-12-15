@@ -132,8 +132,8 @@ describe 'MinimapElement', ->
       describe 'when the editor is resized to a greater size', ->
         beforeEach ->
           height = editor.getHeight()
-          editorElement.style.width = '300px'
-          editorElement.style.height = '300px'
+          editorElement.style.width = '100%'
+          editorElement.style.height = '500px'
 
           waitsFor -> editor.getHeight() isnt height
 
