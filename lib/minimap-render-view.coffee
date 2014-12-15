@@ -301,6 +301,12 @@ class MinimapRenderView extends ScrollView
       height: @getMinimapHeight()
     }
 
+  getDummyDOMRoot: (shadowRoot) ->
+    if shadowRoot
+      @minimapView.getEditorViewRoot()
+    else
+      @editorView
+
   # Returns a pixel position corresponding to a character's screen
   # position.
   #
