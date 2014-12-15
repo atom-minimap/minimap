@@ -181,6 +181,8 @@ class CanvasDrawer extends Mixin
         else
           x += w * charWidth
 
+        break if x > canvasWidth
+
       # Finally the highlight over decorations are drawn.
       highlightDecorations = @minimap.decorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
       for decoration in highlightDecorations
