@@ -79,6 +79,8 @@ class MinimapElement extends HTMLElement
     @visibleArea.style.top = (@minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()) + 'px'
     @visibleArea.style.left = (@minimap.getTextEditorScrollLeft()) + 'px'
 
+    @canvas.style.top = (@minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()) + 'px'
+
     @updateCanvas()
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########

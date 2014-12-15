@@ -112,6 +112,12 @@ describe 'MinimapElement', ->
         expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
         expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
 
+      it 'offsets the canvas when the scroll does not match line height', ->
+        editor.setScrollTop(1004)
+        nextAnimationFrame()
+
+        expect(canvas.offsetTop).toEqual(-2)
+
       describe 'when the editor is scrolled', ->
         beforeEach ->
           editor.setScrollTop(2000)
