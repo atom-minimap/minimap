@@ -12,9 +12,6 @@ class CanvasDrawer extends Mixin
     @offscreenContext = @offscreenCanvas.getContext('2d')
 
   updateCanvas: ->
-    #is this scroll only or has content changed?
-    hasChanges = @pendingChanges.length > 0
-
     firstRow = @minimap.getFirstVisibleScreenRow()
     lastRow = @minimap.getLastVisibleScreenRow()
     intactRanges = @computeIntactRanges(firstRow, lastRow)
