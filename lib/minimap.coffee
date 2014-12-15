@@ -33,6 +33,7 @@ class Minimap extends Model
   getTextEditorHeight: -> @textEditor.getHeight() * @getScaleFactor()
 
   getTextEditorScrollTop: -> @textEditor.getScrollTop() * @getScaleFactor()
+  getTextEditorScrollLeft: -> @textEditor.getScrollLeft() * @getScaleFactor()
 
   getTextEditorScrollRatio: ->
     @textEditor.getScrollTop() / @textEditor.displayBuffer.getMaxScrollTop()

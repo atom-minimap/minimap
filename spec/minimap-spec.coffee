@@ -13,6 +13,7 @@ describe 'Minimap', ->
     editor = new TextEditor({})
     editor.setLineHeightInPixels(10)
     editor.setHeight(50)
+    editor.setWidth(200)
 
     minimap = new Minimap({textEditor: editor})
     largeSample = fs.readFileSync(atom.project.resolve('large-file.coffee')).toString()
@@ -21,7 +22,7 @@ describe 'Minimap', ->
   it 'has an associated editor', ->
     expect(minimap.getTextEditor()).toEqual(editor)
 
-  it 'raise an exceptiono if created without a text editor', ->
+  it 'raise an exception if created without a text editor', ->
     expect(-> new Minimap).toThrow()
 
   it 'measures the minimap size based on the current editor content', ->
@@ -85,12 +86,15 @@ describe 'Minimap', ->
     beforeEach ->
       editor.setText(largeSample)
       editor.setScrollTop(1000)
+      editor.setScrollLeft(200)
+
       largeLineCount = editor.getLineCount()
       editorHeight = largeLineCount * editor.getLineHeightInPixels()
       editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
 
     it 'scales the editor scroll based on the minimap scale factor', ->
       expect(minimap.getTextEditorScrollTop()).toEqual(500)
+      expect(minimap.getTextEditorScrollLeft()).toEqual(100)    
 
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
