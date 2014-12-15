@@ -1,6 +1,8 @@
+{CompositeDisposable} = require 'event-kit'
 
 class MinimapElement extends HTMLElement
   createdCallback: ->
+    @subscriptions = new CompositeDisposable
     @initializeContent()
 
   attach: ->
@@ -16,7 +18,11 @@ class MinimapElement extends HTMLElement
 
   getModel: -> @minimap
 
-  setModel: (@minimap) -> @minimap
+  setModel: (@minimap) ->
+    @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
+    @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
+
+    @minimap
 
   initializeContent: ->
     @shadowRoot = @createShadowRoot()

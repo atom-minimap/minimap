@@ -111,3 +111,14 @@ describe 'MinimapElement', ->
       it 'sets the visible visible area offset', ->
         expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
         expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+
+      describe 'when the editor is scrolled', ->
+        beforeEach ->
+          editor.setScrollTop(2000)
+          editor.setScrollLeft(50)
+
+          nextAnimationFrame()
+
+        it 'updates the visible area', ->
+          expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
+          expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
