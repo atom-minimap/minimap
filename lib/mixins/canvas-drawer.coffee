@@ -201,7 +201,6 @@ class CanvasDrawer extends Mixin
   drawToken: (context, text, color, x, y, charWidth, charHeight) ->
     context.fillStyle = color
     chars = 0
-    console.log text
     for char in text
       if /\s/.test char
         if chars > 0
