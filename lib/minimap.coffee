@@ -56,7 +56,7 @@ class Minimap extends Model
 
   getCharWidth: -> @charWidth
 
-  getCharHeight: -> @charWidth
+  getCharHeight: -> @charHeight
 
   getInterline: -> @interline
 
