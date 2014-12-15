@@ -33,7 +33,8 @@ describe 'Minimap', ->
     expect(minimap.getHeight()).toEqual(editor.getLineCount() * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
-    expect(minimap.getScaleFactor()).toEqual(0.5)
+    expect(minimap.getVerticalScaleFactor()).toEqual(0.5)
+    expect(minimap.getHorizontalScaleFactor()).toEqual(2 / editor.getDefaultCharWidth())
 
   it 'measures the editor visible area size at minimap scale', ->
     editor.setText(largeSample)
@@ -104,7 +105,7 @@ describe 'Minimap', ->
 
     it 'scales the editor scroll based on the minimap scale factor', ->
       expect(minimap.getTextEditorScrollTop()).toEqual(500)
-      expect(minimap.getTextEditorScrollLeft()).toEqual(100)
+      expect(minimap.getTextEditorScrollLeft()).toEqual(200 * minimap.getHorizontalScaleFactor())
 
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
