@@ -5,6 +5,7 @@ class CanvasDrawer extends Mixin
   initializeCanvas: ->
     @canvas = document.createElement('canvas')
     @context = @canvas.getContext('2d')
+    @canvas.webkitImageSmoothingEnabled = false
     @pendingChanges ?= []
 
     @offscreenCanvas = document.createElement('canvas')
@@ -17,6 +18,7 @@ class CanvasDrawer extends Mixin
     firstRow = @minimap.getFirstVisibleScreenRow()
     lastRow = @minimap.getLastVisibleScreenRow()
     intactRanges = @computeIntactRanges(firstRow, lastRow)
+
     if intactRanges.length is 0
       @drawLines(@context, firstRow, lastRow, 0)
     else
