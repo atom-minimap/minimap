@@ -60,13 +60,23 @@ describe 'Minimap', ->
 
     expect(changeSpy).toHaveBeenCalled()
 
-  it 'relays scroll events from the editor', ->
+  it 'relays scroll top events from the editor', ->
     editor.setText(largeSample)
 
     scrollSpy = jasmine.createSpy('didScroll')
     minimap.onDidChangeScrollTop(scrollSpy)
 
     editor.setScrollTop(100)
+
+    expect(scrollSpy).toHaveBeenCalled()
+
+  it 'relays scroll left events from the editor', ->
+    editor.setText(largeSample)
+
+    scrollSpy = jasmine.createSpy('didScroll')
+    minimap.onDidChangeScrollLeft(scrollSpy)
+
+    editor.setScrollLeft(100)
 
     expect(scrollSpy).toHaveBeenCalled()
 
@@ -94,7 +104,7 @@ describe 'Minimap', ->
 
     it 'scales the editor scroll based on the minimap scale factor', ->
       expect(minimap.getTextEditorScrollTop()).toEqual(500)
-      expect(minimap.getTextEditorScrollLeft()).toEqual(100)    
+      expect(minimap.getTextEditorScrollLeft()).toEqual(100)
 
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())

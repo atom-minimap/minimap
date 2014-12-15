@@ -22,17 +22,23 @@ class Minimap extends Model
     subs.add @textEditor.onDidChange (changes) => @emitChanges(changes)
     subs.add @textEditor.onDidChangeScrollTop (scrollTop) =>
       @emitter.emit('did-change-scroll-top', scrollTop)
+    subs.add @textEditor.onDidChangeScrollLeft (scrollLeft) =>
+      @emitter.emit('did-change-scroll-left', scrollLeft)
 
   onDidChange: (callback) -> @emitter.on 'did-change', callback
 
   onDidChangeScrollTop: (callback) ->
     @emitter.on 'did-change-scroll-top', callback
 
+  onDidChangeScrollLeft: (callback) ->
+    @emitter.on 'did-change-scroll-left', callback
+
   getTextEditor: -> @textEditor
 
   getTextEditorHeight: -> @textEditor.getHeight() * @getScaleFactor()
 
   getTextEditorScrollTop: -> @textEditor.getScrollTop() * @getScaleFactor()
+
   getTextEditorScrollLeft: -> @textEditor.getScrollLeft() * @getScaleFactor()
 
   getTextEditorScrollRatio: ->
