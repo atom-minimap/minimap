@@ -1,6 +1,11 @@
 {CompositeDisposable} = require 'event-kit'
+DOMStylesReader = require './mixins/dom-styles-reader'
+CanvasDrawer = require './mixins/canvas-drawer'
 
 class MinimapElement extends HTMLElement
+  DOMStylesReader.includeInto(this)
+  CanvasDrawer.includeInto(this)
+
   createdCallback: ->
     @subscriptions = new CompositeDisposable
     @initializeContent()
@@ -25,14 +30,11 @@ class MinimapElement extends HTMLElement
     @minimap
 
   initializeContent: ->
+    @initializeCanvas()
+
     @shadowRoot = @createShadowRoot()
 
-    @canvas = document.createElement('canvas')
-    @context = @canvas.getContext('2d')
     @shadowRoot.appendChild(@canvas)
-
-    @offscreenCanvas = document.createElement('canvas')
-    @offscreenContext = @offscreenCanvas.getContext('2d')
 
     @visibleArea = document.createElement('div')
     @visibleArea.classList.add('minimap-visible-area')
@@ -47,13 +49,21 @@ class MinimapElement extends HTMLElement
       @canvas.width = width * devicePixelRatio
       @canvas.height = height * devicePixelRatio
 
+  getTextEditor: -> @minimap.getTextEditor()
+
   getTextEditorElement: ->
-    @editorElement ?= atom.views.getView(@minimap.getTextEditor())
+    @editorElement ?= atom.views.getView(@getTextEditor())
 
   getTextEditorElementRoot: ->
     editorElement = @getTextEditorElement()
 
     editorElement.shadowRoot ? editorElement
+
+  getDummyDOMRoot: (shadowRoot) ->
+    if shadowRoot
+      @getTextEditorElementRoot()
+    else
+      @getTextEditorElement()
 
   requestUpdate: ->
     return if @frameRequested
@@ -68,6 +78,8 @@ class MinimapElement extends HTMLElement
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
     @visibleArea.style.top = (@minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()) + 'px'
     @visibleArea.style.left = (@minimap.getTextEditorScrollLeft()) + 'px'
+
+    @updateCanvas()
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########
 #    ##       ##       ##       ###   ### ##       ###   ##    ##

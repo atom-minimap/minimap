@@ -58,6 +58,8 @@ class Minimap extends Model
 
   getCharHeight: -> @charWidth
 
+  getInterline: -> @interline
+
   getFirstVisibleScreenRow: ->
     Math.floor(@getMinimapScrollTop() / @getLineHeight())
 
