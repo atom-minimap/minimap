@@ -109,6 +109,5 @@ describe 'MinimapElement', ->
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
 
       it 'sets the visible visible area offset', ->
-
         expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
         expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
