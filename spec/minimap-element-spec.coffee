@@ -93,7 +93,7 @@ describe 'MinimapElement', ->
       expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 10, -1)
 
     it 'resizes the canvas to fit the minimap', ->
-      expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight)
+      expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
       expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
 
     it 'requests an update', ->

@@ -41,13 +41,12 @@ class MinimapElement extends HTMLElement
     @shadowRoot.appendChild(@visibleArea)
 
   measureHeightAndWidth: ->
-    editorElement = @getTextEditorElement()
-    width = @clientWidth
-    height = @clientHeight
+    @width = @clientWidth
+    @height = @clientHeight
 
-    if width isnt @canvas.width or height isnt @canvas.height
-      @canvas.width = width * devicePixelRatio
-      @canvas.height = height * devicePixelRatio
+    if @width isnt @canvas.width or @height isnt @canvas.height
+      @canvas.width = @width * devicePixelRatio
+      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
 
   getTextEditor: -> @minimap.getTextEditor()
 
