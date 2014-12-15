@@ -10,22 +10,51 @@ class MinimapElement extends HTMLElement
   domPollingInterval: 100
   domPollingIntervalId: null
   domPollingPaused: false
+  displayMinimapOnLeft: false
 
   createdCallback: ->
     @subscriptions = new CompositeDisposable
     @initializeContent()
 
-  attach: ->
-    @getTextEditorElementRoot().appendChild(this)
+    @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (displayMinimapOnLeft) =>
+      swapPosition = @attached and displayMinimapOnLeft isnt @displayMinimapOnLeft
+      @displayMinimapOnLeft = displayMinimapOnLeft
+
+      @swapMinimapPosition() if swapPosition
 
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()
     @requestUpdate()
+    @attached = true
 
   detachedCallback: ->
+    @attached = false
 
   attributeChangedCallback: (attrName, oldValue, newValue) ->
+
+  attach: ->
+    return if @attached
+    @swapMinimapPosition()
+
+  swapMinimapPosition: ->
+    if @displayMinimapOnLeft
+      @attachToLeft()
+    else
+      @attachToRight()
+
+  attachToLeft: ->
+    root = @getTextEditorElementRoot()
+    root.insertBefore(this, root.children[0])
+
+  attachToRight: ->
+    @getTextEditorElementRoot().appendChild(this)
+
+  detach: ->
+    return unless @attached
+    return unless @parentNode?
+
+    @parentNode.removeChild(this)
 
   getModel: -> @minimap
 
