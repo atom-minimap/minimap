@@ -60,6 +60,8 @@ class MinimapElement extends HTMLElement
   update: ->
     @visibleArea.style.width = @clientWidth + 'px'
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
+    @visibleArea.style.top = (@minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()) + 'px'
+    @visibleArea.style.left = (@minimap.getTextEditorScrollLeft()) + 'px'
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########
 #    ##       ##       ##       ###   ### ##       ###   ##    ##

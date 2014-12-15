@@ -11,8 +11,6 @@ describe 'MinimapElement', ->
   [editor, minimap, largeSample, smallSample, jasmineContent, editorElement, minimapElement] = []
 
   beforeEach ->
-    jasmineContent = document.body.querySelector('#jasmine-content')
-
     atom.config.set 'minimap.charHeight', 4
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
@@ -48,6 +46,8 @@ describe 'MinimapElement', ->
     [nextAnimationFrame, canvas, visibleArea] = []
 
     beforeEach ->
+      jasmineContent = document.body.querySelector('#jasmine-content')
+
       spyOn(window, "setInterval").andCallFake window.fakeSetInterval
       spyOn(window, "clearInterval").andCallFake window.fakeClearInterval
 
@@ -63,6 +63,14 @@ describe 'MinimapElement', ->
       styleNode = document.createElement('style')
       styleNode.textContent = """
         #{stylesheet}
+
+        atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
+          background: red;
+        }
+
+        atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area, atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+          background: green;
+        }
       """
 
       jasmineContent.appendChild(styleNode)
@@ -71,7 +79,10 @@ describe 'MinimapElement', ->
       canvas = minimapElement.shadowRoot.querySelector('canvas')
       editorElement.style.width = '200px'
       editorElement.style.height = '50px'
+
       jasmineContent.appendChild(editorElement)
+      editor.setScrollTop(1000)
+      editor.setScrollLeft(200)
       minimapElement.attach()
 
     it 'takes the height of the editor', ->
@@ -96,3 +107,8 @@ describe 'MinimapElement', ->
       it 'sets the visible area width and height', ->
         expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
+
+      it 'sets the visible visible area offset', ->
+
+        expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
+        expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
