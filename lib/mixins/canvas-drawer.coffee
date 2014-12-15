@@ -19,6 +19,8 @@ class CanvasDrawer extends Mixin
     lastRow = @minimap.getLastVisibleScreenRow()
     intactRanges = @computeIntactRanges(firstRow, lastRow)
 
+    @context.clearRect(0,0,@canvas.width, @canvas.height)
+
     if intactRanges.length is 0
       @drawLines(@context, firstRow, lastRow, 0)
     else
