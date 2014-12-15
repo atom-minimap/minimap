@@ -90,7 +90,7 @@ describe 'MinimapElement', ->
 
       # Actually, when in a flex display of 200px width, 10% gives 18px
       # and not 20px
-      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 10, -1)
+      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 11, 0)
 
     it 'resizes the canvas to fit the minimap', ->
       expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
