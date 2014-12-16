@@ -41,6 +41,7 @@ class MinimapElement extends HTMLElement
     @attached = true
 
   detachedCallback: ->
+    clearInterval(@domPollingIntervalId)
     @attached = false
 
   attributeChangedCallback: (attrName, oldValue, newValue) ->
