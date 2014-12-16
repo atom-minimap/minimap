@@ -27,10 +27,10 @@ describe 'Minimap', ->
 
   it 'measures the minimap size based on the current editor content', ->
     editor.setText(smallSample)
-    expect(minimap.getHeight()).toEqual(20)
+    expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
 
     editor.setText(largeSample)
-    expect(minimap.getHeight()).toEqual(editor.getLineCount() * 5)
+    expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
     expect(minimap.getVerticalScaleFactor()).toEqual(0.5)
@@ -42,7 +42,7 @@ describe 'Minimap', ->
 
   it 'measures the available minimap scroll', ->
     editor.setText(largeSample)
-    largeLineCount = editor.getLineCount()
+    largeLineCount = editor.getScreenLineCount()
 
     expect(minimap.getMinimapMaxScrollTop()).toEqual(largeLineCount * 5 - 50)
     expect(minimap.canScroll()).toBeTruthy()
@@ -81,6 +81,19 @@ describe 'Minimap', ->
 
     expect(scrollSpy).toHaveBeenCalled()
 
+  describe 'when soft wrap is enabled', ->
+    beforeEach ->
+      atom.config.set 'editor.softWrap', true
+      atom.config.set 'editor.softWrapAtPreferredLineLength', true
+      atom.config.set 'editor.preferredLineLength', 2
+
+    it 'measures the minimap using screen lines', ->
+      editor.setText(smallSample)
+      expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
+
+      editor.setText(largeSample)
+      expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
+
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
       expect(minimap.getMinimapScrollTop()).toEqual(0)
@@ -99,7 +112,7 @@ describe 'Minimap', ->
       editor.setScrollTop(1000)
       editor.setScrollLeft(200)
 
-      largeLineCount = editor.getLineCount()
+      largeLineCount = editor.getScreenLineCount()
       editorHeight = largeLineCount * editor.getLineHeightInPixels()
       editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
 

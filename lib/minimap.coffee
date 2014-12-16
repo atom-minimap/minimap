@@ -49,7 +49,7 @@ class Minimap extends Model
   getTextEditorScrollRatio: ->
     @textEditor.getScrollTop() / @textEditor.displayBuffer.getMaxScrollTop()
 
-  getHeight: -> @textEditor.getLineCount() * @getLineHeight()
+  getHeight: -> @textEditor.getScreenLineCount() * @getLineHeight()
 
   getVerticalScaleFactor: ->
     @getLineHeight() / @textEditor.getLineHeightInPixels()
@@ -79,7 +79,7 @@ class Minimap extends Model
   canScroll: -> @getMinimapMaxScrollTop() > 0
 
   getMarker: (id) -> @textEditor.getMarker(id)
-  
+
   findMarkers: (o) -> @textEditor.findMarkers(o)
 
   markBufferRange: (range) -> @textEditor.markBufferRange(range)
