@@ -16,23 +16,33 @@ class MinimapElement extends HTMLElement
     @subscriptions = new CompositeDisposable
     @initializeContent()
 
-    @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (displayMinimapOnLeft) =>
-      swapPosition = @attached and displayMinimapOnLeft isnt @displayMinimapOnLeft
-      @displayMinimapOnLeft = displayMinimapOnLeft
+    @observeConfig
+      'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
+        swapPosition = @attached and displayMinimapOnLeft isnt @displayMinimapOnLeft
+        @displayMinimapOnLeft = displayMinimapOnLeft
 
-      @swapMinimapPosition() if swapPosition
+        @swapMinimapPosition() if swapPosition
 
-    @subscriptions.add atom.config.observe 'minimap.minimapScrollIndicator', (@minimapScrollIndicator) =>
-      if @minimapScrollIndicator and not @scrollIndicator?
-        @initializeScrollIndicator()
-      else if @scrollIndicator?
-        @disposeScrollIndicator()
+      'minimap.minimapScrollIndicator': (@minimapScrollIndicator) =>
+        if @minimapScrollIndicator and not @scrollIndicator?
+          @initializeScrollIndicator()
+        else if @scrollIndicator?
+          @disposeScrollIndicator()
 
-    @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
-      @requestForcedUpdate() if @attached
+      'minimap.textOpacity': (@textOpacity) =>
+        @requestForcedUpdate() if @attached
 
-    @subscriptions.add atom.config.observe 'minimap.displayCodeHighlights', (@displayCodeHighlights) =>
-      @requestForcedUpdate() if @attached
+      'minimap.displayCodeHighlights': (@displayCodeHighlights) =>
+        @requestForcedUpdate() if @attached
+
+      'minimap.adjustMinimapWidthToSoftWrap': (@adjustToSoftWrap) =>
+        if @attached
+          @measureHeightAndWidth()
+          @requestForcedUpdate()
+
+  observeConfig: (configs={}) ->
+    for config, callback of configs
+      @subscriptions.add atom.config.observe config, callback
 
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
@@ -120,8 +130,15 @@ class MinimapElement extends HTMLElement
       @requestUpdate()
 
   measureHeightAndWidth: ->
-    @width = @clientWidth
     @height = @clientHeight
+    @width = @clientWidth
+
+    if @adjustToSoftWrap
+      lineLength = atom.config.get('editor.preferredLineLength')
+      softWrap = atom.config.get('editor.softWrap')
+      width = lineLength * @minimap.getCharWidth()
+
+      @width = width if softWrap and lineLength and width < @width
 
     if @width isnt @canvas.width or @height isnt @canvas.height
       @canvas.width = @width * devicePixelRatio
@@ -158,6 +175,11 @@ class MinimapElement extends HTMLElement
 
   update: ->
     return unless @attached
+
+    if @adjustToSoftWrap
+      @style.width = @width + 'px'
+    else
+      @style.width = null
 
     @visibleArea.style.width = @clientWidth + 'px'
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'

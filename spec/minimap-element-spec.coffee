@@ -273,6 +273,27 @@ describe 'MinimapElement', ->
       it 'moves the attached minimap to the left', ->
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
 
+    describe 'when minimap.adjustMinimapWidthToSoftWrap is true', ->
+      beforeEach ->
+        atom.config.set 'editor.softWrap', true
+        atom.config.set 'editor.softWrapAtPreferredLineLength', true
+        atom.config.set 'editor.preferredLineLength', 2
+
+        atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', true
+        nextAnimationFrame()
+
+      it 'adjusts the width of the minimap', ->
+        expect(minimapElement.offsetWidth).toEqual(4)
+
+      describe 'and then disabled', ->
+        beforeEach ->
+          atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', false
+          nextAnimationFrame()
+
+        it 'adjusts the width of the minimap', ->
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
+          expect(minimapElement.style.width).toEqual('')
+
     describe 'when minimap.minimapScrollIndicator setting is true', ->
       beforeEach ->
         editor.setText(mediumSample)
