@@ -28,6 +28,9 @@ class MinimapElement extends HTMLElement
       else if @scrollIndicator?
         @disposeScrollIndicator()
 
+    @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
+      @requestForcedUpdate() if @attached
+
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()
@@ -67,6 +70,8 @@ class MinimapElement extends HTMLElement
   setModel: (@minimap) ->
     @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
     @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
+    @subscriptions.add @minimap.onDidChangeConfig =>
+      @requestForcedUpdate() if @attached
     @subscriptions.add @minimap.onDidChange (change) =>
       @pendingChanges.push(change)
       @requestUpdate()
@@ -142,7 +147,14 @@ class MinimapElement extends HTMLElement
       @update()
       @frameRequested = false
 
+  requestForcedUpdate: ->
+    @offscreenFirstRow = null
+    @offscreenLastRow = null
+    @requestUpdate()
+
   update: ->
+    return unless @attached
+
     @visibleArea.style.width = @clientWidth + 'px'
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
     @visibleArea.style.top = (@minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()) + 'px'

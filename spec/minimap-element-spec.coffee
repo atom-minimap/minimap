@@ -14,6 +14,7 @@ describe 'MinimapElement', ->
     atom.config.set 'minimap.charHeight', 4
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
+    atom.config.set 'minimap.textOpacity', 1
 
     MinimapElement.registerViewProvider()
 
@@ -221,13 +222,48 @@ describe 'MinimapElement', ->
     #    ##    ## ##     ## ##   ### ##        ##  ##    ##
     #     ######   #######  ##    ## ##       ####  ######
 
+    describe 'when minimap.textOpacity is changed', ->
+      beforeEach ->
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        atom.config.set 'minimap.textOpacity', 0.3
+        nextAnimationFrame()
+
+      it 'requests a complete update', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
+    describe 'when minimap.charWidth is changed', ->
+      beforeEach ->
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        atom.config.set 'minimap.charWidth', 1
+        nextAnimationFrame()
+
+      it 'requests a complete update', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
+    describe 'when minimap.charHeight is changed', ->
+      beforeEach ->
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        atom.config.set 'minimap.charHeight', 1
+        nextAnimationFrame()
+
+      it 'requests a complete update', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
+    describe 'when minimap.interline is changed', ->
+      beforeEach ->
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        atom.config.set 'minimap.interline', 2
+        nextAnimationFrame()
+
+      it 'requests a complete update', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
     describe 'when minimap.displayMinimapOnLeft setting is true', ->
       beforeEach ->
         atom.config.set 'minimap.displayMinimapOnLeft', true
 
       it 'moves the attached minimap to the left', ->
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
-        nextAnimationFrame()
 
     describe 'when minimap.minimapScrollIndicator setting is true', ->
       beforeEach ->

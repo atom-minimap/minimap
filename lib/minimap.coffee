@@ -16,8 +16,11 @@ class Minimap extends Model
     @initializeDecorations()
 
     subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
+      @emitter.emit('did-change-config')
     subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
+      @emitter.emit('did-change-config')
     subs.add atom.config.observe 'minimap.interline', (@interline) =>
+      @emitter.emit('did-change-config')
 
     subs.add @textEditor.onDidChange (changes) => @emitChanges(changes)
     subs.add @textEditor.onDidChangeScrollTop (scrollTop) =>
@@ -26,6 +29,8 @@ class Minimap extends Model
       @emitter.emit('did-change-scroll-left', scrollLeft)
 
   onDidChange: (callback) -> @emitter.on 'did-change', callback
+
+  onDidChangeConfig: (callback) -> @emitter.on 'did-change-config', callback
 
   onDidChangeScrollTop: (callback) ->
     @emitter.on 'did-change-scroll-top', callback

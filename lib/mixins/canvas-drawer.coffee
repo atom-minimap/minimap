@@ -40,7 +40,7 @@ class CanvasDrawer extends Mixin
   #    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
   #     ######   #######  ########  #######  ##     ##  ######
 
-  getTextOpacity: -> 0.6
+  getTextOpacity: -> @textOpacity
 
   # Returns the default text color for an editor content.
   #
