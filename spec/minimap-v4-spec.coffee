@@ -2,14 +2,22 @@
 Minimap = require '../lib/minimap'
 
 describe 'Minimap package v4', ->
-  [workspaceElement, minimapPackage] = []
+  [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
 
   beforeEach ->
     atom.config.set 'minimap.v4Preview', true
 
+    workspaceElement = atom.views.getView(atom.workspace)
+
+    waitsFor ->
+      atom.workspace.open('sample.coffee')
+
     waitsFor -> atom.packages.activatePackage('minimap')
 
+    waitsFor -> workspaceElement.querySelector('atom-text-editor')
     runs ->
+      editor = atom.workspace.getActiveTextEditor()
+      editorElement = atom.views.getView(editor)
       minimapPackage = atom.packages.getLoadedPackage('minimap').mainModule
 
   afterEach ->
@@ -29,22 +37,6 @@ describe 'Minimap package v4', ->
     expect(minimapElement).toExist()
 
   describe 'when an editor is opened', ->
-    [editor, minimap, editorElement, minimapElement] = []
-
-    beforeEach ->
-      waitsFor ->
-        atom.workspace.open('sample.coffee')
-
-      runs ->
-        workspaceElement = atom.views.getView(atom.workspace)
-        jasmine.attachToDOM(workspaceElement)
-
-      waitsFor -> atom.workspace.getActiveTextEditor()
-
-      runs ->
-        editor = atom.workspace.getActiveTextEditor()
-        editorElement = atom.views.getView(editor)
-
     it 'creates a minimap model for the editor', ->
       expect(minimapPackage.minimapForEditor(editor)).toBeDefined()
 
