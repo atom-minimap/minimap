@@ -133,7 +133,7 @@ class CanvasDrawer extends Mixin
     charHeight = @minimap.getCharHeight() * devicePixelRatio
     charWidth = @minimap.getCharWidth() * devicePixelRatio
     canvasWidth = @canvas.width
-    displayCodeHighlights = false # @minimapView.displayCodeHighlights
+    displayCodeHighlights = @displayCodeHighlights
     decorations = @minimap.decorationsForScreenRowRange(firstRow, lastRow)
 
     line = lines[0]
