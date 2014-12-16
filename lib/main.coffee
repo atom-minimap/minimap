@@ -2,6 +2,7 @@
 
 ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
+V4Main = null
 
 [MinimapPluginGeneratorView, deprecate, semver] = []
 
@@ -80,6 +81,10 @@ class Main
       minimum: 0
       maximum: 1
       description: "The opacity used to render the line's text in the minimap."
+    v4Preview:
+      type: 'boolean'
+      default: false
+      description: "Require Atom restart. Plugins will be disabled."
 
   # Internal: The activation state of the minimap package.
   active: false
@@ -91,20 +96,31 @@ class Main
 
   # Activates the minimap package.
   activate: ->
-    @subscriptions.add atom.commands.add 'atom-workspace',
-      'minimap:toggle': => @toggle()
-      'minimap:generate-plugin': => @generatePlugin()
+    @v4Preview = atom.config.get('minimap.v4Preview')
 
-    workspaceElement = atom.views.getView(atom.workspace)
+    if @v4Preview
+      @version = '4.0.0-preview'
+      V4Main = require './main-v4'
 
-    if atom.config.get('minimap.displayPluginsControls')
+      V4Main.includeInto(Main)
+
+      @activateV4()
+
+    else
       @subscriptions.add atom.commands.add 'atom-workspace',
-        'minimap:open-quick-settings': ->
-          editor = atom.workspace.getActiveEditor()
-          @minimapForEditor(editor).openQuickSettings.mousedown()
+        'minimap:toggle': => @toggle()
+        'minimap:generate-plugin': => @generatePlugin()
 
-    @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (value) ->
-      workspaceElement.classList.toggle 'minimap-on-left', value
+      workspaceElement = atom.views.getView(atom.workspace)
+
+      if atom.config.get('minimap.displayPluginsControls')
+        @subscriptions.add atom.commands.add 'atom-workspace',
+          'minimap:open-quick-settings': ->
+            editor = atom.workspace.getActiveEditor()
+            @minimapForEditor(editor).openQuickSettings.mousedown()
+
+      @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (value) ->
+        workspaceElement.classList.toggle 'minimap-on-left', value
 
     @toggle() if atom.config.get 'minimap.autoToggle'
 
