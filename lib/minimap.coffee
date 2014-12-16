@@ -79,6 +79,7 @@ class Minimap extends Model
   canScroll: -> @getMinimapMaxScrollTop() > 0
 
   getMarker: (id) -> @textEditor.getMarker(id)
+  
   findMarkers: (o) -> @textEditor.findMarkers(o)
 
   markBufferRange: (range) -> @textEditor.markBufferRange(range)
