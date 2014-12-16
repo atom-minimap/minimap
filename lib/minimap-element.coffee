@@ -40,6 +40,9 @@ class MinimapElement extends HTMLElement
           @measureHeightAndWidth()
           @requestForcedUpdate()
 
+      'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
+        @requestUpdate() if @attached
+
   observeConfig: (configs={}) ->
     for config, callback of configs
       @subscriptions.add atom.config.observe config, callback
@@ -131,14 +134,15 @@ class MinimapElement extends HTMLElement
 
   measureHeightAndWidth: ->
     @height = @clientHeight
-    @width = @clientWidth
 
     if @adjustToSoftWrap
       lineLength = atom.config.get('editor.preferredLineLength')
       softWrap = atom.config.get('editor.softWrap')
       width = lineLength * @minimap.getCharWidth()
 
-      @width = width if softWrap and lineLength and width < @width
+      @width = width if softWrap and lineLength and (not @width? or width < @width)
+    else
+      @width = @clientWidth
 
     if @width isnt @canvas.width or @height isnt @canvas.height
       @canvas.width = @width * devicePixelRatio
@@ -181,12 +185,16 @@ class MinimapElement extends HTMLElement
     else
       @style.width = null
 
+    visibleAreaLeft = @minimap.getTextEditorScrollLeft()
+    visibleAreaTop = @minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()
+
     @visibleArea.style.width = @clientWidth + 'px'
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
-    @visibleArea.style.top = (@minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()) + 'px'
-    @visibleArea.style.left = (@minimap.getTextEditorScrollLeft()) + 'px'
+    @transformElement @visibleArea, @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
-    @canvas.style.top = (@minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()) + 'px'
+    canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()
+
+    @transformElement(@canvas, @makeTranslate(0, canvasTop))
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
       @initializeScrollIndicator()
@@ -197,11 +205,20 @@ class MinimapElement extends HTMLElement
       indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getTextEditorScrollRatio()
 
       @scrollIndicator.style.height = indicatorHeight + 'px'
-      @scrollIndicator.style.top = indicatorScroll + 'px'
+      @transformElement @scrollIndicator, @makeTranslate(0, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 
     @updateCanvas()
+
+  transformElement: (el, transform) ->
+    el.style.transform = transform
+
+  makeTranslate: (x=0,y=0) ->
+    if @useHardwareAcceleration
+      "translate3d(#{x}px, #{y}px, 0)"
+    else
+      "translate(#{x}px, #{y}px)"
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########
 #    ##       ##       ##       ###   ### ##       ###   ##    ##

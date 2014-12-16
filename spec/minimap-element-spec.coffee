@@ -7,6 +7,14 @@ MinimapElement = require '../lib/minimap-element'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
+realOffsetTop = (o) ->
+  transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
+  o.offsetTop + transform.m42
+
+realOffsetLeft = (o) ->
+  transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
+  o.offsetLeft + transform.m41
+
 describe 'MinimapElement', ->
   [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement] = []
 
@@ -132,14 +140,14 @@ describe 'MinimapElement', ->
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
 
       it 'sets the visible visible area offset', ->
-        expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
-        expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+        expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
+        expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
 
       it 'offsets the canvas when the scroll does not match line height', ->
         editor.setScrollTop(1004)
         nextAnimationFrame()
 
-        expect(canvas.offsetTop).toEqual(-2)
+        expect(realOffsetTop(canvas)).toBeCloseTo(-2, -1)
 
       it 'renders the visible line decorations', ->
         spyOn(minimapElement, 'drawLineDecorations').andCallThrough()
@@ -175,8 +183,8 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
         it 'updates the visible area', ->
-          expect(visibleArea.offsetTop).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
-          expect(visibleArea.offsetLeft).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+          expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
+          expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
 
       describe 'when the editor is resized to a greater size', ->
         beforeEach ->
@@ -286,6 +294,12 @@ describe 'MinimapElement', ->
       it 'adjusts the width of the minimap', ->
         expect(minimapElement.offsetWidth).toEqual(4)
 
+      describe 'the dom polling routine', ->
+        it 'does not change the value', ->
+          advanceClock(150)
+          nextAnimationFrame()
+          expect(minimapElement.offsetWidth).toEqual(4)
+
       describe 'and then disabled', ->
         beforeEach ->
           atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', false
@@ -329,7 +343,7 @@ describe 'MinimapElement', ->
           scroll = (editor.getHeight() - height) * minimap.getTextEditorScrollRatio()
 
           expect(indicator.offsetHeight).toBeCloseTo(height, 0)
-          expect(indicator.offsetTop).toBeCloseTo(scroll, 0)
+          expect(realOffsetTop(indicator)).toBeCloseTo(scroll, 0)
 
       describe 'when the minimap cannot scroll', ->
         beforeEach ->
