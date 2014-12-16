@@ -134,6 +134,19 @@ describe 'MinimapElement', ->
 
         expect(canvas.offsetTop).toEqual(-2)
 
+      it 'renders the visible line decorations', ->
+        spyOn(minimapElement, 'drawLineDecorations').andCallThrough()
+
+        minimap.decorateMarker(editor.markBufferRange([[1,0], [1,10]]), type: 'line', color: '#0000FF')
+        minimap.decorateMarker(editor.markBufferRange([[10,0], [10,10]]), type: 'line', color: '#0000FF')
+        minimap.decorateMarker(editor.markBufferRange([[100,0], [100,10]]), type: 'line', color: '#0000FF')
+
+        editor.setScrollTop(0)
+        nextAnimationFrame()
+
+        expect(minimapElement.drawLineDecorations).toHaveBeenCalled()
+        expect(minimapElement.drawLineDecorations.calls.length).toEqual(2)
+
       describe 'when the editor is scrolled', ->
         beforeEach ->
           editor.setScrollTop(2000)
@@ -182,7 +195,7 @@ describe 'MinimapElement', ->
           expect(minimapElement.drawLines.calls[1].args[1]).toEqual(100)
           expect(minimapElement.drawLines.calls[1].args[2]).toEqual(101)
 
-    #     ######   #######  ##    ## ######## ####  ######   
+    #     ######   #######  ##    ## ######## ####  ######
     #    ##    ## ##     ## ###   ## ##        ##  ##    ##
     #    ##       ##     ## ####  ## ##        ##  ##
     #    ##       ##     ## ## ## ## ######    ##  ##   ####

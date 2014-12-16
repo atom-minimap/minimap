@@ -156,9 +156,7 @@ class CanvasDrawer extends Mixin
 
       # Line decorations are first drawn on the canvas.
       lineDecorations = @minimap.decorationsByTypesForRow(screenRow, 'line', decorations)
-      for decoration in lineDecorations
-        context.fillStyle = @getDecorationColor(decoration)
-        context.fillRect(0,y0,canvasWidth,lineHeight)
+      @drawLineDecorations(context, lineDecorations, y0, canvasWidth, lineHeight) if lineDecorations.length
 
       # Then comes the highlight decoration with `highlight-under` type.
       highlightDecorations = @minimap.decorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
@@ -217,6 +215,12 @@ class CanvasDrawer extends Mixin
     context.fillRect(x-(chars * charWidth), y, chars*charWidth, charHeight) if chars > 0
 
     x
+
+  drawLineDecorations: (context, decorations, y, canvasWidth, lineHeight) ->
+    for decoration in decorations
+      context.fillStyle = @getDecorationColor(decoration)
+      context.fillRect(0,y,canvasWidth,lineHeight)
+
 
   # Internal: Draws a highlight decoration on the passed-in context.
   #
