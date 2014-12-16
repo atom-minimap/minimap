@@ -42,6 +42,14 @@ describe 'MinimapElement', ->
   it 'has a div representing the visible area', ->
     expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
 
+  #       ###    ######## ########    ###     ######  ##     ##
+  #      ## ##      ##       ##      ## ##   ##    ## ##     ##
+  #     ##   ##     ##       ##     ##   ##  ##       ##     ##
+  #    ##     ##    ##       ##    ##     ## ##       #########
+  #    #########    ##       ##    ######### ##       ##     ##
+  #    ##     ##    ##       ##    ##     ## ##    ## ##     ##
+  #    ##     ##    ##       ##    ##     ##  ######  ##     ##
+
   describe 'when attached to the text editor element', ->
     [nextAnimationFrame, canvas, visibleArea] = []
 
@@ -98,6 +106,14 @@ describe 'MinimapElement', ->
 
     it 'requests an update', ->
       expect(minimapElement.frameRequested).toBeTruthy()
+
+    #    ##     ## ########  ########     ###    ######## ########
+    #    ##     ## ##     ## ##     ##   ## ##      ##    ##
+    #    ##     ## ##     ## ##     ##  ##   ##     ##    ##
+    #    ##     ## ########  ##     ## ##     ##    ##    ######
+    #    ##     ## ##        ##     ## #########    ##    ##
+    #    ##     ## ##        ##     ## ##     ##    ##    ##
+    #     #######  ##        ########  ##     ##    ##    ########
 
     describe 'when the update is performed', ->
       beforeEach ->
@@ -165,6 +181,14 @@ describe 'MinimapElement', ->
           expect(minimapElement.drawLines).toHaveBeenCalled()
           expect(minimapElement.drawLines.calls[1].args[1]).toEqual(100)
           expect(minimapElement.drawLines.calls[1].args[2]).toEqual(101)
+
+    #     ######   #######  ##    ## ######## ####  ######   
+    #    ##    ## ##     ## ###   ## ##        ##  ##    ##
+    #    ##       ##     ## ####  ## ##        ##  ##
+    #    ##       ##     ## ## ## ## ######    ##  ##   ####
+    #    ##       ##     ## ##  #### ##        ##  ##    ##
+    #    ##    ## ##     ## ##   ### ##        ##  ##    ##
+    #     ######   #######  ##    ## ##       ####  ######
 
     describe 'when minimap.displayMinimapOnLeft setting is true', ->
       beforeEach ->
