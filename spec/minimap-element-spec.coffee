@@ -8,7 +8,7 @@ stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
 describe 'MinimapElement', ->
-  [editor, minimap, largeSample, smallSample, jasmineContent, editorElement, minimapElement] = []
+  [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -23,6 +23,7 @@ describe 'MinimapElement', ->
 
     minimap = new Minimap({textEditor: editor})
     largeSample = fs.readFileSync(atom.project.resolve('large-file.coffee')).toString()
+    mediumSample = fs.readFileSync(atom.project.resolve('two-hundred.txt')).toString()
     smallSample = fs.readFileSync(atom.project.resolve('sample.coffee')).toString()
 
     editor.setText largeSample
@@ -74,6 +75,10 @@ describe 'MinimapElement', ->
 
         atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
           background: rgba(255,0,0,0.3);
+        }
+
+        atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator, atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
+          background: rgba(0,0,255,0.3);
         }
 
         atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area, atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
@@ -223,3 +228,55 @@ describe 'MinimapElement', ->
       it 'moves the attached minimap to the left', ->
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
         nextAnimationFrame()
+
+    describe 'when minimap.minimapScrollIndicator setting is true', ->
+      beforeEach ->
+        editor.setText(mediumSample)
+        editor.setScrollTop(50)
+        nextAnimationFrame()
+
+        atom.config.set 'minimap.minimapScrollIndicator', true
+
+      it 'adds a scroll indicator in the element', ->
+        expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
+
+      describe 'and then deactivated', ->
+        it 'removes the scroll indicator from the element', ->
+          atom.config.set 'minimap.minimapScrollIndicator', false
+          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).not.toExist()
+
+      describe 'on update', ->
+        beforeEach ->
+          height = editor.getHeight()
+          editorElement.style.height = '500px'
+
+          waitsFor -> editor.getHeight() isnt height
+
+          runs ->
+            advanceClock(150)
+            nextAnimationFrame()
+
+        it 'adjusts the size and position of the indicator', ->
+          indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+
+          height = editor.getHeight() * (editor.getHeight() / minimap.getHeight())
+          scroll = (editor.getHeight() - height) * minimap.getTextEditorScrollRatio()
+
+          expect(indicator.offsetHeight).toBeCloseTo(height, 0)
+          expect(indicator.offsetTop).toBeCloseTo(scroll, 0)
+
+      describe 'when the minimap cannot scroll', ->
+        beforeEach ->
+          editor.setText(smallSample)
+          nextAnimationFrame()
+
+        it 'removes the scroll indicator', ->
+          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).not.toExist()
+
+        describe 'and then can scroll again', ->
+          beforeEach ->
+            editor.setText(largeSample)
+            nextAnimationFrame()
+
+          it 'attaches the scroll indicator', ->
+            expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()

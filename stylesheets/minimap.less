@@ -23,6 +23,16 @@ atom-text-editor::shadow, atom-text-editor {
         position: absolute;
         display: 'block';
       }
+
+      .minimap-scroll-indicator {
+        position: absolute;
+        display: block;
+        right: 0;
+        width: 2px;
+        min-height: 2px;
+        z-index: 10;
+        background: @background-color-selected;
+      }
     }
   }
 }

@@ -22,6 +22,12 @@ class MinimapElement extends HTMLElement
 
       @swapMinimapPosition() if swapPosition
 
+    @subscriptions.add atom.config.observe 'minimap.minimapScrollIndicator', (@minimapScrollIndicator) =>
+      if @minimapScrollIndicator and not @scrollIndicator?
+        @initializeScrollIndicator()
+      else if @scrollIndicator?
+        @disposeScrollIndicator()
+
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()
@@ -77,6 +83,15 @@ class MinimapElement extends HTMLElement
     @visibleArea = document.createElement('div')
     @visibleArea.classList.add('minimap-visible-area')
     @shadowRoot.appendChild(@visibleArea)
+
+  initializeScrollIndicator: ->
+    @scrollIndicator = document.createElement('div')
+    @scrollIndicator.classList.add 'minimap-scroll-indicator'
+    @shadowRoot.appendChild(@scrollIndicator)
+
+  disposeScrollIndicator: ->
+    @shadowRoot.removeChild(@scrollIndicator)
+    @scrollIndicator = undefined
 
   pauseDOMPolling: ->
     @domPollingPaused = true
@@ -134,6 +149,19 @@ class MinimapElement extends HTMLElement
     @visibleArea.style.left = (@minimap.getTextEditorScrollLeft()) + 'px'
 
     @canvas.style.top = (@minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()) + 'px'
+
+    if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
+      @initializeScrollIndicator()
+
+    if @scrollIndicator?
+      editorHeight = @getTextEditor().getHeight()
+      indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
+      indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getTextEditorScrollRatio()
+
+      @scrollIndicator.style.height = indicatorHeight + 'px'
+      @scrollIndicator.style.top = indicatorScroll + 'px'
+
+      @disposeScrollIndicator() if not @minimap.canScroll()
 
     @updateCanvas()
 
