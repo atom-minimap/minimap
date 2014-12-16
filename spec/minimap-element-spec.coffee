@@ -197,7 +197,6 @@ describe 'MinimapElement', ->
           expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
 
       describe 'when the editor visible content is changed', ->
-
         beforeEach ->
           editor.setScrollLeft(0)
           editor.setScrollTop(1400)
