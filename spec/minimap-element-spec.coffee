@@ -148,10 +148,10 @@ describe 'MinimapElement', ->
           expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
           expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
 
-    describe 'when displayMinimapOnLeft setting is true', ->
+    describe 'when minimap.displayMinimapOnLeft setting is true', ->
       beforeEach ->
         atom.config.set 'minimap.displayMinimapOnLeft', true
 
-      it 'moves the attached to the left', ->
+      it 'moves the attached minimap to the left', ->
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
         nextAnimationFrame()
