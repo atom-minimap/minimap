@@ -1,4 +1,4 @@
-xdescribe "Minimap", ->
+describe "Minimap", ->
   [workspaceElement, editor, editorView] = []
 
   beforeEach ->

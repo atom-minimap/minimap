@@ -1,9 +1,9 @@
 path = require 'path'
 MinimapRenderView = require '../lib/minimap-render-view'
 MinimapView = require '../lib/minimap-view'
-Minimap = require '../lib/minimap'
+Minimap = require '../lib/main'
 
-xdescribe "MinimapRenderView", ->
+describe "MinimapRenderView", ->
   [minimapView, MinimapRenderView, editorView, updateCallback, workspaceElement, editor] = []
 
   afterEach -> minimapView?.detach()

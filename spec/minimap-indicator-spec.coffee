@@ -30,7 +30,7 @@ SCROLLER_HEIGHT = 1000
 #   .............
 #
 
-xdescribe "Minimap Indicator", ->
+describe "Minimap Indicator", ->
   describe 'set indicator size', ->
     beforeEach ->
       indicator.width = INDICATOR_WIDTH
