@@ -61,6 +61,9 @@ class MinimapElement extends HTMLElement
   setModel: (@minimap) ->
     @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
     @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
+    @subscriptions.add @minimap.onDidChange (change) =>
+      @pendingChanges.push(change)
+      @requestUpdate()
 
     @minimap
 

@@ -148,6 +148,24 @@ describe 'MinimapElement', ->
           expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
           expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
 
+      describe 'when the editor visible content is changed', ->
+
+        beforeEach ->
+          editor.setScrollLeft(0)
+          editor.setScrollTop(1400)
+          editor.setSelectedBufferRange [[101, 0], [102, 20]]
+          nextAnimationFrame()
+
+          spyOn(minimapElement, 'drawLines').andCallThrough()
+          editor.insertText 'foo'
+
+        it 'rerenders the part that have changed', ->
+          nextAnimationFrame()
+
+          expect(minimapElement.drawLines).toHaveBeenCalled()
+          expect(minimapElement.drawLines.calls[1].args[1]).toEqual(100)
+          expect(minimapElement.drawLines.calls[1].args[2]).toEqual(101)
+
     describe 'when minimap.displayMinimapOnLeft setting is true', ->
       beforeEach ->
         atom.config.set 'minimap.displayMinimapOnLeft', true
