@@ -31,6 +31,9 @@ class MinimapElement extends HTMLElement
     @subscriptions.add atom.config.observe 'minimap.textOpacity', (@textOpacity) =>
       @requestForcedUpdate() if @attached
 
+    @subscriptions.add atom.config.observe 'minimap.displayCodeHighlights', (@displayCodeHighlights) =>
+      @requestForcedUpdate() if @attached
+
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()

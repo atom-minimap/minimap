@@ -230,6 +230,15 @@ describe 'MinimapElement', ->
       it 'requests a complete update', ->
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
 
+    describe 'when minimap.displayCodeHighlights is changed', ->
+      beforeEach ->
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        atom.config.set 'minimap.displayCodeHighlights', true
+        nextAnimationFrame()
+
+      it 'requests a complete update', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
     describe 'when minimap.charWidth is changed', ->
       beforeEach ->
         spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
