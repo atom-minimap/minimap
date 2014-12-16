@@ -12,13 +12,14 @@ describe 'Minimap package v4', ->
     waitsFor ->
       atom.workspace.open('sample.coffee')
 
-    waitsFor -> atom.packages.activatePackage('minimap')
+    waitsFor ->
+      atom.packages.activatePackage('minimap').then (pkg) ->
+        minimapPackage = pkg.mainModule
 
     waitsFor -> workspaceElement.querySelector('atom-text-editor')
     runs ->
       editor = atom.workspace.getActiveTextEditor()
       editorElement = atom.views.getView(editor)
-      minimapPackage = atom.packages.getLoadedPackage('minimap').mainModule
 
   afterEach ->
     minimapPackage.deactivate()
