@@ -21,13 +21,8 @@ describe 'Minimap package v4', ->
       editor = atom.workspace.getActiveTextEditor()
       editorElement = atom.views.getView(editor)
 
-      console.log editor, editorElement
-
     waitsFor ->
       workspaceElement.querySelector('atom-text-editor::shadow atom-text-editor-minimap')
-
-  afterEach ->
-    minimapPackage.deactivate()
 
   it 'returns a custom version instead of the one in package.json', ->
     expect(minimapPackage.version).toEqual('4.0.0-preview')
@@ -39,7 +34,6 @@ describe 'Minimap package v4', ->
     textEditor = new TextEditor({})
     minimap = new Minimap({textEditor})
     minimapElement = atom.views.getView(minimap)
-    console.log minimap, minimapElement
 
     expect(minimapElement).toExist()
 
