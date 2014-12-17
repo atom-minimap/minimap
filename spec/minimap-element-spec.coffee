@@ -411,3 +411,33 @@ describe 'MinimapElement', ->
 
           it 'attaches the scroll indicator', ->
             expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
+
+    #     #######  ##     ## ####  ######  ##    ##
+    #    ##     ## ##     ##  ##  ##    ## ##   ##
+    #    ##     ## ##     ##  ##  ##       ##  ##
+    #    ##     ## ##     ##  ##  ##       #####
+    #    ##  ## ## ##     ##  ##  ##       ##  ##
+    #    ##    ##  ##     ##  ##  ##    ## ##   ##
+    #     ##### ##  #######  ####  ######  ##    ##
+    #
+    #     ######  ######## ######## ######## #### ##    ##  ######    ######
+    #    ##    ## ##          ##       ##     ##  ###   ## ##    ##  ##    ##
+    #    ##       ##          ##       ##     ##  ####  ## ##        ##
+    #     ######  ######      ##       ##     ##  ## ## ## ##   ####  ######
+    #          ## ##          ##       ##     ##  ##  #### ##    ##        ##
+    #    ##    ## ##          ##       ##     ##  ##   ### ##    ##  ##    ##
+    #     ######  ########    ##       ##    #### ##    ##  ######    ######
+
+    describe 'when minimap.displayPluginsControls setting is true', ->
+      [openQuickSettings] = []
+      beforeEach ->
+        atom.config.set 'minimap.displayPluginsControls', true
+
+      it 'has a div to open the quick settings', ->
+        expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).toExist()
+      describe 'then disabling it', ->
+        beforeEach ->
+          atom.config.set 'minimap.displayPluginsControls', false
+
+        it 'removes the div', ->
+          expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).not.toExist()

@@ -31,6 +31,12 @@ class MinimapElement extends HTMLElement
 
         @requestUpdate() if @attached
 
+      'minimap.displayPluginsControls': (@displayPluginsControls) =>
+        if @displayPluginsControls and not @openQuickSettings?
+          @initializeOpenQuickSettings()
+        else if @openQuickSettings?
+          @disposeOpenQuickSettings()
+
       'minimap.textOpacity': (@textOpacity) =>
         @requestForcedUpdate() if @attached
 
@@ -120,6 +126,15 @@ class MinimapElement extends HTMLElement
   disposeScrollIndicator: ->
     @shadowRoot.removeChild(@scrollIndicator)
     @scrollIndicator = undefined
+
+  initializeOpenQuickSettings: ->
+    @openQuickSettings = document.createElement('div')
+    @openQuickSettings.classList.add 'open-minimap-quick-settings'
+    @shadowRoot.appendChild(@openQuickSettings)
+
+  disposeOpenQuickSettings: ->
+    @shadowRoot.removeChild(@openQuickSettings)
+    @openQuickSettings = undefined
 
   pauseDOMPolling: ->
     @domPollingPaused = true
