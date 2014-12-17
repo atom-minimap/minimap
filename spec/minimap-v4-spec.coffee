@@ -6,6 +6,7 @@ describe 'Minimap package v4', ->
 
   beforeEach ->
     atom.config.set 'minimap.v4Preview', true
+    atom.config.set 'minimap.autoToggle', true
 
     workspaceElement = atom.views.getView(atom.workspace)
 
