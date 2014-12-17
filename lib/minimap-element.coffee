@@ -138,6 +138,11 @@ class MinimapElement extends HTMLElement
 
       @quickSettingsView = new MinimapQuickSettingsView(this)
       @quickSettingsView.attach()
+      {top, left} = @getBoundingClientRect()
+      @quickSettingsView.css({
+        top: top + 'px'
+        left: (left - @quickSettingsView.width()) + 'px'
+      })
 
   disposeOpenQuickSettings: ->
     @shadowRoot.removeChild(@openQuickSettings)

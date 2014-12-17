@@ -429,7 +429,7 @@ describe 'MinimapElement', ->
     #     ######  ########    ##       ##    #### ##    ##  ######    ######
 
     describe 'when minimap.displayPluginsControls setting is true', ->
-      [openQuickSettings, workspaceElement] = []
+      [openQuickSettings, quickSettingsView, workspaceElement] = []
       beforeEach ->
         atom.config.set 'minimap.displayPluginsControls', true
 
@@ -439,15 +439,25 @@ describe 'MinimapElement', ->
       describe 'clicking on the div', ->
         beforeEach ->
           workspaceElement = atom.views.getView(atom.workspace)
+          jasmineContent.appendChild(workspaceElement)
 
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
           click(openQuickSettings)
+
+          quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
 
         afterEach ->
           minimapElement.quickSettingsView.destroy()
 
         it 'opens the quick settings view', ->
-          expect(workspaceElement.querySelector('.minimap-quick-settings')).toExist()
+          expect(quickSettingsView).toExist()
+
+        it 'position the quick settings view next to the minimap', ->
+          minimapBounds = minimapElement.getBoundingClientRect()
+          settingsBounds = quickSettingsView.getBoundingClientRect()
+
+          expect(realOffsetTop(quickSettingsView)).toBeCloseTo(minimapBounds.top, 0)
+          expect(realOffsetLeft(quickSettingsView)).toBeCloseTo(minimapBounds.left - settingsBounds.width, 0)
 
       describe 'then disabling it', ->
         beforeEach ->
