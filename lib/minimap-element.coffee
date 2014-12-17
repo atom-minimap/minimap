@@ -81,14 +81,18 @@ class MinimapElement extends HTMLElement
   detach: ->
     return unless @attached
     return unless @parentNode?
-
     @parentNode.removeChild(this)
+
+  destroy: ->
+    @subscriptions.dispose()
+    @detach()
 
   getModel: -> @minimap
 
   setModel: (@minimap) ->
     @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
     @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
+    @subscriptions.add @minimap.onDidDestroy => @destroy()
     @subscriptions.add @minimap.onDidChangeConfig =>
       @requestForcedUpdate() if @attached
     @subscriptions.add @minimap.onDidChange (change) =>
@@ -185,7 +189,7 @@ class MinimapElement extends HTMLElement
     @requestUpdate()
 
   update: ->
-    return unless @attached and @isVisible()
+    return unless @attached and @isVisible() and not @minimap.isDestroyed()
 
     if @adjustToSoftWrap
       @style.marginRight = @marginRight + 'px'

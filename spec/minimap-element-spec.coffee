@@ -231,6 +231,28 @@ describe 'MinimapElement', ->
           expect(minimapElement.canvas.width).toEqual(canvasWidth)
           expect(minimapElement.canvas.height).toEqual(canvasHeight)
 
+    #    ########  ########  ######  ######## ########   #######  ##    ##
+    #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
+    #    ##     ## ##       ##          ##    ##     ## ##     ##   ####
+    #    ##     ## ######    ######     ##    ########  ##     ##    ##
+    #    ##     ## ##             ##    ##    ##   ##   ##     ##    ##
+    #    ##     ## ##       ##    ##    ##    ##    ##  ##     ##    ##
+    #    ########  ########  ######     ##    ##     ##  #######     ##
+
+    describe 'when the model is destroyed', ->
+      beforeEach ->
+        minimap.destroy()
+
+      it 'detaches itself from its parent', ->
+        expect(minimapElement.parentNode).toBeNull()
+
+      it 'stops the DOM polling interval', ->
+        spyOn(minimapElement, 'pollDOM')
+
+        advanceClock(200)
+
+        expect(minimapElement.pollDOM).not.toHaveBeenCalled()
+
     #     ######   #######  ##    ## ######## ####  ######
     #    ##    ## ##     ## ###   ## ##        ##  ##    ##
     #    ##       ##     ## ####  ## ##        ##  ##
