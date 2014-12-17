@@ -29,6 +29,8 @@ class MinimapElement extends HTMLElement
         else if @scrollIndicator?
           @disposeScrollIndicator()
 
+        @requestUpdate() if @attached
+
       'minimap.textOpacity': (@textOpacity) =>
         @requestForcedUpdate() if @attached
 
@@ -134,20 +136,23 @@ class MinimapElement extends HTMLElement
 
   measureHeightAndWidth: ->
     @height = @clientHeight
+    @width = @clientWidth
+    canvasWidth = @width
+
+    return unless @isVisible()
 
     if @adjustToSoftWrap
       lineLength = atom.config.get('editor.preferredLineLength')
       softWrap = atom.config.get('editor.softWrap')
       width = lineLength * @minimap.getCharWidth()
 
-      @width = width if softWrap and lineLength and (not @width? or width < @width)
+      @marginRight = width - @width if softWrap and lineLength and width < @width
+      canvasWidth = width
     else
-      @width = @clientWidth
+      delete @marginRight
 
-    return unless @isVisible()
-
-    if @width isnt @canvas.width or @height isnt @canvas.height
-      @canvas.width = @width * devicePixelRatio
+    if canvasWidth isnt @canvas.width or @height isnt @canvas.height
+      @canvas.width = canvasWidth * devicePixelRatio
       @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
 
   getTextEditor: -> @minimap.getTextEditor()
@@ -183,9 +188,9 @@ class MinimapElement extends HTMLElement
     return unless @attached and @isVisible()
 
     if @adjustToSoftWrap
-      @style.width = @width + 'px'
+      @style.marginRight = @marginRight + 'px'
     else
-      @style.width = null
+      @style.marginRight = null
 
     visibleAreaLeft = @minimap.getTextEditorScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()
@@ -205,9 +210,11 @@ class MinimapElement extends HTMLElement
       editorHeight = @getTextEditor().getHeight()
       indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
       indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getTextEditorScrollRatio()
+      indicatorOffset = 0
+      indicatorOffset = @marginRight if @adjustToSoftWrap
 
       @scrollIndicator.style.height = indicatorHeight + 'px'
-      @transformElement @scrollIndicator, @makeTranslate(0, indicatorScroll)
+      @transformElement @scrollIndicator, @makeTranslate(indicatorOffset, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 

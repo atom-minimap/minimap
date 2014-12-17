@@ -292,7 +292,10 @@ describe 'MinimapElement', ->
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
 
     describe 'when minimap.adjustMinimapWidthToSoftWrap is true', ->
+      [minimapWidth] = []
       beforeEach ->
+        minimapWidth = minimapElement.offsetWidth
+
         atom.config.set 'editor.softWrap', true
         atom.config.set 'editor.softWrapAtPreferredLineLength', true
         atom.config.set 'editor.preferredLineLength', 2
@@ -300,14 +303,31 @@ describe 'MinimapElement', ->
         atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', true
         nextAnimationFrame()
 
-      it 'adjusts the width of the minimap', ->
-        expect(minimapElement.offsetWidth).toEqual(4)
+      it 'adjusts the width of the minimap canvas', ->
+        expect(minimapElement.canvas.width).toEqual(4)
+
+      it 'offsets the minimap by the difference', ->
+        expect(realOffsetLeft(minimapElement)).toBeCloseTo(editorElement.clientWidth - 4, -1)
+        expect(minimapElement.clientWidth).toBeCloseTo(minimapWidth, -1)
 
       describe 'the dom polling routine', ->
         it 'does not change the value', ->
           advanceClock(150)
           nextAnimationFrame()
-          expect(minimapElement.offsetWidth).toEqual(4)
+          expect(minimapElement.canvas.width).toEqual(4)
+
+      describe 'and when minimap.minimapScrollIndicator setting is true', ->
+        beforeEach ->
+          editor.setText(mediumSample)
+          editor.setScrollTop(50)
+          nextAnimationFrame()
+
+          atom.config.set 'minimap.minimapScrollIndicator', true
+          nextAnimationFrame()
+
+        it 'offsets the scroll indicator by the difference', ->
+          indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+          expect(realOffsetLeft(indicator)).toBeCloseTo(2, -1)
 
       describe 'and then disabled', ->
         beforeEach ->
