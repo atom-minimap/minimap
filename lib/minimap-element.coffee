@@ -3,6 +3,8 @@
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
 
+MinimapQuickSettingsView = null
+
 class MinimapElement extends HTMLElement
   DOMStylesReader.includeInto(this)
   CanvasDrawer.includeInto(this)
@@ -131,6 +133,11 @@ class MinimapElement extends HTMLElement
     @openQuickSettings = document.createElement('div')
     @openQuickSettings.classList.add 'open-minimap-quick-settings'
     @shadowRoot.appendChild(@openQuickSettings)
+    @openQuickSettings.addEventListener 'click', (e) =>
+      MinimapQuickSettingsView ?= require './minimap-quick-settings-view'
+
+      view = new MinimapQuickSettingsView(this)
+      view.attach()
 
   disposeOpenQuickSettings: ->
     @shadowRoot.removeChild(@openQuickSettings)

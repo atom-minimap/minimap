@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-
+{click} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -429,12 +429,23 @@ describe 'MinimapElement', ->
     #     ######  ########    ##       ##    #### ##    ##  ######    ######
 
     describe 'when minimap.displayPluginsControls setting is true', ->
-      [openQuickSettings] = []
+      [openQuickSettings, workspaceElement] = []
       beforeEach ->
         atom.config.set 'minimap.displayPluginsControls', true
 
       it 'has a div to open the quick settings', ->
         expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).toExist()
+
+      describe 'clicking on the div', ->
+        beforeEach ->
+          workspaceElement = atom.views.getView(atom.workspace)
+
+          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          click(openQuickSettings)
+
+        it 'opens the quick settings view', ->
+          expect(workspaceElement.querySelector('.minimap-quick-settings')).toExist()
+
       describe 'then disabling it', ->
         beforeEach ->
           atom.config.set 'minimap.displayPluginsControls', false
