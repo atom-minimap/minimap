@@ -15,6 +15,7 @@ class V4Main
     MinimapElement.registerViewProvider()
 
   deactivate: ->
+    minimap.destroy() for id,minimap of @editorsMinimaps
     @subscriptions.dispose()
     @editorsMinimaps = {}
     @toggled = false

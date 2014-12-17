@@ -9,6 +9,7 @@ describe 'Minimap package v4', ->
     atom.config.set 'minimap.autoToggle', true
 
     workspaceElement = atom.views.getView(atom.workspace)
+    jasmine.attachToDOM(workspaceElement)
 
     waitsFor ->
       atom.workspace.open('sample.coffee')
@@ -44,3 +45,13 @@ describe 'Minimap package v4', ->
 
     it 'attaches a minimap element to the editor view', ->
       expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).toExist()
+
+  describe '::deactivate', ->
+    beforeEach ->
+      minimapPackage.deactivate()
+
+    it 'destroys all the minimap models', ->
+      expect(minimapPackage.minimapForEditor(editor)).toBeUndefined()
+
+    it 'destroys all the minimap elements', ->
+      expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
