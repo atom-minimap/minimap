@@ -192,8 +192,6 @@ describe 'MinimapElement', ->
           editorElement.style.width = '800px'
           editorElement.style.height = '500px'
 
-          waitsFor -> editor.getHeight() isnt height
-
           runs ->
             advanceClock(150)
             nextAnimationFrame()
