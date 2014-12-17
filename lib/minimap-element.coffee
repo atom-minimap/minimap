@@ -151,7 +151,7 @@ class MinimapElement extends HTMLElement
 
     if @width isnt @clientWidth or @height isnt @clientHeight
       @measureHeightAndWidth()
-      @requestUpdate()
+      @requestForcedUpdate()
 
   measureHeightAndWidth: ->
     @height = @clientHeight
