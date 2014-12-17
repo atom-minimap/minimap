@@ -144,6 +144,8 @@ class MinimapElement extends HTMLElement
     else
       @width = @clientWidth
 
+    return unless @isVisible()
+
     if @width isnt @canvas.width or @height isnt @canvas.height
       @canvas.width = @width * devicePixelRatio
       @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
@@ -178,7 +180,7 @@ class MinimapElement extends HTMLElement
     @requestUpdate()
 
   update: ->
-    return unless @attached
+    return unless @attached and @isVisible()
 
     if @adjustToSoftWrap
       @style.width = @width + 'px'
@@ -210,6 +212,8 @@ class MinimapElement extends HTMLElement
       @disposeScrollIndicator() if not @minimap.canScroll()
 
     @updateCanvas()
+
+  isVisible: -> @offsetWidth > 0 or @offsetHeight > 0
 
   transformElement: (el, transform) ->
     el.style.transform = transform
