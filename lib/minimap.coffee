@@ -99,9 +99,9 @@ class Minimap
 
     if atom.config.get('minimap.displayPluginsControls')
       @subscriptions.add atom.commands.add 'atom-workspace',
-        'minimap:open-quick-settings': ->
+        'minimap:open-quick-settings': =>
           editor = atom.workspace.getActiveEditor()
-          @minimapForEditor(editor).openQuickSettings.mousedown()
+          @minimapForEditor(editor)?.openQuickSettings.mousedown() if editor?
 
     @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (value) ->
       workspaceElement.classList.toggle 'minimap-on-left', value
