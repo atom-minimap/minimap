@@ -1,3 +1,11 @@
+<a name="v3.4.8"></a>
+# v3.4.8 (2014-12-17)
+
+## :bug: Bug Fixes
+
+- Fix broken quick settings command ([bea14b44](https://github.com/fundon/atom-minimap/commit/bea14b44e78e079dc6813aec6e30e8c819419e4f), [#186](https://github.com/fundon/atom-minimap/issues/186))
+- Fix minimum value for interline ([e4a114dc](https://github.com/fundon/atom-minimap/commit/e4a114dc99a65a003ebd4d5b4e2e3a6b0fee467d), [#175](https://github.com/fundon/atom-minimap/issues/175))
+
 <a name="v3.4.7"></a>
 # v3.4.7 (2014-12-10)
 
