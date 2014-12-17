@@ -1,3 +1,10 @@
+<a name="v3.4.9"></a>
+# v3.4.9 (2014-12-17)
+
+## :bug: Bug Fixes
+
+- Fix broken invisibles substitution when line is null ([c0c30ee9](https://github.com/fundon/atom-minimap/commit/c0c30ee9b2888c3b7a6f358208e8fd5d3212cb06), [#179](https://github.com/fundon/atom-minimap/issues/179))
+
 <a name="v3.4.8"></a>
 # v3.4.8 (2014-12-17)
 
