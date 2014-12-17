@@ -2,7 +2,7 @@ fs = require 'fs-plus'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 
-fdescribe 'Minimap', ->
+describe 'Minimap', ->
   [editor, minimap, largeSample, smallSample] = []
 
   beforeEach ->
