@@ -443,6 +443,9 @@ describe 'MinimapElement', ->
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
           click(openQuickSettings)
 
+        afterEach ->
+          minimapElement.quickSettingsView.destroy()
+
         it 'opens the quick settings view', ->
           expect(workspaceElement.querySelector('.minimap-quick-settings')).toExist()
 

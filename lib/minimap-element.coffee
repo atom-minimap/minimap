@@ -136,8 +136,8 @@ class MinimapElement extends HTMLElement
     @openQuickSettings.addEventListener 'click', (e) =>
       MinimapQuickSettingsView ?= require './minimap-quick-settings-view'
 
-      view = new MinimapQuickSettingsView(this)
-      view.attach()
+      @quickSettingsView = new MinimapQuickSettingsView(this)
+      @quickSettingsView.attach()
 
   disposeOpenQuickSettings: ->
     @shadowRoot.removeChild(@openQuickSettings)
