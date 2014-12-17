@@ -27,6 +27,12 @@ class Minimap extends Model
       @emitter.emit('did-change-scroll-top', scrollTop)
     subs.add @textEditor.onDidChangeScrollLeft (scrollLeft) =>
       @emitter.emit('did-change-scroll-left', scrollLeft)
+    subs.add @textEditor.onDidDestroy => @destroy()
+
+  destroyed: ->
+    @subscriptions.dispose()
+    @textEditor = null
+    @emitter.emit 'did-destroy'
 
   onDidChange: (callback) -> @emitter.on 'did-change', callback
 
@@ -37,6 +43,9 @@ class Minimap extends Model
 
   onDidChangeScrollLeft: (callback) ->
     @emitter.on 'did-change-scroll-left', callback
+
+  onDidDestroy: (callback) ->
+    @emitter.on 'did-destroy', callback
 
   getTextEditor: -> @textEditor
 

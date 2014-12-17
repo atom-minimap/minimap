@@ -2,7 +2,7 @@ fs = require 'fs-plus'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 
-describe 'Minimap', ->
+fdescribe 'Minimap', ->
   [editor, minimap, largeSample, smallSample] = []
 
   beforeEach ->
@@ -21,6 +21,9 @@ describe 'Minimap', ->
 
   it 'has an associated editor', ->
     expect(minimap.getTextEditor()).toEqual(editor)
+
+  it 'returns false when asked if destroyed', ->
+    expect(minimap.isDestroyed()).toBeFalsy()
 
   it 'raise an exception if created without a text editor', ->
     expect(-> new Minimap).toThrow()
@@ -142,6 +145,27 @@ describe 'Minimap', ->
 
       it 'computes the last visible row in the minimap', ->
         expect(minimap.getLastVisibleScreenRow()).toEqual(largeLineCount)
+
+  describe 'destroying the model', ->
+    it 'emits a did-destroy event', ->
+      spy = jasmine.createSpy('destroy')
+      minimap.onDidDestroy(spy)
+
+      minimap.destroy()
+
+      expect(spy).toHaveBeenCalled()
+
+    it 'returns true when asked if destroyed', ->
+      minimap.destroy()
+      expect(minimap.isDestroyed()).toBeTruthy()
+
+  describe 'destroying the text editor', ->
+    it 'destroys the model', ->
+      spyOn(minimap,'destroy')
+
+      editor.destroy()
+
+      expect(minimap.destroy).toHaveBeenCalled()
 
   #    ########  ########  ######   #######
   #    ##     ## ##       ##    ## ##     ##
