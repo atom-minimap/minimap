@@ -7,8 +7,6 @@ describe 'Minimap package v4', ->
   beforeEach ->
     atom.config.set 'minimap.v4Preview', true
 
-    console.log atom.config.get 'minimap.v4Preview'
-
     workspaceElement = atom.views.getView(atom.workspace)
 
     waitsFor ->
@@ -23,6 +21,11 @@ describe 'Minimap package v4', ->
       editor = atom.workspace.getActiveTextEditor()
       editorElement = atom.views.getView(editor)
 
+      console.log editor, editorElement
+
+    waitsFor ->
+      workspaceElement.querySelector('atom-text-editor::shadow atom-text-editor-minimap')
+
   afterEach ->
     minimapPackage.deactivate()
 
@@ -36,6 +39,7 @@ describe 'Minimap package v4', ->
     textEditor = new TextEditor({})
     minimap = new Minimap({textEditor})
     minimapElement = atom.views.getView(minimap)
+    console.log minimap, minimapElement
 
     expect(minimapElement).toExist()
 

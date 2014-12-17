@@ -6,10 +6,8 @@ class V4Main
   @includeInto: (base) ->
     for k,v of @prototype
       base::[k] = v
-    console.log 'v4 code included'
 
   activateV4: ->
-    console.log 'v4 activation called'
     @editorsMinimaps = {}
     @subscriptions = new CompositeDisposable
     MinimapElement ?= require './minimap-element'
@@ -17,7 +15,6 @@ class V4Main
     MinimapElement.registerViewProvider()
 
   deactivate: ->
-    console.log 'v4 deactivation called'
     @subscriptions.dispose()
     @editorsMinimaps = {}
     @toggled = false
