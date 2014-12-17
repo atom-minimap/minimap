@@ -31,10 +31,8 @@ class V4Main
 
   initSubscriptions: ->
     Minimap ?= require './minimap'
-    console.log 'observe text editors'
 
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
-      console.log 'text editor created'
       minimap = new Minimap({textEditor})
       @editorsMinimaps[textEditor.id] = minimap
 
