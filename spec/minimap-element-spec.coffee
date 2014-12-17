@@ -15,7 +15,7 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
-fdescribe 'MinimapElement', ->
+describe 'MinimapElement', ->
   [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement] = []
 
   beforeEach ->
@@ -220,7 +220,7 @@ fdescribe 'MinimapElement', ->
           expect(minimapElement.drawLines.calls[1].args[1]).toEqual(100)
           expect(minimapElement.drawLines.calls[1].args[2]).toEqual(101)
 
-      ffdescribe 'when the editor visibility change', ->
+      describe 'when the editor visibility change', ->
         it 'does not modify the size of the canvas', ->
           canvasWidth = minimapElement.canvas.width
           canvasHeight = minimapElement.canvas.height
