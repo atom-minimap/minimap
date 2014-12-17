@@ -7,6 +7,8 @@ describe 'Minimap package v4', ->
   beforeEach ->
     atom.config.set 'minimap.v4Preview', true
 
+    console.log atom.config.get 'minimap.v4Preview'
+
     workspaceElement = atom.views.getView(atom.workspace)
 
     waitsFor ->
