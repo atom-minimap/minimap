@@ -461,12 +461,39 @@ describe 'MinimapElement', ->
         it 'opens the quick settings view', ->
           expect(quickSettingsView).toExist()
 
-        it 'position the quick settings view next to the minimap', ->
+        it 'positions the quick settings view next to the minimap', ->
           minimapBounds = minimapElement.getBoundingClientRect()
           settingsBounds = quickSettingsView.getBoundingClientRect()
 
           expect(realOffsetTop(quickSettingsView)).toBeCloseTo(minimapBounds.top, 0)
           expect(realOffsetLeft(quickSettingsView)).toBeCloseTo(minimapBounds.left - settingsBounds.width, 0)
+
+      describe 'when the quick settings view is open', ->
+        beforeEach ->
+          workspaceElement = atom.views.getView(atom.workspace)
+          jasmineContent.appendChild(workspaceElement)
+
+          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          click(openQuickSettings)
+
+          quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
+
+        describe 'clicking on the open settings button again', ->
+          beforeEach ->
+            click(openQuickSettings)
+
+          it 'closes the quick settings view', ->
+            expect(workspaceElement.querySelector('.minimap-quick-settings')).not.toExist()
+
+          it 'removes the view from the element', ->
+            expect(minimapElement.quickSettingsView).toBeNull()
+
+        describe 'when an external event destroys the view', ->
+          beforeEach ->
+            minimapElement.quickSettingsView.destroy()
+
+          it 'removes the view reference from the element', ->
+            expect(minimapElement.quickSettingsView).toBeNull()
 
       describe 'then disabling it', ->
         beforeEach ->

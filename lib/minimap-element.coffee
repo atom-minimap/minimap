@@ -138,15 +138,21 @@ class MinimapElement extends HTMLElement
     @openQuickSettings.classList.add 'open-minimap-quick-settings'
     @controls.appendChild(@openQuickSettings)
     @openQuickSettings.addEventListener 'click', (e) =>
-      MinimapQuickSettingsView ?= require './minimap-quick-settings-view'
+      if @quickSettingsView?
+        @quickSettingsView.destroy()
+        @quickSettingsSubscription.dispose()
+      else
+        MinimapQuickSettingsView ?= require './minimap-quick-settings-view'
+        @quickSettingsView = new MinimapQuickSettingsView(this)
+        @quickSettingsSubscription = @quickSettingsView.onDidDestroy =>
+          @quickSettingsView = null
 
-      @quickSettingsView = new MinimapQuickSettingsView(this)
-      @quickSettingsView.attach()
-      {top, left} = @getBoundingClientRect()
-      @quickSettingsView.css({
-        top: top + 'px'
-        left: (left - @quickSettingsView.width()) + 'px'
-      })
+        @quickSettingsView.attach()
+        {top, left} = @getBoundingClientRect()
+        @quickSettingsView.css({
+          top: top + 'px'
+          left: (left - @quickSettingsView.width()) + 'px'
+        })
 
   disposeOpenQuickSettings: ->
     @controls.removeChild(@openQuickSettings)
