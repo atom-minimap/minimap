@@ -351,6 +351,15 @@ describe 'MinimapElement', ->
           indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
           expect(realOffsetLeft(indicator)).toBeCloseTo(2, -1)
 
+      describe 'and when minimap.displayPluginsControls setting is true', ->
+        beforeEach ->
+          atom.config.set 'minimap.displayPluginsControls', true
+          nextAnimationFrame()
+
+        it 'offsets the scroll indicator by the difference', ->
+          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          expect(realOffsetLeft(openQuickSettings)).toBeCloseTo(2 - openQuickSettings.offsetWidth, -1)
+
       describe 'and then disabled', ->
         beforeEach ->
           atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', false

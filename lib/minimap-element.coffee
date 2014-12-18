@@ -120,19 +120,23 @@ class MinimapElement extends HTMLElement
     @visibleArea.classList.add('minimap-visible-area')
     @shadowRoot.appendChild(@visibleArea)
 
+    @controls = document.createElement('div')
+    @controls.classList.add('minimap-controls')
+    @shadowRoot.appendChild(@controls)
+
   initializeScrollIndicator: ->
     @scrollIndicator = document.createElement('div')
     @scrollIndicator.classList.add 'minimap-scroll-indicator'
-    @shadowRoot.appendChild(@scrollIndicator)
+    @controls.appendChild(@scrollIndicator)
 
   disposeScrollIndicator: ->
-    @shadowRoot.removeChild(@scrollIndicator)
+    @controls.removeChild(@scrollIndicator)
     @scrollIndicator = undefined
 
   initializeOpenQuickSettings: ->
     @openQuickSettings = document.createElement('div')
     @openQuickSettings.classList.add 'open-minimap-quick-settings'
-    @shadowRoot.appendChild(@openQuickSettings)
+    @controls.appendChild(@openQuickSettings)
     @openQuickSettings.addEventListener 'click', (e) =>
       MinimapQuickSettingsView ?= require './minimap-quick-settings-view'
 
@@ -145,7 +149,7 @@ class MinimapElement extends HTMLElement
       })
 
   disposeOpenQuickSettings: ->
-    @shadowRoot.removeChild(@openQuickSettings)
+    @controls.removeChild(@openQuickSettings)
     @openQuickSettings = undefined
 
   pauseDOMPolling: ->
@@ -230,6 +234,8 @@ class MinimapElement extends HTMLElement
     @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
     @transformElement @visibleArea, @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
+    @controls.style.width = @canvas.width + 'px'
+
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()
 
     @transformElement(@canvas, @makeTranslate(0, canvasTop))
@@ -241,11 +247,8 @@ class MinimapElement extends HTMLElement
       editorHeight = @getTextEditor().getHeight()
       indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
       indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getTextEditorScrollRatio()
-      indicatorOffset = 0
-      indicatorOffset = @marginRight if @adjustToSoftWrap
-
       @scrollIndicator.style.height = indicatorHeight + 'px'
-      @transformElement @scrollIndicator, @makeTranslate(indicatorOffset, indicatorScroll)
+      @transformElement @scrollIndicator, @makeTranslate(0, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 
