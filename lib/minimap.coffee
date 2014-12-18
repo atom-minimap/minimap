@@ -15,6 +15,8 @@ class Minimap extends Model
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
 
+    subs.add atom.config.observe 'editor.scrollPastEnd', (@scrollPastEnd) =>
+      @emitter.emit('did-change-config')
     subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
       @emitter.emit('did-change-config')
     subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
@@ -56,7 +58,10 @@ class Minimap extends Model
   getTextEditorScrollLeft: -> @textEditor.getScrollLeft() * @getHorizontalScaleFactor()
 
   getTextEditorScrollRatio: ->
-    @textEditor.getScrollTop() / @textEditor.displayBuffer.getMaxScrollTop()
+    maxScrollTop = @textEditor.displayBuffer.getMaxScrollTop()
+    if @scrollPastEnd
+      maxScrollTop -= @textEditor.getHeight() - 3 * @textEditor.displayBuffer.getLineHeightInPixels()
+    @textEditor.getScrollTop() / maxScrollTop
 
   getHeight: -> @textEditor.getScreenLineCount() * @getLineHeight()
 
@@ -81,7 +86,7 @@ class Minimap extends Model
     Math.ceil((@getMinimapScrollTop() + @textEditor.getHeight()) / @getLineHeight())
 
   getMinimapScrollTop: ->
-    Math.abs(@getTextEditorScrollRatio() * @getMinimapMaxScrollTop())
+    Math.abs(Math.min(1, @getTextEditorScrollRatio()) * @getMinimapMaxScrollTop())
 
   getMinimapMaxScrollTop: -> Math.max(0, @getHeight() - @textEditor.getHeight())
 
