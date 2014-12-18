@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-{click} = require './helpers/events'
+{click, mousedown} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -477,6 +477,17 @@ describe 'MinimapElement', ->
           click(openQuickSettings)
 
           quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
+
+        describe 'clicking on the code highlight item', ->
+          beforeEach ->
+            item = quickSettingsView.querySelector('li:last-child')
+            mousedown(item)
+
+          it 'toggles the code highlights on the minimap element', ->
+            expect(minimapElement.displayCodeHighlights).toBeTruthy()
+
+          it 'requests an update', ->
+            expect(minimapElement.frameRequested).toBeTruthy()
 
         describe 'clicking on the open settings button again', ->
           beforeEach ->

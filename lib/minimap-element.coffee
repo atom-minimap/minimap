@@ -109,6 +109,9 @@ class MinimapElement extends HTMLElement
 
     @minimap
 
+  setDisplayCodeHighlights: (@displayCodeHighlights) ->
+    @requestForcedUpdate() if @attached
+
   initializeContent: ->
     @initializeCanvas()
 
