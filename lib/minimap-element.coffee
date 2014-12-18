@@ -255,7 +255,7 @@ class MinimapElement extends HTMLElement
     if @scrollIndicator?
       editorHeight = @getTextEditor().getHeight()
       indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
-      indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getTextEditorScrollRatio()
+      indicatorScroll = (editorHeight - indicatorHeight) * Math.min(1, @minimap.getTextEditorScrollRatio())
       @scrollIndicator.style.height = indicatorHeight + 'px'
       @transformElement @scrollIndicator, @makeTranslate(0, indicatorScroll)
 
