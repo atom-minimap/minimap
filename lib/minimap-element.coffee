@@ -14,6 +14,14 @@ class MinimapElement extends HTMLElement
   domPollingPaused: false
   displayMinimapOnLeft: false
 
+  #    ##     ##  #######   #######  ##    ##  ######
+  #    ##     ## ##     ## ##     ## ##   ##  ##    ##
+  #    ##     ## ##     ## ##     ## ##  ##   ##
+  #    ######### ##     ## ##     ## #####     ######
+  #    ##     ## ##     ## ##     ## ##  ##         ##
+  #    ##     ## ##     ## ##     ## ##   ##  ##    ##
+  #    ##     ##  #######   #######  ##    ##  ######
+
   createdCallback: ->
     @subscriptions = new CompositeDisposable
     @initializeContent()
@@ -53,10 +61,6 @@ class MinimapElement extends HTMLElement
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
         @requestUpdate() if @attached
 
-  observeConfig: (configs={}) ->
-    for config, callback of configs
-      @subscriptions.add atom.config.observe config, callback
-
   attachedCallback: ->
     @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
     @measureHeightAndWidth()
@@ -69,15 +73,19 @@ class MinimapElement extends HTMLElement
 
   attributeChangedCallback: (attrName, oldValue, newValue) ->
 
+  #       ###    ######## ########    ###     ######  ##     ##
+  #      ## ##      ##       ##      ## ##   ##    ## ##     ##
+  #     ##   ##     ##       ##     ##   ##  ##       ##     ##
+  #    ##     ##    ##       ##    ##     ## ##       #########
+  #    #########    ##       ##    ######### ##       ##     ##
+  #    ##     ##    ##       ##    ##     ## ##    ## ##     ##
+  #    ##     ##    ##       ##    ##     ##  ######  ##     ##
+
+  isVisible: -> @offsetWidth > 0 or @offsetHeight > 0
+
   attach: ->
     return if @attached
     @swapMinimapPosition()
-
-  swapMinimapPosition: ->
-    if @displayMinimapOnLeft
-      @attachToLeft()
-    else
-      @attachToRight()
 
   attachToLeft: ->
     root = @getTextEditorElementRoot()
@@ -85,6 +93,12 @@ class MinimapElement extends HTMLElement
 
   attachToRight: ->
     @getTextEditorElementRoot().appendChild(this)
+
+  swapMinimapPosition: ->
+    if @displayMinimapOnLeft
+      @attachToLeft()
+    else
+      @attachToRight()
 
   detach: ->
     return unless @attached
@@ -95,22 +109,13 @@ class MinimapElement extends HTMLElement
     @subscriptions.dispose()
     @detach()
 
-  getModel: -> @minimap
-
-  setModel: (@minimap) ->
-    @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
-    @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
-    @subscriptions.add @minimap.onDidDestroy => @destroy()
-    @subscriptions.add @minimap.onDidChangeConfig =>
-      @requestForcedUpdate() if @attached
-    @subscriptions.add @minimap.onDidChange (change) =>
-      @pendingChanges.push(change)
-      @requestUpdate()
-
-    @minimap
-
-  setDisplayCodeHighlights: (@displayCodeHighlights) ->
-    @requestForcedUpdate() if @attached
+  #     ######   #######  ##    ## ######## ######## ##    ## ########
+  #    ##    ## ##     ## ###   ##    ##    ##       ###   ##    ##
+  #    ##       ##     ## ####  ##    ##    ##       ####  ##    ##
+  #    ##       ##     ## ## ## ##    ##    ######   ## ## ##    ##
+  #    ##       ##     ## ##  ####    ##    ##       ##  ####    ##
+  #    ##    ## ##     ## ##   ###    ##    ##       ##   ###    ##
+  #     ######   #######  ##    ##    ##    ######## ##    ##    ##
 
   initializeContent: ->
     @initializeCanvas()
@@ -147,7 +152,7 @@ class MinimapElement extends HTMLElement
     @openQuickSettings.addEventListener 'mousedown', (e) =>
       e.preventDefault()
       e.stopPropagation()
-      
+
       if @quickSettingsView?
         @quickSettingsView.destroy()
         @quickSettingsSubscription.dispose()
@@ -168,44 +173,6 @@ class MinimapElement extends HTMLElement
     @controls.removeChild(@openQuickSettings)
     @openQuickSettings = undefined
 
-  pauseDOMPolling: ->
-    @domPollingPaused = true
-    @resumeDOMPollingAfterDelay ?= debounce(@resumeDOMPolling, 100)
-    @resumeDOMPollingAfterDelay()
-
-  resumeDOMPolling: ->
-    @domPollingPaused = false
-
-  resumeDOMPollingAfterDelay: null
-
-  pollDOM: ->
-    return if @domPollingPaused or @updateRequested
-
-    if @width isnt @clientWidth or @height isnt @clientHeight
-      @measureHeightAndWidth()
-      @requestForcedUpdate()
-
-  measureHeightAndWidth: ->
-    @height = @clientHeight
-    @width = @clientWidth
-    canvasWidth = @width
-
-    return unless @isVisible()
-
-    if @adjustToSoftWrap
-      lineLength = atom.config.get('editor.preferredLineLength')
-      softWrap = atom.config.get('editor.softWrap')
-      width = lineLength * @minimap.getCharWidth()
-
-      @marginRight = width - @width if softWrap and lineLength and width < @width
-      canvasWidth = width
-    else
-      delete @marginRight
-
-    if canvasWidth isnt @canvas.width or @height isnt @canvas.height
-      @canvas.width = canvasWidth * devicePixelRatio
-      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
-
   getTextEditor: -> @minimap.getTextEditor()
 
   getTextEditorElement: ->
@@ -221,6 +188,36 @@ class MinimapElement extends HTMLElement
       @getTextEditorElementRoot()
     else
       @getTextEditorElement()
+
+  #    ##     ##  #######  ########  ######## ##
+  #    ###   ### ##     ## ##     ## ##       ##
+  #    #### #### ##     ## ##     ## ##       ##
+  #    ## ### ## ##     ## ##     ## ######   ##
+  #    ##     ## ##     ## ##     ## ##       ##
+  #    ##     ## ##     ## ##     ## ##       ##
+  #    ##     ##  #######  ########  ######## ########
+
+  getModel: -> @minimap
+
+  setModel: (@minimap) ->
+    @subscriptions.add @minimap.onDidChangeScrollTop => @requestUpdate()
+    @subscriptions.add @minimap.onDidChangeScrollLeft => @requestUpdate()
+    @subscriptions.add @minimap.onDidDestroy => @destroy()
+    @subscriptions.add @minimap.onDidChangeConfig =>
+      @requestForcedUpdate() if @attached
+    @subscriptions.add @minimap.onDidChange (change) =>
+      @pendingChanges.push(change)
+      @requestUpdate()
+
+    @minimap
+
+  #    ##     ## ########  ########     ###    ######## ########
+  #    ##     ## ##     ## ##     ##   ## ##      ##    ##
+  #    ##     ## ##     ## ##     ##  ##   ##     ##    ##
+  #    ##     ## ########  ##     ## ##     ##    ##    ######
+  #    ##     ## ##        ##     ## #########    ##    ##
+  #    ##     ## ##        ##     ## ##     ##    ##    ##
+  #     #######  ##        ########  ##     ##    ##    ########
 
   requestUpdate: ->
     return if @frameRequested
@@ -270,7 +267,59 @@ class MinimapElement extends HTMLElement
 
     @updateCanvas()
 
-  isVisible: -> @offsetWidth > 0 or @offsetHeight > 0
+  setDisplayCodeHighlights: (@displayCodeHighlights) ->
+    @requestForcedUpdate() if @attached
+
+  pauseDOMPolling: ->
+    @domPollingPaused = true
+    @resumeDOMPollingAfterDelay ?= debounce(@resumeDOMPolling, 100)
+    @resumeDOMPollingAfterDelay()
+
+  resumeDOMPolling: ->
+    @domPollingPaused = false
+
+  resumeDOMPollingAfterDelay: null
+
+  pollDOM: ->
+    return if @domPollingPaused or @updateRequested
+
+    if @width isnt @clientWidth or @height isnt @clientHeight
+      @measureHeightAndWidth()
+      @requestForcedUpdate()
+
+  measureHeightAndWidth: ->
+    @height = @clientHeight
+    @width = @clientWidth
+    canvasWidth = @width
+
+    return unless @isVisible()
+
+    if @adjustToSoftWrap
+      lineLength = atom.config.get('editor.preferredLineLength')
+      softWrap = atom.config.get('editor.softWrap')
+      width = lineLength * @minimap.getCharWidth()
+
+      @marginRight = width - @width if softWrap and lineLength and width < @width
+      canvasWidth = width
+    else
+      delete @marginRight
+
+    if canvasWidth isnt @canvas.width or @height isnt @canvas.height
+      @canvas.width = canvasWidth * devicePixelRatio
+      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
+
+  #    ######## ##     ## ######## ##    ## ########  ######
+  #    ##       ##     ## ##       ###   ##    ##    ##    ##
+  #    ##       ##     ## ##       ####  ##    ##    ##
+  #    ######   ##     ## ######   ## ## ##    ##     ######
+  #    ##        ##   ##  ##       ##  ####    ##          ##
+  #    ##         ## ##   ##       ##   ###    ##    ##    ##
+  #    ########    ###    ######## ##    ##    ##     ######
+
+  observeConfig: (configs={}) ->
+    for config, callback of configs
+      @subscriptions.add atom.config.observe config, callback
+
   mousePressedOverCanvas: ({pageY, target}) ->
     y = pageY - target.getBoundingClientRect().top
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
@@ -278,6 +327,14 @@ class MinimapElement extends HTMLElement
     scrollTop = row * @minimap.textEditor.getLineHeightInPixels() - @minimap.textEditor.getHeight() / 2
 
     @minimap.textEditor.setScrollTop(scrollTop)
+
+  #     ######   ######   ######  
+  #    ##    ## ##    ## ##    ##
+  #    ##       ##       ##
+  #    ##        ######   ######
+  #    ##             ##       ##
+  #    ##    ## ##    ## ##    ##
+  #     ######   ######   ######
 
   transformElement: (el, transform) ->
     el.style.transform = transform
