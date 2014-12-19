@@ -1,5 +1,5 @@
 {debounce} = require 'underscore-plus'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'event-kit'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
 
@@ -126,6 +126,10 @@ class MinimapElement extends HTMLElement
     @controls = document.createElement('div')
     @controls.classList.add('minimap-controls')
     @shadowRoot.appendChild(@controls)
+
+    @canvas.addEventListener 'mousedown', l = (e) => @mousePressedOverCanvas(e)
+    @subscriptions.add new Disposable =>
+      @canvas.removeEventListener 'mousedown', l
 
   initializeScrollIndicator: ->
     @scrollIndicator = document.createElement('div')
@@ -267,6 +271,13 @@ class MinimapElement extends HTMLElement
     @updateCanvas()
 
   isVisible: -> @offsetWidth > 0 or @offsetHeight > 0
+  mousePressedOverCanvas: ({pageY, target}) ->
+    y = pageY - target.getBoundingClientRect().top
+    row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
+
+    scrollTop = row * @minimap.textEditor.getLineHeightInPixels() - @minimap.textEditor.getHeight() / 2
+
+    @minimap.textEditor.setScrollTop(scrollTop)
 
   transformElement: (el, transform) ->
     el.style.transform = transform

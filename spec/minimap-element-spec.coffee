@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-{click, mousedown} = require './helpers/events'
+{mousemove, mousedown} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -103,7 +103,7 @@ describe 'MinimapElement', ->
       editorElement.style.width = '200px'
       editorElement.style.height = '50px'
 
-      jasmineContent.appendChild(editorElement)
+      jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
       editor.setScrollTop(1000)
       editor.setScrollLeft(200)
       minimapElement.attach()
@@ -231,6 +231,34 @@ describe 'MinimapElement', ->
           expect(minimapElement.canvas.width).toEqual(canvasWidth)
           expect(minimapElement.canvas.height).toEqual(canvasHeight)
 
+    #     ######   ######  ########   #######  ##       ##
+    #    ##    ## ##    ## ##     ## ##     ## ##       ##
+    #    ##       ##       ##     ## ##     ## ##       ##
+    #     ######  ##       ########  ##     ## ##       ##
+    #          ## ##       ##   ##   ##     ## ##       ##
+    #    ##    ## ##    ## ##    ##  ##     ## ##       ##
+    #     ######   ######  ##     ##  #######  ######## ########
+
+    describe 'mouse scroll controls', ->
+      beforeEach ->
+        editorElement.style.height = '400px'
+        editorElement.style.width = '400px'
+        editor.setWidth(400)
+        editor.setHeight(400)
+        editor.setScrollTop(0)
+        editor.setScrollLeft(0)
+
+        advanceClock(150)
+        nextAnimationFrame()
+
+      describe 'when pressing the mouse on the minimap canvas', ->
+        beforeEach ->
+          canvas = minimapElement.canvas
+          mousedown(canvas)
+          nextAnimationFrame()
+
+        it 'scrolls the editor to the line below the mouse', ->
+          expect(editor.getScrollTop()).toEqual(360)
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
     #    ##     ## ##       ##          ##    ##     ## ##     ##   ####
