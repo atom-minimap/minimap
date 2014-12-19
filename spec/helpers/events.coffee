@@ -1,26 +1,25 @@
 
-mouseEvent = (type, px, py, cx, cy) ->
-  evt = undefined
+mouseEvent = (type, properties) ->
+  defaults = {
+    bubbles: true
+    cancelable: (type isnt "mousemove")
+    view: window
+    detail: 0
+    pageX: 0
+    pageY: 0
+    clientX: 0
+    clientY: 0
+    ctrlKey: false
+    altKey: false
+    shiftKey: false
+    metaKey: false
+    button: 0
+    relatedTarget: `undefined`
+  }
 
-  bubbles = true
-  cancelable = (type isnt "mousemove")
-  view = window
-  detail = 0
-  pageX = px
-  pageY = py
-  clientX = cx
-  clientY = cy
-  ctrlKey = false
-  altKey = false
-  shiftKey = false
-  metaKey = false
-  button = 0
-  relatedTarget = `undefined`
+  properties[k] = v for k,v of defaults when not properties[k]?
 
-  evt = document.createEvent("MouseEvents")
-  evt.initMouseEvent type, bubbles, cancelable, view, detail, pageX, pageY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey, button, document.body.parentNode
-
-  evt
+  new MouseEvent type, properties
 
 objectCenterCoordinates = (obj) ->
   {top, left, width, height} = obj.getBoundingClientRect()
@@ -36,4 +35,4 @@ module.exports = {objectCenterCoordinates, mouseEvent}
       cx = x
       cy = y
 
-    obj.dispatchEvent(mouseEvent key, x, y, cx, cy)
+    obj.dispatchEvent(mouseEvent key, {pageX: x, pageY: y, clientX: cx, clientY: cy})
