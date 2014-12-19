@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-{mousemove, mousedown} = require './helpers/events'
+{mousemove, mousedown, mouseup} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -279,6 +279,15 @@ describe 'MinimapElement', ->
         it 'scrolls the editor so that the visible area was moved down by 40 pixels', ->
           {top} = visibleArea.getBoundingClientRect()
           expect(top).toBeCloseTo(originalTop + 40, -1)
+
+        it 'stops the drag gesture when the mouse is released outside the minimap', ->
+          {top, left} = visibleArea.getBoundingClientRect()
+          mouseup(jasmineContent, left - 10, top + 80)
+
+          spyOn(minimapElement, 'drag')
+          mousemove(visibleArea, left + 10, top + 50)
+
+          expect(minimapElement.drag).not.toHaveBeenCalled()
 
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
