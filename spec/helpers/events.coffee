@@ -29,7 +29,11 @@ objectCenterCoordinates = (obj) ->
 module.exports = {objectCenterCoordinates, mouseEvent}
 
 ['mousedown', 'mousemove', 'mouseup', 'click'].forEach (key) ->
-  module.exports[key] = (obj, x, y) ->
+  module.exports[key] = (obj, x, y, cx, cy) ->
     {x,y} = objectCenterCoordinates(obj) unless x? and y?
 
-    obj.dispatchEvent(mouseEvent key, x, y)
+    unless cx? and cy?
+      cx = x
+      cy = y
+
+    obj.dispatchEvent(mouseEvent key, x, y, cx, cy)
