@@ -259,6 +259,27 @@ describe 'MinimapElement', ->
 
         it 'scrolls the editor to the line below the mouse', ->
           expect(editor.getScrollTop()).toEqual(360)
+
+      describe 'when dragging the visible area', ->
+        [visibleArea, originalTop] = []
+
+        beforeEach ->
+          visibleArea = minimapElement.visibleArea
+          {top, left, width, height} = visibleArea.getBoundingClientRect()
+          originalTop = top
+
+          mousedown(visibleArea, left + 10, top + 10)
+          mousemove(visibleArea, left + 10, top + 50)
+
+          nextAnimationFrame()
+
+        afterEach ->
+          minimapElement.endDrag()
+
+        it 'scrolls the editor so that the visible area was moved down by 40 pixels', ->
+          {top} = visibleArea.getBoundingClientRect()
+          expect(top).toBeCloseTo(originalTop + 40, -1)
+
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
     #    ##     ## ##       ##          ##    ##     ## ##     ##   ####

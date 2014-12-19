@@ -132,9 +132,15 @@ class MinimapElement extends HTMLElement
     @controls.classList.add('minimap-controls')
     @shadowRoot.appendChild(@controls)
 
-    @canvas.addEventListener 'mousedown', l = (e) => @mousePressedOverCanvas(e)
+    canvasMousedown = (e) => @mousePressedOverCanvas(e)
+    visibleAreaMousedown = (e) => @startDrag(e)
+
+    @canvas.addEventListener 'mousedown', canvasMousedown
+    @visibleArea.addEventListener 'mousedown', visibleAreaMousedown
+
     @subscriptions.add new Disposable =>
-      @canvas.removeEventListener 'mousedown', l
+      @canvas.removeEventListener 'mousedown', canvasMousedown
+      @visibleArea.removeEventListener 'mousedown', visibleAreaMousedown
 
   initializeScrollIndicator: ->
     @scrollIndicator = document.createElement('div')
@@ -328,7 +334,43 @@ class MinimapElement extends HTMLElement
 
     @minimap.textEditor.setScrollTop(scrollTop)
 
-  #     ######   ######   ######  
+  #    ########    ####    ########
+  #    ##     ##  ##  ##   ##     ##
+  #    ##     ##   ####    ##     ##
+  #    ##     ##  ####     ##     ##
+  #    ##     ## ##  ## ## ##     ##
+  #    ##     ## ##   ##   ##     ##
+  #    ########   ####  ## ########
+
+  startDrag: ({pageY}) ->
+    {top} = @visibleArea.getBoundingClientRect()
+    {top: offsetTop} = @getBoundingClientRect()
+
+    dragOffset = pageY - top
+
+    initial = {dragOffset, offsetTop}
+
+    mousemoveHandler = (e) => @drag(e, initial)
+    mouseupHandler = (e) => @endDrag(e, initial)
+
+    @addEventListener('mousemove', mousemoveHandler)
+    @addEventListener('mouseup', mouseupHandler)
+
+    @dragSubscription = new Disposable =>
+      @removeEventListener('mousemove', mousemoveHandler)
+      @removeEventListener('mouseup', mouseupHandler)
+
+  drag: (e, initial) ->
+    y = e.pageY - initial.offsetTop - initial.dragOffset
+
+    ratio = y / (@minimap.textEditor.getHeight() - @minimap.getTextEditorHeight())
+
+    @minimap.textEditor.setScrollTop(ratio * @minimap.textEditor.displayBuffer.getMaxScrollTop())
+
+  endDrag: (e, initial) ->
+    @dragSubscription.dispose()
+
+  #     ######   ######   ######
   #    ##    ## ##    ## ##    ##
   #    ##       ##       ##
   #    ##        ######   ######
