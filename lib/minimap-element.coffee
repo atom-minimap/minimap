@@ -132,13 +132,16 @@ class MinimapElement extends HTMLElement
     @controls.classList.add('minimap-controls')
     @shadowRoot.appendChild(@controls)
 
+    elementMousewheel = (e) => @relayMousewheelEvent(e)
     canvasMousedown = (e) => @mousePressedOverCanvas(e)
     visibleAreaMousedown = (e) => @startDrag(e)
 
+    @addEventListener 'mousewheel', elementMousewheel
     @canvas.addEventListener 'mousedown', canvasMousedown
     @visibleArea.addEventListener 'mousedown', visibleAreaMousedown
 
     @subscriptions.add new Disposable =>
+      @removeEventListener 'mousewheel', elementMousewheel
       @canvas.removeEventListener 'mousedown', canvasMousedown
       @visibleArea.removeEventListener 'mousedown', visibleAreaMousedown
 
@@ -333,6 +336,11 @@ class MinimapElement extends HTMLElement
     scrollTop = row * @minimap.textEditor.getLineHeightInPixels() - @minimap.textEditor.getHeight() / 2
 
     @minimap.textEditor.setScrollTop(scrollTop)
+
+  relayMousewheelEvent: (e) =>
+    editorElement = atom.views.getView(@minimap.textEditor)
+
+    editorElement.component.onMouseWheel(e)
 
   #    ########    ####    ########
   #    ##     ##  ##  ##   ##     ##

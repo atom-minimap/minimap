@@ -36,3 +36,6 @@ module.exports = {objectCenterCoordinates, mouseEvent}
       cy = y
 
     obj.dispatchEvent(mouseEvent key, {pageX: x, pageY: y, clientX: cx, clientY: cy})
+
+module.exports.mousewheel = (obj, deltaX=0, deltaY=0) ->
+  obj.dispatchEvent(mouseEvent 'mousewheel', {deltaX, deltaY})

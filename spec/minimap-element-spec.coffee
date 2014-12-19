@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-{mousemove, mousedown, mouseup} = require './helpers/events'
+{mousemove, mousedown, mouseup, mousewheel} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -251,6 +251,15 @@ describe 'MinimapElement', ->
         advanceClock(150)
         nextAnimationFrame()
 
+      describe 'using the mouse scrollwheel over the minimap', ->
+        beforeEach ->
+          spyOn(editor, 'setScrollTop').andCallThrough()
+
+          mousewheel(minimapElement, 0, 15)
+
+        it 'relays the events to the editor view', ->
+          expect(editor.setScrollTop).toHaveBeenCalled()
+
       describe 'when pressing the mouse on the minimap canvas', ->
         beforeEach ->
           canvas = minimapElement.canvas
@@ -265,7 +274,7 @@ describe 'MinimapElement', ->
 
         beforeEach ->
           visibleArea = minimapElement.visibleArea
-          {top, left, width, height} = visibleArea.getBoundingClientRect()
+          {top, left} = visibleArea.getBoundingClientRect()
           originalTop = top
 
           mousedown(visibleArea, left + 10, top + 10)
