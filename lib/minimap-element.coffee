@@ -140,7 +140,10 @@ class MinimapElement extends HTMLElement
     @openQuickSettings = document.createElement('div')
     @openQuickSettings.classList.add 'open-minimap-quick-settings'
     @controls.appendChild(@openQuickSettings)
-    @openQuickSettings.addEventListener 'click', (e) =>
+    @openQuickSettings.addEventListener 'mousedown', (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      
       if @quickSettingsView?
         @quickSettingsView.destroy()
         @quickSettingsSubscription.dispose()

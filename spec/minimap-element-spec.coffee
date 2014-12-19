@@ -451,7 +451,7 @@ describe 'MinimapElement', ->
           jasmineContent.appendChild(workspaceElement)
 
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
-          click(openQuickSettings)
+          mousedown(openQuickSettings)
 
           quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
 
@@ -474,7 +474,7 @@ describe 'MinimapElement', ->
           jasmineContent.appendChild(workspaceElement)
 
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
-          click(openQuickSettings)
+          mousedown(openQuickSettings)
 
           quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
 
@@ -491,7 +491,7 @@ describe 'MinimapElement', ->
 
         describe 'clicking on the open settings button again', ->
           beforeEach ->
-            click(openQuickSettings)
+            mousedown(openQuickSettings)
 
           it 'closes the quick settings view', ->
             expect(workspaceElement.querySelector('.minimap-quick-settings')).not.toExist()
