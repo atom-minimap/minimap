@@ -252,15 +252,18 @@ class MinimapElement extends HTMLElement
     visibleAreaLeft = @minimap.getTextEditorScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()
 
-    @visibleArea.style.width = @clientWidth + 'px'
-    @visibleArea.style.height = @minimap.getTextEditorHeight() + 'px'
-    @transformElement @visibleArea, @makeTranslate(visibleAreaLeft, visibleAreaTop)
+    @applyStyles @visibleArea,
+      width: @clientWidth + 'px'
+      height: @minimap.getTextEditorHeight() + 'px'
+      transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
-    @controls.style.width = @canvas.width + 'px'
+    @applyStyles @controls,
+      width: @canvas.width + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()
 
-    @transformElement(@canvas, @makeTranslate(0, canvasTop))
+    @applyStyles @canvas,
+      transform: @makeTranslate(0, canvasTop)
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
       @initializeScrollIndicator()
@@ -269,8 +272,10 @@ class MinimapElement extends HTMLElement
       editorHeight = @getTextEditor().getHeight()
       indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
       indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRation()
-      @scrollIndicator.style.height = indicatorHeight + 'px'
-      @transformElement @scrollIndicator, @makeTranslate(0, indicatorScroll)
+
+      @applyStyles @scrollIndicator,
+        height: indicatorHeight + 'px'
+        transform: @makeTranslate(0, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 
@@ -386,8 +391,13 @@ class MinimapElement extends HTMLElement
   #    ##    ## ##    ## ##    ##
   #     ######   ######   ######
 
-  transformElement: (el, transform) ->
-    el.style.transform = transform
+  applyStyles: (element, styles) ->
+    cssText = ''
+
+    for property,value of styles
+      cssText += "#{property}: #{value}; "
+
+    element.style.cssText = cssText
 
   makeTranslate: (x=0,y=0) ->
     if @useHardwareAcceleration
