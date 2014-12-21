@@ -98,7 +98,7 @@ class MinimapQuickSettingsView extends View
       @selectedItem.addClass('selected')
 
   removeItemFor: (name, plugin) ->
-    @list.remove(@plugins[name])
+    try @list.remove(@plugins[name])
     delete @plugins[name]
 
   activateItem: (name, plugin) ->
