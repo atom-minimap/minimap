@@ -57,16 +57,23 @@ class Minimap extends Model
 
   getTextEditorScrollLeft: -> @textEditor.getScrollLeft() * @getHorizontalScaleFactor()
 
-  getTextEditorScrollRatio: ->
+  getTextEditorMaxScrollTop: ->
     maxScrollTop = @textEditor.displayBuffer.getMaxScrollTop()
     if @scrollPastEnd
       maxScrollTop -= @textEditor.getHeight() - 3 * @textEditor.displayBuffer.getLineHeightInPixels()
-    @textEditor.getScrollTop() / maxScrollTop
+
+    maxScrollTop
+
+  getTextEditorScrollRatio: ->
+    @textEditor.getScrollTop() / @getTextEditorMaxScrollTop()
 
   getCapedTextEditorScrollRation: ->
     Math.min(1, @getTextEditorScrollRatio())
 
   getHeight: -> @textEditor.getScreenLineCount() * @getLineHeight()
+
+  getVisibleHeight: ->
+    Math.min(@textEditor.getHeight(), @getHeight())
 
   getVerticalScaleFactor: ->
     @getLineHeight() / @textEditor.getLineHeightInPixels()

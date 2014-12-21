@@ -371,9 +371,9 @@ class MinimapElement extends HTMLElement
   drag: (e, initial) ->
     y = e.pageY - initial.offsetTop - initial.dragOffset
 
-    ratio = y / (@minimap.textEditor.getHeight() - @minimap.getTextEditorHeight())
+    ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorHeight())
 
-    @minimap.textEditor.setScrollTop(ratio * @minimap.textEditor.displayBuffer.getMaxScrollTop())
+    @minimap.textEditor.setScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
 
   endDrag: (e, initial) ->
     @dragSubscription.dispose()

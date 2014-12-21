@@ -260,7 +260,7 @@ describe 'MinimapElement', ->
         it 'relays the events to the editor view', ->
           expect(editor.setScrollTop).toHaveBeenCalled()
 
-      describe 'when pressing the mouse on the minimap canvas', ->
+      describe 'pressing the mouse on the minimap canvas', ->
         beforeEach ->
           canvas = minimapElement.canvas
           mousedown(canvas)
@@ -269,7 +269,7 @@ describe 'MinimapElement', ->
         it 'scrolls the editor to the line below the mouse', ->
           expect(editor.getScrollTop()).toEqual(360)
 
-      describe 'when dragging the visible area', ->
+      describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []
 
         beforeEach ->
@@ -280,7 +280,9 @@ describe 'MinimapElement', ->
           mousedown(visibleArea, left + 10, top + 10)
           mousemove(visibleArea, left + 10, top + 50)
 
-          nextAnimationFrame()
+          waitsFor -> minimapElement.frameRequested
+
+          runs -> nextAnimationFrame()
 
         afterEach ->
           minimapElement.endDrag()
@@ -297,6 +299,60 @@ describe 'MinimapElement', ->
           mousemove(visibleArea, left + 10, top + 50)
 
           expect(minimapElement.drag).not.toHaveBeenCalled()
+
+      describe 'when the minimap cannot scroll', ->
+        [visibleArea, originalTop] = []
+
+        beforeEach ->
+          sample = fs.readFileSync(atom.project.resolve('seventy.txt')).toString()
+          editor.setText(sample)
+          editor.setScrollTop(0)
+
+        describe 'dragging the visible area', ->
+          beforeEach ->
+            nextAnimationFrame()
+
+            visibleArea = minimapElement.visibleArea
+            {top, left} = visibleArea.getBoundingClientRect()
+            originalTop = top
+
+            mousedown(visibleArea, left + 10, top + 10)
+            mousemove(visibleArea, left + 10, top + 50)
+
+            nextAnimationFrame()
+
+          afterEach ->
+            minimapElement.endDrag()
+
+          it 'scrolls based on a ratio adjusted to the minimap height', ->
+            {top} = visibleArea.getBoundingClientRect()
+            expect(top).toBeCloseTo(originalTop + 40, -1)
+
+      describe 'when scroll past end is enabled', ->
+        beforeEach ->
+          atom.config.set 'editor.scrollPastEnd', true
+          nextAnimationFrame()
+
+        describe 'dragging the visible area', ->
+          [visibleArea, originalTop] = []
+
+          beforeEach ->
+            visibleArea = minimapElement.visibleArea
+            {top, left} = visibleArea.getBoundingClientRect()
+            originalTop = top
+
+            mousedown(visibleArea, left + 10, top + 10)
+            mousemove(visibleArea, left + 10, top + 50)
+
+            nextAnimationFrame()
+
+          afterEach ->
+            minimapElement.endDrag()
+
+          it 'scrolls the editor so that the visible area was moved down by 40 pixels', ->
+            {top} = visibleArea.getBoundingClientRect()
+            expect(top).toBeCloseTo(originalTop + 40, -1)
+
 
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
