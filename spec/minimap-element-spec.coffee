@@ -280,9 +280,7 @@ describe 'MinimapElement', ->
           mousedown(visibleArea, left + 10, top + 10)
           mousemove(visibleArea, left + 10, top + 50)
 
-          waitsFor -> minimapElement.frameRequested
-
-          runs -> nextAnimationFrame()
+          nextAnimationFrame()
 
         afterEach ->
           minimapElement.endDrag()
