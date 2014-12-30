@@ -31,6 +31,14 @@ class Minimap extends Model
       @emitter.emit('did-change-scroll-left', scrollLeft)
     subs.add @textEditor.onDidDestroy => @destroy()
 
+    # FIXME: Some changes occuring during the tokenization produces
+    # ranges that deceive the canvas rendering by making some
+    # lines at the end of the buffer intact while they are in fact not
+    # resulting in extra lines appearing at the end of the minimap.
+    # Forcing a whole repaint fix that but is suboptimal.
+    subs.add @textEditor.displayBuffer.onDidTokenize =>
+      @emitter.emit('did-change-config')
+
   destroyed: ->
     @subscriptions.dispose()
     @textEditor = null
