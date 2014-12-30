@@ -44,9 +44,11 @@ class Minimap extends Model
     @textEditor = null
     @emitter.emit 'did-destroy'
 
-  onDidChange: (callback) -> @emitter.on 'did-change', callback
+  onDidChange: (callback) ->
+    @emitter.on 'did-change', callback
 
-  onDidChangeConfig: (callback) -> @emitter.on 'did-change-config', callback
+  onDidChangeConfig: (callback) ->
+    @emitter.on 'did-change-config', callback
 
   onDidChangeScrollTop: (callback) ->
     @emitter.on 'did-change-scroll-top', callback
