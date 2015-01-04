@@ -30,6 +30,16 @@ class V4Main
 
   minimapForEditor: (editor) -> @editorsMinimaps[editor.id]
 
+  observeMinimaps: (iterator) ->
+    return unless iterator?
+    iterator({view: minimap}) for id,minimap of @editorsMinimaps
+    createdCallback = (minimap) -> iterator(minimap)
+    disposable = @onDidCreateMinimap(createdCallback)
+    disposable.off = ->
+      deprecate('Use Disposable::dispose instead')
+      disposable.dispose()
+    disposable
+
   initSubscriptions: ->
     Minimap ?= require './minimap'
 
@@ -40,4 +50,6 @@ class V4Main
       editorElement = atom.views.getView(textEditor)
       minimapElement = atom.views.getView(minimap)
 
+      @emitter.emit('did-create-minimap')
+      
       minimapElement.attach()
