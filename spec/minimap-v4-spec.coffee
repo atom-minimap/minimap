@@ -11,10 +11,10 @@ describe 'Minimap package v4', ->
     workspaceElement = atom.views.getView(atom.workspace)
     jasmine.attachToDOM(workspaceElement)
 
-    waitsFor ->
+    waitsForPromise ->
       atom.workspace.open('sample.coffee')
 
-    waitsFor ->
+    waitsForPromise ->
       atom.packages.activatePackage('minimap').then (pkg) ->
         minimapPackage = pkg.mainModule
 
@@ -45,6 +45,20 @@ describe 'Minimap package v4', ->
 
     it 'attaches a minimap element to the editor view', ->
       expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).toExist()
+
+  describe '::observeMinimaps', ->
+    [spy] = []
+    beforeEach ->
+      spy = jasmine.createSpy('observeMinimaps')
+      minimapPackage.observeMinimaps(spy)
+
+    it 'calls the callback with the existing minimaps', ->
+      expect(spy).toHaveBeenCalled()
+
+    it 'calls the callback when a new editor is opened', ->
+      waitsForPromise -> atom.workspace.open('other-sample.js')
+
+      runs -> expect(spy.calls.length).toEqual(2)
 
   describe '::deactivate', ->
     beforeEach ->
