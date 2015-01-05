@@ -1,3 +1,62 @@
+<a name="v3.5.0"></a>
+# v3.5.0 (2015-01-05)
+
+The main change in v3.5.0 is the addition of the `V4 Preview` setting that enable the new custom element based minimap. **A Restart is needed to activate the preview. Plugins may be disabled if they doesn't have been updated to suport the new API.**
+
+The following changes mostly concerns the implementation of the new minimap.
+
+## :sparkles: Features
+
+- Implement minimap creation observer method for v4 ([e583763a](https://github.com/fundon/atom-minimap/commit/e583763a8f166f42f177dcb7df9379827ee0ce28))
+- Implement basic minimap scroll through dragging ([769fb815](https://github.com/fundon/atom-minimap/commit/769fb8153960baac29b4f1bc4ace419db852a14d))
+- Implement scroll on mouse pressed over canvas ([eb927855](https://github.com/fundon/atom-minimap/commit/eb9278552561539ce9d1ac87f45b738f12d6f573))
+- Implement sublime-like minimap scroll with scroll past end ([5d5185b7](https://github.com/fundon/atom-minimap/commit/5d5185b725ba399345cfba363b44b59825782e02))  
+  <br>It prevents the minimap from going past the end while the editor is.
+- Implement code highlight toggle from quick settings in element ([c779f6fd](https://github.com/fundon/atom-minimap/commit/c779f6fd0eb3c7dac950d423fe95480f4b765a8c))
+- Implement proper quick settings view life cycle ([9af0bd12](https://github.com/fundon/atom-minimap/commit/9af0bd12f6b9c6820c8b649f71517c4e6de79558))
+- Add quick settings button in minimap element ([a2184d14](https://github.com/fundon/atom-minimap/commit/a2184d14b2b608c85a8ca7070e1c57fa1c2ea872))
+- Implement minimap element destruction ([60081818](https://github.com/fundon/atom-minimap/commit/60081818e4a5af66e3245bbd3076b28b1d80a89c))
+- Implement minimap model destruction ([b65698bb](https://github.com/fundon/atom-minimap/commit/b65698bb487c5d6a09cd95b263e861cef946ae04))
+- Add support for adjustMinimapWidthToSoftWrap config ([b66bbbb1](https://github.com/fundon/atom-minimap/commit/b66bbbb1110b35988e60eff70ec89173307b8e7f))
+- Implement a basic switch in main to enable v4 preview ([2d072921](https://github.com/fundon/atom-minimap/commit/2d072921d82006a1c75dcf65b5ff1c3447be5877))
+- Implement config observers to update minimap elements ([5bea5458](https://github.com/fundon/atom-minimap/commit/5bea54580ba16270a671cba3688ae27526281be6))
+- Implement minimap scroll indicator ([1128bb45](https://github.com/fundon/atom-minimap/commit/1128bb45241cf79e1b7688c65a4dd745bdf7ad61))
+- Implement partial redraw on editor changes ([0c50eb55](https://github.com/fundon/atom-minimap/commit/0c50eb559070b0a2047b0ab32820ad6efd6b6b7a))
+- Implement minimap on left config support in minimap element ([15a586a0](https://github.com/fundon/atom-minimap/commit/15a586a0cbb99ab70630820ad75084572cffb4ce))
+- Implement resize detection with DOM polling ([a5b888ce](https://github.com/fundon/atom-minimap/commit/a5b888cece5f7570322ce7810deb5ab9cdf49e93))
+- Implement canvas offset to allow smooth scroll ([57accd3c](https://github.com/fundon/atom-minimap/commit/57accd3c6e503c97eaa824cceb5f71db927442aa))
+- Add support for visible area scroll in minimap element update ([f3b68565](https://github.com/fundon/atom-minimap/commit/f3b6856562918efa508505e99777117de2d5ae9b))
+- Add support for editor left scroll in the minimap model ([d2f59e38](https://github.com/fundon/atom-minimap/commit/d2f59e38d85f15d1356df3675f2c1c4b466620e8))
+- Add basic view update routine ([312b6080](https://github.com/fundon/atom-minimap/commit/312b60802372f17d83c147a954ac337f08a81ae2))
+- Add basic content in minimap element ([8a8869d0](https://github.com/fundon/atom-minimap/commit/8a8869d07ae16d523ede73f512861b50d95438cf))
+- Add view provider registration method on minimap element ([d1e95aa8](https://github.com/fundon/atom-minimap/commit/d1e95aa87161b0444179f04e7988f04d0899d314))
+- Add stub for minimap element ([19f1aeaa](https://github.com/fundon/atom-minimap/commit/19f1aeaa99b19263b753c70031173afbf72ab40d))
+- Implement decoration management in minimap model ([f6181c9d](https://github.com/fundon/atom-minimap/commit/f6181c9df4b60481d96ccd5a6f70752164cffc48))  <br>The biggest change so far is that changes are not stacked in the model
+  but emitted as events.
+- Add model method to compute the visible rows range ([5a38ef5c](https://github.com/fundon/atom-minimap/commit/5a38ef5c87d98ba02186714b8dfa8f047b9bb016))
+- Add more minimap scroll related method ([990f29a1](https://github.com/fundon/atom-minimap/commit/990f29a100105c8949eb47a8478283794df7cd9a))
+- Add more scroll related methods ([2e517425](https://github.com/fundon/atom-minimap/commit/2e517425bc086003f8c1fa94aa410764639fd99e))
+- Add first methods in the new Minimap model ([93651f2a](https://github.com/fundon/atom-minimap/commit/93651f2a8259a68a971f1014180f3a66c19da1b3))
+
+## :bug: Bug Fixes
+
+- Fix missing getTextEditor method on minimap view ([569ee952](https://github.com/fundon/atom-minimap/commit/569ee952583a0b9cb116189c437f4279c92c61ab))
+- Fix position of right positioned controls without using offset ([4f32ca74](https://github.com/fundon/atom-minimap/commit/4f32ca74fb0543033aa229aa4aaeab3b53df47f0))
+- Change minimap width adjustments to avoid update on every DOM poll ([cca596c7](https://github.com/fundon/atom-minimap/commit/cca596c77c6eb647666a2a70646ba2c31c33da33))
+- Prevent canvas resize when minimap become invisible ([43ebe7b9](https://github.com/fundon/atom-minimap/commit/43ebe7b94b41c79b5aad653b1d40691913a526e6))
+- Fix minimap model not relying on screen lines ([3ea02bf5](https://github.com/fundon/atom-minimap/commit/3ea02bf51c80fe648eaaa2cc3c3e35968fe6928a))
+- Fix minimap redraw when scrolling down ([d3edad15](https://github.com/fundon/atom-minimap/commit/d3edad1542195d3a627c2789107882ff39a10810))
+- Bad value returned in getCharHeight ([6f804830](https://github.com/fundon/atom-minimap/commit/6f804830a98e39381656fd891ca26c9741342dbf))
+- Fix missing method for decoration management in minimap ([b1911a9f](https://github.com/fundon/atom-minimap/commit/b1911a9f431dcc494d63e989fcf615a2efe4d0c9))
+- Fix dom reader failing to append the node outside render view ([17ba1732](https://github.com/fundon/atom-minimap/commit/17ba1732194a47648adf9aa63a13591e064c0122))
+
+## :racehorse: Performances
+
+- Replace sequencial styles affectation with cssText ([f12ae20f](https://github.com/fundon/atom-minimap/commit/f12ae20f128a8dffa60438b3fa697936502c1d25))
+- Use translate and translate3d for offsets ([98083d88](https://github.com/fundon/atom-minimap/commit/98083d884e9dcfc2c95625ed228c7b8bdce5761a))
+- Prevent drawing tokens past the canvas width ([c7ab242f](https://github.com/fundon/atom-minimap/commit/c7ab242fc78c1be1adc911745c68cb1234211cbf))
+
+
 <a name="v3.4.9"></a>
 # v3.4.9 (2014-12-17)
 
