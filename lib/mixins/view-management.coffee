@@ -35,7 +35,7 @@ class ViewManagement extends Mixin
   # Public: Returns the {MinimapView} of the active editor view.
   #
   # Returns a {MinimapView}.
-  getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveEditor())
+  getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveTextEditor())
 
   # Public: Calls `iterator` for each present and future minimap views.
   # It returns a subscription {Object} with a `off` method so that
