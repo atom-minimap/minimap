@@ -209,6 +209,8 @@ class MinimapView extends View
     @renderView.destroy()
     @remove()
 
+  getTextEditor: -> @editor
+
   setEditorView: (@editorView) ->
     @editor = @editorView.getModel()
     if @paneView?
