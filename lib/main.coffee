@@ -84,7 +84,7 @@ class Main
     v4Preview:
       type: 'boolean'
       default: false
-      description: "Require Atom restart. Plugins will be disabled."
+      description: "Require Atom restart. Some plugins may be disabled if they don't support the new API."
 
   # Internal: The activation state of the minimap package.
   active: false
