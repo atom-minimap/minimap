@@ -432,7 +432,7 @@ class MinimapRenderView extends ScrollView
 
     # Whitespaces can be substituted by other characters so we need
     # to replace them when that's the case.
-    if line.invisibles?
+    if line? and line.invisibles?
       re = ///
       #{line.invisibles.cr}|
       #{line.invisibles.eol}|
