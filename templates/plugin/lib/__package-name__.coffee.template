@@ -1,5 +1,4 @@
 {CompositeDisposable} = require 'event-kit'
-__PackageName__View = require './__package-name__-view'
 
 module.exports =
   active: false
@@ -8,14 +7,12 @@ module.exports =
   isActive: -> @active
 
   activate: (state) ->
-    minimapPackage = atom.packages.getLoadedPackage('minimap')
-    return @deactivate() unless minimapPackage?
+    atom.packages.activatePackage('minimap').then (minimapPackage) =>
+      @minimap = minimapPackage.mainModule
+      return @deactivate() unless @minimap.versionMatch('>= 3.5.0')
 
-    @minimap = require minimapPackage.path
-    return @deactivate() unless @minimap.versionMatch('3.x')
-
-    @subscriptions = new CompositeDisposable
-    @minimap.registerPlugin '__package-name__', this
+      @subscriptions = new CompositeDisposable
+      @minimap.registerPlugin '__package-name__', this
 
   deactivate: ->
     @minimap.unregisterPlugin '__package-name__'
@@ -26,30 +23,14 @@ module.exports =
 
     @active = true
 
-    @subscriptions.add @minimap.onDidActivate => @createViews()
-    @subscriptions.add @minimap.onDidDeactivate => @destroyViews()
+    @subscription = @minimap.observeMinimaps (minimap) =>
+      minimapElement = atom.views.getView(minimap)
 
-    @createViews()
+      # ...
 
   deactivatePlugin: ->
     return unless @active
 
     @active = false
-    @destroyViews()
-    @subscription.off()
+    @subscription.dispose()
     @subscriptions.dispose()
-
-  createViews: ->
-    @subscription = @minimap.eachMinimapView ({view}) =>
-      pluginView = new __PackageName__View(view)
-      @views[view.editor.id] = pluginView
-
-      pluginView.attach()
-
-      view.editor.once 'destroyed', =>
-        pluginView.destroy()
-        delete @views[view.editor.id]
-
-  destroyViews: ->
-    view.destroy() for id,view of @views
-    @views = {}
