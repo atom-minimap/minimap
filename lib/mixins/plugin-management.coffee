@@ -99,3 +99,6 @@ class PluginManagement extends Mixin
     @pluginsSubscriptions[name].dispose()
     delete @pluginsSubscriptions[name]
     delete @config.plugins.properties[name]
+
+  deactivateAllPlugins: ->
+    plugin.deactivatePlugin() for name, plugin of @plugins
