@@ -44,6 +44,7 @@ If you want to hide the default editor scrollbar, edit your `style.less` (Open Y
 
 ```css
 // hide scrollbar
+.with-minimap atom-text-editor .vertical-scrollbar,
 .with-minimap atom-text-editor::shadow .vertical-scrollbar {
   opacity: 0;
   width: 0;
