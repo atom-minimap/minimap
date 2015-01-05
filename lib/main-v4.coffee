@@ -32,7 +32,7 @@ class V4Main
 
   observeMinimaps: (iterator) ->
     return unless iterator?
-    iterator({view: minimap}) for id,minimap of @editorsMinimaps
+    iterator(minimap) for id,minimap of @editorsMinimaps
     createdCallback = (minimap) -> iterator(minimap)
     disposable = @onDidCreateMinimap(createdCallback)
     disposable.off = ->
@@ -50,6 +50,6 @@ class V4Main
       editorElement = atom.views.getView(textEditor)
       minimapElement = atom.views.getView(minimap)
 
-      @emitter.emit('did-create-minimap')
-      
+      @emitter.emit('did-create-minimap', minimap)
+
       minimapElement.attach()
