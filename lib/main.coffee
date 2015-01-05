@@ -83,7 +83,7 @@ class Main
       description: "The opacity used to render the line's text in the minimap."
     v4Preview:
       type: 'boolean'
-      default: true
+      default: false
       description: "Require Atom restart. Plugins will be disabled."
 
   # Internal: The activation state of the minimap package.
