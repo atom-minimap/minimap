@@ -28,7 +28,7 @@ class MinimapElement extends HTMLElement
 
     @observeConfig
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
-        swapPosition = @attached and displayMinimapOnLeft isnt @displayMinimapOnLeft
+        swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft
         @displayMinimapOnLeft = displayMinimapOnLeft
 
         @swapMinimapPosition() if swapPosition

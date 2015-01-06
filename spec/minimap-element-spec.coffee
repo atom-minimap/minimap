@@ -428,11 +428,28 @@ describe 'MinimapElement', ->
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
 
     describe 'when minimap.displayMinimapOnLeft setting is true', ->
-      beforeEach ->
-        atom.config.set 'minimap.displayMinimapOnLeft', true
-
       it 'moves the attached minimap to the left', ->
+        atom.config.set 'minimap.displayMinimapOnLeft', true
         expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
+
+      describe 'when the minimap is not attached yet', ->
+        beforeEach ->
+          editor = new TextEditor({})
+          editor.setLineHeightInPixels(10)
+          editor.setHeight(50)
+
+          minimap = new Minimap({textEditor: editor})
+
+          editorElement = atom.views.getView(editor)
+          minimapElement = atom.views.getView(minimap)
+
+          jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
+
+          atom.config.set 'minimap.displayMinimapOnLeft', true
+          minimapElement.attach()
+
+        it 'moves the attached minimap to the left', ->
+          expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
 
     describe 'when minimap.adjustMinimapWidthToSoftWrap is true', ->
       [minimapWidth] = []
