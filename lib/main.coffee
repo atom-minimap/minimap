@@ -115,7 +115,7 @@ class Main
 
       if atom.config.get('minimap.displayPluginsControls')
         @subscriptions.add atom.commands.add 'atom-workspace',
-          'minimap:open-quick-settings': ->
+          'minimap:open-quick-settings': =>
             editor = atom.workspace.getActiveEditor()
             @minimapForEditor(editor).openQuickSettings.mousedown()
 
