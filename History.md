@@ -1,3 +1,14 @@
+<a name="v3.5.1"></a>
+# v3.5.1 (2015-01-07)
+
+## :bug: Bug Fixes
+
+- Fix minimap position not updated if setting change before attachment ([4b9b6242](https://github.com/fundon/atom-minimap/commit/4b9b624243cd8102bc1bd4f4a19eab1d59247b5d))
+- Prevent NaN screenDelta in changes ([4f00149e](https://github.com/fundon/atom-minimap/commit/4f00149e8d98a9affe6ca3488db33aa41d1b334a))
+- Stop drag gesture when mouse leaves the window ([8d026d14](https://github.com/fundon/atom-minimap/commit/8d026d147e60cb142573ebee755e5ece5028d174), [#193](https://github.com/fundon/atom-minimap/issues/193))
+- Fix minimap canvas scaling when device pixel ratio > 1 ([8c066eee](https://github.com/fundon/atom-minimap/commit/8c066eee35694320687b157de5fbb8bd3f3e447d), [#192](https://github.com/fundon/atom-minimap/issues/192))
+- Fix duplicated minimap when dragging tab ([83830ca4](https://github.com/fundon/atom-minimap/commit/83830ca40b34fd7361c973a96619dfb20c0bf958))
+
 <a name="v3.5.0"></a>
 # v3.5.0 (2015-01-05)
 
