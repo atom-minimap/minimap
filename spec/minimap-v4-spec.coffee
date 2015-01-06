@@ -130,7 +130,7 @@ describe 'Minimap package v4', ->
       describe 'on minimap deactivation', ->
         beforeEach ->
           expect(plugin.active).toBeTruthy()
-          atom.packages.deactivatePackage('minimap')
+          minimapPackage.deactivate()
 
         it 'deactivates all the plugins', ->
           expect(plugin.active).toBeFalsy()
