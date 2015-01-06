@@ -262,8 +262,9 @@ class MinimapElement extends HTMLElement
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()
 
-    @applyStyles @canvas,
-      transform: @makeTranslate(0, canvasTop)
+    canvasTransform = @makeTranslate(0, canvasTop)
+    canvasTransform += " " + @makeScale(1/devicePixelRatio) if devicePixelRatio isnt 1
+    @applyStyles @canvas, transform: canvasTransform
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
       @initializeScrollIndicator()
@@ -404,6 +405,12 @@ class MinimapElement extends HTMLElement
       "translate3d(#{x}px, #{y}px, 0)"
     else
       "translate(#{x}px, #{y}px)"
+
+  makeScale: (x=0,y=x) ->
+    if @useHardwareAcceleration
+      "scale3d(#{x}, #{y}, 1)"
+    else
+      "scale(#{x}, #{y})"
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########
 #    ##       ##       ##       ###   ### ##       ###   ##    ##
