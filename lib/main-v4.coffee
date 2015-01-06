@@ -45,6 +45,8 @@ class V4Main
     Minimap ?= require './minimap'
 
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
+      return if @editorsMinimaps[textEditor.id]?
+      
       minimap = new Minimap({textEditor})
       @editorsMinimaps[textEditor.id] = minimap
 
