@@ -369,10 +369,12 @@ class MinimapElement extends HTMLElement
 
     document.body.addEventListener('mousemove', mousemoveHandler)
     document.body.addEventListener('mouseup', mouseupHandler)
+    document.body.addEventListener('mouseout', mouseupHandler)
 
     @dragSubscription = new Disposable =>
       document.body.removeEventListener('mousemove', mousemoveHandler)
       document.body.removeEventListener('mouseup', mouseupHandler)
+      document.body.removeEventListener('mouseout', mouseupHandler)
 
   drag: (e, initial) ->
     y = e.pageY - initial.offsetTop - initial.dragOffset
