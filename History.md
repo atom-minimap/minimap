@@ -1,3 +1,10 @@
+<a name="v3.5.2"></a>
+# v3.5.2 (2015-01-07)
+
+## :bug: Bug Fixes
+
+- Fix broken quick settings command in v3 mode ([8cbde1df](https://github.com/fundon/atom-minimap/commit/8cbde1dfd4a6418335ea6f5235cbbd6b627ef16b), [#194](https://github.com/fundon/atom-minimap/issues/194))
+
 <a name="v3.5.1"></a>
 # v3.5.1 (2015-01-07)
 
