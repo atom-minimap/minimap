@@ -168,6 +168,10 @@ class DecorationManagement extends Mixin
     firstRenderedScreenRow = @getFirstVisibleScreenRow()
     screenDelta = (lastRenderedScreenRow - firstRenderedScreenRow) - (endScreenRow - startScreenRow)
 
+    if isNaN(screenDelta)
+      console.log startScreenRow, endScreenRow, firstRenderedScreenRow, lastRenderedScreenRow
+      screenDelta = 0
+
     changeEvent =
       start: startScreenRow
       end: endScreenRow
