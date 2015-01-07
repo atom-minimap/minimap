@@ -130,7 +130,7 @@ class DecorationManagement extends Mixin
 
       [start, end] = [end, start] if start.row > end.row
 
-      @stackRangeChanges({start, end})
+      @stackRangeChanges({start, end, screenDelta: end - start})
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
