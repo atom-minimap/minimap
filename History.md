@@ -1,3 +1,12 @@
+<a name="v3.5.4"></a>
+# v3.5.4 (2015-01-07)
+
+## :bug: Bug Fixes
+
+- Fix error raised when clicking on minimap ([a77a94a9](https://github.com/fundon/atom-minimap/commit/a77a94a981128a5a2f1335bc02729d510dfd8310), [#198](https://github.com/fundon/atom-minimap/issues/198))
+- Add guard when screenDelta is NaN ([4f1f204c](https://github.com/fundon/atom-minimap/commit/4f1f204c6b18380e5286e0e680289d62177bfd22))
+- Fix screen delta not set in decoration changes ([3aa521bd](https://github.com/fundon/atom-minimap/commit/3aa521bdefab1d5c0f27169e106a2e40dca53b6a))
+
 <a name="v3.5.3"></a>
 # v3.5.3 (2015-01-07)
 
