@@ -29,7 +29,7 @@ class V4Main
       @toggled = true
       @initSubscriptions()
 
-  minimapForEditor: (editor) -> @editorsMinimaps[editor.id]
+  minimapForEditor: (editor) -> @editorsMinimaps[editor.id] if editor?
 
   observeMinimaps: (iterator) ->
     return unless iterator?
@@ -46,7 +46,7 @@ class V4Main
 
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
       return if @editorsMinimaps[textEditor.id]?
-      
+
       minimap = new Minimap({textEditor})
       @editorsMinimaps[textEditor.id] = minimap
 
