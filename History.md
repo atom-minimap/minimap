@@ -1,3 +1,10 @@
+<a name="v3.5.3"></a>
+# v3.5.3 (2015-01-07)
+
+## :bug: Bug Fixes
+
+- Fix broken access to minimap for editor when editor is undefined ([3127b25b](https://github.com/fundon/atom-minimap/commit/3127b25bb3d845825a3ec477da1942215f630df1), [#200](https://github.com/fundon/atom-minimap/issues/200))
+
 <a name="v3.5.2"></a>
 # v3.5.2 (2015-01-07)
 
