@@ -1,6 +1,5 @@
-{View} = require 'atom-space-pen-views'
+{$, View} = require 'atom-space-pen-views'
 {CompositeDisposable, Emitter} = require 'event-kit'
-$ = View.__super__.constructor
 
 Minimap = require './main'
 
