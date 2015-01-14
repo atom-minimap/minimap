@@ -1,3 +1,10 @@
+<a name="v3.5.5"></a>
+# v3.5.5 (2015-01-14)
+
+## :bug: Bug Fixes
+
+- Prevent text selection of the minimap ([#219](https://github.com/fundon/atom-minimap/pull/219)).
+
 <a name="v3.5.4"></a>
 # v3.5.4 (2015-01-07)
 
