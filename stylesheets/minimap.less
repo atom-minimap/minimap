@@ -20,6 +20,8 @@ atom-text-editor::shadow, atom-text-editor {
     overflow: hidden;
     position: relative;
 
+    -webkit-user-select: none;
+
     &::shadow {
       canvas {
         position: absolute;
@@ -196,6 +198,8 @@ atom-text-editor::shadow, atom-text-editor {
   width: 10%;
   overflow: hidden;
   box-sizing: border-box;
+
+  -webkit-user-select: none;
 
   .editor {
     padding: 0 !important;
