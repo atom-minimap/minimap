@@ -93,8 +93,8 @@ atom-text-editor::shadow, atom-text-editor {
 //     ## ##   ##     ##
 //      ###     #######
 
-.pane.with-minimap {
-  .editor, :host, atom-text-editor, atom-text-editor::shadow {
+atom-pane.with-minimap {
+  atom-text-editor, :host, atom-text-editor, atom-text-editor::shadow {
 
     &:not(.minimap-editor):not(.mini) {
       padding-right: 10%;
@@ -105,7 +105,7 @@ atom-text-editor::shadow, atom-text-editor {
   }
 }
 
-.zen .pane.with-minimap {
+.zen atom-pane.with-minimap {
   atom-text-editor, atom-text-editor::shadow {
     padding-right: 0 !important;
 
@@ -171,8 +171,8 @@ atom-text-editor::shadow, atom-text-editor {
 }
 
 .minimap-on-left {
-  .pane.with-minimap {
-    .editor, :host, atom-text-editor, atom-text-editor::shadow {
+  atom-pane.with-minimap {
+    atom-text-editor, :host, atom-text-editor, atom-text-editor::shadow {
       &:not(.minimap-editor):not(.mini) {
         padding-right: 0;
         padding-left: 10%;
@@ -201,7 +201,7 @@ atom-text-editor::shadow, atom-text-editor {
 
   -webkit-user-select: none;
 
-  .editor {
+  atom-text-editor {
     padding: 0 !important;
     background: transparent;
   }
@@ -259,8 +259,8 @@ atom-text-editor::shadow, atom-text-editor {
   // Mixins
   .accelerated {
     -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+    backface-visibility: hidden;
     -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
