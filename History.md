@@ -1,3 +1,10 @@
+<a name="v3.5.6"></a>
+# v3.5.6 (2015-01-16)
+
+## :bug: Bug Fixes
+
+- Fix deprecations in stylesheet ([393ef8c0](https://github.com/fundon/atom-minimap/commit/393ef8c04caa9c8ace99e1626933ede3a43c8593))
+
 <a name="v3.5.5"></a>
 # v3.5.5 (2015-01-14)
 
