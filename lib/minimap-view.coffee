@@ -314,6 +314,9 @@ class MinimapView extends View
     evw = editorViewRect.width
     evh = editorViewRect.height
 
+    @css height: evh, bottom: height - evh    # new line
+    height = evh                              # new line
+  
     minimapVisibilityRatio = miniScrollViewRect.height / height
 
     @miniScroller.height(evh / minimapVisibilityRatio)
