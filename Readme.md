@@ -12,8 +12,8 @@ apm install minimap
 
 ### Features
 
-* Mouse wheel and click-to-scroll _(no animation)_
-* Drag-to-scroll
+* plugable
+* ...
 
 ### Settings
 
