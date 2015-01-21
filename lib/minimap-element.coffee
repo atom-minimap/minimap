@@ -26,6 +26,9 @@ class MinimapElement extends HTMLElement
     @subscriptions = new CompositeDisposable
     @initializeContent()
 
+    @subscriptions.add atom.themes.onDidChangeActiveThemes =>
+      @requestForcedUpdate()
+
     @observeConfig
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
         swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft

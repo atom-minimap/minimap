@@ -132,7 +132,7 @@ class MinimapView extends View
     @observer.observe @paneView, config
 
     # Update the minimap whenever theme is reloaded
-    @subscriptions.add atom.themes.onDidReloadAll =>
+    @subscriptions.add atom.themes.onDidChangeActiveThemes =>
       @updateTopPosition()
       @updateMinimapView()
 
@@ -316,7 +316,7 @@ class MinimapView extends View
 
     @css height: evh, bottom: height - evh    # new line
     height = evh                              # new line
-  
+
     minimapVisibilityRatio = miniScrollViewRect.height / height
 
     @miniScroller.height(evh / minimapVisibilityRatio)
