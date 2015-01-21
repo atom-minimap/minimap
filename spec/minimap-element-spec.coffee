@@ -137,7 +137,7 @@ describe 'MinimapElement', ->
         nextAnimationFrame()
         visibleArea = minimapElement.shadowRoot.querySelector('.minimap-visible-area')
 
-      fit 'sets the visible area width and height', ->
+      it 'sets the visible area width and height', ->
         expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
 
