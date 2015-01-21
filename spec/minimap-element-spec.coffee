@@ -16,7 +16,7 @@ realOffsetLeft = (o) ->
   o.offsetLeft + transform.m41
 
 describe 'MinimapElement', ->
-  [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement] = []
+  [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement, dir] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -31,9 +31,11 @@ describe 'MinimapElement', ->
     editor.setHeight(50)
 
     minimap = new Minimap({textEditor: editor})
-    largeSample = fs.readFileSync(atom.project.resolve('large-file.coffee')).toString()
-    mediumSample = fs.readFileSync(atom.project.resolve('two-hundred.txt')).toString()
-    smallSample = fs.readFileSync(atom.project.resolve('sample.coffee')).toString()
+    dir = atom.project.getDirectories()[0]
+
+    largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
+    mediumSample = fs.readFileSync(dir.resolve('two-hundred.txt')).toString()
+    smallSample = fs.readFileSync(dir.resolve('sample.coffee')).toString()
 
     editor.setText largeSample
 
@@ -135,7 +137,7 @@ describe 'MinimapElement', ->
         nextAnimationFrame()
         visibleArea = minimapElement.shadowRoot.querySelector('.minimap-visible-area')
 
-      it 'sets the visible area width and height', ->
+      fit 'sets the visible area width and height', ->
         expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
 
@@ -302,7 +304,7 @@ describe 'MinimapElement', ->
         [visibleArea, originalTop] = []
 
         beforeEach ->
-          sample = fs.readFileSync(atom.project.resolve('seventy.txt')).toString()
+          sample = fs.readFileSync(dir.resolve('seventy.txt')).toString()
           editor.setText(sample)
           editor.setScrollTop(0)
 
