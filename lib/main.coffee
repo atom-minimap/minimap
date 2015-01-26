@@ -1,10 +1,8 @@
 {Emitter, CompositeDisposable} = require 'event-kit'
 
-ViewManagement = require './mixins/view-management'
 PluginManagement = require './mixins/plugin-management'
-V4Main = null
 
-[MinimapPluginGeneratorView, deprecate, semver] = []
+[Minimap, MinimapElement, MinimapPluginGeneratorView, deprecate, semver] = []
 
 require '../vendor/resizeend'
 
@@ -24,7 +22,6 @@ require '../vendor/resizeend'
 #   bool isActive: ->
 # ```
 class Main
-  ViewManagement.includeInto(this)
   PluginManagement.includeInto(this)
 
   ### Public ###
@@ -81,10 +78,6 @@ class Main
       minimum: 0
       maximum: 1
       description: "The opacity used to render the line's text in the minimap."
-    v4Preview:
-      type: 'boolean'
-      default: false
-      description: "Require Atom restart. Some plugins may be disabled if they don't support the new API."
 
   # Internal: The activation state of the minimap package.
   active: false
@@ -96,39 +89,21 @@ class Main
 
   # Activates the minimap package.
   activate: ->
-    @v4Preview = atom.config.get('minimap.v4Preview')
+    @editorsMinimaps = {}
+    @subscriptions = new CompositeDisposable
+    MinimapElement ?= require './minimap-element'
 
-    if @v4Preview
-      @version = '4.0.0-preview'
-      V4Main = require './main-v4'
-
-      V4Main.includeInto(Main)
-
-      @activateV4()
-
-    else
-      @subscriptions.add atom.commands.add 'atom-workspace',
-        'minimap:toggle': => @toggle()
-        'minimap:generate-plugin': => @generatePlugin()
-
-      workspaceElement = atom.views.getView(atom.workspace)
-
-      if atom.config.get('minimap.displayPluginsControls')
-        @subscriptions.add atom.commands.add 'atom-workspace',
-          'minimap:open-quick-settings': =>
-            editor = atom.workspace.getActiveEditor()
-            @minimapForEditor(editor).openQuickSettings.mousedown()
-
-      @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (value) ->
-        workspaceElement.classList.toggle 'minimap-on-left', value
+    MinimapElement.registerViewProvider()
 
     @toggle() if atom.config.get 'minimap.autoToggle'
 
   # Deactivates the minimap package.
   deactivate: ->
-    @active = false
-    @destroyViews()
-    @emitter.emit('did-deactivate')
+    @deactivateAllPlugins()
+    minimap.destroy() for id,minimap of @editorsMinimaps
+    @subscriptions.dispose()
+    @editorsMinimaps = {}
+    @toggled = false
 
   # Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
@@ -144,13 +119,12 @@ class Main
 
   # Public: Toggles the minimap activation state.
   toggle: ->
-    if @active
-      @active = false
-      @deactivate()
+    if @toggled
+      @toggled = false
+      @subscriptions.dispose()
     else
-      @createViews()
-      @active = true
-      @emitter.emit('did-activate')
+      @toggled = true
+      @initSubscriptions()
 
   # Public: Opens the plugin generation view.
   generatePlugin: ->
@@ -246,6 +220,65 @@ class Main
   # Returns a `Disposable`.
   onDidDeactivatePlugin: (callback) ->
     @emitter.on 'did-deactivate-plugin', callback
+
+  # Public: Returns the {Minimap} object associated to the
+  # passed-in `TextEditorElement`.
+  #
+  # editorView - An `TextEditorView` instance
+  #
+  # Returns a {Minimap}.
+  minimapForEditorElement: (editorElement) ->
+    return unless editorElement?
+    @minimapForEditor(editorElement.getModel())
+
+  # Public: Returns the {Minimap} object associated to the
+  # passed-in `TextEditor`.
+  #
+  # editorView - An `Editor` instance
+  #
+  # Returns a {Minimap}.
+  minimapForEditor: (editor) -> @editorsMinimaps[editor.id] if editor?
+
+  # Public: Returns the {MinimapElement} of the active editor view.
+  #
+  # Returns a {MinimapElement}.
+  getActiveMinimap: -> @minimapForEditor(atom.workspace.getActiveTextEditor())
+
+  # Public: Calls `iterator` for each present and future minimap views.
+  # It returns a subscription {Object} with a `off` method so that
+  # it is possible to unsubscribe the iterator from being called
+  # for future views.
+  #
+  # iterator - A {Function} to call for each minimap view. It will receive
+  #            an object with the following property:
+  #            * view - The {MinimapElement} instance
+  #
+  # Returns an {Object}.
+  observeMinimaps: (iterator) ->
+    return unless iterator?
+    iterator(minimap) for id,minimap of @editorsMinimaps
+    createdCallback = (minimap) -> iterator(minimap)
+    disposable = @onDidCreateMinimap(createdCallback)
+    disposable.off = ->
+      deprecate('Use Disposable::dispose instead')
+      disposable.dispose()
+    disposable
+
+  initSubscriptions: ->
+    Minimap ?= require './minimap'
+
+    @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
+      return if @editorsMinimaps[textEditor.id]?
+
+      minimap = new Minimap({textEditor})
+      @editorsMinimaps[textEditor.id] = minimap
+
+      editorElement = atom.views.getView(textEditor)
+      minimapElement = atom.views.getView(minimap)
+
+      @emitter.emit('did-create-minimap', minimap)
+
+      minimapElement.attach()
 
 # The minimap module is an instance of the {Minimap} class.
 module.exports = new Main()

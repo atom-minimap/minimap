@@ -4,7 +4,7 @@ path = require 'path'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
 {mousemove, mousedown, mouseup, mousewheel} = require './helpers/events'
-stylesheetPath = path.resolve __dirname, '..', 'stylesheets', 'minimap.less'
+stylesheetPath = path.resolve __dirname, '..', 'styles', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
 realOffsetTop = (o) ->
