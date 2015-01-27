@@ -72,9 +72,6 @@ describe 'MinimapElement', ->
     beforeEach ->
       jasmineContent = document.body.querySelector('#jasmine-content')
 
-      # spyOn(window, "setInterval").andCallFake window.fakeSetInterval
-      # spyOn(window, "clearInterval").andCallFake window.fakeClearInterval
-
       noAnimationFrame = -> throw new Error('No animation frame requested')
       nextAnimationFrame = noAnimationFrame
 

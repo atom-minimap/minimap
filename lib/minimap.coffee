@@ -6,8 +6,9 @@ DecorationManagement = require './mixins/decoration-management'
 # Public: The {Minimap} class is the underlying model of a {MinimapElement}.
 # Most manipulations of the minimap is done through the model.
 #
-# A {Minimap} instance is tied to a `TextEditor`. It is created at the same time
-# and destroyed when the text editor is destroyed as well.
+# Any {Minimap} instance is tied to a `TextEditor`.
+# Their lifecycle follow the one of their target `TextEditor`, so they are
+# destroyed whenever their `TextEditor` is destroyed.
 module.exports =
 class Minimap extends Model
   DecorationManagement.includeInto(this)
@@ -29,26 +30,40 @@ class Minimap extends Model
     @initializeDecorations()
 
     subs.add atom.config.observe 'editor.scrollPastEnd', (@scrollPastEnd) =>
-      @emitter.emit('did-change-config', config: 'editor.scrollPastEnd', value: @scrollPastEnd)
+      @emitter.emit('did-change-config', {
+        config: 'editor.scrollPastEnd'
+        value: @scrollPastEnd
+      })
     subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
-      @emitter.emit('did-change-config', config: 'minimap.charHeight', value: @charHeight)
+      @emitter.emit('did-change-config', {
+        config: 'minimap.charHeight'
+        value: @charHeight
+      })
     subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
-      @emitter.emit('did-change-config', config: 'minimap.charWidth', value: @charWidth)
+      @emitter.emit('did-change-config', {
+        config: 'minimap.charWidth'
+        value: @charWidth
+      })
     subs.add atom.config.observe 'minimap.interline', (@interline) =>
-      @emitter.emit('did-change-config', config: 'minimap.interline', value: @interline)
+      @emitter.emit('did-change-config', {
+        config: 'minimap.interline'
+        value: @interline
+      })
 
-    subs.add @textEditor.onDidChange (changes) => @emitChanges(changes)
+    subs.add @textEditor.onDidChange (changes) =>
+      @emitChanges(changes)
     subs.add @textEditor.onDidChangeScrollTop (scrollTop) =>
       @emitter.emit('did-change-scroll-top', scrollTop)
     subs.add @textEditor.onDidChangeScrollLeft (scrollLeft) =>
       @emitter.emit('did-change-scroll-left', scrollLeft)
-    subs.add @textEditor.onDidDestroy => @destroy()
+    subs.add @textEditor.onDidDestroy =>
+      @destroy()
 
-    # FIXME: Some changes occuring during the tokenization produces
+    # FIXME Some changes occuring during the tokenization produces
     # ranges that deceive the canvas rendering by making some
-    # lines at the end of the buffer intact while they are in fact not
+    # lines at the end of the buffer intact while they are in fact not,
     # resulting in extra lines appearing at the end of the minimap.
-    # Forcing a whole repaint fix that but is suboptimal.
+    # Forcing a whole repaint to fix that bug is suboptimal but works.
     subs.add @textEditor.displayBuffer.onDidTokenize =>
       @emitter.emit('did-change-config')
 
@@ -128,7 +143,7 @@ class Minimap extends Model
   getTextEditorScaledScrollTop: ->
     @textEditor.getScrollTop() * @getVerticalScaleFactor()
 
-  # Returns the `TextEditor::getScrollLeft` at the {Minimap} scale.
+  # Returns the `TextEditor::getScrollLeft` value at the {Minimap} scale.
   #
   # Returns a {Number}.
   getTextEditorScaledScrollLeft: ->
@@ -228,7 +243,7 @@ class Minimap extends Model
     Math.ceil((@getScrollTop() + @textEditor.getHeight()) / @getLineHeight())
 
   # Returns the current scroll of the {Minimap}.
-  # 
+  #
   # The {Minimap} can scroll only when its height is greater that the height
   # of its `TextEditor`.
   #
