@@ -5,9 +5,12 @@ CanvasDrawer = require './mixins/canvas-drawer'
 
 MinimapQuickSettingsView = null
 
+# Public:
 class MinimapElement extends HTMLElement
   DOMStylesReader.includeInto(this)
   CanvasDrawer.includeInto(this)
+
+  ### Public ###
 
   domPollingInterval: 100
   domPollingIntervalId: null
@@ -252,18 +255,18 @@ class MinimapElement extends HTMLElement
     else
       @style.marginRight = null
 
-    visibleAreaLeft = @minimap.getTextEditorScrollLeft()
-    visibleAreaTop = @minimap.getTextEditorScrollTop() - @minimap.getMinimapScrollTop()
+    visibleAreaLeft = @minimap.getTextEditorScaledScrollLeft()
+    visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
 
     @applyStyles @visibleArea,
       width: @clientWidth + 'px'
-      height: @minimap.getTextEditorHeight() + 'px'
+      height: @minimap.getTextEditorScaledHeight() + 'px'
       transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
       width: @canvas.width + 'px'
 
-    canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getMinimapScrollTop()
+    canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
     canvasTransform = @makeTranslate(0, canvasTop)
     canvasTransform += " " + @makeScale(1/devicePixelRatio) if devicePixelRatio isnt 1
@@ -275,7 +278,7 @@ class MinimapElement extends HTMLElement
     if @scrollIndicator?
       editorHeight = @getTextEditor().getHeight()
       indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
-      indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRation()
+      indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRatio()
 
       @applyStyles @scrollIndicator,
         height: indicatorHeight + 'px'
@@ -382,7 +385,7 @@ class MinimapElement extends HTMLElement
   drag: (e, initial) ->
     y = e.pageY - initial.offsetTop - initial.dragOffset
 
-    ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorHeight())
+    ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
 
     @minimap.textEditor.setScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
 

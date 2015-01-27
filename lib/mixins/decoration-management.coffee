@@ -130,7 +130,7 @@ class DecorationManagement extends Mixin
 
       [start, end] = [end, start] if start.row > end.row
 
-      @stackRangeChanges({start, end, screenDelta: end - start})
+      @emitRangeChanges({start, end, screenDelta: end - start})
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
@@ -138,30 +138,30 @@ class DecorationManagement extends Mixin
     @decorationsById[decoration.id] = decoration
 
     @decorationUpdatedSubscriptions[decoration.id] ?= decoration.onDidChangeProperties (event) =>
-      @stackDecorationChanges(decoration)
+      @emitDecorationChanges(decoration)
 
     @decorationDestroyedSubscriptions[decoration.id] ?= decoration.onDidDestroy (event) =>
       @removeDecoration(decoration)
 
-    @stackDecorationChanges(decoration)
+    @emitDecorationChanges(decoration)
     @emitter.emit 'did-add-decoration', {marker, decoration}
     decoration
 
-  # Internal: Registers a change in the {MinimapRenderView} pending changes
-  # corresponding to the passed-in decoration.
+  # Internal: Emits a change in the {Minimap} corresponding to the
+  # passed-in decoration.
   #
   # decoration - The `Decoration` to register changes for.
-  stackDecorationChanges: (decoration) ->
+  emitDecorationChanges: (decoration) ->
     return if decoration.marker.displayBuffer.isDestroyed()
     range = decoration.marker.getScreenRange()
     return unless range?
 
-    @stackRangeChanges(range)
+    @emitRangeChanges(range)
 
-  # Internal: Registers a change for the specified range.
+  # Internal: Emits a change for the specified range.
   #
-  # range - The `Range` ro register changes for.
-  stackRangeChanges: (range) ->
+  # range - The `Range` to emits changes for.
+  emitRangeChanges: (range) ->
     startScreenRow = range.start.row
     endScreenRow = range.end.row
     lastRenderedScreenRow  = @getLastVisibleScreenRow()
@@ -175,7 +175,7 @@ class DecorationManagement extends Mixin
       end: endScreenRow
       screenDelta: screenDelta
 
-    @stackChanges changeEvent
+    @emitChanges changeEvent
 
   # Removes a `Decoration` from this minimap.
   #
@@ -185,7 +185,7 @@ class DecorationManagement extends Mixin
     {marker} = decoration
     return unless decorations = @decorationsByMarkerId[marker.id]
 
-    @stackDecorationChanges(decoration)
+    @emitDecorationChanges(decoration)
 
     @decorationUpdatedSubscriptions[decoration.id].dispose()
     @decorationDestroyedSubscriptions[decoration.id].dispose()
@@ -210,7 +210,7 @@ class DecorationManagement extends Mixin
     return unless decorations
     for decoration in decorations
       @emitter.emit 'did-remove-decoration', {marker, decoration}
-      @stackDecorationChanges(decoration)
+      @emitDecorationChanges(decoration)
 
     @removedAllMarkerDecorations(marker)
 

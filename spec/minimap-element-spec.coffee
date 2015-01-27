@@ -143,11 +143,11 @@ describe 'MinimapElement', ->
 
       it 'sets the visible area width and height', ->
         expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
-        expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorHeight(), 0)
+        expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorScaledHeight(), 0)
 
       it 'sets the visible visible area offset', ->
-        expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
-        expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+        expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
+        expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollLeft(), 0)
 
       it 'offsets the canvas when the scroll does not match line height', ->
         editor.setScrollTop(1004)
@@ -189,8 +189,8 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
         it 'updates the visible area', ->
-          expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollTop() - minimap.getMinimapScrollTop(), 0)
-          expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScrollLeft(), 0)
+          expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
+          expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollLeft(), 0)
 
       describe 'when the editor is resized to a greater size', ->
         beforeEach ->

@@ -43,13 +43,13 @@ describe 'Minimap', ->
 
   it 'measures the editor visible area size at minimap scale', ->
     editor.setText(largeSample)
-    expect(minimap.getTextEditorHeight()).toEqual(25)
+    expect(minimap.getTextEditorScaledHeight()).toEqual(25)
 
   it 'measures the available minimap scroll', ->
     editor.setText(largeSample)
     largeLineCount = editor.getScreenLineCount()
 
-    expect(minimap.getMinimapMaxScrollTop()).toEqual(largeLineCount * 5 - 50)
+    expect(minimap.getMaxScrollTop()).toEqual(largeLineCount * 5 - 50)
     expect(minimap.canScroll()).toBeTruthy()
 
   it 'computes the first visible row in the minimap', ->
@@ -100,7 +100,7 @@ describe 'Minimap', ->
 
     it 'lock the minimap scroll top to 1', ->
       editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
-      expect(minimap.getMinimapScrollTop()).toEqual(minimap.getMinimapMaxScrollTop())
+      expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
 
   describe 'when soft wrap is enabled', ->
     beforeEach ->
@@ -117,12 +117,12 @@ describe 'Minimap', ->
 
   describe 'when there is no scrolling needed to display the whole minimap', ->
     it 'returns 0 when computing the minimap scroll', ->
-      expect(minimap.getMinimapScrollTop()).toEqual(0)
+      expect(minimap.getScrollTop()).toEqual(0)
 
     it 'returns 0 when measuring the available minimap scroll', ->
       editor.setText(smallSample)
 
-      expect(minimap.getMinimapMaxScrollTop()).toEqual(0)
+      expect(minimap.getMaxScrollTop()).toEqual(0)
       expect(minimap.canScroll()).toBeFalsy()
 
   describe 'when the editor is scrolled', ->
@@ -138,11 +138,11 @@ describe 'Minimap', ->
       editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
 
     it 'scales the editor scroll based on the minimap scale factor', ->
-      expect(minimap.getTextEditorScrollTop()).toEqual(500)
-      expect(minimap.getTextEditorScrollLeft()).toEqual(200 * minimap.getHorizontalScaleFactor())
+      expect(minimap.getTextEditorScaledScrollTop()).toEqual(500)
+      expect(minimap.getTextEditorScaledScrollLeft()).toEqual(200 * minimap.getHorizontalScaleFactor())
 
     it 'computes the offset to apply based on the editor scroll top', ->
-      expect(minimap.getMinimapScrollTop()).toEqual(editorScrollRatio * minimap.getMinimapMaxScrollTop())
+      expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
       expect(minimap.getFirstVisibleScreenRow()).toEqual(Math.floor(99))
@@ -156,7 +156,7 @@ describe 'Minimap', ->
         editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
 
       it 'computes an offset that scrolls the minimap to the bottom edge', ->
-        expect(minimap.getMinimapScrollTop()).toEqual(minimap.getMinimapMaxScrollTop())
+        expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
 
       it 'computes the first visible row in the minimap', ->
         expect(minimap.getFirstVisibleScreenRow()).toEqual(largeLineCount - 10)
