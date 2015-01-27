@@ -7,13 +7,14 @@ __PackageName__ = require '../lib/__package-name__'
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe "__PackageName__", ->
-  [workspaceElement] = []
+  [workspaceElement, editor] = []
 
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
     jasmine.attachToDOM(workspaceElement)
 
-    waitsForPromise -> atom.workspaceView.open('sample.js')
+    waitsForPromise ->
+      atom.workspace.open('sample.js')
 
     runs ->
       editor = atom.workspace.getActiveTextEditor()

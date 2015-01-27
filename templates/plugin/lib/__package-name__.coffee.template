@@ -2,14 +2,13 @@
 
 module.exports =
   active: false
-  views: {}
 
   isActive: -> @active
 
   activate: (state) ->
     atom.packages.activatePackage('minimap').then (minimapPackage) =>
       @minimap = minimapPackage.mainModule
-      return @deactivate() unless @minimap.versionMatch('>= 3.5.0')
+      return @deactivate() unless @minimap.versionMatch('>= 4.0.0')
 
       @subscriptions = new CompositeDisposable
       @minimap.registerPlugin '__package-name__', this
