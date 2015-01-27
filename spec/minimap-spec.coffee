@@ -15,9 +15,11 @@ describe 'Minimap', ->
     editor.setHeight(50)
     editor.setWidth(200)
 
+    dir = atom.project.getDirectories()[0]
+
     minimap = new Minimap({textEditor: editor})
-    largeSample = fs.readFileSync(atom.project.resolve('large-file.coffee')).toString()
-    smallSample = fs.readFileSync(atom.project.resolve('sample.coffee')).toString()
+    largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
+    smallSample = fs.readFileSync(dir.resolve('sample.coffee')).toString()
 
   it 'has an associated editor', ->
     expect(minimap.getTextEditor()).toEqual(editor)

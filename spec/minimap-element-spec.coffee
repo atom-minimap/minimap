@@ -15,6 +15,10 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
+sleep = (duration) ->
+  t = new Date
+  waitsFor -> new Date - t > duration
+
 describe 'MinimapElement', ->
   [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement, dir] = []
 
@@ -68,8 +72,8 @@ describe 'MinimapElement', ->
     beforeEach ->
       jasmineContent = document.body.querySelector('#jasmine-content')
 
-      spyOn(window, "setInterval").andCallFake window.fakeSetInterval
-      spyOn(window, "clearInterval").andCallFake window.fakeClearInterval
+      # spyOn(window, "setInterval").andCallFake window.fakeSetInterval
+      # spyOn(window, "clearInterval").andCallFake window.fakeClearInterval
 
       noAnimationFrame = -> throw new Error('No animation frame requested')
       nextAnimationFrame = noAnimationFrame
@@ -195,8 +199,8 @@ describe 'MinimapElement', ->
           editorElement.style.height = '500px'
 
           runs ->
-            advanceClock(150)
-            nextAnimationFrame()
+            sleep(150)
+            runs -> nextAnimationFrame()
 
         it 'detect the resize and adjust itself', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
@@ -227,11 +231,12 @@ describe 'MinimapElement', ->
           canvasWidth = minimapElement.canvas.width
           canvasHeight = minimapElement.canvas.height
           editorElement.style.display = 'none'
-          advanceClock(150)
-          nextAnimationFrame()
+          sleep(150)
+          runs ->
+            nextAnimationFrame()
 
-          expect(minimapElement.canvas.width).toEqual(canvasWidth)
-          expect(minimapElement.canvas.height).toEqual(canvasHeight)
+            expect(minimapElement.canvas.width).toEqual(canvasWidth)
+            expect(minimapElement.canvas.height).toEqual(canvasHeight)
 
     #     ######   ######  ########   #######  ##       ##
     #    ##    ## ##    ## ##     ## ##     ## ##       ##
@@ -250,8 +255,8 @@ describe 'MinimapElement', ->
         editor.setScrollTop(0)
         editor.setScrollLeft(0)
 
-        advanceClock(150)
-        nextAnimationFrame()
+        sleep(150)
+        runs -> nextAnimationFrame()
 
       describe 'using the mouse scrollwheel over the minimap', ->
         beforeEach ->
@@ -372,9 +377,9 @@ describe 'MinimapElement', ->
       it 'stops the DOM polling interval', ->
         spyOn(minimapElement, 'pollDOM')
 
-        advanceClock(200)
+        sleep(200)
 
-        expect(minimapElement.pollDOM).not.toHaveBeenCalled()
+        runs -> expect(minimapElement.pollDOM).not.toHaveBeenCalled()
 
     #     ######   #######  ##    ## ######## ####  ######
     #    ##    ## ##     ## ###   ## ##        ##  ##    ##
@@ -474,9 +479,10 @@ describe 'MinimapElement', ->
 
       describe 'the dom polling routine', ->
         it 'does not change the value', ->
-          advanceClock(150)
-          nextAnimationFrame()
-          expect(minimapElement.canvas.width).toEqual(4)
+          sleep(150)
+          runs ->
+            nextAnimationFrame()
+            expect(minimapElement.canvas.width).toEqual(4)
 
       describe 'and when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->
@@ -532,9 +538,9 @@ describe 'MinimapElement', ->
 
           waitsFor -> editor.getHeight() isnt height
 
-          runs ->
-            advanceClock(150)
-            nextAnimationFrame()
+          sleep(150)
+
+          runs -> nextAnimationFrame()
 
         it 'adjusts the size and position of the indicator', ->
           indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
