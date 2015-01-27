@@ -257,7 +257,7 @@ describe 'MinimapElement', ->
 
       describe 'using the mouse scrollwheel over the minimap', ->
         beforeEach ->
-          spyOn(editor, 'setScrollTop').andCallThrough()
+          spyOn(editor, 'setScrollTop').andCallFake ->
 
           mousewheel(minimapElement, 0, 15)
 
