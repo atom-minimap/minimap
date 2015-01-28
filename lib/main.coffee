@@ -262,8 +262,6 @@ class Main
     Minimap ?= require './minimap'
 
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
-      return if @editorsMinimaps?.get(textEditor)?
-
       minimap = @minimapForEditor(textEditor)
 
       editorElement = atom.views.getView(textEditor)
