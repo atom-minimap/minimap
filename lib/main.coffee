@@ -95,6 +95,10 @@ class Main
 
     MinimapElement.registerViewProvider()
 
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'minimap:toggle': => @toggle()
+      'minimap:generate-plugin': => @generatePlugin()
+
     @toggle() if atom.config.get 'minimap.autoToggle'
 
   # Deactivates the minimap package.
