@@ -89,7 +89,6 @@ class Main
 
   # Activates the minimap package.
   activate: ->
-    @editorsMinimaps = {}
     @subscriptions = new CompositeDisposable
     MinimapElement ?= require './minimap-element'
 
@@ -104,9 +103,11 @@ class Main
   # Deactivates the minimap package.
   deactivate: ->
     @deactivateAllPlugins()
-    minimap.destroy() for id,minimap of @editorsMinimaps
     @subscriptions.dispose()
-    @editorsMinimaps = {}
+    @editorsMinimaps?.forEach (value, key) =>
+      value.destroy()
+      @editorsMinimaps.delete(key)
+    @editorsMinimaps = undefined
     @toggled = false
 
   # Verifies that the passed-in version expression is satisfied by
@@ -220,7 +221,18 @@ class Main
   # editorView - An `Editor` instance
   #
   # Returns a {Minimap}.
-  minimapForEditor: (editor) -> @editorsMinimaps[editor.id] if editor?
+  minimapForEditor: (textEditor) ->
+    @editorsMinimaps ?= new Map
+
+    minimap = @editorsMinimaps.get(textEditor)
+    unless minimap?
+      minimap = new Minimap({textEditor})
+      @editorsMinimaps.set(textEditor, minimap)
+      editorSubscription = textEditor.onDidDestroy =>
+        @editorsMinimaps?.delete(textEditor)
+        editorSubscription.dispose()
+
+    minimap
 
   # Returns the {Minimap} of the active `TextEditor`.
   #
@@ -237,7 +249,7 @@ class Main
   # Returns a `Disposable`.
   observeMinimaps: (iterator) ->
     return unless iterator?
-    iterator(minimap) for id,minimap of @editorsMinimaps
+    @editorsMinimaps.forEach (minimap) -> iterator(minimap)
     createdCallback = (minimap) -> iterator(minimap)
     disposable = @onDidCreateMinimap(createdCallback)
     disposable.off = ->
@@ -250,10 +262,9 @@ class Main
     Minimap ?= require './minimap'
 
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
-      return if @editorsMinimaps[textEditor.id]?
+      return if @editorsMinimaps?.get(textEditor)?
 
-      minimap = new Minimap({textEditor})
-      @editorsMinimaps[textEditor.id] = minimap
+      minimap = @minimapForEditor(textEditor)
 
       editorElement = atom.views.getView(textEditor)
       minimapElement = atom.views.getView(minimap)

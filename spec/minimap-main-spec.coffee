@@ -58,7 +58,7 @@ describe 'Minimap package', ->
       minimapPackage.deactivate()
 
     it 'destroys all the minimap models', ->
-      expect(minimapPackage.minimapForEditor(editor)).toBeUndefined()
+      expect(minimapPackage.editorsMinimaps).toBeUndefined()
 
     it 'destroys all the minimap elements', ->
       expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
