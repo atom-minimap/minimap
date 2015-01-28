@@ -12,8 +12,9 @@ apm install minimap
 
 ### Features
 
-* plugable
-* ...
+* Plugin API: Use the plugin generation command and start developing your plugin right away.
+* Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
+* Canvas-based Rendering: Simple, fast and flexible.
 
 ### Settings
 
@@ -36,30 +37,33 @@ Customizing Key Bindings:
 ```cson
 '.editor':
   'cmd-m': 'minimap:toggle'
+  'ctrl-alt-cmd-m': 'minimap:generate-plugin'
 ```
 
-### Customizing Style
+### Hiding Scrollbars
 
-If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet).
+If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
 
 ```css
-// hide scrollbar
-.with-minimap atom-text-editor .vertical-scrollbar,
-.with-minimap atom-text-editor::shadow .vertical-scrollbar {
+atom-text-editor .vertical-scrollbar,
+atom-text-editor::shadow .vertical-scrollbar {
   opacity: 0;
   width: 0;
 }
 ```
 
-### Contributors
-
-https://github.com/fundon/atom-minimap/graphs/contributors
-
 ### Plugins
 
-The minimap can be augmented with plugins.
+#### Plugin Generation Command
 
-Plugins can be created with the `Minimap: Generate Plugin` command available in the command palette.
+Use the `Minimap: Generate Plugin` command available in the command palette or add a binding to the `minimap:generate-plugin` event:
+
+```cson
+'atom-workspace':
+  'ctrl-alt-cmd-m': 'minimap:generate-plugin'
+```
+
+#### Available Plugins
 
 Below is the list of available plugins so far:
 
@@ -69,15 +73,21 @@ Below is the list of available plugins so far:
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
   * [Selection](https://atom.io/packages/minimap-selection)
 
+#### Plugins Controls
+
 When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the minimap package settings or by using the quick settings dropdown available on the mimimap itself:
 
 ![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true)
 
-### Documentation
+### External Documentation
 
 * [Minimap API Documentation](http://abe33.github.io/atom-minimap/)
 * [How to create a minimap plugin?](http://abe33.github.io/atom-minimap/docs/Plugins.md.html)
 * [Minimap's Decorations API](http://abe33.github.io/atom-minimap/docs/Decorations.md.html)
+
+### Contributors
+
+https://github.com/fundon/atom-minimap/graphs/contributors
 
 ### License
 
