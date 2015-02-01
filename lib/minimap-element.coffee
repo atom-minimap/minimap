@@ -264,7 +264,7 @@ class MinimapElement extends HTMLElement
       transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
-      width: @canvas.width + 'px'
+      width: Math.min(@canvas.width, @width) + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
