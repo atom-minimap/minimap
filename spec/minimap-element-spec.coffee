@@ -195,9 +195,8 @@ describe 'MinimapElement', ->
           editorElement.style.width = '800px'
           editorElement.style.height = '500px'
 
-          runs ->
-            sleep(150)
-            runs -> nextAnimationFrame()
+          sleep(150)
+          runs -> nextAnimationFrame()
 
         it 'detect the resize and adjust itself', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
