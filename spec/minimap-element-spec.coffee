@@ -481,6 +481,19 @@ describe 'MinimapElement', ->
             nextAnimationFrame()
             expect(minimapElement.canvas.width).toEqual(4)
 
+      describe 'when the editor is resized', ->
+        beforeEach ->
+          atom.config.set 'editor.preferredLineLength', 6
+          editorElement.style.width = '100px'
+          editorElement.style.height = '100px'
+
+          sleep(150)
+          runs -> nextAnimationFrame()
+
+        it 'makes the minimap smaller than soft wrap', ->
+          expect(minimapElement.offsetWidth).toBeCloseTo(10, -1)
+          expect(minimapElement.style.marginRight).toEqual('')
+
       describe 'and when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->
           editor.setText(mediumSample)

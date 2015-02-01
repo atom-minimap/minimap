@@ -250,7 +250,7 @@ class MinimapElement extends HTMLElement
   update: ->
     return unless @attached and @isVisible() and not @minimap.isDestroyed()
 
-    if @adjustToSoftWrap
+    if @adjustToSoftWrap and @marginRight?
       @style.marginRight = @marginRight + 'px'
     else
       @style.marginRight = null
@@ -320,7 +320,11 @@ class MinimapElement extends HTMLElement
       softWrap = atom.config.get('editor.softWrap')
       width = lineLength * @minimap.getCharWidth()
 
-      @marginRight = width - @width if softWrap and lineLength and width < @width
+      if softWrap and lineLength and width < @width
+        @marginRight = width - @width
+      else
+        @marginRight = null
+
       canvasWidth = width
     else
       delete @marginRight
