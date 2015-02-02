@@ -345,14 +345,15 @@ class MinimapElement extends HTMLElement
     for config, callback of configs
       @subscriptions.add atom.config.observe config, callback
 
-  mousePressedOverCanvas: ({pageY, target}) ->
+  mousePressedOverCanvas: ({which, pageY, target}) ->
+    return if which isnt 1
+
     y = pageY - target.getBoundingClientRect().top
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
 
     scrollTop = row * @minimap.textEditor.getLineHeightInPixels() - @minimap.textEditor.getHeight() / 2
 
     @minimap.textEditor.setScrollTop(scrollTop)
-
   relayMousewheelEvent: (e) =>
     editorElement = atom.views.getView(@minimap.textEditor)
 
@@ -366,7 +367,8 @@ class MinimapElement extends HTMLElement
   #    ##     ## ##   ##   ##     ##
   #    ########   ####  ## ########
 
-  startDrag: ({pageY}) ->
+  startDrag: ({which, pageY}) ->
+    return if which isnt 1
     {top} = @visibleArea.getBoundingClientRect()
     {top: offsetTop} = @getBoundingClientRect()
 
@@ -387,6 +389,7 @@ class MinimapElement extends HTMLElement
       document.body.removeEventListener('mouseout', mouseupHandler)
 
   drag: (e, initial) ->
+    return if e.which isnt 1
     y = e.pageY - initial.offsetTop - initial.dragOffset
 
     ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
