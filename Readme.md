@@ -30,12 +30,16 @@ apm install minimap
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
 * `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
 
+For instance the following result is obtained by setting a `Char Height` of `1px`:
+
+![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/screenshot-alternate.png?raw=true)
+
 ### Key Bindings
 
 Customizing Key Bindings:
 
 ```cson
-'.editor':
+'atom-workspace':
   'cmd-m': 'minimap:toggle'
   'ctrl-alt-cmd-m': 'minimap:generate-plugin'
 ```

@@ -26,7 +26,9 @@ The reason of using a scope rather than a class is that while editor's decoratio
 This allow the minimap decorations to still be stylable using css. For instance, the scope used by the `minimap-selection` package is:
 
 ```css
-.minimap .editor .selection .region
+.minimap .editor .selection .region {
+  /* ... */
+}
 ```
 
 Note that the scope is prefixed with `.minimap` so that you can override the selection style in the minimap without impacting the editor's one.
