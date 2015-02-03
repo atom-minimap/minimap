@@ -1,4 +1,3 @@
-{WorkspaceView} = require 'atom'
 __PackageName__ = require '../lib/__package-name__'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
