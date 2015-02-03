@@ -222,6 +222,7 @@ class Main
   #
   # Returns a {Minimap}.
   minimapForEditor: (textEditor) ->
+    return unless textEditor?
     @editorsMinimaps ?= new Map
 
     minimap = @editorsMinimaps.get(textEditor)
