@@ -1,3 +1,25 @@
+<a name="v4.0.1"></a>
+# v4.0.1 (2015-02-03)
+
+## :bug: Bug Fixes
+
+- Fix error raised when retrieving active minimap without active editor ([549830d8](https://github.com/fundon/atom-minimap/commit/549830d89d2bb7e6622bf0244e6996c1507676fa))
+
+
+<a name="v4.0.0"></a>
+# v4.0.0 (2015-02-03)
+
+## :bug: Bug Fixes
+
+- Fix right click starting a drag gesture ([c17a5dc9](https://github.com/fundon/atom-minimap/commit/c17a5dc9292aac177e9f14f9d26c53f64dcfc5d8))
+- Fix controls and scroll indicator position ([2ffa507c](https://github.com/fundon/atom-minimap/commit/2ffa507c091fa2578d60e270df2ba34ec3c68dc8))
+- Fix minimap size when splitting a pane ([bbe60ddb](https://github.com/fundon/atom-minimap/commit/bbe60ddb36bc21349c606bfebe58f8a06160bb78))
+- Fix missing minimap when a plugin get an instance before the observer ([98729736](https://github.com/fundon/atom-minimap/commit/987297363ad34b58404ffbe2a8bafebfb5a45b97))
+- Fix removed commands in activate ([412b083f](https://github.com/fundon/atom-minimap/commit/412b083f19b22e3fd30768d4fd11c0d6a42fa1ba))
+- Fix plugin template for v4 ([ce09615f](https://github.com/fundon/atom-minimap/commit/ce09615f242610f5c8859eabbd348edde18ed503))
+- Fix styles directory deprecation ([ff047197](https://github.com/fundon/atom-minimap/commit/ff04719765061fe710007be682e1f609cb6e3833))
+- Fix deprecation on theme observer ([d1d183a5](https://github.com/fundon/atom-minimap/commit/d1d183a5d58e17bb30dd76243fd76f8b4ad860fc))
+
 <a name="v3.5.6"></a>
 # v3.5.6 (2015-01-16)
 
