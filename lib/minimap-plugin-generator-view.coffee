@@ -23,7 +23,7 @@ class MinimapPluginGeneratorView extends View
   attach: (@mode) ->
     @previouslyFocusedElement = $(':focus')
     @message.text("Enter #{mode} path")
-    atom.workspaceView.append(this)
+    atom.views.getView(atom.workspace).appendChild(@element)
     @setPathText("my-minimap-plugin")
     @miniEditor.focus()
 
