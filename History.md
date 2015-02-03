@@ -1,3 +1,11 @@
+<a name="v4.0.2"></a>
+# v4.0.2 (2015-02-03)
+
+## :bug: Bug Fixes
+
+- Fix minimap instanciated before having required Minimap ([ca01a307](https://github.com/fundon/atom-minimap/commit/ca01a307529e49920fb9a88cd81457063993bf94), [#212](https://github.com/fundon/atom-minimap/issues/212))
+- Fix deprecation in plugin generator command ([cbe85b8c](https://github.com/fundon/atom-minimap/commit/cbe85b8c3ee34e218de83abe60e0bdecb3f7c2c5))
+
 <a name="v4.0.1"></a>
 # v4.0.1 (2015-02-03)
 
