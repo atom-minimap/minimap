@@ -223,6 +223,8 @@ class Main
   # Returns a {Minimap}.
   minimapForEditor: (textEditor) ->
     return unless textEditor?
+
+    Minimap ?= require './minimap'
     @editorsMinimaps ?= new Map
 
     minimap = @editorsMinimaps.get(textEditor)
@@ -260,8 +262,6 @@ class Main
 
   # Internal: Registers
   initSubscriptions: ->
-    Minimap ?= require './minimap'
-
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
       minimap = @minimapForEditor(textEditor)
 
