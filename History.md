@@ -1,3 +1,14 @@
+<a name="v4.1.0"></a>
+# v4.1.0 (2015-02-04)
+
+## :sparkles: Features
+
+- Add scroll animation. ([986c725e](https://github.com/fundon/atom-minimap/commit/986c725e232b4825f8700fe8e0008f10e095e89e))
+
+## :bug: Bug Fixes
+
+- Fix missing DOM cache invalidation when themes are changed ([333c1558](https://github.com/fundon/atom-minimap/commit/333c15583f3cdd4c17cb396b3ec46e00f07ca46f), [#250](https://github.com/fundon/atom-minimap/issues/250))
+
 <a name="v4.0.2"></a>
 # v4.0.2 (2015-02-03)
 
