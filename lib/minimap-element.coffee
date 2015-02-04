@@ -30,6 +30,7 @@ class MinimapElement extends HTMLElement
     @initializeContent()
 
     @subscriptions.add atom.themes.onDidChangeActiveThemes =>
+      @invalidateCache()
       @requestForcedUpdate()
 
     @observeConfig

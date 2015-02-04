@@ -404,6 +404,20 @@ describe 'MinimapElement', ->
     #    ##    ## ##     ## ##   ### ##        ##  ##    ##
     #     ######   #######  ##    ## ##       ####  ######
 
+    describe 'when the atom them is changed', ->
+      beforeEach ->
+        nextAnimationFrame()
+        spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
+        spyOn(minimapElement, 'invalidateCache').andCallThrough()
+
+        atom.themes.emitter.emit 'did-change-active-themes'
+
+        waitsFor -> minimapElement.frameRequested
+
+      it 'forces a refresh with cache invalidation', ->
+        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+        expect(minimapElement.invalidateCache).toHaveBeenCalled()
+
     describe 'when minimap.textOpacity is changed', ->
       beforeEach ->
         spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
@@ -519,7 +533,7 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
           atom.config.set 'minimap.minimapScrollIndicator', true
-          
+
           waitsFor -> minimapElement.frameRequested
           runs -> nextAnimationFrame()
 
