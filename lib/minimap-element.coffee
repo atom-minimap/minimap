@@ -5,25 +5,6 @@ CanvasDrawer = require './mixins/canvas-drawer'
 
 MinimapQuickSettingsView = null
 
-animate = ({from, to, duration, step}) ->
-  start = new Date()
-
-  swing = (progress) ->
-    return 0.5 - Math.cos( progress * Math.PI ) / 2
-
-  update = ->
-    passed = new Date() - start
-    if duration == 0
-      progress = 1
-    else
-      progress = passed / duration
-    progress = 1 if progress > 1
-    delta = swing(progress)
-    step(from + (to-from)*delta)
-    requestAnimationFrame(update) if progress < 1
-
-  update()
-
 # Public:
 class MinimapElement extends HTMLElement
   DOMStylesReader.includeInto(this)
@@ -380,7 +361,8 @@ class MinimapElement extends HTMLElement
       duration = 300
     else
       duration = 0
-    animate(from: from, to: to, duration: duration, step: step)
+
+    @animate(from: from, to: to, duration: duration, step: step)
 
   relayMousewheelEvent: (e) =>
     editorElement = atom.views.getView(@minimap.textEditor)
@@ -454,6 +436,25 @@ class MinimapElement extends HTMLElement
       "scale3d(#{x}, #{y}, 1)"
     else
       "scale(#{x}, #{y})"
+
+  animate: ({from, to, duration, step}) ->
+    start = new Date()
+
+    swing = (progress) ->
+      return 0.5 - Math.cos( progress * Math.PI ) / 2
+
+    update = ->
+      passed = new Date() - start
+      if duration == 0
+        progress = 1
+      else
+        progress = passed / duration
+      progress = 1 if progress > 1
+      delta = swing(progress)
+      step(from + (to-from)*delta)
+      requestAnimationFrame(update) if progress < 1
+
+    update()
 
 #    ######## ##       ######## ##     ## ######## ##    ## ########
 #    ##       ##       ##       ###   ### ##       ###   ##    ##
