@@ -67,7 +67,7 @@ describe 'MinimapElement', ->
   #    ##     ##    ##       ##    ##     ##  ######  ##     ##
 
   describe 'when attached to the text editor element', ->
-    [nextAnimationFrame, canvas, visibleArea] = []
+    [noAnimationFrame, nextAnimationFrame, canvas, visibleArea] = []
 
     beforeEach ->
       jasmineContent = document.body.querySelector('#jasmine-content')
@@ -263,14 +263,33 @@ describe 'MinimapElement', ->
         it 'relays the events to the editor view', ->
           expect(editor.setScrollTop).toHaveBeenCalled()
 
-      describe 'pressing the mouse on the minimap canvas', ->
+      describe 'pressing the mouse on the minimap canvas (without scroll animation)', ->
         beforeEach ->
+          atom.config.set 'minimap.scrollAnimation', false
           canvas = minimapElement.canvas
           mousedown(canvas)
           nextAnimationFrame()
 
         it 'scrolls the editor to the line below the mouse', ->
           expect(editor.getScrollTop()).toEqual(360)
+
+      describe 'pressing the mouse on the minimap canvas (with scroll animation)', ->
+        beforeEach ->
+          atom.config.set 'minimap.scrollAnimation', true
+          canvas = minimapElement.canvas
+          mousedown(canvas)
+          nextAnimationFrame()
+
+        it 'scrolls the editor gradually to the line below the mouse', ->
+          expect(editor.getScrollTop()).toEqual(0)
+
+          #wait until all animations run out
+          waitsFor ->
+            nextAnimationFrame()
+            return nextAnimationFrame == noAnimationFrame
+
+          runs ->
+            expect(editor.getScrollTop()).toEqual(360)
 
       describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []

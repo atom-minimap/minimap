@@ -78,6 +78,10 @@ class Main
       minimum: 0
       maximum: 1
       description: "The opacity used to render the line's text in the minimap."
+    scrollAnimation:
+      type: 'boolean'
+      default: false
+      description: "If this option is enabled then when you click the minimap it will scroll to the destination with animation"
 
   # Internal: The activation state of the minimap package.
   active: false
