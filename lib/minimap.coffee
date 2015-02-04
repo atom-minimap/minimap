@@ -1,7 +1,7 @@
-{Model} = require 'theorist'
 {Emitter, CompositeDisposable} = require 'event-kit'
 DecorationManagement = require './mixins/decoration-management'
 
+nextModelId = 1
 
 # Public: The {Minimap} class is the underlying model of a {MinimapElement}.
 # Most manipulations of the minimap is done through the model.
@@ -10,7 +10,7 @@ DecorationManagement = require './mixins/decoration-management'
 # Their lifecycle follow the one of their target `TextEditor`, so they are
 # destroyed whenever their `TextEditor` is destroyed.
 module.exports =
-class Minimap extends Model
+class Minimap
   DecorationManagement.includeInto(this)
 
   ### Public ###
@@ -24,7 +24,7 @@ class Minimap extends Model
     unless @textEditor?
       throw new Error('Cannot create a minimap without an editor')
 
-    super
+    @id = nextModelId++
     @emitter = new Emitter
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
@@ -67,11 +67,14 @@ class Minimap extends Model
     subs.add @textEditor.displayBuffer.onDidTokenize =>
       @emitter.emit('did-change-config')
 
-  # Internal: Theorist hook for when the model is destroyed.
-  destroyed: ->
+  # Destroys the model.
+  destroy: ->
     @subscriptions.dispose()
     @textEditor = null
     @emitter.emit 'did-destroy'
+    @destroyed = true
+
+  isDestroyed: -> @destroyed
 
   # Calls the `callback` when changes have been made in the buffer or in the
   # minimap that alter the minimap display.
