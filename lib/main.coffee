@@ -93,7 +93,6 @@ class Main
 
   # Activates the minimap package.
   activate: ->
-    @subscriptions = new CompositeDisposable
     MinimapElement ?= require './minimap-element'
 
     MinimapElement.registerViewProvider()
@@ -130,7 +129,10 @@ class Main
   toggle: ->
     if @toggled
       @toggled = false
-      @subscriptions.dispose()
+      @editorsMinimaps?.forEach (value, key) =>
+        value.destroy()
+        @editorsMinimaps.delete(key)
+      @editorsMinimaps = undefined
     else
       @toggled = true
       @initSubscriptions()
