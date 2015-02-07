@@ -89,18 +89,21 @@ class Main
   # Internal: Used only at export time.
   constructor: ->
     @emitter = new Emitter
+
+    # Commands Subscriptions
+    @subscriptionsOfCommands = new CompositeDisposable
+    @subscriptionsOfCommands.add atom.commands.add 'atom-workspace',
+      'minimap:toggle': => @toggle()
+      'minimap:generate-plugin': => @generatePlugin()
+
+    # Other Subscriptions
     @subscriptions = new CompositeDisposable
+
+    MinimapElement ?= require './minimap-element'
+    MinimapElement.registerViewProvider()
 
   # Activates the minimap package.
   activate: ->
-    @subscriptions = new CompositeDisposable
-    MinimapElement ?= require './minimap-element'
-
-    MinimapElement.registerViewProvider()
-
-    @subscriptions.add atom.commands.add 'atom-workspace',
-      'minimap:toggle': => @toggle()
-      'minimap:generate-plugin': => @generatePlugin()
 
     @toggle() if atom.config.get 'minimap.autoToggle'
 
@@ -130,6 +133,9 @@ class Main
   toggle: ->
     if @toggled
       @toggled = false
+      @editorsMinimaps?.forEach (value, key) =>
+        value.destroy()
+        @editorsMinimaps.delete(key)
       @subscriptions.dispose()
     else
       @toggled = true

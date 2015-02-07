@@ -93,6 +93,7 @@ class MinimapElement extends HTMLElement
   attach: ->
     return if @attached
     @swapMinimapPosition()
+    @attached = true
 
   attachToLeft: ->
     root = @getTextEditorElementRoot()
