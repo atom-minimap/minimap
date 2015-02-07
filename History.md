@@ -1,3 +1,10 @@
+<a name="v4.1.1"></a>
+# v4.1.1 (2015-02-07)
+
+## :bug: Bug Fixes
+
+- Fix broken toggling when it is toggled, disabled, enabled ([e4bce068](https://github.com/fundon/atom-minimap/commit/e4bce0689894107d28921e99ebc390c7eac5402e), [#255](https://github.com/fundon/atom-minimap/issues/255))
+
 <a name="v4.1.0"></a>
 # v4.1.0 (2015-02-04)
 
