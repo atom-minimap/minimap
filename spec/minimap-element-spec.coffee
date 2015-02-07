@@ -15,6 +15,8 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
+devicePixelRatio = window.devicePixelRatio || 1
+
 sleep = (duration) ->
   t = new Date
   waitsFor -> new Date - t > duration
@@ -119,8 +121,8 @@ describe 'MinimapElement', ->
       expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 11, 0)
 
     it 'resizes the canvas to fit the minimap', ->
-      expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
-      expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
+      expect(canvas.offsetHeight / devicePixelRatio).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
+      expect(canvas.offsetWidth / devicePixelRatio).toEqual(minimapElement.offsetWidth)
 
     it 'requests an update', ->
       expect(minimapElement.frameRequested).toBeTruthy()
@@ -202,8 +204,8 @@ describe 'MinimapElement', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
           expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
 
-          expect(canvas.offsetWidth).toEqual(minimapElement.offsetWidth)
-          expect(canvas.offsetHeight).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
+          expect(canvas.offsetWidth / devicePixelRatio).toEqual(minimapElement.offsetWidth)
+          expect(canvas.offsetHeight / devicePixelRatio).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
 
       describe 'when the editor visible content is changed', ->
         beforeEach ->
@@ -500,7 +502,7 @@ describe 'MinimapElement', ->
         nextAnimationFrame()
 
       it 'adjusts the width of the minimap canvas', ->
-        expect(minimapElement.canvas.width).toEqual(4)
+        expect(minimapElement.canvas.width / devicePixelRatio).toEqual(4)
 
       it 'offsets the minimap by the difference', ->
         expect(realOffsetLeft(minimapElement)).toBeCloseTo(editorElement.clientWidth - 4, -1)
@@ -511,7 +513,7 @@ describe 'MinimapElement', ->
           sleep(150)
           runs ->
             nextAnimationFrame()
-            expect(minimapElement.canvas.width).toEqual(4)
+            expect(minimapElement.canvas.width / devicePixelRatio).toEqual(4)
 
       describe 'when the editor is resized', ->
         beforeEach ->
