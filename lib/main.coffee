@@ -104,7 +104,7 @@ class Main
 
   # Activates the minimap package.
   activate: ->
-
+    @active = true
     @toggle() if atom.config.get 'minimap.autoToggle'
 
   # Deactivates the minimap package.
@@ -116,6 +116,7 @@ class Main
       @editorsMinimaps.delete(key)
     @editorsMinimaps = undefined
     @toggled = false
+    @active = false
 
   # Verifies that the passed-in version expression is satisfied by
   # the current minimap version.
@@ -131,6 +132,7 @@ class Main
 
   # Toggles the minimap display.
   toggle: ->
+    return unless @active
     if @toggled
       @toggled = false
       @editorsMinimaps?.forEach (value, key) =>
