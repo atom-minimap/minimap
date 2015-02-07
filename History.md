@@ -1,3 +1,10 @@
+<a name="v4.1.2"></a>
+# v4.1.2 (2015-02-07)
+
+## :bug: Bug Fixes
+
+- minimap should be not toggle when minimap was disabled
+
 <a name="v4.1.1"></a>
 # v4.1.1 (2015-02-07)
 
