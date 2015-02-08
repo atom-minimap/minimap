@@ -1,3 +1,10 @@
+<a name="v4.1.3"></a>
+# v4.1.3 (2015-02-08)
+
+## :bug: Bug Fixes
+
+- Fix minimap width when enable soft wrap and at preferred line length(\>=16384). ([#256](https://github.com/fundon/atom-minimap/issues/256))
+
 <a name="v4.1.2"></a>
 # v4.1.2 (2015-02-07)
 
