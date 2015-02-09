@@ -323,7 +323,7 @@ class MinimapElement extends HTMLElement
       softWrapAtPreferredLineLength = atom.config.get('editor.softWrapAtPreferredLineLength')
       width = lineLength * @minimap.getCharWidth()
 
-      if softWrap && softWrapAtPreferredLineLength and lineLength and width < @width
+      if softWrap and softWrapAtPreferredLineLength and lineLength and width < @width
         @marginRight = width - @width
         canvasWidth = width
       else

@@ -562,6 +562,15 @@ describe 'MinimapElement', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, -1)
           expect(minimapElement.style.width).toEqual('')
 
+      describe 'and when preferredLineLength >= 16384', ->
+        beforeEach ->
+          atom.config.set 'minimap.preferredLineLength', 16384
+          nextAnimationFrame()
+
+        it 'adjusts the width of the minimap', ->
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, -1)
+          expect(minimapElement.style.width).toEqual('')
+
     describe 'when minimap.minimapScrollIndicator setting is true', ->
       beforeEach ->
         editor.setText(mediumSample)
