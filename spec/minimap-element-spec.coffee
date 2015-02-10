@@ -17,6 +17,8 @@ realOffsetLeft = (o) ->
 
 devicePixelRatio = window.devicePixelRatio || 1
 
+getComputedStyle = (e, k) -> window.getComputedStyle(e).getPropertyValue(k)
+
 sleep = (duration) ->
   t = new Date
   waitsFor -> new Date - t > duration
@@ -714,3 +716,36 @@ describe 'MinimapElement', ->
 
         it 'removes the div', ->
           expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).not.toExist()
+
+      describe 'controls & openQuickSettings position', ->
+        [controls] = []
+
+        beforeEach ->
+          atom.config.set 'editor.softWrap', true
+          atom.config.set 'editor.softWrapAtPreferredLineLength', true
+          atom.config.set 'editor.preferredLineLength', 2
+
+          atom.config.set 'minimap.adjustMinimapWidthToSoftWrap', true
+
+          controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
+          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+
+          editorElement.style.width = '2560px'
+
+          sleep(150)
+          runs -> nextAnimationFrame()
+
+        it 'openQuickSettings right should equal 4px', ->
+          expect(getComputedStyle(openQuickSettings, 'right')).toEqual('4px')
+
+        it 'controls marginLeft should equal minimapElement marginRight', ->
+          expect(openQuickSettings.getBoundingClientRect().right + 4).toEqual(2560)
+          expect(getComputedStyle(controls, 'margin-left')).toEqual(getComputedStyle(minimapElement, 'margin-right'))
+
+        describe 'disable softWrap', ->
+          beforeEach ->
+            atom.config.set 'editor.softWrap', false
+
+          it 'controls marginLeft should equal minimapElement marginRight', ->
+            expect(openQuickSettings.getBoundingClientRect().right + 4).toEqual(2560)
+            expect(getComputedStyle(controls, 'margin-left')).toEqual(getComputedStyle(minimapElement, 'margin-right'))

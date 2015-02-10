@@ -267,6 +267,7 @@ class MinimapElement extends HTMLElement
 
     @applyStyles @controls,
       width: Math.min(@canvas.width, @width) + 'px'
+      'margin-left': (@marginRight || 0) + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
