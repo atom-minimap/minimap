@@ -17,7 +17,7 @@ echo "Downloading latest Minimap release..."
 atom/Atom.app/Contents/Resources/app/apm/node_modules/.bin/apm install minimap
 
 echo "Downloading package dependencies..."
-atom/Atom.app/Contents/Resources/app/apm/node_modules/.bin/apm update
+atom/Atom.app/Contents/Resources/app/apm/node_modules/.bin/apm install
 
 echo "Running specs..."
 ATOM_PATH=./atom atom/Atom.app/Contents/Resources/app/apm/node_modules/.bin/apm test --path atom/Atom.app/Contents/Resources/app/atom.sh
