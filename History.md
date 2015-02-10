@@ -1,3 +1,15 @@
+<a name="v4.1.4"></a>
+# v4.1.4 (2015-02-10)
+
+## :sparkles: Features
+
+- Add softWrapAtPreferredLineLength test case ([9ca75aca](https://github.com/fundon/atom-minimap/commit/9ca75acaa891cba13737c1a06ddfa6d0102b2052))
+
+## :bug: Bug Fixes
+
+- Fix getTextEditorScrollRatio() return NaN, #260 ([2d656596](https://github.com/fundon/atom-minimap/commit/2d656596f8d29d5c10c231d36a1906dd2ce5550d))
+- Fix travis build-package script ([00cf91de](https://github.com/fundon/atom-minimap/commit/00cf91de819b34c447e269922c8c86671af565e5))
+
 <a name="v4.1.3"></a>
 # v4.1.3 (2015-02-08)
 
