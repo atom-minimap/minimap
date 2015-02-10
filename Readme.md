@@ -90,6 +90,14 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 * [Minimap's Decorations API](http://abe33.github.io/atom-minimap/docs/Decorations.md.html)
 * [Quick Personal Hacks](http://abe33.github.io/atom-minimap/docs/Quick-Personal-Hacks.md.html)
 
+### Contributing
+
+The `minimap` package try to follow the [Atom contribution guidelines](https://atom.io/docs/v0.177.0/contributing).
+
+Especially, the commits should follow the conventions defined in the *Git Commit Messages* section of the guideline.
+
+The `CHANGELOG` content is then generated using the [changelog-gen utils](https://github.com/abe33/changelog-gen)
+
 ### Contributors
 
 https://github.com/fundon/atom-minimap/graphs/contributors
