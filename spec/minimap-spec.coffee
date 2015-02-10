@@ -102,6 +102,20 @@ describe 'Minimap', ->
       editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
       expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
 
+    describe 'when getScrollTop() and maxScrollTop both equal 0', ->
+      beforeEach ->
+        editor.setText(smallSample)
+        editor.setHeight(40)
+        atom.config.set 'editor.scrollPastEnd', true
+
+      it 'getTextEditorScrollRatio() should return 0', ->
+        editor.setScrollTop(0)
+
+        maxScrollTop = editor.displayBuffer.getMaxScrollTop() - (editor.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+
+        expect(maxScrollTop).toEqual(0)
+        expect(minimap.getTextEditorScrollRatio()).toEqual(0)
+
   describe 'when soft wrap is enabled', ->
     beforeEach ->
       atom.config.set 'editor.softWrap', true
