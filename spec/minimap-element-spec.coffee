@@ -696,12 +696,31 @@ describe 'MinimapElement', ->
             expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
 
       describe 'when the adjustMinimapWidthToSoftWrap setting is enabled', ->
+        beforeEach ->
+          atom.config.set 'editor.softWrap', true
+          atom.config.set 'editor.softWrapAtPreferredLineLength', true
+          atom.config.set 'editor.preferredLineLength', 2
+
+          atom.config.set('minimap.adjustMinimapWidthToSoftWrap', true)
+          nextAnimationFrame()
+
+        describe 'the open-minimap-quick-settings position', ->
+          [controls] = []
+
+          beforeEach ->
+            controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
+
+            editorElement.style.width = '1024px'
+            waitsFor -> minimapElement.frameRequested
+            runs -> nextAnimationFrame()
+
+          it 'adjusts the size of the control div to fit in the minimap', ->
+            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           describe 'clicking on the div', ->
             beforeEach ->
-              atom.config.set('minimap.adjustMinimapWidthToSoftWrap', true)
               atom.config.set('minimap.displayMinimapOnLeft', true)
-              nextAnimationFrame()
 
               workspaceElement = atom.views.getView(atom.workspace)
               jasmineContent.appendChild(workspaceElement)
