@@ -27,6 +27,6 @@
     "event-kit": "1.x",
     "fs-plus": "2.x",
     "underscore-plus": "1.x",
-    "atom-space-pen-views": ">= 0.20.0"
+    "atom-utils": "0.5.x"
   }
 }

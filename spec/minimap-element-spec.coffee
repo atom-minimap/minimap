@@ -72,6 +72,8 @@ describe 'MinimapElement', ->
     [noAnimationFrame, nextAnimationFrame, canvas, visibleArea] = []
 
     beforeEach ->
+      # Comment after body below to leave the created text editor and minimap
+      # on DOM after the test run.
       jasmineContent = document.body.querySelector('#jasmine-content')
 
       noAnimationFrame = -> throw new Error('No animation frame requested')
@@ -406,7 +408,7 @@ describe 'MinimapElement', ->
     #    ##    ## ##     ## ##   ### ##        ##  ##    ##
     #     ######   #######  ##    ## ##       ####  ######
 
-    describe 'when the atom them is changed', ->
+    describe 'when the atom themes are changed', ->
       beforeEach ->
         nextAnimationFrame()
         spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
@@ -640,7 +642,7 @@ describe 'MinimapElement', ->
     #     ######  ########    ##       ##    #### ##    ##  ######    ######
 
     describe 'when minimap.displayPluginsControls setting is true', ->
-      [openQuickSettings, quickSettingsView, workspaceElement] = []
+      [openQuickSettings, quickSettingsElement, workspaceElement] = []
       beforeEach ->
         atom.config.set 'minimap.displayPluginsControls', true
 
@@ -655,20 +657,20 @@ describe 'MinimapElement', ->
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
           mousedown(openQuickSettings)
 
-          quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
+          quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
 
         afterEach ->
-          minimapElement.quickSettingsView.destroy()
+          minimapElement.quickSettingsElement.destroy()
 
         it 'opens the quick settings view', ->
-          expect(quickSettingsView).toExist()
+          expect(quickSettingsElement).toExist()
 
         it 'positions the quick settings view next to the minimap', ->
           minimapBounds = minimapElement.getBoundingClientRect()
-          settingsBounds = quickSettingsView.getBoundingClientRect()
+          settingsBounds = quickSettingsElement.getBoundingClientRect()
 
-          expect(realOffsetTop(quickSettingsView)).toBeCloseTo(minimapBounds.top, 0)
-          expect(realOffsetLeft(quickSettingsView)).toBeCloseTo(minimapBounds.left - settingsBounds.width, 0)
+          expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
+          expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.left - settingsBounds.width, 0)
 
       describe 'when the quick settings view is open', ->
         beforeEach ->
@@ -678,11 +680,11 @@ describe 'MinimapElement', ->
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
           mousedown(openQuickSettings)
 
-          quickSettingsView = workspaceElement.querySelector('.minimap-quick-settings')
+          quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
 
         describe 'clicking on the code highlight item', ->
           beforeEach ->
-            item = quickSettingsView.querySelector('li:last-child')
+            item = quickSettingsElement.querySelector('li:last-child')
             mousedown(item)
 
           it 'toggles the code highlights on the minimap element', ->
@@ -696,17 +698,17 @@ describe 'MinimapElement', ->
             mousedown(openQuickSettings)
 
           it 'closes the quick settings view', ->
-            expect(workspaceElement.querySelector('.minimap-quick-settings')).not.toExist()
+            expect(workspaceElement.querySelector('minimap-quick-settings')).not.toExist()
 
           it 'removes the view from the element', ->
-            expect(minimapElement.quickSettingsView).toBeNull()
+            expect(minimapElement.quickSettingsElement).toBeNull()
 
         describe 'when an external event destroys the view', ->
           beforeEach ->
-            minimapElement.quickSettingsView.destroy()
+            minimapElement.quickSettingsElement.destroy()
 
           it 'removes the view reference from the element', ->
-            expect(minimapElement.quickSettingsView).toBeNull()
+            expect(minimapElement.quickSettingsElement).toBeNull()
 
       describe 'then disabling it', ->
         beforeEach ->
