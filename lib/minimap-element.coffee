@@ -186,7 +186,7 @@ class MinimapElement extends HTMLElement
             @quickSettingsElement = null
 
           @quickSettingsElement.attach()
-          {top, left, right} = @getBoundingClientRect()
+          {top, left, right} = @canvas.getBoundingClientRect()
           @quickSettingsElement.style.top = top + 'px'
 
           if @displayMinimapOnLeft

@@ -666,7 +666,7 @@ describe 'MinimapElement', ->
           expect(quickSettingsElement).toExist()
 
         it 'positions the quick settings view next to the minimap', ->
-          minimapBounds = minimapElement.getBoundingClientRect()
+          minimapBounds = minimapElement.canvas.getBoundingClientRect()
           settingsBounds = quickSettingsElement.getBoundingClientRect()
 
           expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
@@ -689,11 +689,38 @@ describe 'MinimapElement', ->
             minimapElement.quickSettingsElement.destroy()
 
           it 'positions the quick settings view next to the minimap', ->
-            minimapBounds = minimapElement.getBoundingClientRect()
+            minimapBounds = minimapElement.canvas.getBoundingClientRect()
             settingsBounds = quickSettingsElement.getBoundingClientRect()
 
             expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
             expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
+
+      describe 'when the adjustMinimapWidthToSoftWrap setting is enabled', ->
+        describe 'when the displayMinimapOnLeft setting is enabled', ->
+          describe 'clicking on the div', ->
+            beforeEach ->
+              atom.config.set('minimap.adjustMinimapWidthToSoftWrap', true)
+              atom.config.set('minimap.displayMinimapOnLeft', true)
+              nextAnimationFrame()
+
+              workspaceElement = atom.views.getView(atom.workspace)
+              jasmineContent.appendChild(workspaceElement)
+
+              openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+              mousedown(openQuickSettings)
+
+              quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
+
+            afterEach ->
+              minimapElement.quickSettingsElement.destroy()
+
+            it 'positions the quick settings view next to the minimap', ->
+              minimapBounds = minimapElement.canvas.getBoundingClientRect()
+              settingsBounds = quickSettingsElement.getBoundingClientRect()
+
+              expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
+              expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
+
 
       describe 'when the quick settings view is open', ->
         beforeEach ->
