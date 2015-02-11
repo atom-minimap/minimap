@@ -4,14 +4,6 @@ atom-notifications:empty {
   pointer-events: none
 }
 
-//    ##     ## ##
-//    ##     ## ##    ##
-//    ##     ## ##    ##
-//    ##     ## ##    ##
-//     ##   ##  #########
-//      ## ##         ##
-//       ###          ##
-
 atom-text-editor::shadow, atom-text-editor {
   atom-text-editor-minimap {
     display: block;
@@ -85,36 +77,6 @@ atom-text-editor::shadow, atom-text-editor {
   }
 }
 
-//   ##     ##  #######
-//   ##     ## ##     ##
-//   ##     ##        ##
-//   ##     ##  #######
-//    ##   ##         ##
-//     ## ##   ##     ##
-//      ###     #######
-
-atom-pane.with-minimap {
-  atom-text-editor, :host, atom-text-editor, atom-text-editor::shadow {
-
-    &:not(.minimap-editor):not(.mini) {
-      padding-right: 10%;
-    }
-    .vertical-scrollbar {
-      right: 0 !important;
-    }
-  }
-}
-
-.zen atom-pane.with-minimap {
-  atom-text-editor, atom-text-editor::shadow {
-    padding-right: 0 !important;
-
-    .vertical-scrollbar {
-      right: 0 !important;
-    }
-  }
-}
-
 minimap-quick-settings {
   position: absolute !important;
 
@@ -141,126 +103,5 @@ minimap-quick-settings {
     li:hover {
       background: @background-color-highlight;
     }
-  }
-}
-
-.open-minimap-quick-settings {
-  opacity: 0;
-  position: absolute;
-  z-index: 1;
-  cursor: pointer;
-  color: @text-color;
-  font-size: 20px;
-  text-align: center;
-  line-height: 24px;
-  width: 24px;
-  height: 24px;
-  display: block;
-  right: 4px;
-  transition: opacity 0.4s;
-
-  &:before {
-    content: '\f02f';
-    font-family: 'Octicons Regular';
-  }
-}
-
-.minimap:hover .open-minimap-quick-settings {
-  opacity: 1;
-  transition: opacity 0.1s;
-}
-
-.minimap-on-left {
-  atom-pane.with-minimap {
-    atom-text-editor, :host, atom-text-editor, atom-text-editor::shadow {
-      &:not(.minimap-editor):not(.mini) {
-        padding-right: 0;
-        padding-left: 10%;
-      }
-    }
-
-    .vertical-scrollbar {
-      right: 0;
-    }
-
-    .minimap {
-      left: 0 !important;
-    }
-  }
-}
-
-.minimap {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: initial !important;
-
-  width: 10%;
-  overflow: hidden;
-  box-sizing: border-box;
-
-  -webkit-user-select: none;
-
-  atom-text-editor {
-    padding: 0 !important;
-    background: transparent;
-  }
-
-  .minimap-scroller {
-    position: absolute;
-    display: none;
-    right: 0;
-    width: 2px;
-    min-height: 2px;
-    z-index: 10;
-    background: @background-color-selected;
-
-    &.visible {
-      display: block;
-    }
-  }
-
-  .minimap-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-transform-origin: 0 0;
-    .accelerated;
-  }
-
-  .minimap-underlayer,
-  .minimap-overlayer {
-    -webkit-transform-origin: 0 0;
-  }
-
-  .minimap-visible-area {
-    position: absolute;
-    width: 100%;
-    background-color: #888;
-    opacity: .2;
-    cursor: -webkit-grab;
-  }
-  .minimap-visible-area:active{
-    cursor: -webkit-grabbing;
-  }
-
-  .minimap-editor {
-    position: absolute;
-    cursor: default;
-    height: 100%;
-    width: 100%;
-  }
-
-  .minimap-canvas {
-    width: 100%;
-    height: 100%;
-  }
-
-  // Mixins
-  .accelerated {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
   }
 }
