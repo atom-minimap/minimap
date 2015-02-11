@@ -40,7 +40,7 @@ class MinimapQuickSettingsElement extends HTMLElement
     @subscriptions.add @subscribeTo @codeHighlights,
       'mousedown': (e) =>
         e.preventDefault()
-        @minimap.setDisplayCodeHighlights(!@minimap.displayCodeHighlights)
+        atom.config.set('minimap.displayCodeHighlights', !@minimap.displayCodeHighlights)
         @codeHighlights.classList.toggle('active', @minimap.displayCodeHighlights)
 
     @subscriptions.add @subscribeTo @hiddenInput,
