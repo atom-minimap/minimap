@@ -682,6 +682,9 @@ describe 'MinimapElement', ->
 
           quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
 
+        it 'sets the on right button active', ->
+          expect(quickSettingsElement.querySelector('.btn.selected:last-child')).toExist()
+
         describe 'clicking on the code highlight item', ->
           beforeEach ->
             item = quickSettingsElement.querySelector('li:last-child')
@@ -692,6 +695,19 @@ describe 'MinimapElement', ->
 
           it 'requests an update', ->
             expect(minimapElement.frameRequested).toBeTruthy()
+
+        describe 'clicking on the on left button', ->
+          beforeEach ->
+            item = quickSettingsElement.querySelector('.btn:first-child')
+            mousedown(item)
+
+          it 'toggles the displayMinimapOnLeft setting', ->
+            expect(atom.config.get('minimap.displayMinimapOnLeft')).toBeTruthy()
+
+          it 'changes the buttons activation state', ->
+            expect(quickSettingsElement.querySelector('.btn.selected:last-child')).not.toExist()
+            expect(quickSettingsElement.querySelector('.btn.selected:first-child')).toExist()
+
 
         describe 'clicking on the open settings button again', ->
           beforeEach ->

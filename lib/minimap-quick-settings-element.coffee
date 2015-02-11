@@ -14,6 +14,9 @@ class MinimapQuickSettingsElement extends HTMLElement
       @ol class: 'list-group mark-active', outlet: 'list', =>
         @li class: 'separator', outlet: 'separator'
         @li class: '', outlet: 'codeHighlights', 'code-highlights'
+      @div class: 'btn-group', =>
+        @button class: 'btn btn-default', outlet: 'onLeftButton', 'On Left'
+        @button class: 'btn btn-default', outlet: 'onRightButton', 'On Right'
 
   selectedItem: null
 
@@ -46,6 +49,20 @@ class MinimapQuickSettingsElement extends HTMLElement
     @subscriptions.add @subscribeTo @hiddenInput,
       'focusout': (e) =>
         @destroy()
+
+    @subscriptions.add @subscribeTo @onLeftButton,
+      'mousedown': (e) ->
+        e.preventDefault()
+        atom.config.set('minimap.displayMinimapOnLeft', true)
+
+    @subscriptions.add @subscribeTo @onRightButton,
+      'mousedown': (e) ->
+        e.preventDefault()
+        atom.config.set('minimap.displayMinimapOnLeft', false)
+
+    @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (bool) =>
+      @onLeftButton.classList.toggle('selected', bool)
+      @onRightButton.classList.toggle('selected', not bool)
 
     @initList()
 
