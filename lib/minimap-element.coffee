@@ -186,9 +186,13 @@ class MinimapElement extends HTMLElement
             @quickSettingsElement = null
 
           @quickSettingsElement.attach()
-          {top, left} = @getBoundingClientRect()
+          {top, left, right} = @getBoundingClientRect()
           @quickSettingsElement.style.top = top + 'px'
-          @quickSettingsElement.style.left = (left - @quickSettingsElement.clientWidth) + 'px'
+
+          if @displayMinimapOnLeft
+            @quickSettingsElement.style.left = (right) + 'px'
+          else
+            @quickSettingsElement.style.left = (left - @quickSettingsElement.clientWidth) + 'px'
 
   disposeOpenQuickSettings: ->
     return unless @openQuickSettings?

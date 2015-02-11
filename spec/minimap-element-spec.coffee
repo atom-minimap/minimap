@@ -672,6 +672,29 @@ describe 'MinimapElement', ->
           expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
           expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.left - settingsBounds.width, 0)
 
+      describe 'when the displayMinimapOnLeft setting is enabled', ->
+        describe 'clicking on the div', ->
+          beforeEach ->
+            atom.config.set('minimap.displayMinimapOnLeft', true)
+
+            workspaceElement = atom.views.getView(atom.workspace)
+            jasmineContent.appendChild(workspaceElement)
+
+            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+            mousedown(openQuickSettings)
+
+            quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
+
+          afterEach ->
+            minimapElement.quickSettingsElement.destroy()
+
+          it 'positions the quick settings view next to the minimap', ->
+            minimapBounds = minimapElement.getBoundingClientRect()
+            settingsBounds = quickSettingsElement.getBoundingClientRect()
+
+            expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
+            expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
+
       describe 'when the quick settings view is open', ->
         beforeEach ->
           workspaceElement = atom.views.getView(atom.workspace)
