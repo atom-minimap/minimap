@@ -92,9 +92,7 @@ class PluginManagement extends Mixin
       @updatesPluginActivationState(name)
 
     commands = {}
-    commands["minimap:toggle-#{name}"] = =>
-      console.log this
-      @togglePluginActivation(name)
+    commands["minimap:toggle-#{name}"] = => @togglePluginActivation(name)
 
     @pluginsSubscriptions[name].add atom.commands.add 'atom-workspace', commands
 
