@@ -740,7 +740,6 @@ describe 'MinimapElement', ->
               expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
               expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
 
-
       describe 'when the quick settings view is open', ->
         beforeEach ->
           workspaceElement = atom.views.getView(atom.workspace)
