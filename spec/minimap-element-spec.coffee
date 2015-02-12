@@ -823,3 +823,93 @@ describe 'MinimapElement', ->
 
         it 'removes the div', ->
           expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).not.toExist()
+
+      describe 'with plugins registered in the package', ->
+        [minimapPackage, pluginA, pluginB] = []
+        beforeEach ->
+          waitsForPromise ->
+            atom.packages.activatePackage('minimap').then (pkg) ->
+              minimapPackage = pkg.mainModule
+
+          runs ->
+            class Plugin
+              active: false
+              activatePlugin: -> @active = true
+              deactivatePlugin: -> @active = false
+              isActive: -> @active
+
+            pluginA = new Plugin
+            pluginB = new Plugin
+
+            minimapPackage.registerPlugin('dummyA', pluginA)
+            minimapPackage.registerPlugin('dummyB', pluginB)
+
+            workspaceElement = atom.views.getView(atom.workspace)
+            jasmineContent.appendChild(workspaceElement)
+
+            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+            mousedown(openQuickSettings)
+
+            quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
+
+        it 'creates one list item for each registered plugin', ->
+          expect(quickSettingsElement.querySelectorAll('li').length).toEqual(4)
+
+        it 'selects the first item of the list', ->
+          expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
+
+        describe 'core:confirm', ->
+          beforeEach ->
+            atom.commands.dispatch quickSettingsElement, 'core:confirm'
+
+          it 'disable the plugin of the selected item', ->
+            expect(pluginA.isActive()).toBeFalsy()
+
+          describe 'triggered a second time', ->
+            beforeEach ->
+              atom.commands.dispatch quickSettingsElement, 'core:confirm'
+
+            it 'enable the plugin of the selected item', ->
+              expect(pluginA.isActive()).toBeTruthy()
+
+        describe 'core:move-down', ->
+          beforeEach ->
+            atom.commands.dispatch workspaceElement, 'core:move-down'
+
+          it 'selects the second item', ->
+            expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
+
+          describe 'reaching a separator', ->
+            beforeEach ->
+              atom.commands.dispatch workspaceElement, 'core:move-down'
+
+            it 'moves past the separator', ->
+              expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
+
+          describe 'then core:move-up', ->
+            beforeEach ->
+              atom.commands.dispatch workspaceElement, 'core:move-up'
+
+            it 'selects again the first item of the list', ->
+              expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
+
+        describe 'core:move-up', ->
+          beforeEach ->
+            atom.commands.dispatch workspaceElement, 'core:move-up'
+
+          it 'selects the last item', ->
+            expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
+
+          describe 'reaching a separator', ->
+            beforeEach ->
+              atom.commands.dispatch workspaceElement, 'core:move-up'
+
+            it 'moves past the separator', ->
+              expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
+
+          describe 'then core:move-down', ->
+            beforeEach ->
+              atom.commands.dispatch workspaceElement, 'core:move-down'
+
+            it 'selects again the first item of the list', ->
+              expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
