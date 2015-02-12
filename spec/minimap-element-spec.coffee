@@ -777,6 +777,29 @@ describe 'MinimapElement', ->
             expect(quickSettingsElement.querySelector('.btn.selected:last-child')).not.toExist()
             expect(quickSettingsElement.querySelector('.btn.selected:first-child')).toExist()
 
+        describe 'core:move-left', ->
+          beforeEach ->
+            atom.commands.dispatch quickSettingsElement, 'core:move-left'
+
+          it 'toggles the displayMinimapOnLeft setting', ->
+            expect(atom.config.get('minimap.displayMinimapOnLeft')).toBeTruthy()
+
+          it 'changes the buttons activation state', ->
+            expect(quickSettingsElement.querySelector('.btn.selected:last-child')).not.toExist()
+            expect(quickSettingsElement.querySelector('.btn.selected:first-child')).toExist()
+
+        describe 'core:move-right when the minimap is on the right', ->
+          beforeEach ->
+            atom.config.set('minimap.displayMinimapOnLeft', true)
+            atom.commands.dispatch quickSettingsElement, 'core:move-right'
+
+          it 'toggles the displayMinimapOnLeft setting', ->
+            expect(atom.config.get('minimap.displayMinimapOnLeft')).toBeFalsy()
+
+          it 'changes the buttons activation state', ->
+            expect(quickSettingsElement.querySelector('.btn.selected:first-child')).not.toExist()
+            expect(quickSettingsElement.querySelector('.btn.selected:last-child')).toExist()
+
 
         describe 'clicking on the open settings button again', ->
           beforeEach ->
