@@ -874,42 +874,42 @@ describe 'MinimapElement', ->
 
         describe 'core:move-down', ->
           beforeEach ->
-            atom.commands.dispatch workspaceElement, 'core:move-down'
+            atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
           it 'selects the second item', ->
             expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
 
           describe 'reaching a separator', ->
             beforeEach ->
-              atom.commands.dispatch workspaceElement, 'core:move-down'
+              atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
             it 'moves past the separator', ->
               expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
 
           describe 'then core:move-up', ->
             beforeEach ->
-              atom.commands.dispatch workspaceElement, 'core:move-up'
+              atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
             it 'selects again the first item of the list', ->
               expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
 
         describe 'core:move-up', ->
           beforeEach ->
-            atom.commands.dispatch workspaceElement, 'core:move-up'
+            atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
           it 'selects the last item', ->
             expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
 
           describe 'reaching a separator', ->
             beforeEach ->
-              atom.commands.dispatch workspaceElement, 'core:move-up'
+              atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
             it 'moves past the separator', ->
               expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
 
           describe 'then core:move-down', ->
             beforeEach ->
-              atom.commands.dispatch workspaceElement, 'core:move-down'
+              atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
             it 'selects again the first item of the list', ->
               expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
