@@ -24,6 +24,8 @@ class MinimapQuickSettingsElement extends HTMLElement
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @plugins = {}
+    @itemsActions = new WeakMap
+
     @subscriptions.add Main.onDidAddPlugin ({name, plugin}) =>
       @addItemFor(name, plugin)
     @subscriptions.add Main.onDidRemovePlugin ({name, plugin}) =>
@@ -46,7 +48,9 @@ class MinimapQuickSettingsElement extends HTMLElement
       'mousedown': (e) =>
         e.preventDefault()
         atom.config.set('minimap.displayCodeHighlights', !@minimap.displayCodeHighlights)
-        @codeHighlights.classList.toggle('active', @minimap.displayCodeHighlights)
+
+    @itemsActions.set @codeHighlights, =>
+      atom.config.set('minimap.displayCodeHighlights', !@minimap.displayCodeHighlights)
 
     @subscriptions.add @subscribeTo @hiddenInput,
       'focusout': (e) =>
@@ -61,6 +65,9 @@ class MinimapQuickSettingsElement extends HTMLElement
       'mousedown': (e) ->
         e.preventDefault()
         atom.config.set('minimap.displayMinimapOnLeft', false)
+
+    @subscriptions.add atom.config.observe 'minimap.displayCodeHighlights', (bool) =>
+      @codeHighlights.classList.toggle('active', bool)
 
     @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (bool) =>
       @onLeftButton.classList.toggle('selected', bool)
@@ -82,7 +89,6 @@ class MinimapQuickSettingsElement extends HTMLElement
     @parentNode.removeChild(this)
 
   initList: ->
-    @itemsActions = new WeakMap
     @itemsDisposables = new WeakMap
     @addItemFor(name, plugin) for name, plugin of Main.plugins
 
