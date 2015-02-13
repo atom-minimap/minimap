@@ -101,6 +101,10 @@ describe 'MinimapElement', ->
           background: rgba(0,255,0,0.3);
           opacity: 1;
         }
+
+        atom-text-editor::shadow atom-text-editor-minimap::shadow .open-minimap-quick-settings {
+          opacity: 1 !important;
+        }
       """
 
       jasmineContent.appendChild(styleNode)
@@ -709,13 +713,21 @@ describe 'MinimapElement', ->
 
           beforeEach ->
             controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
+            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
 
             editorElement.style.width = '1024px'
+
+            sleep(150)
             waitsFor -> minimapElement.frameRequested
             runs -> nextAnimationFrame()
 
           it 'adjusts the size of the control div to fit in the minimap', ->
             expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+          it 'positions the controls div over the canvas', ->
+            controlsRect = controls.getBoundingClientRect()
+            canvasRect = minimapElement.canvas.getBoundingClientRect()
+            expect(controlsRect.left).toEqual(canvasRect.left)
+            expect(controlsRect.right).toEqual(canvasRect.right)
 
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           describe 'clicking on the div', ->
