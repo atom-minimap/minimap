@@ -886,13 +886,15 @@ describe 'MinimapElement', ->
               expect(pluginA.isActive()).toBeTruthy()
 
           describe 'on the code highlight item', ->
+            [initial] = []
             beforeEach ->
+              initial = minimapElement.displayCodeHighlights
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
               atom.commands.dispatch quickSettingsElement, 'core:confirm'
 
             it 'toggles the code highlights on the minimap element', ->
-              expect(minimapElement.displayCodeHighlights).toBeFalsy()
+              expect(minimapElement.displayCodeHighlights).toEqual(not initial)
 
         describe 'core:move-down', ->
           beforeEach ->
