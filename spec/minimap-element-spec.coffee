@@ -856,7 +856,7 @@ describe 'MinimapElement', ->
           expect(quickSettingsElement.querySelectorAll('li').length).toEqual(4)
 
         it 'selects the first item of the list', ->
-          expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
+          expect(quickSettingsElement.querySelector('li.selected:first-child')).toExist()
 
         describe 'core:confirm', ->
           beforeEach ->
@@ -877,41 +877,39 @@ describe 'MinimapElement', ->
             atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
           it 'selects the second item', ->
-            expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
+            expect(quickSettingsElement.querySelector('li.selected:nth-child(2)')).toExist()
 
           describe 'reaching a separator', ->
             beforeEach ->
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
-              console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
 
             it 'moves past the separator', ->
-              expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
+              expect(quickSettingsElement.querySelector('li.selected:last-child')).toExist()
 
           describe 'then core:move-up', ->
             beforeEach ->
               atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
             it 'selects again the first item of the list', ->
-              expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
+              expect(quickSettingsElement.querySelector('li.selected:first-child')).toExist()
 
         describe 'core:move-up', ->
           beforeEach ->
             atom.commands.dispatch quickSettingsElement, 'core:move-up'
-            console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
 
           it 'selects the last item', ->
-            expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
+            expect(quickSettingsElement.querySelector('li.selected:last-child')).toExist()
 
           describe 'reaching a separator', ->
             beforeEach ->
               atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
             it 'moves past the separator', ->
-              expect(quickSettingsElement.querySelector('li.active:nth-child(2)')).toExist()
+              expect(quickSettingsElement.querySelector('li.selected:nth-child(2)')).toExist()
 
           describe 'then core:move-down', ->
             beforeEach ->
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
             it 'selects again the first item of the list', ->
-              expect(quickSettingsElement.querySelector('li.active:first-child')).toExist()
+              expect(quickSettingsElement.querySelector('li.selected:first-child')).toExist()
