@@ -881,8 +881,8 @@ describe 'MinimapElement', ->
 
           describe 'reaching a separator', ->
             beforeEach ->
-              console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
+              console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
 
             it 'moves past the separator', ->
               expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
@@ -896,8 +896,8 @@ describe 'MinimapElement', ->
 
         describe 'core:move-up', ->
           beforeEach ->
-            console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
             atom.commands.dispatch quickSettingsElement, 'core:move-up'
+            console.log Array::map.call quickSettingsElement.querySelectorAll('li'), (el) -> el.outerHTML
 
           it 'selects the last item', ->
             expect(quickSettingsElement.querySelector('li.active:last-child')).toExist()
