@@ -21,12 +21,12 @@
     "atom": ">=0.177.0"
   },
   "dependencies": {
-    "mixto": "1.x",
+    "atom-space-pen-views": ">= 0.20.0",
     "delegato": "1.x",
-    "semver": "~2.3.0",
     "event-kit": "1.x",
     "fs-plus": "2.x",
-    "underscore-plus": "1.x",
-    "atom-space-pen-views": ">= 0.20.0"
+    "mixto": "1.x",
+    "semver": "^4.3.0",
+    "underscore-plus": "1.x"
   }
 }
