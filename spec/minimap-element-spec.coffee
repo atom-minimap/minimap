@@ -723,6 +723,7 @@ describe 'MinimapElement', ->
 
           it 'adjusts the size of the control div to fit in the minimap', ->
             expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+
           it 'positions the controls div over the canvas', ->
             controlsRect = controls.getBoundingClientRect()
             canvasRect = minimapElement.canvas.getBoundingClientRect()
