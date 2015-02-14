@@ -730,6 +730,23 @@ describe 'MinimapElement', ->
             expect(controlsRect.left).toEqual(canvasRect.left)
             expect(controlsRect.right).toEqual(canvasRect.right)
 
+          describe 'positions the open-minimap-quick-settings button', ->
+            beforeEach ->
+              atom.config.set 'editor.preferredLineLength', 80
+              atom.config.set 'minimap.displayMinimapOnLeft', false
+              editorElement.style.width = '2560px'
+
+              sleep(150)
+              waitsFor -> minimapElement.frameRequested
+              runs -> nextAnimationFrame()
+
+            it 'right should be less than 2560', ->
+              openQuickSettingsRect = openQuickSettings.getBoundingClientRect()
+              minimapRect = minimapElement.getBoundingClientRect()
+              expect(openQuickSettingsRect.right).toBeLessThan(minimapRect.right)
+              expect(openQuickSettingsRect.right).toBeLessThan(2560)
+              expect(openQuickSettingsRect.right).toEqual(2560 - 4)
+
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           describe 'clicking on the div', ->
             beforeEach ->
