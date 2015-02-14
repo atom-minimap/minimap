@@ -747,6 +747,27 @@ describe 'MinimapElement', ->
               expect(openQuickSettingsRect.right).toBeLessThan(2560)
               expect(openQuickSettingsRect.right).toEqual(2560 - 4)
 
+          describe 'positions minimap-scroll-indicator', ->
+            [scrollIndicator] = []
+            beforeEach ->
+              atom.config.set 'editor.preferredLineLength', 80
+              atom.config.set 'minimap.displayMinimapOnLeft', false
+              atom.config.set 'minimap.minimapScrollIndicator', true
+
+              scrollIndicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+
+              editorElement.style.width = '2560px'
+
+              sleep(150)
+              waitsFor -> minimapElement.frameRequested
+              runs -> nextAnimationFrame()
+
+            it 'right should be <= 2560', ->
+              scrollIndicatorRect = scrollIndicator.getBoundingClientRect()
+              minimapRect = minimapElement.getBoundingClientRect()
+              expect(scrollIndicatorRect.right).toBeLessThan(minimapRect.right)
+              expect(scrollIndicatorRect.right).toBeLessThan(2560)
+
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           describe 'clicking on the div', ->
             beforeEach ->
