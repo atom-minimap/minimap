@@ -15,7 +15,7 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
-devicePixelRatio = window.devicePixelRatio || 1
+devicePixelRatio = 1
 
 sleep = (duration) ->
   t = new Date
@@ -29,6 +29,7 @@ describe 'MinimapElement', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
     atom.config.set 'minimap.textOpacity', 1
+    atom.config.set 'minimap.devicePixelRatio', 1
 
     MinimapElement.registerViewProvider()
 

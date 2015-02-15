@@ -18,6 +18,7 @@ class MinimapElement extends HTMLElement
   domPollingIntervalId: null
   domPollingPaused: false
   displayMinimapOnLeft: false
+  devicePixelRatio: 1
 
   #    ##     ##  #######   #######  ##    ##  ######
   #    ##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -68,6 +69,9 @@ class MinimapElement extends HTMLElement
           @requestForcedUpdate()
 
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
+        @requestUpdate() if @attached
+
+      'minimap.devicePixelRatio': (@devicePixelRatio) =>
         @requestUpdate() if @attached
 
   attachedCallback: ->
@@ -276,12 +280,12 @@ class MinimapElement extends HTMLElement
       transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
-      width: Math.min(@canvas.width, @width) + 'px'
+      width: Math.min(@canvas.width / @devicePixelRatio, @width) + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
     canvasTransform = @makeTranslate(0, canvasTop)
-    canvasTransform += " " + @makeScale(1/devicePixelRatio) if devicePixelRatio isnt 1
+    canvasTransform += " " + @makeScale(1 / @devicePixelRatio) if @devicePixelRatio isnt 1
     @applyStyles @canvas, transform: canvasTransform
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
@@ -342,8 +346,8 @@ class MinimapElement extends HTMLElement
       delete @marginRight
 
     if canvasWidth isnt @canvas.width or @height isnt @canvas.height
-      @canvas.width = canvasWidth * devicePixelRatio
-      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
+      @canvas.width = canvasWidth * @devicePixelRatio
+      @canvas.height = (@height + @minimap.getLineHeight()) * @devicePixelRatio
 
   #    ######## ##     ## ######## ##    ## ########  ######
   #    ##       ##     ## ##       ###   ##    ##    ##    ##
