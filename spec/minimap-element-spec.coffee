@@ -728,10 +728,21 @@ describe 'MinimapElement', ->
           expect(controlsRect.right).toEqual(canvasRect.right)
 
         describe 'when the displayMinimapOnLeft setting is enabled', ->
+          beforeEach ->
+            atom.config.set('minimap.displayMinimapOnLeft', true)
+            nextAnimationFrame()
+
+          it 'adjusts the size of the control div to fit in the minimap', ->
+            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+
+          it 'positions the controls div over the canvas', ->
+            controlsRect = controls.getBoundingClientRect()
+            canvasRect = minimapElement.canvas.getBoundingClientRect()
+            expect(controlsRect.left).toEqual(canvasRect.left)
+            expect(controlsRect.right).toEqual(canvasRect.right)
+
           describe 'clicking on the div', ->
             beforeEach ->
-              atom.config.set('minimap.displayMinimapOnLeft', true)
-
               workspaceElement = atom.views.getView(atom.workspace)
               jasmineContent.appendChild(workspaceElement)
 
