@@ -15,7 +15,7 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
-devicePixelRatio = 1
+devicePixelRatio = 2
 
 sleep = (duration) ->
   t = new Date
@@ -29,7 +29,7 @@ describe 'MinimapElement', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
     atom.config.set 'minimap.textOpacity', 1
-    atom.config.set 'minimap.devicePixelRatio', 1
+    atom.config.set 'minimap.devicePixelRatio', 2
 
     MinimapElement.registerViewProvider()
 
@@ -720,7 +720,7 @@ describe 'MinimapElement', ->
           runs -> nextAnimationFrame()
 
         it 'adjusts the size of the control div to fit in the minimap', ->
-          expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+          expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth / devicePixelRatio)
 
         it 'positions the controls div over the canvas', ->
           controlsRect = controls.getBoundingClientRect()
@@ -734,7 +734,7 @@ describe 'MinimapElement', ->
             nextAnimationFrame()
 
           it 'adjusts the size of the control div to fit in the minimap', ->
-            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
+            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth / devicePixelRatio)
 
           it 'positions the controls div over the canvas', ->
             controlsRect = controls.getBoundingClientRect()
