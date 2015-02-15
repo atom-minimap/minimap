@@ -700,6 +700,7 @@ describe 'MinimapElement', ->
             expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
 
       describe 'when the adjustMinimapWidthToSoftWrap setting is enabled', ->
+        [controls] = []
         beforeEach ->
           atom.config.set 'editor.softWrap', true
           atom.config.set 'editor.softWrapAtPreferredLineLength', true
@@ -708,65 +709,23 @@ describe 'MinimapElement', ->
           atom.config.set('minimap.adjustMinimapWidthToSoftWrap', true)
           nextAnimationFrame()
 
-        describe 'the open-minimap-quick-settings position', ->
-          [controls] = []
+          controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
+          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
 
-          beforeEach ->
-            controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
-            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          editorElement.style.width = '1024px'
 
-            editorElement.style.width = '1024px'
+          sleep(150)
+          waitsFor -> minimapElement.frameRequested
+          runs -> nextAnimationFrame()
 
-            sleep(150)
-            waitsFor -> minimapElement.frameRequested
-            runs -> nextAnimationFrame()
+        it 'adjusts the size of the control div to fit in the minimap', ->
+          expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
 
-          it 'adjusts the size of the control div to fit in the minimap', ->
-            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth)
-
-          it 'positions the controls div over the canvas', ->
-            controlsRect = controls.getBoundingClientRect()
-            canvasRect = minimapElement.canvas.getBoundingClientRect()
-            expect(controlsRect.left).toEqual(canvasRect.left)
-            expect(controlsRect.right).toEqual(canvasRect.right)
-
-          describe 'positions the open-minimap-quick-settings button', ->
-            beforeEach ->
-              atom.config.set 'editor.preferredLineLength', 80
-              atom.config.set 'minimap.displayMinimapOnLeft', false
-              editorElement.style.width = '2560px'
-
-              sleep(150)
-              waitsFor -> minimapElement.frameRequested
-              runs -> nextAnimationFrame()
-
-            it 'right should be less than 2560', ->
-              openQuickSettingsRect = openQuickSettings.getBoundingClientRect()
-              minimapRect = minimapElement.getBoundingClientRect()
-              expect(openQuickSettingsRect.right).toBeLessThan(minimapRect.right)
-              expect(openQuickSettingsRect.right).toBeLessThan(2560)
-              expect(openQuickSettingsRect.right).toEqual(2560 - 4)
-
-          describe 'positions minimap-scroll-indicator', ->
-            [scrollIndicator] = []
-            beforeEach ->
-              atom.config.set 'editor.preferredLineLength', 80
-              atom.config.set 'minimap.displayMinimapOnLeft', false
-              atom.config.set 'minimap.minimapScrollIndicator', true
-
-              scrollIndicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
-
-              editorElement.style.width = '2560px'
-
-              sleep(150)
-              waitsFor -> minimapElement.frameRequested
-              runs -> nextAnimationFrame()
-
-            it 'right should be <= 2560', ->
-              scrollIndicatorRect = scrollIndicator.getBoundingClientRect()
-              minimapRect = minimapElement.getBoundingClientRect()
-              expect(scrollIndicatorRect.right).toBeLessThan(minimapRect.right)
-              expect(scrollIndicatorRect.right).toBeLessThan(2560)
+        it 'positions the controls div over the canvas', ->
+          controlsRect = controls.getBoundingClientRect()
+          canvasRect = minimapElement.canvas.getBoundingClientRect()
+          expect(controlsRect.left).toEqual(canvasRect.left)
+          expect(controlsRect.right).toEqual(canvasRect.right)
 
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           describe 'clicking on the div', ->
