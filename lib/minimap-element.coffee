@@ -276,12 +276,12 @@ class MinimapElement extends HTMLElement
       transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
-      width: Math.min(@canvas.width, @width) + 'px'
+      width: Math.min(@canvas.width / devicePixelRatio, @width) + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
     canvasTransform = @makeTranslate(0, canvasTop)
-    canvasTransform += " " + @makeScale(1/devicePixelRatio) if devicePixelRatio isnt 1
+    canvasTransform += " " + @makeScale(1 / devicePixelRatio) if devicePixelRatio isnt 1
     @applyStyles @canvas, transform: canvasTransform
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
