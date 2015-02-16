@@ -1,3 +1,10 @@
+<a name="v4.2.1"></a>
+# v4.2.1 (2015-02-16)
+
+## :bug: Bug Fixes
+
+- Fix error raised on destruction due to remaining decorations ([23f13497](https://github.com/fundon/atom-minimap/commit/23f134978d4e8700761a05440c971cb20dd76e13), [#273](https://github.com/fundon/atom-minimap/issues/273))
+
 <a name="v4.2.0"></a>
 # v4.2.0 (2015-02-16)
 
