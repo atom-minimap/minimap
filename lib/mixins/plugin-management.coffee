@@ -14,6 +14,9 @@ Mixin = require 'mixto'
 #     from the minimap using the `unregisterPlugin`.
 module.exports =
 class PluginManagement extends Mixin
+
+  provideMinimapServiceV1: -> this
+
   # Internal: Stores the minimap plugin with their identifying name as key.
   plugins: {}
   pluginsSubscriptions: {}

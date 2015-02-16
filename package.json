@@ -20,6 +20,14 @@
   "engines": {
     "atom": ">=0.177.0"
   },
+  "providedServices": {
+    "minimap": {
+      "description": "Exposes the minimap API to other packages",
+      "versions": {
+        "1.0.0": "provideMinimapServiceV1"
+      }
+    }
+  },
   "dependencies": {
     "atom-space-pen-views": ">= 0.20.0",
     "delegato": "1.x",
