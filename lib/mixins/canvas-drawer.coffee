@@ -129,9 +129,9 @@ class CanvasDrawer extends Mixin
     return if firstRow > lastRow
 
     lines = @getTextEditor().tokenizedLinesForScreenRows(firstRow, lastRow)
-    lineHeight = @minimap.getLineHeight() * devicePixelRatio
-    charHeight = @minimap.getCharHeight() * devicePixelRatio
-    charWidth = @minimap.getCharWidth() * devicePixelRatio
+    lineHeight = @minimap.getLineHeight() * @devicePixelRatio
+    charHeight = @minimap.getCharHeight() * @devicePixelRatio
+    charWidth = @minimap.getCharWidth() * @devicePixelRatio
     canvasWidth = @canvas.width
     displayCodeHighlights = @displayCodeHighlights
     decorations = @minimap.decorationsForScreenRowRange(firstRow, lastRow)
@@ -260,7 +260,7 @@ class CanvasDrawer extends Mixin
   # destRow - The row {Number} on the destination bitmap.
   # rowCount - The {Number} of rows to copy.
   copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
-    lineHeight = @minimap.getLineHeight() * devicePixelRatio
+    lineHeight = @minimap.getLineHeight() * @devicePixelRatio
     context.drawImage(bitmapCanvas,
         0, srcRow * lineHeight,
         bitmapCanvas.width, rowCount * lineHeight,

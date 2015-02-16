@@ -46,6 +46,14 @@ class PluginManagement extends Mixin
     event = {name, plugin}
     @emitter.emit('did-remove-plugin', event)
 
+  togglePluginActivation: (name, boolean=undefined) ->
+    settingsKey = "minimap.plugins.#{name}"
+    if boolean?
+      atom.config.set settingsKey, boolean
+    else
+      atom.config.set settingsKey, not atom.config.get(settingsKey)
+
+    @updatesPluginActivationState(name)
 
   # Internal: Updates the plugin activation state according to the current
   # config.
@@ -84,9 +92,7 @@ class PluginManagement extends Mixin
       @updatesPluginActivationState(name)
 
     commands = {}
-    commands["minimap:toggle-#{name}"] = =>
-      atom.config.set settingsKey, not atom.config.get(settingsKey)
-      @updatesPluginActivationState(name)
+    commands["minimap:toggle-#{name}"] = => @togglePluginActivation(name)
 
     @pluginsSubscriptions[name].add atom.commands.add 'atom-workspace', commands
 

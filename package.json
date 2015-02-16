@@ -27,6 +27,7 @@
     "fs-plus": "2.x",
     "mixto": "1.x",
     "semver": "^4.3.0",
-    "underscore-plus": "1.x"
+    "underscore-plus": "1.x",
+    "atom-utils": "0.5.x"
   }
 }
