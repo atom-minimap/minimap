@@ -257,3 +257,17 @@ describe 'Minimap', ->
       it 'creates a change corresponding to the marker range', ->
         expect(changeSpy.calls[1].args[0].start).toEqual(0)
         expect(changeSpy.calls[1].args[0].end).toEqual(0)
+
+    describe 'destroying the minimap', ->
+      beforeEach ->
+        minimap.destroy()
+
+      it 'removes all the previously added decorations', ->
+        expect(minimap.decorationsById).toEqual({})
+        expect(minimap.decorationsByMarkerId).toEqual({})
+
+      it 'prevents the creation of new decorations', ->
+        marker = editor.markBufferRange [[0,6], [0,11]]
+        decoration = minimap.decorateMarker marker, type: 'highlight', class: 'dummy'
+
+        expect(decoration).toBeUndefined()

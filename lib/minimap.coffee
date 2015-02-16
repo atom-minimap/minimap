@@ -70,6 +70,7 @@ class Minimap
   # Destroys the model.
   destroy: ->
     @subscriptions.dispose()
+    @removeAllDecorations()
     @textEditor = null
     @emitter.emit 'did-destroy'
     @destroyed = true

@@ -105,6 +105,7 @@ class DecorationManagement extends Mixin
   #
   # Returns a `Decoration` object.
   decorateMarker: (marker, decorationParams) ->
+    return if @destroyed
     return unless marker?
     marker = @getMarker(marker.id)
     return unless marker?
@@ -225,6 +226,21 @@ class DecorationManagement extends Mixin
     delete @decorationsByMarkerId[marker.id]
     delete @decorationMarkerChangedSubscriptions[marker.id]
     delete @decorationMarkerDestroyedSubscriptions[marker.id]
+
+  removeAllDecorations: ->
+    sub.dispose() for id,sub of @decorationMarkerChangedSubscriptions
+    sub.dispose() for id,sub of @decorationMarkerDestroyedSubscriptions
+    sub.dispose() for id,sub of @decorationUpdatedSubscriptions
+    sub.dispose() for id,sub of @decorationDestroyedSubscriptions
+    decoration.destroy() for id,decoration of @decorationsById
+
+    @decorationsById = {}
+    @decorationsByMarkerId = {}
+    @decorationMarkerChangedSubscriptions = {}
+    @decorationMarkerDestroyedSubscriptions = {}
+    @decorationUpdatedSubscriptions = {}
+    @decorationDestroyedSubscriptions = {}
+
 
   # Internal: Receive the update event of a decoration and trigger
   # a `minimap:decoration-updated` event.
