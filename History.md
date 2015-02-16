@@ -1,3 +1,22 @@
+<a name="v4.2.0"></a>
+# v4.2.0 (2015-02-16)
+
+## :sparkles: Features
+
+- Add keyboard controls for minimap position ([a741d926](https://github.com/fundon/atom-minimap/commit/a741d926706a79372a4cefa147157eec2b9265e2))
+- Add controls to toggle the position of the minimap ([6434c34b](https://github.com/fundon/atom-minimap/commit/6434c34bb9733312e0676b5a55cbacbf43838886))
+
+## :bug: Bug Fixes
+
+- Fix open-minimap-quick-settings and minimap-scroll-indicator's position on HiDPI displays ([7909b5c7](https://github.com/fundon/atom-minimap/commit/7909b5c72f01bc9c4be48530aa3e5286c1713224))
+- Fix code highlight not toggled with keyboard in quick settings ([f0fbe442](https://github.com/fundon/atom-minimap/commit/f0fbe44250cb0c106e106f360db171f77912f8e4))
+- Fix quick settings position with soft wrap and on left settings ([61495669](https://github.com/fundon/atom-minimap/commit/61495669a2ea3c869453c08f5f9f7e520da667fe))
+- Fix position of the quick settings view when minimap is on left ([0d454456](https://github.com/fundon/atom-minimap/commit/0d454456a72b44fa2cfc54d96469341719983a09))
+
+## :arrow_up: Dependencies Update
+
+- update semver ([4e30323b](https://github.com/fundon/atom-minimap/commit/4e30323b3e24213ae533df4e3cd09f889528b264))
+
 <a name="v4.1.4"></a>
 # v4.1.4 (2015-02-10)
 
