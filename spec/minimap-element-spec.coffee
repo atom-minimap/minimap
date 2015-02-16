@@ -15,7 +15,8 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
-devicePixelRatio = 2
+# Modify the global `devicePixelRatio` variable.
+window.devicePixelRatio = 2
 
 sleep = (duration) ->
   t = new Date
@@ -128,8 +129,8 @@ describe 'MinimapElement', ->
       expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 11, 0)
 
     it 'resizes the canvas to fit the minimap', ->
-      expect(canvas.offsetHeight / devicePixelRatio).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
-      expect(canvas.offsetWidth / devicePixelRatio).toEqual(minimapElement.offsetWidth)
+      expect(canvas.offsetHeight / devicePixelRatio).toBeCloseTo(minimapElement.offsetHeight + minimap.getLineHeight(), 0)
+      expect(canvas.offsetWidth / devicePixelRatio).toBeCloseTo(minimapElement.offsetWidth, 0)
 
     it 'requests an update', ->
       expect(minimapElement.frameRequested).toBeTruthy()
@@ -211,8 +212,8 @@ describe 'MinimapElement', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
           expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
 
-          expect(canvas.offsetWidth / devicePixelRatio).toEqual(minimapElement.offsetWidth)
-          expect(canvas.offsetHeight / devicePixelRatio).toEqual(minimapElement.offsetHeight + minimap.getLineHeight())
+          expect(canvas.offsetWidth / devicePixelRatio).toBeCloseTo(minimapElement.offsetWidth, 0)
+          expect(canvas.offsetHeight / devicePixelRatio).toBeCloseTo(minimapElement.offsetHeight + minimap.getLineHeight(), 0)
 
       describe 'when the editor visible content is changed', ->
         beforeEach ->
