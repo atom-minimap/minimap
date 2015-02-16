@@ -1,3 +1,10 @@
+<a name="v4.2.2"></a>
+# v4.2.2 (2015-02-16)
+
+## :bug: Bug Fixes
+
+- Fix size settings not allowing float numbers [9a9df90e](https://github.com/fundon/atom-minimap/commit/9a9df90e1c2dca1232e62c6ea720407823d857e6, [#271](https://github.com/fundon/atom-minimap/issues/271))
+
 <a name="v4.2.1"></a>
 # v4.2.1 (2015-02-16)
 
