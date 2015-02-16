@@ -60,15 +60,15 @@ class Main
       default: true
       description: 'If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value.'
     charWidth:
-      type: 'integer'
+      type: 'number'
       default: 1
-      minimum: 1
+      minimum: .5
     charHeight:
-      type: 'integer'
+      type: 'number'
       default: 2
-      minimum: 1
+      minimum: .5
     interline:
-      type: 'integer'
+      type: 'number'
       default: 1
       minimum: 0
       description: 'The space between lines in the minimap in pixels.'
