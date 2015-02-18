@@ -270,7 +270,7 @@ class Main
   # Returns a `Disposable`.
   observeMinimaps: (iterator) ->
     return unless iterator?
-    @editorsMinimaps.forEach (minimap) -> iterator(minimap)
+    @editorsMinimaps?.forEach (minimap) -> iterator(minimap)
     createdCallback = (minimap) -> iterator(minimap)
     disposable = @onDidCreateMinimap(createdCallback)
     disposable.off = ->
