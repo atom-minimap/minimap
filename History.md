@@ -1,3 +1,10 @@
+<a name="v4.2.3"></a>
+# v4.2.3 (2015-02-19)
+
+## :bug: Bug Fixes
+
+- Fix error raised when opening Atom with no buffer opened ([c186e618](https://github.com/fundon/atom-minimap/commit/c186e618e5ae8b7ac8dfe42aaad0a8080417767b), [#276](https://github.com/fundon/atom-minimap/issues/276))
+
 <a name="v4.2.2"></a>
 # v4.2.2 (2015-02-16)
 
