@@ -18,7 +18,6 @@ class MinimapElement extends HTMLElement
   domPollingIntervalId: null
   domPollingPaused: false
   displayMinimapOnLeft: false
-  devicePixelRatio: 1
 
   #    ##     ##  #######   #######  ##    ##  ######
   #    ##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -69,9 +68,6 @@ class MinimapElement extends HTMLElement
           @requestForcedUpdate()
 
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
-        @requestUpdate() if @attached
-
-      'minimap.devicePixelRatio': (@devicePixelRatio) =>
         @requestUpdate() if @attached
 
   attachedCallback: ->
@@ -346,8 +342,8 @@ class MinimapElement extends HTMLElement
       delete @marginRight
 
     if canvasWidth isnt @canvas.width or @height isnt @canvas.height
-      @canvas.width = canvasWidth * @devicePixelRatio
-      @canvas.height = (@height + @minimap.getLineHeight()) * @devicePixelRatio
+      @canvas.width = canvasWidth * devicePixelRatio
+      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
 
   #    ######## ##     ## ######## ##    ## ########  ######
   #    ##       ##     ## ##       ###   ##    ##    ##    ##
