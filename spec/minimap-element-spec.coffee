@@ -30,7 +30,6 @@ describe 'MinimapElement', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
     atom.config.set 'minimap.textOpacity', 1
-    atom.config.set 'minimap.devicePixelRatio', 2
 
     MinimapElement.registerViewProvider()
 

@@ -82,12 +82,6 @@ class Main
       type: 'boolean'
       default: false
       description: "If this option is enabled then when you click the minimap it will scroll to the destination with animation"
-    devicePixelRatio:
-      type: 'number'
-      minimum: 1
-      maximum: 3
-      default: window.devicePixelRatio
-      description: 'The device pixel ratio used to draw the canvas on high-DPI device.'
 
   # Internal: The activation state of the minimap package.
   active: false
