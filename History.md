@@ -1,3 +1,9 @@
+<a name="v4.3.0"></a>
+# v4.3.0 (2015-02-20)
+
+- :stars: Transfer to Atom-Minimap
+- plugins list screen cap ([5595ab36](https://github.com/atom-minimap/minimap/commit/5595ab36e591e7fd7d7a61142254303c69a7e8d8))
+
 <a name="v4.2.3"></a>
 # v4.2.3 (2015-02-19)
 
