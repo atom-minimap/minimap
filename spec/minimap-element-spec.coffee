@@ -265,12 +265,12 @@ describe 'MinimapElement', ->
 
       describe 'using the mouse scrollwheel over the minimap', ->
         beforeEach ->
-          spyOn(editor, 'setScrollTop').andCallFake ->
+          spyOn(editorElement.component.presenter, 'setScrollTop').andCallFake ->
 
           mousewheel(minimapElement, 0, 15)
 
         it 'relays the events to the editor view', ->
-          expect(editor.setScrollTop).toHaveBeenCalled()
+          expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
 
       describe 'pressing the mouse on the minimap canvas (without scroll animation)', ->
         beforeEach ->
