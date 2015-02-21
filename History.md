@@ -1,3 +1,10 @@
+<a name="v4.3.1"></a>
+# v4.3.1 (2015-02-22)
+
+## :bug: Bug Fixes
+
+- Fix QuickSettings is overlapped by editor scrollbar ([47249678](https://github.com/atom-minimap/minimap/commit/4724967818ceb479db164d16ae6fc23974d042e6), [#279](https://github.com/atom-minimap/minimap/issues/279))
+
 <a name="v4.3.0"></a>
 # v4.3.0 (2015-02-20)
 
