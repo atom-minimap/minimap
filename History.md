@@ -1,54 +1,74 @@
+<a name="v4.3.1"></a>
+# v4.3.1 (2015-02-22)
+
+## :bug: Bug Fixes
+
+- Fix QuickSettings is overlapped by editor scrollbar ([47249678](https://github.com/atom-minimap/minimap/commit/4724967818ceb479db164d16ae6fc23974d042e6), [#279](https://github.com/atom-minimap/minimap/issues/279))
+
+<a name="v4.3.0"></a>
+# v4.3.0 (2015-02-20)
+
+- :stars: Transfer to Atom-Minimap
+- plugins list screen cap ([5595ab36](https://github.com/atom-minimap/minimap/commit/5595ab36e591e7fd7d7a61142254303c69a7e8d8))
+
+<a name="v4.2.3"></a>
+# v4.2.3 (2015-02-19)
+
+## :bug: Bug Fixes
+
+- Fix error raised when opening Atom with no buffer opened ([c186e618](https://github.com/atom-minimap/minimap/commit/c186e618e5ae8b7ac8dfe42aaad0a8080417767b), [#276](https://github.com/atom-minimap/minimap/issues/276))
+
 <a name="v4.2.2"></a>
 # v4.2.2 (2015-02-16)
 
 ## :bug: Bug Fixes
 
-- Fix size settings not allowing float numbers [9a9df90e](https://github.com/fundon/atom-minimap/commit/9a9df90e1c2dca1232e62c6ea720407823d857e6, [#271](https://github.com/fundon/atom-minimap/issues/271))
+- Fix size settings not allowing float numbers [9a9df90e](https://github.com/atom-minimap/minimap/commit/9a9df90e1c2dca1232e62c6ea720407823d857e6, [#271](https://github.com/atom-minimap/minimap/issues/271))
 
 <a name="v4.2.1"></a>
 # v4.2.1 (2015-02-16)
 
 ## :bug: Bug Fixes
 
-- Fix error raised on destruction due to remaining decorations ([23f13497](https://github.com/fundon/atom-minimap/commit/23f134978d4e8700761a05440c971cb20dd76e13), [#273](https://github.com/fundon/atom-minimap/issues/273))
+- Fix error raised on destruction due to remaining decorations ([23f13497](https://github.com/atom-minimap/minimap/commit/23f134978d4e8700761a05440c971cb20dd76e13), [#273](https://github.com/atom-minimap/minimap/issues/273))
 
 <a name="v4.2.0"></a>
 # v4.2.0 (2015-02-16)
 
 ## :sparkles: Features
 
-- Add keyboard controls for minimap position ([a741d926](https://github.com/fundon/atom-minimap/commit/a741d926706a79372a4cefa147157eec2b9265e2))
-- Add controls to toggle the position of the minimap ([6434c34b](https://github.com/fundon/atom-minimap/commit/6434c34bb9733312e0676b5a55cbacbf43838886))
+- Add keyboard controls for minimap position ([a741d926](https://github.com/atom-minimap/minimap/commit/a741d926706a79372a4cefa147157eec2b9265e2))
+- Add controls to toggle the position of the minimap ([6434c34b](https://github.com/atom-minimap/minimap/commit/6434c34bb9733312e0676b5a55cbacbf43838886))
 
 ## :bug: Bug Fixes
 
-- Fix open-minimap-quick-settings and minimap-scroll-indicator's position on HiDPI displays ([7909b5c7](https://github.com/fundon/atom-minimap/commit/7909b5c72f01bc9c4be48530aa3e5286c1713224))
-- Fix code highlight not toggled with keyboard in quick settings ([f0fbe442](https://github.com/fundon/atom-minimap/commit/f0fbe44250cb0c106e106f360db171f77912f8e4))
-- Fix quick settings position with soft wrap and on left settings ([61495669](https://github.com/fundon/atom-minimap/commit/61495669a2ea3c869453c08f5f9f7e520da667fe))
-- Fix position of the quick settings view when minimap is on left ([0d454456](https://github.com/fundon/atom-minimap/commit/0d454456a72b44fa2cfc54d96469341719983a09))
+- Fix open-minimap-quick-settings and minimap-scroll-indicator's position on HiDPI displays ([7909b5c7](https://github.com/atom-minimap/minimap/commit/7909b5c72f01bc9c4be48530aa3e5286c1713224))
+- Fix code highlight not toggled with keyboard in quick settings ([f0fbe442](https://github.com/atom-minimap/minimap/commit/f0fbe44250cb0c106e106f360db171f77912f8e4))
+- Fix quick settings position with soft wrap and on left settings ([61495669](https://github.com/atom-minimap/minimap/commit/61495669a2ea3c869453c08f5f9f7e520da667fe))
+- Fix position of the quick settings view when minimap is on left ([0d454456](https://github.com/atom-minimap/minimap/commit/0d454456a72b44fa2cfc54d96469341719983a09))
 
 ## :arrow_up: Dependencies Update
 
-- update semver ([4e30323b](https://github.com/fundon/atom-minimap/commit/4e30323b3e24213ae533df4e3cd09f889528b264))
+- update semver ([4e30323b](https://github.com/atom-minimap/minimap/commit/4e30323b3e24213ae533df4e3cd09f889528b264))
 
 <a name="v4.1.4"></a>
 # v4.1.4 (2015-02-10)
 
 ## :sparkles: Features
 
-- Add softWrapAtPreferredLineLength test case ([9ca75aca](https://github.com/fundon/atom-minimap/commit/9ca75acaa891cba13737c1a06ddfa6d0102b2052))
+- Add softWrapAtPreferredLineLength test case ([9ca75aca](https://github.com/atom-minimap/minimap/commit/9ca75acaa891cba13737c1a06ddfa6d0102b2052))
 
 ## :bug: Bug Fixes
 
-- Fix getTextEditorScrollRatio() return NaN, #260 ([2d656596](https://github.com/fundon/atom-minimap/commit/2d656596f8d29d5c10c231d36a1906dd2ce5550d))
-- Fix travis build-package script ([00cf91de](https://github.com/fundon/atom-minimap/commit/00cf91de819b34c447e269922c8c86671af565e5))
+- Fix getTextEditorScrollRatio() return NaN, #260 ([2d656596](https://github.com/atom-minimap/minimap/commit/2d656596f8d29d5c10c231d36a1906dd2ce5550d))
+- Fix travis build-package script ([00cf91de](https://github.com/atom-minimap/minimap/commit/00cf91de819b34c447e269922c8c86671af565e5))
 
 <a name="v4.1.3"></a>
 # v4.1.3 (2015-02-08)
 
 ## :bug: Bug Fixes
 
-- Fix minimap width when enable soft wrap and at preferred line length(\>=16384). ([#256](https://github.com/fundon/atom-minimap/issues/256))
+- Fix minimap width when enable soft wrap and at preferred line length(\>=16384). ([#256](https://github.com/atom-minimap/minimap/issues/256))
 
 <a name="v4.1.2"></a>
 # v4.1.2 (2015-02-07)
@@ -62,33 +82,33 @@
 
 ## :bug: Bug Fixes
 
-- Fix broken toggling when it is toggled, disabled, enabled ([e4bce068](https://github.com/fundon/atom-minimap/commit/e4bce0689894107d28921e99ebc390c7eac5402e), [#255](https://github.com/fundon/atom-minimap/issues/255))
+- Fix broken toggling when it is toggled, disabled, enabled ([e4bce068](https://github.com/atom-minimap/minimap/commit/e4bce0689894107d28921e99ebc390c7eac5402e), [#255](https://github.com/atom-minimap/minimap/issues/255))
 
 <a name="v4.1.0"></a>
 # v4.1.0 (2015-02-04)
 
 ## :sparkles: Features
 
-- Add scroll animation. ([986c725e](https://github.com/fundon/atom-minimap/commit/986c725e232b4825f8700fe8e0008f10e095e89e))
+- Add scroll animation. ([986c725e](https://github.com/atom-minimap/minimap/commit/986c725e232b4825f8700fe8e0008f10e095e89e))
 
 ## :bug: Bug Fixes
 
-- Fix missing DOM cache invalidation when themes are changed ([333c1558](https://github.com/fundon/atom-minimap/commit/333c15583f3cdd4c17cb396b3ec46e00f07ca46f), [#250](https://github.com/fundon/atom-minimap/issues/250))
+- Fix missing DOM cache invalidation when themes are changed ([333c1558](https://github.com/atom-minimap/minimap/commit/333c15583f3cdd4c17cb396b3ec46e00f07ca46f), [#250](https://github.com/atom-minimap/minimap/issues/250))
 
 <a name="v4.0.2"></a>
 # v4.0.2 (2015-02-03)
 
 ## :bug: Bug Fixes
 
-- Fix minimap instanciated before having required Minimap ([ca01a307](https://github.com/fundon/atom-minimap/commit/ca01a307529e49920fb9a88cd81457063993bf94), [#212](https://github.com/fundon/atom-minimap/issues/212))
-- Fix deprecation in plugin generator command ([cbe85b8c](https://github.com/fundon/atom-minimap/commit/cbe85b8c3ee34e218de83abe60e0bdecb3f7c2c5))
+- Fix minimap instanciated before having required Minimap ([ca01a307](https://github.com/atom-minimap/minimap/commit/ca01a307529e49920fb9a88cd81457063993bf94), [#212](https://github.com/atom-minimap/minimap/issues/212))
+- Fix deprecation in plugin generator command ([cbe85b8c](https://github.com/atom-minimap/minimap/commit/cbe85b8c3ee34e218de83abe60e0bdecb3f7c2c5))
 
 <a name="v4.0.1"></a>
 # v4.0.1 (2015-02-03)
 
 ## :bug: Bug Fixes
 
-- Fix error raised when retrieving active minimap without active editor ([549830d8](https://github.com/fundon/atom-minimap/commit/549830d89d2bb7e6622bf0244e6996c1507676fa))
+- Fix error raised when retrieving active minimap without active editor ([549830d8](https://github.com/atom-minimap/minimap/commit/549830d89d2bb7e6622bf0244e6996c1507676fa))
 
 
 <a name="v4.0.0"></a>
@@ -96,62 +116,62 @@
 
 ## :bug: Bug Fixes
 
-- Fix right click starting a drag gesture ([c17a5dc9](https://github.com/fundon/atom-minimap/commit/c17a5dc9292aac177e9f14f9d26c53f64dcfc5d8))
-- Fix controls and scroll indicator position ([2ffa507c](https://github.com/fundon/atom-minimap/commit/2ffa507c091fa2578d60e270df2ba34ec3c68dc8))
-- Fix minimap size when splitting a pane ([bbe60ddb](https://github.com/fundon/atom-minimap/commit/bbe60ddb36bc21349c606bfebe58f8a06160bb78))
-- Fix missing minimap when a plugin get an instance before the observer ([98729736](https://github.com/fundon/atom-minimap/commit/987297363ad34b58404ffbe2a8bafebfb5a45b97))
-- Fix removed commands in activate ([412b083f](https://github.com/fundon/atom-minimap/commit/412b083f19b22e3fd30768d4fd11c0d6a42fa1ba))
-- Fix plugin template for v4 ([ce09615f](https://github.com/fundon/atom-minimap/commit/ce09615f242610f5c8859eabbd348edde18ed503))
-- Fix styles directory deprecation ([ff047197](https://github.com/fundon/atom-minimap/commit/ff04719765061fe710007be682e1f609cb6e3833))
-- Fix deprecation on theme observer ([d1d183a5](https://github.com/fundon/atom-minimap/commit/d1d183a5d58e17bb30dd76243fd76f8b4ad860fc))
+- Fix right click starting a drag gesture ([c17a5dc9](https://github.com/atom-minimap/minimap/commit/c17a5dc9292aac177e9f14f9d26c53f64dcfc5d8))
+- Fix controls and scroll indicator position ([2ffa507c](https://github.com/atom-minimap/minimap/commit/2ffa507c091fa2578d60e270df2ba34ec3c68dc8))
+- Fix minimap size when splitting a pane ([bbe60ddb](https://github.com/atom-minimap/minimap/commit/bbe60ddb36bc21349c606bfebe58f8a06160bb78))
+- Fix missing minimap when a plugin get an instance before the observer ([98729736](https://github.com/atom-minimap/minimap/commit/987297363ad34b58404ffbe2a8bafebfb5a45b97))
+- Fix removed commands in activate ([412b083f](https://github.com/atom-minimap/minimap/commit/412b083f19b22e3fd30768d4fd11c0d6a42fa1ba))
+- Fix plugin template for v4 ([ce09615f](https://github.com/atom-minimap/minimap/commit/ce09615f242610f5c8859eabbd348edde18ed503))
+- Fix styles directory deprecation ([ff047197](https://github.com/atom-minimap/minimap/commit/ff04719765061fe710007be682e1f609cb6e3833))
+- Fix deprecation on theme observer ([d1d183a5](https://github.com/atom-minimap/minimap/commit/d1d183a5d58e17bb30dd76243fd76f8b4ad860fc))
 
 <a name="v3.5.6"></a>
 # v3.5.6 (2015-01-16)
 
 ## :bug: Bug Fixes
 
-- Fix deprecations in stylesheet ([393ef8c0](https://github.com/fundon/atom-minimap/commit/393ef8c04caa9c8ace99e1626933ede3a43c8593))
+- Fix deprecations in stylesheet ([393ef8c0](https://github.com/atom-minimap/minimap/commit/393ef8c04caa9c8ace99e1626933ede3a43c8593))
 
 <a name="v3.5.5"></a>
 # v3.5.5 (2015-01-14)
 
 ## :bug: Bug Fixes
 
-- Prevent text selection of the minimap ([#219](https://github.com/fundon/atom-minimap/pull/219)).
+- Prevent text selection of the minimap ([#219](https://github.com/atom-minimap/minimap/pull/219)).
 
 <a name="v3.5.4"></a>
 # v3.5.4 (2015-01-07)
 
 ## :bug: Bug Fixes
 
-- Fix error raised when clicking on minimap ([a77a94a9](https://github.com/fundon/atom-minimap/commit/a77a94a981128a5a2f1335bc02729d510dfd8310), [#198](https://github.com/fundon/atom-minimap/issues/198))
-- Add guard when screenDelta is NaN ([4f1f204c](https://github.com/fundon/atom-minimap/commit/4f1f204c6b18380e5286e0e680289d62177bfd22))
-- Fix screen delta not set in decoration changes ([3aa521bd](https://github.com/fundon/atom-minimap/commit/3aa521bdefab1d5c0f27169e106a2e40dca53b6a))
+- Fix error raised when clicking on minimap ([a77a94a9](https://github.com/atom-minimap/minimap/commit/a77a94a981128a5a2f1335bc02729d510dfd8310), [#198](https://github.com/atom-minimap/minimap/issues/198))
+- Add guard when screenDelta is NaN ([4f1f204c](https://github.com/atom-minimap/minimap/commit/4f1f204c6b18380e5286e0e680289d62177bfd22))
+- Fix screen delta not set in decoration changes ([3aa521bd](https://github.com/atom-minimap/minimap/commit/3aa521bdefab1d5c0f27169e106a2e40dca53b6a))
 
 <a name="v3.5.3"></a>
 # v3.5.3 (2015-01-07)
 
 ## :bug: Bug Fixes
 
-- Fix broken access to minimap for editor when editor is undefined ([3127b25b](https://github.com/fundon/atom-minimap/commit/3127b25bb3d845825a3ec477da1942215f630df1), [#200](https://github.com/fundon/atom-minimap/issues/200))
+- Fix broken access to minimap for editor when editor is undefined ([3127b25b](https://github.com/atom-minimap/minimap/commit/3127b25bb3d845825a3ec477da1942215f630df1), [#200](https://github.com/atom-minimap/minimap/issues/200))
 
 <a name="v3.5.2"></a>
 # v3.5.2 (2015-01-07)
 
 ## :bug: Bug Fixes
 
-- Fix broken quick settings command in v3 mode ([8cbde1df](https://github.com/fundon/atom-minimap/commit/8cbde1dfd4a6418335ea6f5235cbbd6b627ef16b), [#194](https://github.com/fundon/atom-minimap/issues/194))
+- Fix broken quick settings command in v3 mode ([8cbde1df](https://github.com/atom-minimap/minimap/commit/8cbde1dfd4a6418335ea6f5235cbbd6b627ef16b), [#194](https://github.com/atom-minimap/minimap/issues/194))
 
 <a name="v3.5.1"></a>
 # v3.5.1 (2015-01-07)
 
 ## :bug: Bug Fixes
 
-- Fix minimap position not updated if setting change before attachment ([4b9b6242](https://github.com/fundon/atom-minimap/commit/4b9b624243cd8102bc1bd4f4a19eab1d59247b5d))
-- Prevent NaN screenDelta in changes ([4f00149e](https://github.com/fundon/atom-minimap/commit/4f00149e8d98a9affe6ca3488db33aa41d1b334a))
-- Stop drag gesture when mouse leaves the window ([8d026d14](https://github.com/fundon/atom-minimap/commit/8d026d147e60cb142573ebee755e5ece5028d174), [#193](https://github.com/fundon/atom-minimap/issues/193))
-- Fix minimap canvas scaling when device pixel ratio > 1 ([8c066eee](https://github.com/fundon/atom-minimap/commit/8c066eee35694320687b157de5fbb8bd3f3e447d), [#192](https://github.com/fundon/atom-minimap/issues/192))
-- Fix duplicated minimap when dragging tab ([83830ca4](https://github.com/fundon/atom-minimap/commit/83830ca40b34fd7361c973a96619dfb20c0bf958))
+- Fix minimap position not updated if setting change before attachment ([4b9b6242](https://github.com/atom-minimap/minimap/commit/4b9b624243cd8102bc1bd4f4a19eab1d59247b5d))
+- Prevent NaN screenDelta in changes ([4f00149e](https://github.com/atom-minimap/minimap/commit/4f00149e8d98a9affe6ca3488db33aa41d1b334a))
+- Stop drag gesture when mouse leaves the window ([8d026d14](https://github.com/atom-minimap/minimap/commit/8d026d147e60cb142573ebee755e5ece5028d174), [#193](https://github.com/atom-minimap/minimap/issues/193))
+- Fix minimap canvas scaling when device pixel ratio > 1 ([8c066eee](https://github.com/atom-minimap/minimap/commit/8c066eee35694320687b157de5fbb8bd3f3e447d), [#192](https://github.com/atom-minimap/minimap/issues/192))
+- Fix duplicated minimap when dragging tab ([83830ca4](https://github.com/atom-minimap/minimap/commit/83830ca40b34fd7361c973a96619dfb20c0bf958))
 
 <a name="v3.5.0"></a>
 # v3.5.0 (2015-01-05)
@@ -162,54 +182,54 @@ The following changes mostly concerns the implementation of the new minimap.
 
 ## :sparkles: Features
 
-- Implement minimap creation observer method for v4 ([e583763a](https://github.com/fundon/atom-minimap/commit/e583763a8f166f42f177dcb7df9379827ee0ce28))
-- Implement basic minimap scroll through dragging ([769fb815](https://github.com/fundon/atom-minimap/commit/769fb8153960baac29b4f1bc4ace419db852a14d))
-- Implement scroll on mouse pressed over canvas ([eb927855](https://github.com/fundon/atom-minimap/commit/eb9278552561539ce9d1ac87f45b738f12d6f573))
-- Implement sublime-like minimap scroll with scroll past end ([5d5185b7](https://github.com/fundon/atom-minimap/commit/5d5185b725ba399345cfba363b44b59825782e02))  
+- Implement minimap creation observer method for v4 ([e583763a](https://github.com/atom-minimap/minimap/commit/e583763a8f166f42f177dcb7df9379827ee0ce28))
+- Implement basic minimap scroll through dragging ([769fb815](https://github.com/atom-minimap/minimap/commit/769fb8153960baac29b4f1bc4ace419db852a14d))
+- Implement scroll on mouse pressed over canvas ([eb927855](https://github.com/atom-minimap/minimap/commit/eb9278552561539ce9d1ac87f45b738f12d6f573))
+- Implement sublime-like minimap scroll with scroll past end ([5d5185b7](https://github.com/atom-minimap/minimap/commit/5d5185b725ba399345cfba363b44b59825782e02))  
   <br>It prevents the minimap from going past the end while the editor is.
-- Implement code highlight toggle from quick settings in element ([c779f6fd](https://github.com/fundon/atom-minimap/commit/c779f6fd0eb3c7dac950d423fe95480f4b765a8c))
-- Implement proper quick settings view life cycle ([9af0bd12](https://github.com/fundon/atom-minimap/commit/9af0bd12f6b9c6820c8b649f71517c4e6de79558))
-- Add quick settings button in minimap element ([a2184d14](https://github.com/fundon/atom-minimap/commit/a2184d14b2b608c85a8ca7070e1c57fa1c2ea872))
-- Implement minimap element destruction ([60081818](https://github.com/fundon/atom-minimap/commit/60081818e4a5af66e3245bbd3076b28b1d80a89c))
-- Implement minimap model destruction ([b65698bb](https://github.com/fundon/atom-minimap/commit/b65698bb487c5d6a09cd95b263e861cef946ae04))
-- Add support for adjustMinimapWidthToSoftWrap config ([b66bbbb1](https://github.com/fundon/atom-minimap/commit/b66bbbb1110b35988e60eff70ec89173307b8e7f))
-- Implement a basic switch in main to enable v4 preview ([2d072921](https://github.com/fundon/atom-minimap/commit/2d072921d82006a1c75dcf65b5ff1c3447be5877))
-- Implement config observers to update minimap elements ([5bea5458](https://github.com/fundon/atom-minimap/commit/5bea54580ba16270a671cba3688ae27526281be6))
-- Implement minimap scroll indicator ([1128bb45](https://github.com/fundon/atom-minimap/commit/1128bb45241cf79e1b7688c65a4dd745bdf7ad61))
-- Implement partial redraw on editor changes ([0c50eb55](https://github.com/fundon/atom-minimap/commit/0c50eb559070b0a2047b0ab32820ad6efd6b6b7a))
-- Implement minimap on left config support in minimap element ([15a586a0](https://github.com/fundon/atom-minimap/commit/15a586a0cbb99ab70630820ad75084572cffb4ce))
-- Implement resize detection with DOM polling ([a5b888ce](https://github.com/fundon/atom-minimap/commit/a5b888cece5f7570322ce7810deb5ab9cdf49e93))
-- Implement canvas offset to allow smooth scroll ([57accd3c](https://github.com/fundon/atom-minimap/commit/57accd3c6e503c97eaa824cceb5f71db927442aa))
-- Add support for visible area scroll in minimap element update ([f3b68565](https://github.com/fundon/atom-minimap/commit/f3b6856562918efa508505e99777117de2d5ae9b))
-- Add support for editor left scroll in the minimap model ([d2f59e38](https://github.com/fundon/atom-minimap/commit/d2f59e38d85f15d1356df3675f2c1c4b466620e8))
-- Add basic view update routine ([312b6080](https://github.com/fundon/atom-minimap/commit/312b60802372f17d83c147a954ac337f08a81ae2))
-- Add basic content in minimap element ([8a8869d0](https://github.com/fundon/atom-minimap/commit/8a8869d07ae16d523ede73f512861b50d95438cf))
-- Add view provider registration method on minimap element ([d1e95aa8](https://github.com/fundon/atom-minimap/commit/d1e95aa87161b0444179f04e7988f04d0899d314))
-- Add stub for minimap element ([19f1aeaa](https://github.com/fundon/atom-minimap/commit/19f1aeaa99b19263b753c70031173afbf72ab40d))
-- Implement decoration management in minimap model ([f6181c9d](https://github.com/fundon/atom-minimap/commit/f6181c9df4b60481d96ccd5a6f70752164cffc48))  <br>The biggest change so far is that changes are not stacked in the model
+- Implement code highlight toggle from quick settings in element ([c779f6fd](https://github.com/atom-minimap/minimap/commit/c779f6fd0eb3c7dac950d423fe95480f4b765a8c))
+- Implement proper quick settings view life cycle ([9af0bd12](https://github.com/atom-minimap/minimap/commit/9af0bd12f6b9c6820c8b649f71517c4e6de79558))
+- Add quick settings button in minimap element ([a2184d14](https://github.com/atom-minimap/minimap/commit/a2184d14b2b608c85a8ca7070e1c57fa1c2ea872))
+- Implement minimap element destruction ([60081818](https://github.com/atom-minimap/minimap/commit/60081818e4a5af66e3245bbd3076b28b1d80a89c))
+- Implement minimap model destruction ([b65698bb](https://github.com/atom-minimap/minimap/commit/b65698bb487c5d6a09cd95b263e861cef946ae04))
+- Add support for adjustMinimapWidthToSoftWrap config ([b66bbbb1](https://github.com/atom-minimap/minimap/commit/b66bbbb1110b35988e60eff70ec89173307b8e7f))
+- Implement a basic switch in main to enable v4 preview ([2d072921](https://github.com/atom-minimap/minimap/commit/2d072921d82006a1c75dcf65b5ff1c3447be5877))
+- Implement config observers to update minimap elements ([5bea5458](https://github.com/atom-minimap/minimap/commit/5bea54580ba16270a671cba3688ae27526281be6))
+- Implement minimap scroll indicator ([1128bb45](https://github.com/atom-minimap/minimap/commit/1128bb45241cf79e1b7688c65a4dd745bdf7ad61))
+- Implement partial redraw on editor changes ([0c50eb55](https://github.com/atom-minimap/minimap/commit/0c50eb559070b0a2047b0ab32820ad6efd6b6b7a))
+- Implement minimap on left config support in minimap element ([15a586a0](https://github.com/atom-minimap/minimap/commit/15a586a0cbb99ab70630820ad75084572cffb4ce))
+- Implement resize detection with DOM polling ([a5b888ce](https://github.com/atom-minimap/minimap/commit/a5b888cece5f7570322ce7810deb5ab9cdf49e93))
+- Implement canvas offset to allow smooth scroll ([57accd3c](https://github.com/atom-minimap/minimap/commit/57accd3c6e503c97eaa824cceb5f71db927442aa))
+- Add support for visible area scroll in minimap element update ([f3b68565](https://github.com/atom-minimap/minimap/commit/f3b6856562918efa508505e99777117de2d5ae9b))
+- Add support for editor left scroll in the minimap model ([d2f59e38](https://github.com/atom-minimap/minimap/commit/d2f59e38d85f15d1356df3675f2c1c4b466620e8))
+- Add basic view update routine ([312b6080](https://github.com/atom-minimap/minimap/commit/312b60802372f17d83c147a954ac337f08a81ae2))
+- Add basic content in minimap element ([8a8869d0](https://github.com/atom-minimap/minimap/commit/8a8869d07ae16d523ede73f512861b50d95438cf))
+- Add view provider registration method on minimap element ([d1e95aa8](https://github.com/atom-minimap/minimap/commit/d1e95aa87161b0444179f04e7988f04d0899d314))
+- Add stub for minimap element ([19f1aeaa](https://github.com/atom-minimap/minimap/commit/19f1aeaa99b19263b753c70031173afbf72ab40d))
+- Implement decoration management in minimap model ([f6181c9d](https://github.com/atom-minimap/minimap/commit/f6181c9df4b60481d96ccd5a6f70752164cffc48))  <br>The biggest change so far is that changes are not stacked in the model
   but emitted as events.
-- Add model method to compute the visible rows range ([5a38ef5c](https://github.com/fundon/atom-minimap/commit/5a38ef5c87d98ba02186714b8dfa8f047b9bb016))
-- Add more minimap scroll related method ([990f29a1](https://github.com/fundon/atom-minimap/commit/990f29a100105c8949eb47a8478283794df7cd9a))
-- Add more scroll related methods ([2e517425](https://github.com/fundon/atom-minimap/commit/2e517425bc086003f8c1fa94aa410764639fd99e))
-- Add first methods in the new Minimap model ([93651f2a](https://github.com/fundon/atom-minimap/commit/93651f2a8259a68a971f1014180f3a66c19da1b3))
+- Add model method to compute the visible rows range ([5a38ef5c](https://github.com/atom-minimap/minimap/commit/5a38ef5c87d98ba02186714b8dfa8f047b9bb016))
+- Add more minimap scroll related method ([990f29a1](https://github.com/atom-minimap/minimap/commit/990f29a100105c8949eb47a8478283794df7cd9a))
+- Add more scroll related methods ([2e517425](https://github.com/atom-minimap/minimap/commit/2e517425bc086003f8c1fa94aa410764639fd99e))
+- Add first methods in the new Minimap model ([93651f2a](https://github.com/atom-minimap/minimap/commit/93651f2a8259a68a971f1014180f3a66c19da1b3))
 
 ## :bug: Bug Fixes
 
-- Fix missing getTextEditor method on minimap view ([569ee952](https://github.com/fundon/atom-minimap/commit/569ee952583a0b9cb116189c437f4279c92c61ab))
-- Fix position of right positioned controls without using offset ([4f32ca74](https://github.com/fundon/atom-minimap/commit/4f32ca74fb0543033aa229aa4aaeab3b53df47f0))
-- Change minimap width adjustments to avoid update on every DOM poll ([cca596c7](https://github.com/fundon/atom-minimap/commit/cca596c77c6eb647666a2a70646ba2c31c33da33))
-- Prevent canvas resize when minimap become invisible ([43ebe7b9](https://github.com/fundon/atom-minimap/commit/43ebe7b94b41c79b5aad653b1d40691913a526e6))
-- Fix minimap model not relying on screen lines ([3ea02bf5](https://github.com/fundon/atom-minimap/commit/3ea02bf51c80fe648eaaa2cc3c3e35968fe6928a))
-- Fix minimap redraw when scrolling down ([d3edad15](https://github.com/fundon/atom-minimap/commit/d3edad1542195d3a627c2789107882ff39a10810))
-- Bad value returned in getCharHeight ([6f804830](https://github.com/fundon/atom-minimap/commit/6f804830a98e39381656fd891ca26c9741342dbf))
-- Fix missing method for decoration management in minimap ([b1911a9f](https://github.com/fundon/atom-minimap/commit/b1911a9f431dcc494d63e989fcf615a2efe4d0c9))
-- Fix dom reader failing to append the node outside render view ([17ba1732](https://github.com/fundon/atom-minimap/commit/17ba1732194a47648adf9aa63a13591e064c0122))
+- Fix missing getTextEditor method on minimap view ([569ee952](https://github.com/atom-minimap/minimap/commit/569ee952583a0b9cb116189c437f4279c92c61ab))
+- Fix position of right positioned controls without using offset ([4f32ca74](https://github.com/atom-minimap/minimap/commit/4f32ca74fb0543033aa229aa4aaeab3b53df47f0))
+- Change minimap width adjustments to avoid update on every DOM poll ([cca596c7](https://github.com/atom-minimap/minimap/commit/cca596c77c6eb647666a2a70646ba2c31c33da33))
+- Prevent canvas resize when minimap become invisible ([43ebe7b9](https://github.com/atom-minimap/minimap/commit/43ebe7b94b41c79b5aad653b1d40691913a526e6))
+- Fix minimap model not relying on screen lines ([3ea02bf5](https://github.com/atom-minimap/minimap/commit/3ea02bf51c80fe648eaaa2cc3c3e35968fe6928a))
+- Fix minimap redraw when scrolling down ([d3edad15](https://github.com/atom-minimap/minimap/commit/d3edad1542195d3a627c2789107882ff39a10810))
+- Bad value returned in getCharHeight ([6f804830](https://github.com/atom-minimap/minimap/commit/6f804830a98e39381656fd891ca26c9741342dbf))
+- Fix missing method for decoration management in minimap ([b1911a9f](https://github.com/atom-minimap/minimap/commit/b1911a9f431dcc494d63e989fcf615a2efe4d0c9))
+- Fix dom reader failing to append the node outside render view ([17ba1732](https://github.com/atom-minimap/minimap/commit/17ba1732194a47648adf9aa63a13591e064c0122))
 
 ## :racehorse: Performances
 
-- Replace sequencial styles affectation with cssText ([f12ae20f](https://github.com/fundon/atom-minimap/commit/f12ae20f128a8dffa60438b3fa697936502c1d25))
-- Use translate and translate3d for offsets ([98083d88](https://github.com/fundon/atom-minimap/commit/98083d884e9dcfc2c95625ed228c7b8bdce5761a))
-- Prevent drawing tokens past the canvas width ([c7ab242f](https://github.com/fundon/atom-minimap/commit/c7ab242fc78c1be1adc911745c68cb1234211cbf))
+- Replace sequencial styles affectation with cssText ([f12ae20f](https://github.com/atom-minimap/minimap/commit/f12ae20f128a8dffa60438b3fa697936502c1d25))
+- Use translate and translate3d for offsets ([98083d88](https://github.com/atom-minimap/minimap/commit/98083d884e9dcfc2c95625ed228c7b8bdce5761a))
+- Prevent drawing tokens past the canvas width ([c7ab242f](https://github.com/atom-minimap/minimap/commit/c7ab242fc78c1be1adc911745c68cb1234211cbf))
 
 
 <a name="v3.4.9"></a>
@@ -217,87 +237,87 @@ The following changes mostly concerns the implementation of the new minimap.
 
 ## :bug: Bug Fixes
 
-- Fix broken invisibles substitution when line is null ([c0c30ee9](https://github.com/fundon/atom-minimap/commit/c0c30ee9b2888c3b7a6f358208e8fd5d3212cb06), [#179](https://github.com/fundon/atom-minimap/issues/179))
+- Fix broken invisibles substitution when line is null ([c0c30ee9](https://github.com/atom-minimap/minimap/commit/c0c30ee9b2888c3b7a6f358208e8fd5d3212cb06), [#179](https://github.com/atom-minimap/minimap/issues/179))
 
 <a name="v3.4.8"></a>
 # v3.4.8 (2014-12-17)
 
 ## :bug: Bug Fixes
 
-- Fix broken quick settings command ([bea14b44](https://github.com/fundon/atom-minimap/commit/bea14b44e78e079dc6813aec6e30e8c819419e4f), [#186](https://github.com/fundon/atom-minimap/issues/186))
-- Fix minimum value for interline ([e4a114dc](https://github.com/fundon/atom-minimap/commit/e4a114dc99a65a003ebd4d5b4e2e3a6b0fee467d), [#175](https://github.com/fundon/atom-minimap/issues/175))
+- Fix broken quick settings command ([bea14b44](https://github.com/atom-minimap/minimap/commit/bea14b44e78e079dc6813aec6e30e8c819419e4f), [#186](https://github.com/atom-minimap/minimap/issues/186))
+- Fix minimum value for interline ([e4a114dc](https://github.com/atom-minimap/minimap/commit/e4a114dc99a65a003ebd4d5b4e2e3a6b0fee467d), [#175](https://github.com/atom-minimap/minimap/issues/175))
 
 <a name="v3.4.7"></a>
 # v3.4.7 (2014-12-10)
 
 ## :bug: Bug Fixes
 
-- Fix broken scroll when clicking the minimap ([e9c501c9](https://github.com/fundon/atom-minimap/commit/e9c501c908b160cc4a86df9eebe911866fae6c0a), [#171](https://github.com/fundon/atom-minimap/issues/171))
+- Fix broken scroll when clicking the minimap ([e9c501c9](https://github.com/atom-minimap/minimap/commit/e9c501c908b160cc4a86df9eebe911866fae6c0a), [#171](https://github.com/atom-minimap/minimap/issues/171))
 
 <a name="v3.4.6"></a>
 # v3.4.6 (2014-12-10)
 
 ## :bug: Bug Fixes
 
-- :guardsman: Try to use the already retrieve pane when possible ([33dd8cf6](https://github.com/fundon/atom-minimap/commit/33dd8cf6bc3f9bf51d3a4cdc4b1c2dcd842a9001))
-- Fix editor styles with minimap in zen mode ([6496aa92](https://github.com/fundon/atom-minimap/commit/6496aa92e05f96a5d45d0ec7d77888fd4d8cebed))
+- :guardsman: Try to use the already retrieve pane when possible ([33dd8cf6](https://github.com/atom-minimap/minimap/commit/33dd8cf6bc3f9bf51d3a4cdc4b1c2dcd842a9001))
+- Fix editor styles with minimap in zen mode ([6496aa92](https://github.com/atom-minimap/minimap/commit/6496aa92e05f96a5d45d0ec7d77888fd4d8cebed))
 
 <a name="v3.4.5"></a>
 # v3.4.5 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Fix broken view destruction with shadow DOM disabled ([7d062ec6](https://github.com/fundon/atom-minimap/commit/7d062ec601b0c63cedd2ef55f6990c96ab57f483), [#166](https://github.com/fundon/atom-minimap/issues/166))
+- Fix broken view destruction with shadow DOM disabled ([7d062ec6](https://github.com/atom-minimap/minimap/commit/7d062ec601b0c63cedd2ef55f6990c96ab57f483), [#166](https://github.com/atom-minimap/minimap/issues/166))
 
 <a name="v3.4.4"></a>
 # v3.4.4 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Fix broken minimap when shadowRoot isn't enabled ([f5f6e779](https://github.com/fundon/atom-minimap/commit/f5f6e7792bd8ef471d2f122dabfc34e3f2adcb88))
+- Fix broken minimap when shadowRoot isn't enabled ([f5f6e779](https://github.com/atom-minimap/minimap/commit/f5f6e7792bd8ef471d2f122dabfc34e3f2adcb88))
 
 <a name="v3.4.3"></a>
 # v3.4.3 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Fix broken actions and navigation in quick settings ([b2114b34](https://github.com/fundon/atom-minimap/commit/b2114b348d0a66a077a27dd6ec7be121944efee6))
+- Fix broken actions and navigation in quick settings ([b2114b34](https://github.com/atom-minimap/minimap/commit/b2114b348d0a66a077a27dd6ec7be121944efee6))
 
 <a name="v3.4.2"></a>
 # v3.4.2 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Should fix non-activation in post update hook ([659ffc63](https://github.com/fundon/atom-minimap/commit/659ffc63d7530ab340ca18054e22e708f1a9b1bf))
+- Should fix non-activation in post update hook ([659ffc63](https://github.com/atom-minimap/minimap/commit/659ffc63d7530ab340ca18054e22e708f1a9b1bf))
 
 <a name="v3.4.1"></a>
 # v3.4.1 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Fix atom-space-pen-views version in package.son ([90aa4588](https://github.com/fundon/atom-minimap/commit/90aa4588e8137a6f74d2883d1d10b73786b12fb4))
+- Fix atom-space-pen-views version in package.son ([90aa4588](https://github.com/atom-minimap/minimap/commit/90aa4588e8137a6f74d2883d1d10b73786b12fb4))
 
 <a name="v3.4.0"></a>
 # v3.4.0 (2014-12-05)
 
 ## :sparkles: Features
 
-- Add an observeMinimaps method replacing eachMinimapView ([98c81307](https://github.com/fundon/atom-minimap/commit/98c8130705c6ffbf1ce4f0cf43f8654d5f5d7615))
-- Add more defensive code if a marker can't be retrieved ([600e5bb1](https://github.com/fundon/atom-minimap/commit/600e5bb1ba3c855eac0312a9573d47b605b30ed5))
-- Add defensive code on decorations methods ([6104fe17](https://github.com/fundon/atom-minimap/commit/6104fe17625e30af5d4f9d211d393167830f18aa))
+- Add an observeMinimaps method replacing eachMinimapView ([98c81307](https://github.com/atom-minimap/minimap/commit/98c8130705c6ffbf1ce4f0cf43f8654d5f5d7615))
+- Add more defensive code if a marker can't be retrieved ([600e5bb1](https://github.com/atom-minimap/minimap/commit/600e5bb1ba3c855eac0312a9573d47b605b30ed5))
+- Add defensive code on decorations methods ([6104fe17](https://github.com/atom-minimap/minimap/commit/6104fe17625e30af5d4f9d211d393167830f18aa))
 
 ## :bug: Bug Fixes
 
-- Prevent removal of inexistant decorations ([a8e21c27](https://github.com/fundon/atom-minimap/commit/a8e21c277e308f6b1de44bac0da39ee4f04f0618))
-- Fix broken quick settings button in minimap ([da1986a9](https://github.com/fundon/atom-minimap/commit/da1986a9510ca6410d60a7e8e5f8ff932ea2f47b))
-- Fix missing decorations caused by shadow root ([f8b4ae03](https://github.com/fundon/atom-minimap/commit/f8b4ae03af85b0d4c3a10fc80490d4e11f447038))
-- Fix bugs with minimap scrolling and height ([6327de96](https://github.com/fundon/atom-minimap/commit/6327de966f12a513641a59af3ac5f3321747c9c6))
-- Fix retrieval of the dom colors ([b8c11bb3](https://github.com/fundon/atom-minimap/commit/b8c11bb31733d2bfbab4ed024769db4d6e1869f6))
-- Fix last remaining deprecations ([0a6ea03e](https://github.com/fundon/atom-minimap/commit/0a6ea03ef278237216fe9ef66f68c0299d460e98))
+- Prevent removal of inexistant decorations ([a8e21c27](https://github.com/atom-minimap/minimap/commit/a8e21c277e308f6b1de44bac0da39ee4f04f0618))
+- Fix broken quick settings button in minimap ([da1986a9](https://github.com/atom-minimap/minimap/commit/da1986a9510ca6410d60a7e8e5f8ff932ea2f47b))
+- Fix missing decorations caused by shadow root ([f8b4ae03](https://github.com/atom-minimap/minimap/commit/f8b4ae03af85b0d4c3a10fc80490d4e11f447038))
+- Fix bugs with minimap scrolling and height ([6327de96](https://github.com/atom-minimap/minimap/commit/6327de966f12a513641a59af3ac5f3321747c9c6))
+- Fix retrieval of the dom colors ([b8c11bb3](https://github.com/atom-minimap/minimap/commit/b8c11bb31733d2bfbab4ed024769db4d6e1869f6))
+- Fix last remaining deprecations ([0a6ea03e](https://github.com/atom-minimap/minimap/commit/0a6ea03ef278237216fe9ef66f68c0299d460e98))
 
 ## :racehorse: Performances
 
-- Speed up rendering by sharing cache between instances ([6fd00fa6](https://github.com/fundon/atom-minimap/commit/6fd00fa6faa5dcf1d903ac663b8c7a00925391e8))
+- Speed up rendering by sharing cache between instances ([6fd00fa6](https://github.com/atom-minimap/minimap/commit/6fd00fa6faa5dcf1d903ac663b8c7a00925391e8))
 
 3.3.16 / 2014-12-01
 ===================

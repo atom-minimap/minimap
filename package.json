@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./lib/main",
-  "version": "4.2.2",
+  "version": "4.3.1",
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
@@ -15,7 +15,7 @@
       "email": "cedric.nehemie@gmail.com"
     }
   ],
-  "repository": "https://github.com/fundon/atom-minimap",
+  "repository": "https://github.com/atom-minimap/minimap",
   "license": "MIT",
   "engines": {
     "atom": ">=0.177.0"

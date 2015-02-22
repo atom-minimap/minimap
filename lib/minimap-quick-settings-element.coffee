@@ -38,8 +38,8 @@ class MinimapQuickSettingsElement extends HTMLElement
     @subscriptions.add atom.commands.add 'minimap-quick-settings',
       'core:move-up': => @selectPreviousItem()
       'core:move-down': => @selectNextItem()
-      'core:move-left': => atom.config.set('minimap.displayMinimapOnLeft', true)
-      'core:move-right': => atom.config.set('minimap.displayMinimapOnLeft', false)
+      'core:move-left': -> atom.config.set('minimap.displayMinimapOnLeft', true)
+      'core:move-right': -> atom.config.set('minimap.displayMinimapOnLeft', false)
       'core:cancel': => @destroy()
       'core:confirm': => @toggleSelectedItem()
 

@@ -1,8 +1,8 @@
-# Minimap package [![Build Status](https://travis-ci.org/fundon/atom-minimap.svg?branch=master)](https://travis-ci.org/fundon/atom-minimap)
+# Minimap package [![Build Status](https://travis-ci.org/atom-minimap/minimap.svg?branch=master)](https://travis-ci.org/atom-minimap/minimap)
 
 A preview of the full source code.
 
-![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/screenshot.png?raw=true)
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/screenshot.png?raw=true)
 
 ### Installation
 
@@ -32,7 +32,7 @@ apm install minimap
 
 For instance the following result is obtained by setting a `Char Height` of `1px`:
 
-![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/screenshot-alternate.png?raw=true)
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/screenshot-alternate.png?raw=true)
 
 ### Key Bindings
 
@@ -81,7 +81,7 @@ Below is the list of available plugins so far:
 
 When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the minimap package settings or by using the quick settings dropdown available on the mimimap itself:
 
-![Minimap Screenshot](https://github.com/fundon/atom-minimap/blob/master/plugins-list.gif?raw=true)
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/plugins-list.gif?raw=true)
 
 ### External Documentation
 
@@ -92,15 +92,13 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 
 ### Contributing
 
-The `minimap` package try to follow the [Atom contribution guidelines](https://atom.io/docs/v0.177.0/contributing).
+The `minimap` package try to follow the [Atom contribution guidelines](https://atom.io/docs/latest/contributing).
 
 Especially, the commits should follow the conventions defined in the *Git Commit Messages* section of the guideline.
 
 The `CHANGELOG` content is then generated using the [changelog-gen utils](https://github.com/abe33/changelog-gen).
 
-### Contributors
-
-https://github.com/fundon/atom-minimap/graphs/contributors
+[See all contributors](https://github.com/atom-minimap/minimap/graphs/contributors)
 
 ### License
 
