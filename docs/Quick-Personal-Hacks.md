@@ -47,8 +47,8 @@ atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area {
 #### Changing the background of the Minimap's `scroll-indicator`
 
 ```css
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area {
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator,
+atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator {
   background-color: green;
 }
 ```
