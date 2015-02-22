@@ -11,8 +11,6 @@
     <div id='base' data-path='..&#47;'></div>
 <div id='header'>
   <div id='menu'>
-    <a href='..&#47;README.md.html' title='Minimap'>Minimap</a>
-    &raquo;
     <a href='..&#47;class_index.html' title='Index'>Index</a>
     &raquo;
     <span class='title'>Minimap</span>
@@ -115,13 +113,12 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The <code>Minimap</code> package provides an eagle-eye view of text buffers.</p><p>It also provides API for plugin packages that want to interact with the
-minimap and be available to the user through the minimap settings.</p><h2 id="plugins-interface">Plugins Interface</h2><p>Plugins should conform to the following interface:</p><pre><code class="lang-coffee">class Plugin
-  void activatePlugin: -&gt;
-  void deactivatePlugin: -&gt;
-  bool isActive: -&gt;
-</code></pre>
+   Public: The <a href='../classes/Minimap.html'>Minimap</a> class is the underlying model of a <a href='../classes/MinimapElement.html'>MinimapElement</a>.
+Most manipulations of the minimap is done through the model.
 
+Any <a href='../classes/Minimap.html'>Minimap</a> instance is tied to a `TextEditor`.
+Their lifecycle follow the one of their target `TextEditor`, so they are
+destroyed whenever their `TextEditor` is destroyed. 
 </div>
 <div class='tags'>
 </div>
@@ -129,551 +126,333 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#activate-instance'>
-        ::<strong>activate</strong>()
+      <a href='#canScroll-instance'>
+        Boolean ::<strong>canScroll</strong>()
       </a>
     </span>
     <span class='desc'>
-      Activates the minimap package.
+      Returns <code>true</code> when the <a href='../classes/Minimap.html'>Minimap</a> can scroll.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#deactivate-instance'>
-        ::<strong>deactivate</strong>()
+      <a href='#constructor-instance'>
+        ::<strong>constructor</strong>(options = {})
       </a>
     </span>
     <span class='desc'>
-      Deactivates the minimap package.
+      Creates a new <a href='../classes/Minimap.html'>Minimap</a> instance for the given <code>TextEditor</code>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#generatePlugin-instance'>
-        ::<strong>generatePlugin</strong>()
+      <a href='#destroy-instance'>
+        ::<strong>destroy</strong>()
       </a>
     </span>
     <span class='desc'>
-      Opens the plugin generation view.
+      Destroys the model.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidActivate-instance'>
-        ::<strong>onDidActivate</strong>(callback)
+      <a href='#getCapedTextEditorScrollRatio-instance'>
+        Number ::<strong>getCapedTextEditorScrollRatio</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when the minimap package have been activated.
+      Returns the <code>TextEditor</code> scroll as a value normalized between <code>0</code> and <code>1</code>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidActivatePlugin-instance'>
-        ::<strong>onDidActivatePlugin</strong>(callback)
+      <a href='#getCharHeight-instance'>
+        Number ::<strong>getCharHeight</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a plugin have been activated.
+      Returns the height of a character in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidAddPlugin-instance'>
-        ::<strong>onDidAddPlugin</strong>(callback)
+      <a href='#getCharWidth-instance'>
+        Number ::<strong>getCharWidth</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a plugin have been registered.
+      Returns the width of a character in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidCreateMinimap-instance'>
-        ::<strong>onDidCreateMinimap</strong>(callback)
+      <a href='#getFirstVisibleScreenRow-instance'>
+        Number ::<strong>getFirstVisibleScreenRow</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a minimap have been created.
+      Returns the index of the first visible row in the <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidDeactivate-instance'>
-        ::<strong>onDidDeactivate</strong>(callback)
+      <a href='#getHeight-instance'>
+        Number ::<strong>getHeight</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when the minimap package have been deactivated.
+      Returns the height of the whole minimap in pixels based on the <code>minimap</code> settings.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidDeactivatePlugin-instance'>
-        ::<strong>onDidDeactivatePlugin</strong>(callback)
+      <a href='#getHorizontalScaleFactor-instance'>
+        Number ::<strong>getHorizontalScaleFactor</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a plugin have been deactivated.
+      Returns the horizontal scaling factor when converting coordinates from the <code>TextEditor</code> to the <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidDestroyMinimap-instance'>
-        ::<strong>onDidDestroyMinimap</strong>(callback)
+      <a href='#getInterline-instance'>
+        Number ::<strong>getInterline</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a minimap have been destroyed.
+      Returns the space between lines in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onDidRemovePlugin-instance'>
-        ::<strong>onDidRemovePlugin</strong>(callback)
+      <a href='#getLastVisibleScreenRow-instance'>
+        Number ::<strong>getLastVisibleScreenRow</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a plugin have been unregistered.
+      Returns the index of the last visible row in the <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onWillDestroyMinimap-instance'>
-        ::<strong>onWillDestroyMinimap</strong>(callback)
+      <a href='#getLineHeight-instance'>
+        Number ::<strong>getLineHeight</strong>()
       </a>
     </span>
     <span class='desc'>
-      Calls the <code>callback</code> when a minimap is about to be destroyed.
+      Returns the height of a line in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#toggle-instance'>
-        ::<strong>toggle</strong>()
+      <a href='#getMaxScrollTop-instance'>
+        Number ::<strong>getMaxScrollTop</strong>()
       </a>
     </span>
     <span class='desc'>
-      Toggles the minimap activation state.
+      Returns the maximum scroll value of the <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#versionMatch-instance'>
-        Boolean ::<strong>versionMatch</strong>(expectedVersion)
+      <a href='#getScrollTop-instance'>
+        Number ::<strong>getScrollTop</strong>()
       </a>
     </span>
     <span class='desc'>
-      Verifies that the passed-in version expression is satisfied by the current minimap version.
+      Returns the current scroll of the <a href='../classes/Minimap.html'>Minimap</a>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditor-instance'>
+        ::<strong>getTextEditor</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the <code>TextEditor</code> that this minimap represents.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditorMaxScrollTop-instance'>
+        Number ::<strong>getTextEditorMaxScrollTop</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the maximum scroll the <code>TextEditor</code> can perform.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditorScaledHeight-instance'>
+        Number ::<strong>getTextEditorScaledHeight</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the height of the <code>TextEditor</code> at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditorScaledScrollLeft-instance'>
+        Number ::<strong>getTextEditorScaledScrollLeft</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the <code>TextEditor::getScrollLeft</code> value at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditorScaledScrollTop-instance'>
+        Number ::<strong>getTextEditorScaledScrollTop</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the <code>TextEditor::getScrollTop</code> value at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTextEditorScrollRatio-instance'>
+        Number ::<strong>getTextEditorScrollRatio</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the <code>TextEditor</code> scroll as a value normalized between <code>0</code> and <code>1</code>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getVerticalScaleFactor-instance'>
+        Number ::<strong>getVerticalScaleFactor</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the vertical scaling factor when converting coordinates from the <code>TextEditor</code> to the <a href='../classes/Minimap.html'>Minimap</a>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getVisibleHeight-instance'>
+        Number ::<strong>getVisibleHeight</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the height the <a href='../classes/Minimap.html'>Minimap</a> will take on screen.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isDestroyed-instance'>
+        ::<strong>isDestroyed</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChange-instance'>
+        ::<strong>onDidChange</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when changes have been made in the buffer or in the minimap that alter the minimap display.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChangeConfig-instance'>
+        ::<strong>onDidChangeConfig</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when changes have been made in the configuration fields of the <code>minimap</code> package.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChangeScrollLeft-instance'>
+        ::<strong>onDidChangeScrollLeft</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when the text editor <code>scrollLeft</code> value have been changed.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChangeScrollTop-instance'>
+        ::<strong>onDidChangeScrollTop</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when the text editor <code>scrollTop</code> value have been changed.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidDestroy-instance'>
+        ::<strong>onDidDestroy</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls the <code>callback</code> when this <a href='../classes/Minimap.html'>Minimap</a> was destroyed.
     </span>
   </li>
 </ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      ::<strong>constructor</strong>(options = {})
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L22'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Creates a new <a href='../classes/Minimap.html'>Minimap</a> instance for the given `TextEditor`.
+
+options - An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+          :textEditor - A `TextEditor` instance. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Object)</span>
+      <span class='name'>options</span>
+      &mdash;
+      <span class='desc'>An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='name'>textEditor</span>
+        &mdash;
+        <span class='desc'>A <code>TextEditor</code> instance.</span>
+      </li>
+    </ul>
+  </ul>
+</div>
+  </div>
+</div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='activate-instance'>
-      ::<strong>activate</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L57'>Source</a>
+    <p class='signature' id='canScroll-instance'>
+      Boolean ::<strong>canScroll</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L261'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Activates the minimap package.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='deactivate-instance'>
-      ::<strong>deactivate</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L71'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Deactivates the minimap package.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='generatePlugin-instance'>
-      ::<strong>generatePlugin</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L98'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Opens the plugin generation view.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidActivate-instance'>
-      ::<strong>onDidActivate</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L106'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when the minimap package have been activated.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidActivatePlugin-instance'>
-      ::<strong>onDidActivatePlugin</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L177'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a plugin have been activated.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(String)</span>
-        <span class='name'>name</span>
-        &mdash;
-        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
-      </li>
-      <li>
-        <span class='type'>(Object)</span>
-        <span class='name'>plugin</span>
-        &mdash;
-        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidAddPlugin-instance'>
-      ::<strong>onDidAddPlugin</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L155'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a plugin have been registered.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(String)</span>
-        <span class='name'>name</span>
-        &mdash;
-        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
-      </li>
-      <li>
-        <span class='type'>(Object)</span>
-        <span class='name'>plugin</span>
-        &mdash;
-        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidCreateMinimap-instance'>
-      ::<strong>onDidCreateMinimap</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L124'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a minimap have been created.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(MinimapView)</span>
-        <span class='name'>view</span>
-        &mdash;
-        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that was created.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidDeactivate-instance'>
-      ::<strong>onDidDeactivate</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L114'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when the minimap package have been deactivated.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidDeactivatePlugin-instance'>
-      ::<strong>onDidDeactivatePlugin</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L188'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a plugin have been deactivated.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(String)</span>
-        <span class='name'>name</span>
-        &mdash;
-        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
-      </li>
-      <li>
-        <span class='type'>(Object)</span>
-        <span class='name'>plugin</span>
-        &mdash;
-        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidDestroyMinimap-instance'>
-      ::<strong>onDidDestroyMinimap</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L144'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a minimap have been destroyed.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(MinimapView)</span>
-        <span class='name'>view</span>
-        &mdash;
-        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that was destroyed.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onDidRemovePlugin-instance'>
-      ::<strong>onDidRemovePlugin</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L166'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a plugin have been unregistered.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(String)</span>
-        <span class='name'>name</span>
-        &mdash;
-        <span class='desc'>The plugin name <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
-      </li>
-      <li>
-        <span class='type'>(Object)</span>
-        <span class='name'>plugin</span>
-        &mdash;
-        <span class='desc'>The plugin <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a>.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onWillDestroyMinimap-instance'>
-      ::<strong>onWillDestroyMinimap</strong>(callback)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L134'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Calls the <code>callback</code> when a minimap is about to be destroyed.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='type'>(Function)</span>
-      <span class='name'>callback</span>
-      &mdash;
-      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive have the following properties:</span>
-    </li>
-    <ul class='options'>
-      <li>
-        <span class='type'>(MinimapView)</span>
-        <span class='name'>view</span>
-        &mdash;
-        <span class='desc'>The <a href='../classes/MinimapView.html'>MinimapView</a> that will be destroyed.</span>
-      </li>
-    </ul>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      <span class='desc'>Returns a <code>Disposable</code>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='toggle-instance'>
-      ::<strong>toggle</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L87'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Toggles the minimap activation state.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='versionMatch-instance'>
-      Boolean ::<strong>versionMatch</strong>(expectedVersion)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap.coffee#L84'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Verifies that the passed-in version expression is satisfied by the current minimap version.</p><p><code>expectedVersion</code> - A <a href="https://github.com/npm/node-semver">semver</a>
-                    compatible expression to match agains the minimap
-                    version.</p>
+   Public: Returns `true` when the <a href='../classes/Minimap.html'>Minimap</a> can scroll.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a>. 
 </div>
 <div class='tags'>
   <h3>Returns:</h3>
@@ -687,15 +466,727 @@ minimap and be available to the user through the minimap settings.</p><h2 id="pl
   </ul>
 </div>
   </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-instance'>
+      ::<strong>destroy</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L66'>Source</a>
+    </p>
+    <div class='docstring'>
+  Public: Destroys the model. 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getCapedTextEditorScrollRatio-instance'>
+      Number ::<strong>getCapedTextEditorScrollRatio</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L181'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
+
+The returned value will always be strictly between `0` and `1`.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getCharHeight-instance'>
+      Number ::<strong>getCharHeight</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L225'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the height of a character in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getCharWidth-instance'>
+      Number ::<strong>getCharWidth</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L220'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the width of a character in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getFirstVisibleScreenRow-instance'>
+      Number ::<strong>getFirstVisibleScreenRow</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L235'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the index of the first visible row in the <a href='../classes/Minimap.html'>Minimap</a>.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getHeight-instance'>
+      Number ::<strong>getHeight</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L187'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the height of the whole minimap in pixels based on the `minimap`
+settings.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getHorizontalScaleFactor-instance'>
+      Number ::<strong>getHorizontalScaleFactor</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L209'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the horizontal scaling factor when converting coordinates from the
+`TextEditor` to the <a href='../classes/Minimap.html'>Minimap</a>.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getInterline-instance'>
+      Number ::<strong>getInterline</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L230'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the space between lines in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getLastVisibleScreenRow-instance'>
+      Number ::<strong>getLastVisibleScreenRow</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L241'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the index of the last visible row in the <a href='../classes/Minimap.html'>Minimap</a>.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getLineHeight-instance'>
+      Number ::<strong>getLineHeight</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L215'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the height of a line in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getMaxScrollTop-instance'>
+      Number ::<strong>getMaxScrollTop</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L256'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the maximum scroll value of the <a href='../classes/Minimap.html'>Minimap</a>.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getScrollTop-instance'>
+      Number ::<strong>getScrollTop</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L250'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the current scroll of the <a href='../classes/Minimap.html'>Minimap</a>.
+
+The <a href='../classes/Minimap.html'>Minimap</a> can scroll only when its height is greater that the height
+of its `TextEditor`.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditor-instance'>
+      ::<strong>getTextEditor</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L132'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the `TextEditor` that this minimap represents.
+
+Returns a `TextEditor`. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>TextEditor</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditorMaxScrollTop-instance'>
+      Number ::<strong>getTextEditorMaxScrollTop</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L158'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the maximum scroll the `TextEditor` can perform.
+
+When the `scrollPastEnd` setting is enabled, the method compensate the
+extra scroll by removing the same height as added by the editor from the
+final value.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditorScaledHeight-instance'>
+      Number ::<strong>getTextEditorScaledHeight</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L137'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the height of the `TextEditor` at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditorScaledScrollLeft-instance'>
+      Number ::<strong>getTextEditorScaledScrollLeft</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L148'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the `TextEditor::getScrollLeft` value at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditorScaledScrollTop-instance'>
+      Number ::<strong>getTextEditorScaledScrollTop</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L142'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the `TextEditor::getScrollTop` value at the <a href='../classes/Minimap.html'>Minimap</a> scale.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTextEditorScrollRatio-instance'>
+      Number ::<strong>getTextEditorScrollRatio</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L173'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
+
+When the `scrollPastEnd` setting is enabled the value may exceed `1` as the
+maximum scroll value used to compute this ratio compensate for the extra
+height in the editor. **Use <a href='../classes/Minimap.html#getCapedTextEditorScrollRatio-instance'>::getCapedTextEditorScrollRatio</a> when you
+need a value that is strictly between `0` and `1`.**
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getVerticalScaleFactor-instance'>
+      Number ::<strong>getVerticalScaleFactor</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L202'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the vertical scaling factor when converting coordinates from the
+`TextEditor` to the <a href='../classes/Minimap.html'>Minimap</a>.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getVisibleHeight-instance'>
+      Number ::<strong>getVisibleHeight</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L195'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Returns the height the <a href='../classes/Minimap.html'>Minimap</a> will take on screen.
+
+When the <a href='../classes/Minimap.html'>Minimap</a> height is greater than the `TextEditor` height, the
+`TextEditor` height is returned instead.
+
+Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>. 
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isDestroyed-instance'>
+      ::<strong>isDestroyed</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L74'>Source</a>
+    </p>
+    <div class='docstring'>
+  ~Public~
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChange-instance'>
+      ::<strong>onDidChange</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L85'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Calls the `callback` when changes have been made in the buffer or in the
+minimap that alter the minimap display.
+
+callback - The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive
+           a change <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+           :start - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the change's start row.
+           :end - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the change's end row.
+           :screenDelta - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of rows affected by the changes.
+
+Returns a `Disposable`. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive a change <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(Number)</span>
+        <span class='name'>start</span>
+        &mdash;
+        <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the change&#39;s start row.</span>
+      </li>
+      <li>
+        <span class='type'>(Number)</span>
+        <span class='name'>end</span>
+        &mdash;
+        <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of the change&#39;s end row.</span>
+      </li>
+      <li>
+        <span class='type'>(Number)</span>
+        <span class='name'>screenDelta</span>
+        &mdash;
+        <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> of rows affected by the changes.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChangeConfig-instance'>
+      ::<strong>onDidChangeConfig</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L98'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Calls the `callback` when changes have been made in the configuration fields
+of the `minimap` package. As many computation are tied to these
+configurations this method allow to be notified when these fields changes.
+
+callback - The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive
+           a change <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:
+           :config - The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name of the changed configuration.
+           :value - The new value of the configuration.
+
+Returns a `Disposable`. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive a change <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with the following properties:</span>
+    </li>
+    <ul class='options'>
+      <li>
+        <span class='type'>(String)</span>
+        <span class='name'>config</span>
+        &mdash;
+        <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name of the changed configuration.</span>
+      </li>
+      <li>
+        <span class='name'>value</span>
+        &mdash;
+        <span class='desc'>The new value of the configuration.</span>
+      </li>
+    </ul>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChangeScrollLeft-instance'>
+      ::<strong>onDidChangeScrollLeft</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L118'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Calls the `callback` when the text editor `scrollLeft` value have been
+changed.
+
+callback - The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive
+           the new `scrollLeft` <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> value.
+
+Returns a `Disposable`. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive the new <code>scrollLeft</code> <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> value.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChangeScrollTop-instance'>
+      ::<strong>onDidChangeScrollTop</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L108'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Calls the `callback` when the text editor `scrollTop` value have been
+changed.
+
+callback - The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive
+           the new `scrollTop` <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> value.
+
+Returns a `Disposable`. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>. The event the callback will receive the new <code>scrollTop</code> <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> value.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidDestroy-instance'>
+      ::<strong>onDidDestroy</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.3.1
+/lib&#47;minimap.coffee#L126'>Source</a>
+    </p>
+    <div class='docstring'>
+   Public: Calls the `callback` when this <a href='../classes/Minimap.html'>Minimap</a> was destroyed.
+
+callback - The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.
+
+Returns a `Disposable`. 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The callback <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns a <code>Disposable</code>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Mon Sep 22 2014 18:57:34 GMT+0200 (CEST)
+  Mon Feb 23 2015 01:49:46 GMT+0800 (CST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
-  v2.2.4
-  (Node.js v0.10.21).
+  v2.3.1
+  (Node.js v1.2.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>

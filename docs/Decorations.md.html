@@ -11,8 +11,6 @@
     <div id='base' data-path='..&#47;'></div>
 <div id='header'>
   <div id='menu'>
-    <a href='..&#47;README.md.html' title='Minimap'>Minimap</a>
-    &raquo;
     <a href='..&#47;class_index.html' title='Index'>Index</a>
     &raquo;
     <span class='title'>docs&#47;Decorations.md</span>
@@ -116,7 +114,9 @@
       <div id='filecontents'>
         <h1 id="minimap-decorations">Minimap Decorations</h1><p>The minimap view mimic the decoration API available on editors so that you can easily add your own decorations on the minimap.</p><p>While the interface is the same, some details such as the available decorations types change relatively to the editor&#39;s decorations API.</p><h3 id="scope-and-styling">Scope And Styling</h3><p>The most important change is that decorations on the minimap doesn&#39;t use a <code>class</code>, but rather a <code>scope</code></p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, scope: &#39;.scope .to .the.marker.style&#39;)
 </code></pre><p>It&#39;s still possible to pass a class parameter to the decoration:</p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, class: &#39;the marker style&#39;)
-</code></pre><p>In that case, when rendering the decoration a scope will be build that will look like <code>.minimap .editor .the.marker.style</code>.</p><p>The reason of using a scope rather than a class is that while editor&#39;s decorations are part of the dom and benefit of the styles cascading, minimap&#39;s decorations, rendered in a canvas, do not. In order to work around that, decoration&#39;s styles are defined using a <code>scope</code> property containing the selector allowing to retrieve the decoration style.</p><p>This allow the minimap decorations to still be stylable using css. For instance, the scope used by the <code>minimap-selection</code> package is:</p><pre><code class="lang-css">.minimap .editor .selection .region
+</code></pre><p>In that case, when rendering the decoration a scope will be build that will look like <code>.minimap .editor .the.marker.style</code>.</p><p>The reason of using a scope rather than a class is that while editor&#39;s decorations are part of the dom and benefit of the styles cascading, minimap&#39;s decorations, rendered in a canvas, do not. In order to work around that, decoration&#39;s styles are defined using a <code>scope</code> property containing the selector allowing to retrieve the decoration style.</p><p>This allow the minimap decorations to still be stylable using css. For instance, the scope used by the <code>minimap-selection</code> package is:</p><pre><code class="lang-css">.minimap .editor .selection .region {
+  /* ... */
+}
 </code></pre><p>Note that the scope is prefixed with <code>.minimap</code> so that you can override the selection style in the minimap without impacting the editor&#39;s one.</p><p>Also note that only the <code>background</code> property will be retrieved to style a decoration.</p><p>A last option is to pass a css color directly in a <code>color</code> option, such as:</p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, color: &#39;#ff0000&#39;)
 </code></pre><p>In that case neither the scope nor the class will be used.</p><h3 id="decorations-types">Decorations Types</h3><p>Another non-trivial change is the list of available decoration&#39;s type. At the time, the available types on the minimap are:</p><ul>
 <li><code>line</code>: Same as the editor one, it colors the line background with a color extracted from the decoration scope.</li>
@@ -128,11 +128,11 @@
     </div>
     <div id='footer'>
   Generated on
-  Mon Sep 22 2014 18:57:34 GMT+0200 (CEST)
+  Mon Feb 23 2015 01:49:46 GMT+0800 (CST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
-  v2.2.4
-  (Node.js v0.10.21).
+  v2.3.1
+  (Node.js v1.2.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>
