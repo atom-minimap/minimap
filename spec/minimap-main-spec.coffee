@@ -63,6 +63,14 @@ describe 'Minimap package', ->
     it 'destroys all the minimap elements', ->
       expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
 
+  ##    ########  ##       ##     ##  ######   #### ##    ##  ######  
+  ##    ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
+  ##    ##     ## ##       ##     ## ##         ##  ####  ## ##
+  ##    ########  ##       ##     ## ##   ####  ##  ## ## ##  ######
+  ##    ##        ##       ##     ## ##    ##   ##  ##  ####       ##
+  ##    ##        ##       ##     ## ##    ##   ##  ##   ### ##    ##
+  ##    ##        ########  #######   ######   #### ##    ##  ######
+
   describe 'service', ->
     it 'returns the minimap main module', ->
       expect(minimapPackage.provideMinimapServiceV1()).toEqual(minimapPackage)
