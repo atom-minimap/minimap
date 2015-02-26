@@ -54,6 +54,31 @@ class DecorationManagement extends Mixin
 
     decorationsByMarkerId
 
+  # Returns the decorations that intersects the passed-in row range
+  # in a structured way.
+  #
+  # The returned object look like:
+  #
+  # ```coffee
+  # {
+  #   'line':
+  #     '1': [...]
+  #     '2': [...]
+  #   'highlight-over':
+  #     '10': [...]
+  #     '11': [...]
+  # }
+  # ```
+  #
+  # At the first level, the keys are the available decoration types.
+  # At the second level, the keys are the row index for which there
+  # are decorations available. The value is an array containing the
+  # decorations that intersects with the corresponding row.
+  #
+  # startScreenRow - The starting row index.
+  # endScreenRow - The ending row index.
+  #
+  # Returns an {Object}.
   decorationsForScreenRowRangeByTypeThenRows: (startScreenRow, endScreenRow) ->
     decorationsByMarkerType = {}
     for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
