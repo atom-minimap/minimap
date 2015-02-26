@@ -294,7 +294,7 @@ describe 'Minimap', ->
     it 'returns an object whose keys are the decorations types', ->
       expect(Object.keys(decorations).sort()).toEqual(['highlight-over', 'highlight-under', 'line'])
 
-    it 'stores decorations by row with the type object', ->
+    it 'stores decorations by rows within each type objects', ->
       expect(Object.keys(decorations['highlight-over']).sort())
       .toEqual('1 2 6 7 8 9 10 11'.split(' ').sort())
 
