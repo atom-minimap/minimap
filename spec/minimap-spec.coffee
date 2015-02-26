@@ -271,3 +271,42 @@ describe 'Minimap', ->
         decoration = minimap.decorateMarker marker, type: 'highlight', class: 'dummy'
 
         expect(decoration).toBeUndefined()
+
+  describe '::decorationsForScreenRowRangeByRowAndType', ->
+    [decorations] = []
+
+    beforeEach ->
+      editor.setText(largeSample)
+
+      createDecoration = (type, range) ->
+        marker = minimap.markBufferRange range
+        decoration = minimap.decorateMarker marker, {type}
+
+      createDecoration 'highlight', [[6, 0], [11, 0]]
+      createDecoration 'highlight', [[7, 0], [8, 0]]
+      createDecoration 'highlight-over', [[1, 0], [2,0]]
+      createDecoration 'line', [[3,0], [4,0]]
+      createDecoration 'line', [[12,0], [12,0]]
+      createDecoration 'highlight-under', [[0,0], [10,1]]
+
+      decorations = minimap.decorationsForScreenRowRangeByRowAndType(0, 12)
+
+    it 'returns an object whose keys are the decorations types', ->
+      expect(Object.keys(decorations).sort()).toEqual(['highlight-over', 'highlight-under', 'line'])
+
+    it 'stores decorations by row with the type object', ->
+      expect(Object.keys(decorations['highlight-over']).sort())
+      .toEqual('1 2 6 7 8 9 10 11'.split(' ').sort())
+
+      expect(Object.keys(decorations['line']).sort())
+      .toEqual('3 4 12'.split(' ').sort())
+
+      expect(Object.keys(decorations['highlight-under']).sort())
+      .toEqual('0 1 2 3 4 5 6 7 8 9 10'.split(' ').sort())
+
+    it 'stores the decorations spanning a row in the corresponding row array', ->
+      expect(decorations['highlight-over']['7'].length).toEqual(2)
+
+      expect(decorations['line']['3'].length).toEqual(1)
+
+      expect(decorations['highlight-under']['5'].length).toEqual(1)

@@ -72,6 +72,25 @@ class DecorationManagement extends Mixin
 
     decorationsByMarkerId
 
+  decorationsForScreenRowRangeByRowAndType: (startScreenRow, endScreenRow) ->
+    decorationsByMarkerType = {}
+    for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
+      if decorations = @decorationsByMarkerId[marker.id]
+        range = marker.getScreenRange()
+        rows = [range.start.row..range.end.row]
+
+        console.log range
+
+        for decoration in decorations
+          {type} = decoration.getProperties()
+          decorationsByMarkerType[type] ?= {}
+
+          for row in rows
+            decorationsByMarkerType[type][row] ?= []
+            decorationsByMarkerType[type][row].push(decoration)
+
+    decorationsByMarkerType
+
   # Public: Adds a decoration that tracks a `Marker`. When the marker moves,
   # is invalidated, or is destroyed, the decoration will be updated to reflect
   # the marker's state.
