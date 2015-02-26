@@ -129,6 +129,9 @@ class DecorationManagement extends Mixin
     marker = @getMarker(marker.id)
     return unless marker?
 
+    if decorationParams.type is 'highlight'
+      decorationParams.type = 'highlight-over'
+
     if !decorationParams.scope? and decorationParams.class?
       cls = decorationParams.class.split(' ').join('.')
       decorationParams.scope = ".minimap .#{cls}"
