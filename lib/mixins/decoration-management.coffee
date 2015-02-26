@@ -72,7 +72,7 @@ class DecorationManagement extends Mixin
 
     decorationsByMarkerId
 
-  decorationsForScreenRowRangeByRowAndType: (startScreenRow, endScreenRow) ->
+  decorationsForScreenRowRangeByTypeThenRows: (startScreenRow, endScreenRow) ->
     decorationsByMarkerType = {}
     for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
       if decorations = @decorationsByMarkerId[marker.id]
