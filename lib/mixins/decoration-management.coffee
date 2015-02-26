@@ -86,8 +86,6 @@ class DecorationManagement extends Mixin
         range = marker.getScreenRange()
         rows = [range.start.row..range.end.row]
 
-        console.log range
-
         for decoration in decorations
           {type} = decoration.getProperties()
           decorationsByMarkerType[type] ?= {}
