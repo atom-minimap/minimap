@@ -39,24 +39,6 @@ class DecorationManagement extends Mixin
   decorationForId: (id) ->
     @decorationsById[id]
 
-  # Returns all the decorations of the given type that intersect the passed-in
-  # row.
-  #
-  # row - The row {Number}.
-  # types - A list of decoration types {String}.
-  # decorations - An {Array} of decorations.
-  #
-  # Returns an {Array} of decorations.
-  decorationsByTypesForRow: (row, types..., decorations) ->
-    out = []
-    for id, array of decorations
-      for decoration in array
-        if decoration.getProperties().type in types and
-           decoration.getMarker().getScreenRange().intersectsRow(row)
-          out.push decoration
-
-    out
-
   # Returns all the decorations that intersect the passed-in row range.
   #
   # startScreenRow - The index {Number} of the starting screen row.
