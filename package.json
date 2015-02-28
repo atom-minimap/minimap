@@ -18,7 +18,7 @@
   "repository": "https://github.com/atom-minimap/minimap",
   "license": "MIT",
   "engines": {
-    "atom": ">=0.177.0"
+    "atom": ">=0.184.0"
   },
   "providedServices": {
     "minimap": {
