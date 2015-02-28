@@ -4,8 +4,6 @@ PluginManagement = require './mixins/plugin-management'
 
 [Minimap, MinimapElement, MinimapPluginGeneratorView, deprecate, semver] = []
 
-require '../vendor/resizeend'
-
 # Public: The `Minimap` package provides an eagle-eye view of text buffers.
 #
 # It also provides API for plugin packages that want to interact with the
