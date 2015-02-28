@@ -39,24 +39,6 @@ class DecorationManagement extends Mixin
   decorationForId: (id) ->
     @decorationsById[id]
 
-  # Returns all the decorations of the given type that intersect the passed-in
-  # row.
-  #
-  # row - The row {Number}.
-  # types - A list of decoration types {String}.
-  # decorations - An {Array} of decorations.
-  #
-  # Returns an {Array} of decorations.
-  decorationsByTypesForRow: (row, types..., decorations) ->
-    out = []
-    for id, array of decorations
-      for decoration in array
-        if decoration.getProperties().type in types and
-           decoration.getMarker().getScreenRange().intersectsRow(row)
-          out.push decoration
-
-    out
-
   # Returns all the decorations that intersect the passed-in row range.
   #
   # startScreenRow - The index {Number} of the starting screen row.
@@ -71,6 +53,48 @@ class DecorationManagement extends Mixin
         decorationsByMarkerId[marker.id] = decorations
 
     decorationsByMarkerId
+
+  # Returns the decorations that intersects the passed-in row range
+  # in a structured way.
+  #
+  # The returned object look like:
+  #
+  # ```coffee
+  # {
+  #   'line':
+  #     '1': [...]
+  #     '2': [...]
+  #   'highlight-over':
+  #     '10': [...]
+  #     '11': [...]
+  # }
+  # ```
+  #
+  # At the first level, the keys are the available decoration types.
+  # At the second level, the keys are the row index for which there
+  # are decorations available. The value is an array containing the
+  # decorations that intersects with the corresponding row.
+  #
+  # startScreenRow - The starting row index.
+  # endScreenRow - The ending row index.
+  #
+  # Returns an {Object}.
+  decorationsForScreenRowRangeByTypeThenRows: (startScreenRow, endScreenRow) ->
+    decorationsByMarkerType = {}
+    for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
+      if decorations = @decorationsByMarkerId[marker.id]
+        range = marker.getScreenRange()
+        rows = [range.start.row..range.end.row]
+
+        for decoration in decorations
+          {type} = decoration.getProperties()
+          decorationsByMarkerType[type] ?= {}
+
+          for row in rows
+            decorationsByMarkerType[type][row] ?= []
+            decorationsByMarkerType[type][row].push(decoration)
+
+    decorationsByMarkerType
 
   # Public: Adds a decoration that tracks a `Marker`. When the marker moves,
   # is invalidated, or is destroyed, the decoration will be updated to reflect
@@ -109,6 +133,9 @@ class DecorationManagement extends Mixin
     return unless marker?
     marker = @getMarker(marker.id)
     return unless marker?
+
+    if decorationParams.type is 'highlight'
+      decorationParams.type = 'highlight-over'
 
     if !decorationParams.scope? and decorationParams.class?
       cls = decorationParams.class.split(' ').join('.')

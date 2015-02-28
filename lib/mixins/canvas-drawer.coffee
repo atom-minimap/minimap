@@ -134,7 +134,7 @@ class CanvasDrawer extends Mixin
     charWidth = @minimap.getCharWidth() * devicePixelRatio
     canvasWidth = @canvas.width
     displayCodeHighlights = @displayCodeHighlights
-    decorations = @minimap.decorationsForScreenRowRange(firstRow, lastRow)
+    decorations = @minimap.decorationsForScreenRowRangeByTypeThenRows(firstRow, lastRow)
 
     line = lines[0]
 
@@ -155,13 +155,15 @@ class CanvasDrawer extends Mixin
       y0 = y*lineHeight
 
       # Line decorations are first drawn on the canvas.
-      lineDecorations = @minimap.decorationsByTypesForRow(screenRow, 'line', decorations)
-      @drawLineDecorations(context, lineDecorations, y0, canvasWidth, lineHeight) if lineDecorations.length
+      lineDecorations = decorations['line']?[screenRow]
+
+      @drawLineDecorations(context, lineDecorations, y0, canvasWidth, lineHeight) if lineDecorations?.length
 
       # Then comes the highlight decoration with `highlight-under` type.
-      highlightDecorations = @minimap.decorationsByTypesForRow(firstRow + row, 'highlight-under', decorations)
-      for decoration in highlightDecorations
-        @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
+      highlightDecorations = decorations['highlight-under']?[firstRow + row]
+      if highlightDecorations?.length
+        for decoration in highlightDecorations
+          @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
       # Then the line tokens are drawn
       for token in line.tokens
@@ -182,9 +184,10 @@ class CanvasDrawer extends Mixin
         break if x > canvasWidth
 
       # Finally the highlight over decorations are drawn.
-      highlightDecorations = @minimap.decorationsByTypesForRow(firstRow + row, 'highlight', 'highlight-over', decorations)
-      for decoration in highlightDecorations
-        @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
+      highlightDecorations = decorations['highlight-over']?[firstRow + row]
+      if highlightDecorations?.length
+        for decoration in highlightDecorations
+          @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
     context.fill()
 
