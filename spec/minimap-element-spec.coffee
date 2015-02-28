@@ -120,6 +120,8 @@ describe 'MinimapElement', ->
       editor.setScrollLeft(200)
       minimapElement.attach()
 
+    afterEach -> minimap.destroy()
+
     it 'takes the height of the editor', ->
       expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
 
@@ -204,8 +206,8 @@ describe 'MinimapElement', ->
           editorElement.style.width = '800px'
           editorElement.style.height = '500px'
 
-          sleep(150)
-          runs -> nextAnimationFrame()
+          minimapElement.measureHeightAndWidth()
+          nextAnimationFrame()
 
         it 'detect the resize and adjust itself', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
@@ -236,12 +238,12 @@ describe 'MinimapElement', ->
           canvasWidth = minimapElement.canvas.width
           canvasHeight = minimapElement.canvas.height
           editorElement.style.display = 'none'
-          sleep(150)
-          runs ->
-            nextAnimationFrame()
 
-            expect(minimapElement.canvas.width).toEqual(canvasWidth)
-            expect(minimapElement.canvas.height).toEqual(canvasHeight)
+          minimapElement.measureHeightAndWidth()
+          nextAnimationFrame()
+
+          expect(minimapElement.canvas.width).toEqual(canvasWidth)
+          expect(minimapElement.canvas.height).toEqual(canvasHeight)
 
     #     ######   ######  ########   #######  ##       ##
     #    ##    ## ##    ## ##     ## ##     ## ##       ##

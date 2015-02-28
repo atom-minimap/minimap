@@ -14,9 +14,6 @@ class MinimapElement extends HTMLElement
 
   ### Public ###
 
-  domPollingInterval: 100
-  domPollingIntervalId: null
-  domPollingPaused: false
   displayMinimapOnLeft: false
 
   #    ##     ##  #######   #######  ##    ##  ######
@@ -63,21 +60,18 @@ class MinimapElement extends HTMLElement
         @requestForcedUpdate() if @attached
 
       'minimap.adjustMinimapWidthToSoftWrap': (@adjustToSoftWrap) =>
-        if @attached
-          @measureHeightAndWidth()
-          @requestForcedUpdate()
+        console.log 'here', @attached
+        @measureHeightAndWidth() if @attached
 
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
         @requestUpdate() if @attached
 
   attachedCallback: ->
-    @domPollingIntervalId = setInterval((=> @pollDOM()), @domPollingInterval)
+    @subscriptions.add atom.views.pollDocument => @pollDOM()
     @measureHeightAndWidth()
-    @requestUpdate()
     @attached = true
 
   detachedCallback: ->
-    clearInterval(@domPollingIntervalId)
     @attached = false
 
   attributeChangedCallback: (attrName, oldValue, newValue) ->
@@ -303,47 +297,52 @@ class MinimapElement extends HTMLElement
   setDisplayCodeHighlights: (@displayCodeHighlights) ->
     @requestForcedUpdate() if @attached
 
-  pauseDOMPolling: ->
-    @domPollingPaused = true
-    @resumeDOMPollingAfterDelay ?= debounce(@resumeDOMPolling, 100)
-    @resumeDOMPollingAfterDelay()
-
-  resumeDOMPolling: ->
-    @domPollingPaused = false
-
-  resumeDOMPollingAfterDelay: null
-
   pollDOM: ->
-    return if @domPollingPaused or @updateRequested
+    @measureHeightAndWidth() if @isVisible()
 
-    if @width isnt @clientWidth or @height isnt @clientHeight
-      @measureHeightAndWidth()
-      @requestForcedUpdate()
+  checkForVisibilityChange: ->
+    if @isVisible()
+      if @wasVisible
+        false
+      else
+        @wasVisible = true
+    else
+      if @wasVisible
+        @wasVisible = false
+        true
+      else
+        @wasVisible = false
 
   measureHeightAndWidth: ->
+    wasResized = true if @width isnt @clientWidth or @height isnt @clientHeight
+    visibilityChanged = @checkForVisibilityChange()
+
     @height = @clientHeight
     @width = @clientWidth
     canvasWidth = @width
 
+    @requestForcedUpdate() if wasResized or visibilityChanged
+
     return unless @isVisible()
 
-    if @adjustToSoftWrap
-      lineLength = atom.config.get('editor.preferredLineLength')
-      softWrap = atom.config.get('editor.softWrap')
-      softWrapAtPreferredLineLength = atom.config.get('editor.softWrapAtPreferredLineLength')
-      width = lineLength * @minimap.getCharWidth()
+    if wasResized
+      if @adjustToSoftWrap
+        lineLength = atom.config.get('editor.preferredLineLength')
+        softWrap = atom.config.get('editor.softWrap')
+        softWrapAtPreferredLineLength = atom.config.get('editor.softWrapAtPreferredLineLength')
+        width = lineLength * @minimap.getCharWidth()
 
-      if softWrap and softWrapAtPreferredLineLength and lineLength and width < @width
-        @marginRight = width - @width
-        canvasWidth = width
+        if softWrap and softWrapAtPreferredLineLength and lineLength and width < @width
+          @marginRight = width - @width
+          canvasWidth = width
+        else
+          @marginRight = null
       else
-        @marginRight = null
-    else
-      delete @marginRight
+        delete @marginRight
 
-    if canvasWidth isnt @canvas.width or @height isnt @canvas.height
-      @canvas.width = canvasWidth * devicePixelRatio
-      @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
+      if canvasWidth isnt @canvas.width or @height isnt @canvas.height
+        @canvas.width = canvasWidth * devicePixelRatio
+        @canvas.height = (@height + @minimap.getLineHeight()) * devicePixelRatio
 
   #    ######## ##     ## ######## ##    ## ########  ######
   #    ##       ##     ## ##       ###   ##    ##    ##    ##
