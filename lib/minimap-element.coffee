@@ -298,7 +298,7 @@ class MinimapElement extends HTMLElement
     @requestForcedUpdate() if @attached
 
   pollDOM: ->
-    @measureHeightAndWidth() if @isVisible()
+    @measureHeightAndWidth(false) if @isVisible()
 
   checkForVisibilityChange: ->
     if @isVisible()
@@ -313,19 +313,19 @@ class MinimapElement extends HTMLElement
       else
         @wasVisible = false
 
-  measureHeightAndWidth: ->
-    wasResized = true if @width isnt @clientWidth or @height isnt @clientHeight
+  measureHeightAndWidth: (forceUpdate=true) ->
+    wasResized = @width isnt @clientWidth or @height isnt @clientHeight
     visibilityChanged = @checkForVisibilityChange()
 
     @height = @clientHeight
     @width = @clientWidth
     canvasWidth = @width
 
-    @requestForcedUpdate() if wasResized or visibilityChanged
+    @requestForcedUpdate() if wasResized or visibilityChanged or forceUpdate
 
     return unless @isVisible()
 
-    if wasResized
+    if wasResized or forceUpdate
       if @adjustToSoftWrap
         lineLength = atom.config.get('editor.preferredLineLength')
         softWrap = atom.config.get('editor.softWrap')
