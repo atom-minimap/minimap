@@ -1,3 +1,18 @@
+<a name="v4.4.0"></a>
+# v4.4.0 (2015-03-01)
+
+## :sparkles: Features
+
+- Plugins can now use the `minimap` service provider to access the minimap package.
+
+## :racehorse: Performances
+
+- Speed up decorations retrieval when rendering lines ([ad4b33b6](https://github.com/atom-minimap/minimap/commit/ad4b33b65f6f057c58e14073f0971a1bfd857792))
+
+## :arrow_up: Dependencies Update
+
+- Update engine version ([53457ffb](https://github.com/atom-minimap/minimap/commit/53457ffbf2c34c57d4a09f91d73d691b24189088))
+
 <a name="v4.3.1"></a>
 # v4.3.1 (2015-02-22)
 
