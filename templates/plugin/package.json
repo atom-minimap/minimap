@@ -8,6 +8,13 @@
   "engines": {
     "atom": ">0.50.0"
   },
+  "consumedServices": {
+    "minimap": {
+      "versions": {
+        "1.0.0": "consumeMinimapServiceV1"
+      }
+    }
+  },
   "dependencies": {
     "event-kit": ">= 0.7.2"
   }

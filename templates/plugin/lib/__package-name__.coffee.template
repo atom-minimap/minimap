@@ -6,12 +6,10 @@ module.exports =
   isActive: -> @active
 
   activate: (state) ->
-    atom.packages.activatePackage('minimap').then (minimapPackage) =>
-      @minimap = minimapPackage.mainModule
-      return @deactivate() unless @minimap.versionMatch('>= 4.0.0')
+    @subscriptions = new CompositeDisposable
 
-      @subscriptions = new CompositeDisposable
-      @minimap.registerPlugin '__package-name__', this
+  consumeMinimapServiceV1: (@minimap) ->
+    @minimap.registerPlugin '__package-name__', this
 
   deactivate: ->
     @minimap.unregisterPlugin '__package-name__'
@@ -22,7 +20,7 @@ module.exports =
 
     @active = true
 
-    @subscription = @minimap.observeMinimaps (minimap) =>
+    @minimapsSubscription = @minimap.observeMinimaps (minimap) =>
       minimapElement = atom.views.getView(minimap)
 
       # ...
@@ -31,5 +29,5 @@ module.exports =
     return unless @active
 
     @active = false
-    @subscription.dispose()
+    @minimapsSubscription.dispose()
     @subscriptions.dispose()
