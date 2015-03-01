@@ -60,7 +60,6 @@ class MinimapElement extends HTMLElement
         @requestForcedUpdate() if @attached
 
       'minimap.adjustMinimapWidthToSoftWrap': (@adjustToSoftWrap) =>
-        console.log 'here', @attached
         @measureHeightAndWidth() if @attached
 
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
