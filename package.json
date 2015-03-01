@@ -29,7 +29,6 @@
     }
   },
   "dependencies": {
-    "atom-space-pen-views": ">= 0.20.0",
     "atom-utils": "0.5.x",
     "delegato": "1.x",
     "event-kit": "1.x",
