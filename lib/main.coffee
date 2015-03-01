@@ -2,7 +2,7 @@
 
 PluginManagement = require './mixins/plugin-management'
 
-[Minimap, MinimapElement, MinimapPluginGeneratorView, deprecate, semver] = []
+[Minimap, MinimapElement, MinimapPluginGeneratorElement, deprecate, semver] = []
 
 # Public: The `Minimap` package provides an eagle-eye view of text buffers.
 #
@@ -80,6 +80,9 @@ class Main
       type: 'boolean'
       default: false
       description: "If this option is enabled then when you click the minimap it will scroll to the destination with animation"
+    createPluginInDevMode:
+      type: 'boolean'
+      default: false
 
   # Internal: The activation state of the minimap package.
   active: false
@@ -143,8 +146,9 @@ class Main
 
   # Opens the plugin generation view.
   generatePlugin: ->
-    MinimapPluginGeneratorView ?= require './minimap-plugin-generator-view'
-    view = new MinimapPluginGeneratorView()
+    MinimapPluginGeneratorElement ?= require './minimap-plugin-generator-element'
+    view = new MinimapPluginGeneratorElement()
+    view.attach()
 
   # Calls the `callback` when the minimap package have been activated.
   #

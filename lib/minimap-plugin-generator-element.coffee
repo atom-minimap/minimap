@@ -1,55 +1,75 @@
-path = require 'path'
 _ = require 'underscore-plus'
-{$, BufferedProcess, TextEditorView, View} = require 'atom'
 fs = require 'fs-plus'
+path = require 'path'
+{TextEditor, BufferedProcess} = require 'atom'
+{CompositeDisposable} = require 'event-kit'
 
 module.exports =
-class MinimapPluginGeneratorView extends View
+class MinimapPluginGeneratorElement extends HTMLElement
   previouslyFocusedElement: null
   mode: null
 
-  @content: ->
-    @div class: 'minimap-plugin-generator overlay from-top', =>
-      @subview 'miniEditor', new TextEditorView(mini: true)
-      @div class: 'error', outlet: 'error'
-      @div class: 'message', outlet: 'message'
+  createdCallback: ->
+    @classList.add('minimap-plugin-generator')
+    @classList.add('overlay')
+    @classList.add('from-top')
 
-  initialize: ->
-    @miniEditor.hiddenInput.on 'focusout', => @detach()
-    @on 'core:confirm', => @confirm()
-    @on 'core:cancel', => @detach()
-    @attach('plugin')
+    @editor = new TextEditor(mini: true)
+    @editorElement = atom.views.getView(@editor)
 
-  attach: (@mode) ->
-    @previouslyFocusedElement = $(':focus')
-    @message.text("Enter #{mode} path")
-    atom.views.getView(atom.workspace).appendChild(@element)
+    @error = document.createElement('div')
+    @error.classList.add('error')
+
+    @message = document.createElement('div')
+    @message.classList.add('message')
+
+    @appendChild(@editorElement)
+    @appendChild(@error)
+    @appendChild(@message)
+
+  attachedCallback: ->
+    @previouslyFocusedElement = document.activeElement
+    @message.textContent = "Enter plugin path"
     @setPathText("my-minimap-plugin")
-    @miniEditor.focus()
+    @editorElement.focus()
+
+  attach: ->
+    atom.views.getView(atom.workspace).appendChild(this)
 
   setPathText: (placeholderName, rangeToSelect) ->
-    {editor} = @miniEditor
     rangeToSelect ?= [0, placeholderName.length]
     packagesDirectory = @getPackagesDirectory()
-    editor.setText(path.join(packagesDirectory, placeholderName))
-    pathLength = editor.getText().length
+    @editor.setText(path.join(packagesDirectory, placeholderName))
+    pathLength = @editor.getText().length
     endOfDirectoryIndex = pathLength - placeholderName.length
-    editor.setSelectedBufferRange([[0, endOfDirectoryIndex + rangeToSelect[0]], [0, endOfDirectoryIndex + rangeToSelect[1]]])
+    @editor.setSelectedBufferRange([[0, endOfDirectoryIndex + rangeToSelect[0]], [0, endOfDirectoryIndex + rangeToSelect[1]]])
 
   detach: ->
-    return unless @hasParent()
+    return unless @parentNode?
     @previouslyFocusedElement?.focus()
-    super
+    @parentNode.removeChild(this)
 
   confirm: ->
     if @validPackagePath()
+      @removeChild(@editorElement)
+      @message.innerHTML = """
+        <span class='loading loading-spinner-tiny inline-block'></span>
+        Generate plugin at <span class="text-primary">#{@getPackagePath()}</span>
+      """
       @createPackageFiles =>
         packagePath = @getPackagePath()
-        atom.open(pathsToOpen: [packagePath])
-        @detach()
+        atom.open(pathsToOpen: [packagePath], devMode: atom.config.get('minimap.createPluginInDevMode'))
+
+        @message.innerHTML = """
+          <span class="text-success">Plugin successfully generated, opening it now...</span>
+        """
+
+        setTimeout =>
+          @detach()
+        , 2000
 
   getPackagePath: ->
-    packagePath = @miniEditor.getText()
+    packagePath = @editor.getText()
     packageName = _.dasherize(path.basename(packagePath))
     path.join(path.dirname(packagePath), packageName)
 
@@ -60,8 +80,8 @@ class MinimapPluginGeneratorView extends View
 
   validPackagePath: ->
     if fs.existsSync(@getPackagePath())
-      @error.text("Path already exists at '#{@getPackagePath()}'")
-      @error.show()
+      @error.textContent = "Path already exists at '#{@getPackagePath()}'"
+      @error.style.display = 'block'
       false
     else
       true
@@ -72,7 +92,7 @@ class MinimapPluginGeneratorView extends View
 
   linkPackage: (packagePath, callback) ->
     args = ['link']
-    args.push('--dev') if atom.config.get('package-generator.createInDevMode')
+    args.push('--dev') if atom.config.get('minimap.createPluginInDevMode')
     args.push packagePath.toString()
 
     @runCommand(atom.packages.getApmPath(), args, callback)
@@ -103,3 +123,11 @@ class MinimapPluginGeneratorView extends View
 
   runCommand: (command, args, exit, options={}) ->
     new BufferedProcess({command, args, exit, options})
+
+
+module.exports = MinimapPluginGeneratorElement = document.registerElement 'minimap-plugin-generator', prototype: MinimapPluginGeneratorElement.prototype
+
+atom.commands.add 'minimap-plugin-generator', {
+  'core:confirm': -> @confirm()
+  'core:cancel': -> @detach()
+}
