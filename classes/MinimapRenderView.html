@@ -299,6 +299,66 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#onDidAddDecoration-instance'>
+        ::<strong>onDidAddDecoration</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChangeDecoration-instance'>
+        ::<strong>onDidChangeDecoration</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidChangeScale-instance'>
+        ::<strong>onDidChangeScale</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidRemoveDecoration-instance'>
+        ::<strong>onDidRemoveDecoration</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidUpdate-instance'>
+        ::<strong>onDidUpdate</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onDidUpdateDecoration-instance'>
+        ::<strong>onDidUpdateDecoration</strong>(callback)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#pixelPositionForScreenPosition-instance'>
         Object ::<strong>pixelPositionForScreenPosition</strong>(position)
       </a>
@@ -334,7 +394,7 @@
       </a>
     </span>
     <span class='desc'>
-      Sets the <code>EditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance is displayed.
+      Sets the <code>TextEditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance is displayed.
     </span>
   </li>
   <li>
@@ -365,8 +425,8 @@
     <p class='signature' id='constructor-instance'>
       ::<strong>constructor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L32'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L33'>Source</a>
     </p>
     <div class='docstring'>
   <p>Creates a new <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a>.</p>
@@ -381,8 +441,8 @@
     <p class='signature' id='destroy-instance'>
       ::<strong>destroy</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L64'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L83'>Source</a>
     </p>
     <div class='docstring'>
   <p>Destroys the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance, unsubscribes from the listened events and releases its resources.</p>
@@ -394,8 +454,8 @@
     <p class='signature' id='forceUpdate-instance'>
       ::<strong>forceUpdate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L135'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L171'>Source</a>
     </p>
     <div class='docstring'>
   <p>Forces a render of the whole minimap.</p><p>All the caches are cleared when calling this method. </p>
@@ -407,8 +467,8 @@
     <p class='signature' id='getCharHeight-instance'>
       Number ::<strong>getCharHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L197'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L231'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the height in pixels of a character rendered in the minimap.</p><p>The height of the minimap characters can be changed using the
@@ -431,8 +491,8 @@ to allow for some spacing between lines when rendering the minimap.</p>
     <p class='signature' id='getCharWidth-instance'>
       Number ::<strong>getCharWidth</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L205'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L239'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the width in pixels of a character rendered in the minimap.</p><p>The width of the minimap characters can be changed using the
@@ -454,8 +514,8 @@ to allow for some spacing between lines when rendering the minimap.</p>
     <p class='signature' id='getClientRect-instance'>
       Object ::<strong>getClientRect</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L251'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L285'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the bounds of the whole minimap.</p>
@@ -476,8 +536,8 @@ to allow for some spacing between lines when rendering the minimap.</p>
     <p class='signature' id='getDecorationColor-instance'>
       String ::<strong>getDecorationColor</strong>(decoration)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L309'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L344'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the background color for the passed-in <code>decoration</code> object.</p><p>The color value is read from the DOM by creating a node structure
@@ -508,11 +568,11 @@ provides its own <code>color</code> property.</p>
     <p class='signature' id='getDefaultColor-instance'>
       String ::<strong>getDefaultColor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L281'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L318'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Returns the default text color for an editor content.</p><p>The color value is directly read from the <code>EditorView</code> computed
+  <p>Returns the default text color for an editor content.</p><p>The color value is directly read from the <code>TextEditorView</code> computed
 styles.</p>
 </div>
 <div class='tags'>
@@ -531,8 +591,8 @@ styles.</p>
     <p class='signature' id='getFirstVisibleScreenRow-instance'>
       Number ::<strong>getFirstVisibleScreenRow</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L234'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L268'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the index of the first visible row.</p>
@@ -553,8 +613,8 @@ styles.</p>
     <p class='signature' id='getLastVisibleScreenRow-instance'>
       Number ::<strong>getLastVisibleScreenRow</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L242'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L276'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the index of the last visible row.</p>
@@ -575,8 +635,8 @@ styles.</p>
     <p class='signature' id='getLineHeight-instance'>
       Number ::<strong>getLineHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L186'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L220'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the amount of pixels between lines.</p><p>The space between the minimap lines can be changed using the
@@ -598,8 +658,8 @@ styles.</p>
     <p class='signature' id='getLinesCount-instance'>
       Number ::<strong>getLinesCount</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L215'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L249'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the number of lines in the <code>Editor</code>.</p>
@@ -620,8 +680,8 @@ styles.</p>
     <p class='signature' id='getMinimapHeight-instance'>
       Number ::<strong>getMinimapHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L178'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L212'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the height of the minimap in pixels. Note that the returned height is not the actual height of the minimap canvas but rather the computation of the minimap height if all the lines were rendered.</p><p>This function is used when comparing the minimap to its editor
@@ -643,8 +703,8 @@ to compute the scale factor.</p>
     <p class='signature' id='getMinimapHeightInLines-instance'>
       Number ::<strong>getMinimapHeightInLines</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L229'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L263'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the number of lines the visible area of the minimap covers.</p>
@@ -665,8 +725,8 @@ to compute the scale factor.</p>
     <p class='signature' id='getMinimapScreenHeight-instance'>
       Number ::<strong>getMinimapScreenHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L224'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L258'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the height of the minimap on screen.</p><p>It differs from <a href='../classes/MinimapRenderView.html#getMinimapHeight-instance'>::getMinimapHeight</a> in that the former returns
@@ -689,8 +749,8 @@ of the visible part.</p>
     <p class='signature' id='getTextOpacity-instance'>
       Number ::<strong>getTextOpacity</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L210'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L244'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the opacity at which the text are rendered in the minimap.</p>
@@ -711,8 +771,8 @@ of the visible part.</p>
     <p class='signature' id='getTokenColor-instance'>
       String ::<strong>getTokenColor</strong>(token)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L292'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L330'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the text color for the passed-in <code>token</code> object.</p><p>The color value is read from the DOM by creating a node structure
@@ -740,11 +800,71 @@ that match the token <code>scope</code> property.</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='onDidAddDecoration-instance'>
+      ::<strong>onDidAddDecoration</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L95'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChangeDecoration-instance'>
+      ::<strong>onDidChangeDecoration</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L101'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidChangeScale-instance'>
+      ::<strong>onDidChangeScale</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L92'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidRemoveDecoration-instance'>
+      ::<strong>onDidRemoveDecoration</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L98'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidUpdate-instance'>
+      ::<strong>onDidUpdate</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L88'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onDidUpdateDecoration-instance'>
+      ::<strong>onDidUpdateDecoration</strong>(callback)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L104'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='pixelPositionForScreenPosition-instance'>
       Object ::<strong>pixelPositionForScreenPosition</strong>(position)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L268'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L302'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns a pixel position corresponding to a character&#39;s screen position.</p>
@@ -802,8 +922,8 @@ that match the token <code>scope</code> property.</p>
     <p class='signature' id='requestUpdate-instance'>
       ::<strong>requestUpdate</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L123'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L159'>Source</a>
     </p>
     <div class='docstring'>
   <p>Requests a render of the minimap to be performed on the next frame.</p><p>Only one update can be performed by frame, so calling several time this
@@ -816,8 +936,8 @@ method during a single frame won&#39;t trigger several render. </p>
     <p class='signature' id='scrollTop-instance'>
       Number ::<strong>scrollTop</strong>(scrollTop)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L161'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L195'>Source</a>
     </p>
     <div class='docstring'>
   <p>Changes the scroll top position of the minimap. When called, the minimap is automatically updated.</p>
@@ -847,11 +967,11 @@ method during a single frame won&#39;t trigger several render. </p>
     <p class='signature' id='setEditorView-instance'>
       ::<strong>setEditorView</strong>(editorView)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L73'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L109'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Sets the <code>EditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance is displayed.</p>
+  <p>Sets the <code>TextEditorView</code> for which the <a href='../classes/MinimapRenderView.html'>MinimapRenderView</a> instance is displayed.</p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -859,7 +979,7 @@ method during a single frame won&#39;t trigger several render. </p>
     <li>
       <span class='name'>editorView</span>
       &mdash;
-      <span class='desc'>The <code>EditorView</code> instance.</span>
+      <span class='desc'>The <code>TextEditorView</code> instance.</span>
     </li>
   </ul>
 </div>
@@ -868,8 +988,8 @@ method during a single frame won&#39;t trigger several render. </p>
     <p class='signature' id='stackChanges-instance'>
       ::<strong>stackChanges</strong>(changes)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L151'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L185'>Source</a>
     </p>
     <div class='docstring'>
   <p>Registers changes in the minimap for the next render call.</p><p>Registering changes on an instance will trigger an update request.</p>
@@ -911,8 +1031,8 @@ method during a single frame won&#39;t trigger several render. </p>
       ::<strong>update</strong>()
       (bound)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;minimap-render-view.coffee#L92'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;minimap-render-view.coffee#L126'>Source</a>
     </p>
     <div class='docstring'>
   <p>Performs an update of the minimap.</p>
@@ -924,7 +1044,7 @@ method during a single frame won&#39;t trigger several render. </p>
     </div>
     <div id='footer'>
   Generated on
-  Mon Sep 22 2014 18:57:34 GMT+0200 (CEST)
+  Wed Dec 03 2014 19:09:52 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

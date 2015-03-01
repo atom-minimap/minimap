@@ -129,16 +129,6 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#eachMinimapView-instance'>
-        Object ::<strong>eachMinimapView</strong>(iterator)
-      </a>
-    </span>
-    <span class='desc'>
-      Calls <code>iterator</code> for each present and future minimap views.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#getActiveMinimap-instance'>
         MinimapView ::<strong>getActiveMinimap</strong>()
       </a>
@@ -164,7 +154,17 @@
       </a>
     </span>
     <span class='desc'>
-      Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>EditorView</code>.
+      Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>TextEditorView</code>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#observeMinimaps-instance'>
+        Object ::<strong>observeMinimaps</strong>(iterator)
+      </a>
+    </span>
+    <span class='desc'>
+      Calls <code>iterator</code> for each present and future minimap views.
     </span>
   </li>
   <li>
@@ -181,11 +181,93 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='eachMinimapView-instance'>
-      Object ::<strong>eachMinimapView</strong>(iterator)
+    <p class='signature' id='getActiveMinimap-instance'>
+      MinimapView ::<strong>getActiveMinimap</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;mixins&#47;view-management.coffee#L48'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;mixins&#47;view-management.coffee#L37'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> of the active editor view.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='minimapForEditor-instance'>
+      MinimapView ::<strong>minimapForEditor</strong>(editor)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;mixins&#47;view-management.coffee#L31'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>Editor</code>.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>editorView</span>
+      &mdash;
+      <span class='desc'>An <code>Editor</code> instance</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='minimapForEditorView-instance'>
+      MinimapView ::<strong>minimapForEditorView</strong>(editorView)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;mixins&#47;view-management.coffee#L22'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>TextEditorView</code>.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>editorView</span>
+      &mdash;
+      <span class='desc'>An <code>TextEditorView</code> instance</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='observeMinimaps-instance'>
+      Object ::<strong>observeMinimaps</strong>(iterator)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
+&#47;blob&#47;v3.3.18
+/lib&#47;mixins&#47;view-management.coffee#L49'>Source</a>
     </p>
     <div class='docstring'>
   <p>Calls <code>iterator</code> for each present and future minimap views. It returns a subscription <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> with a <code>off</code> method so that it is possible to unsubscribe the iterator from being called for future views.</p>
@@ -215,93 +297,11 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='getActiveMinimap-instance'>
-      MinimapView ::<strong>getActiveMinimap</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;mixins&#47;view-management.coffee#L36'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> of the active editor view.</p>
-</div>
-<div class='tags'>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
-      &mdash;
-      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='minimapForEditor-instance'>
-      MinimapView ::<strong>minimapForEditor</strong>(editor)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;mixins&#47;view-management.coffee#L30'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>Editor</code>.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>editorView</span>
-      &mdash;
-      <span class='desc'>An <code>Editor</code> instance</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
-      &mdash;
-      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='minimapForEditorView-instance'>
-      MinimapView ::<strong>minimapForEditorView</strong>(editorView)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;mixins&#47;view-management.coffee#L21'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Returns the <a href='../classes/MinimapView.html'>MinimapView</a> object associated to the passed-in <code>EditorView</code>.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>editorView</span>
-      &mdash;
-      <span class='desc'>An <code>EditorView</code> instance</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (<tt><a href='../classes/MinimapView.html'>MinimapView</a></tt>)
-      &mdash;
-      <span class='desc'>Returns a <a href='../classes/MinimapView.html'>MinimapView</a>.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='updateAllViews-instance'>
       ::<strong>updateAllViews</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;fundon&#47;atom-minimap
-&#47;blob&#47;v3.1.0
-/lib&#47;mixins&#47;view-management.coffee#L12'>Source</a>
+&#47;blob&#47;v3.3.18
+/lib&#47;mixins&#47;view-management.coffee#L13'>Source</a>
     </p>
     <div class='docstring'>
   <p>Updates all views currently in use.</p>
@@ -313,7 +313,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Mon Sep 22 2014 18:57:34 GMT+0200 (CEST)
+  Wed Dec 03 2014 19:09:52 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
