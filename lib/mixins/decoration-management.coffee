@@ -108,6 +108,8 @@ class DecorationManagement extends Mixin
   # * __highlight-over__: Same as __highlight__.
   # * __highlight-under__: Renders a colored rectangle on the minimap. The
   #   highlight is rendered below the line's text.
+  # * __highlight-outline__: Renders a colored outline on the minimap. The
+  #   highlight box is rendered above the line's text.
   #
   # marker - A `Marker` you want this decoration to follow.
   # decorationParams - An {Object} representing the decoration eg.

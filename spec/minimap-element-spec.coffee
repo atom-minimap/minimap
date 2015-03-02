@@ -189,6 +189,19 @@ describe 'MinimapElement', ->
         expect(minimapElement.drawHighlightDecoration).toHaveBeenCalled()
         expect(minimapElement.drawHighlightDecoration.calls.length).toEqual(2)
 
+      it 'renders the visible outline decorations', ->
+        spyOn(minimapElement, 'drawHighlightOutlineDecoration').andCallThrough()
+
+        minimap.decorateMarker(editor.markBufferRange([[1,4], [3,6]]), type: 'highlight-outline', color: '#0000ff')
+        minimap.decorateMarker(editor.markBufferRange([[6,0], [6,7]]), type: 'highlight-outline', color: '#0000ff')
+        minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), type: 'highlight-outline', color: '#0000ff')
+
+        editor.setScrollTop(0)
+        nextAnimationFrame()
+
+        expect(minimapElement.drawHighlightOutlineDecoration).toHaveBeenCalled()
+        expect(minimapElement.drawHighlightOutlineDecoration.calls.length).toEqual(4)
+
       describe 'when the editor is scrolled', ->
         beforeEach ->
           editor.setScrollTop(2000)
