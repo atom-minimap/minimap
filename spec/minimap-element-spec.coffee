@@ -279,7 +279,8 @@ describe 'MinimapElement', ->
           atom.config.set 'minimap.scrollAnimation', false
           canvas = minimapElement.canvas
           mousedown(canvas)
-          nextAnimationFrame()
+          waitsFor -> nextAnimationFrame isnt noAnimationFrame
+          runs -> nextAnimationFrame()
 
         it 'scrolls the editor to the line below the mouse', ->
           expect(editor.getScrollTop()).toEqual(360)
@@ -291,12 +292,13 @@ describe 'MinimapElement', ->
           atom.config.set 'minimap.scrollAnimation', true
           canvas = minimapElement.canvas
           mousedown(canvas)
+          waitsFor -> nextAnimationFrame isnt noAnimationFrame
 
         it 'scrolls the editor gradually to the line below the mouse', ->
           # wait until all animations run out
           waitsFor ->
             nextAnimationFrame()
-            return nextAnimationFrame == noAnimationFrame
+            return nextAnimationFrame is noAnimationFrame
 
           runs ->
             expect(editor.getScrollTop()).toEqual(360)
