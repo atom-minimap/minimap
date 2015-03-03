@@ -16,6 +16,18 @@ apm install minimap
 * Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
 * Canvas-based Rendering: Simple, fast and flexible.
 
+
+### Available Plugins
+
+Below is the list of available plugins so far:
+
+  * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
+  * [Git Diff](https://atom.io/packages/minimap-git-diff)
+  * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
+  * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
+  * [Selection](https://atom.io/packages/minimap-selection)
+  * [Bookmarks](https://atom.io/packages/minimap-bookmarks)
+
 ### Settings
 
 * `Auto Toggle`: If checked the minimap is toggled on at startup. (default=true)
@@ -66,16 +78,6 @@ Use the `Minimap: Generate Plugin` command available in the command palette or a
 'atom-workspace':
   'ctrl-alt-cmd-m': 'minimap:generate-plugin'
 ```
-
-#### Available Plugins
-
-Below is the list of available plugins so far:
-
-  * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
-  * [Git Diff](https://atom.io/packages/minimap-git-diff)
-  * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
-  * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
-  * [Selection](https://atom.io/packages/minimap-selection)
 
 #### Plugins Controls
 
