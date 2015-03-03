@@ -1,3 +1,15 @@
+<a name="v4.5.0"></a>
+# v4.5.0 (2015-03-03)
+
+## :sparkles: Features
+
+- Add a highlight-outline decoration mode ([45bf0f44](https://github.com/atom-minimap/minimap/commit/45bf0f44ae9c8b6d7a0036f2e1ad971ac2c639f7))
+  <br>It works like a highlight but only render the outline
+
+## :bug: Bug Fixes
+
+- Fix plugin generation view ([30bea55c](https://github.com/atom-minimap/minimap/commit/30bea55c9ce8c408c1165ca3922c6e77c4b8ea4b))
+
 <a name="v4.4.0"></a>
 # v4.4.0 (2015-03-01)
 
