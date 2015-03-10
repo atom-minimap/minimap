@@ -258,6 +258,15 @@ describe 'MinimapElement', ->
           expect(minimapElement.canvas.width).toEqual(canvasWidth)
           expect(minimapElement.canvas.height).toEqual(canvasHeight)
 
+        describe 'from hidden to visible', ->
+          beforeEach ->
+            spyOn(minimapElement, 'requestForcedUpdate')
+            editorElement.style.display = ''
+            minimapElement.pollDOM()
+
+          it 'requests an update of the whole minimap', ->
+            expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+
     #     ######   ######  ########   #######  ##       ##
     #    ##    ## ##    ## ##     ## ##     ## ##       ##
     #    ##       ##       ##     ## ##     ## ##       ##

@@ -297,7 +297,11 @@ class MinimapElement extends HTMLElement
     @requestForcedUpdate() if @attached
 
   pollDOM: ->
-    @measureHeightAndWidth(false) if @isVisible()
+    if @isVisible()
+      @requestForcedUpdate() unless !@wasVisible
+
+      @measureHeightAndWidth(false)
+
 
   checkForVisibilityChange: ->
     if @isVisible()
