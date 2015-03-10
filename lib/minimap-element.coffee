@@ -370,10 +370,10 @@ class MinimapElement extends HTMLElement
     scrollTop = row * textEditor.getLineHeightInPixels() - textEditor.getHeight() / 2
 
     if atom.config.get('minimap.scrollAnimation')
-      duration = 300
       from = textEditor.getScrollTop()
       to = scrollTop
       step = (now) => textEditor.setScrollTop(now)
+      duration = atom.config.get('minimap.scrollAnimationDuration')
       @animate(from: from, to: to, duration: duration, step: step)
     else
       textEditor.setScrollTop(scrollTop)
