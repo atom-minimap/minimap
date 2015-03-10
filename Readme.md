@@ -40,6 +40,8 @@ Below is the list of available plugins so far:
 * `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.** (default=true)
 * `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the minimap height is bigger than the editor view height. (default=true)
 * `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
+* `Scroll Animation`: Enable animations when scrolling the editor by clicking on the minimap.
+* `Scroll Animation Duration`: Duration of the scroll animation when clicking on the minimap.
 * `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
 
 For instance the following result is obtained by setting a `Char Height` of `1px`:
