@@ -70,7 +70,7 @@ describe 'MinimapElement', ->
   #    ##     ##    ##       ##    ##     ##  ######  ##     ##
 
   describe 'when attached to the text editor element', ->
-    [noAnimationFrame, nextAnimationFrame, canvas, visibleArea] = []
+    [noAnimationFrame, nextAnimationFrame, lastFn, canvas, visibleArea] = []
 
     beforeEach ->
       # Comment after body below to leave the created text editor and minimap
@@ -82,6 +82,7 @@ describe 'MinimapElement', ->
 
       requestAnimationFrameSafe = window.requestAnimationFrame
       spyOn(window, 'requestAnimationFrame').andCallFake (fn) ->
+        lastFn = fn
         nextAnimationFrame = ->
           nextAnimationFrame = noAnimationFrame
           fn()
@@ -284,8 +285,8 @@ describe 'MinimapElement', ->
         editor.setScrollTop(0)
         editor.setScrollLeft(0)
 
-        sleep(150)
-        runs -> nextAnimationFrame()
+        minimapElement.measureHeightAndWidth()
+        nextAnimationFrame()
 
       describe 'using the mouse scrollwheel over the minimap', ->
         beforeEach ->
@@ -298,22 +299,31 @@ describe 'MinimapElement', ->
 
       describe 'pressing the mouse on the minimap canvas (without scroll animation)', ->
         beforeEach ->
+          t = 0
+          spyOn(minimapElement, 'getTime').andCallFake -> n = t; t += 100; n
+          spyOn(minimapElement, 'requestUpdate').andCallFake ->
+
           atom.config.set 'minimap.scrollAnimation', false
+
           canvas = minimapElement.canvas
           mousedown(canvas)
-          waitsFor -> nextAnimationFrame isnt noAnimationFrame
-          runs -> nextAnimationFrame()
 
         it 'scrolls the editor to the line below the mouse', ->
           expect(editor.getScrollTop()).toEqual(360)
 
       describe 'pressing the mouse on the minimap canvas (with scroll animation)', ->
         beforeEach ->
-          expect(editor.getScrollTop()).toEqual(0)
+
+          t = 0
+          spyOn(minimapElement, 'getTime').andCallFake -> n = t; t += 100; n
+          spyOn(minimapElement, 'requestUpdate').andCallFake ->
 
           atom.config.set 'minimap.scrollAnimation', true
+          atom.config.set 'minimap.scrollAnimationDuration', 300
+
           canvas = minimapElement.canvas
           mousedown(canvas)
+
           waitsFor -> nextAnimationFrame isnt noAnimationFrame
 
         it 'scrolls the editor gradually to the line below the mouse', ->

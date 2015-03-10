@@ -365,18 +365,18 @@ class MinimapElement extends HTMLElement
     y = pageY - target.getBoundingClientRect().top
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
 
-    scrollTop = row * @minimap.textEditor.getLineHeightInPixels() - @minimap.textEditor.getHeight() / 2
+    textEditor = @minimap.getTextEditor()
 
-    from = @minimap.textEditor.getScrollTop()
-    to = scrollTop
-    step = (now) =>
-      @minimap.textEditor.setScrollTop(now)
+    scrollTop = row * textEditor.getLineHeightInPixels() - textEditor.getHeight() / 2
+
     if atom.config.get('minimap.scrollAnimation')
       duration = 300
+      from = textEditor.getScrollTop()
+      to = scrollTop
+      step = (now) => textEditor.setScrollTop(now)
+      @animate(from: from, to: to, duration: duration, step: step)
     else
-      duration = 0
-
-    @animate(from: from, to: to, duration: duration, step: step)
+      textEditor.setScrollTop(scrollTop)
 
   relayMousewheelEvent: (e) =>
     editorElement = atom.views.getView(@minimap.textEditor)
@@ -451,14 +451,16 @@ class MinimapElement extends HTMLElement
     else
       "scale(#{x}, #{y})"
 
+  getTime: -> new Date()
+
   animate: ({from, to, duration, step}) ->
-    start = new Date()
+    start = @getTime()
 
     swing = (progress) ->
       return 0.5 - Math.cos( progress * Math.PI ) / 2
 
-    update = ->
-      passed = new Date() - start
+    update = =>
+      passed = @getTime() - start
       if duration == 0
         progress = 1
       else
@@ -466,7 +468,9 @@ class MinimapElement extends HTMLElement
       progress = 1 if progress > 1
       delta = swing(progress)
       step(from + (to-from)*delta)
-      requestAnimationFrame(update) if progress < 1
+
+      if progress < 1
+        requestAnimationFrame(update)
 
     update()
 
