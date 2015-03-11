@@ -278,7 +278,7 @@ class Main
       disposable.dispose()
     disposable
 
-  # Internal: Registers
+  # Internal: Registers to the `observeTextEditors` method.
   initSubscriptions: ->
     @subscriptions.add atom.workspace.observeTextEditors (textEditor) =>
       minimap = @minimapForEditor(textEditor)
