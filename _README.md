@@ -77,13 +77,13 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 
 ### Minimap Decorations
 
-The minimap view mimic the decoration API available on editors so that you can easily add your own decorations on the minimap.
+The Minimap package mimic the decoration API available on editors so that you can easily add your own decorations on the Minimap.
 
 While the interface is the same, some details such as the available decorations types change relatively to the editor's decorations API.
 
 #### Scope And Styling
 
-The most important change is that decorations on the minimap doesn't use a `class`, but rather a `scope`
+The most important change is that decorations on the Minimap doesn't use a `class`, but rather a `scope`
 
 ```coffee
 minimapView.decorateMarker(marker, type: 'line', scope: '.scope .to .the.marker.style')
