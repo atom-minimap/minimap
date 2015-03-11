@@ -1,7 +1,7 @@
 Mixin = require 'mixto'
 path = require 'path'
 {Emitter} = require 'event-kit'
-Decoration = require path.join(atom.config.resourcePath, 'src', 'decoration')
+Decoration = null
 
 # Public: The mixin that provides the decorations API to the minimap editor
 # view.
@@ -18,6 +18,8 @@ class DecorationManagement extends Mixin
     @decorationMarkerDestroyedSubscriptions = {}
     @decorationUpdatedSubscriptions = {}
     @decorationDestroyedSubscriptions = {}
+
+    Decoration ?= require path.join(atom.config.resourcePath, 'src', 'decoration')
 
   onDidAddDecoration: (callback) ->
     @emitter.on 'did-add-decoration', callback
