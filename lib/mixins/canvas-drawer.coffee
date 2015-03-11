@@ -1,7 +1,15 @@
 Mixin = require 'mixto'
 
+# Public: The {CanvasDrawer} mixin is responsible for the rendering of a
+# {Minimap} in a `canvas` element.
+#
+# This mixin is injected in the {MinimapElement} prototype, so all these methods
+# are available on any {MinimapElement} instance.
 module.exports =
 class CanvasDrawer extends Mixin
+  ### Public ###
+
+  # Initializes the canvas elements needed to perform the {Minimap} rendering.
   initializeCanvas: ->
     @canvas = document.createElement('canvas')
     @context = @canvas.getContext('2d')
@@ -11,6 +19,8 @@ class CanvasDrawer extends Mixin
     @offscreenCanvas = document.createElement('canvas')
     @offscreenContext = @offscreenCanvas.getContext('2d')
 
+  # Performs an update of the rendered {Minimap} based on the changes registered
+  # in the instance.
   updateCanvas: ->
     firstRow = @minimap.getFirstVisibleScreenRow()
     lastRow = @minimap.getLastVisibleScreenRow()
@@ -40,6 +50,9 @@ class CanvasDrawer extends Mixin
   #    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
   #     ######   #######  ########  #######  ##     ##  ######
 
+  # Returns the opacity value to use when rendering the {Minimap} text.
+  #
+  # Returns a {Number}.
   getTextOpacity: -> @textOpacity
 
   # Returns the default text color for an editor content.

@@ -5,6 +5,9 @@ Decoration = null
 
 # Public: The mixin that provides the decorations API to the minimap editor
 # view.
+#
+# This mixin is injected into the {Minimap} prototype, so every methods defined
+# in this file will be available on any {Minimap} instance.
 module.exports =
 class DecorationManagement extends Mixin
   ### Public ###
@@ -21,15 +24,48 @@ class DecorationManagement extends Mixin
 
     Decoration ?= require path.join(atom.config.resourcePath, 'src', 'decoration')
 
+  # Registers an event listener to the `did-add-decoration` event.
+  #
+  # callback - The {Function} to call when the event is triggered.
+  #            The callback will be called with an object with the following
+  #            properties:
+  #            marker - The {Marker} object that was decorated.
+  #            decoration - The {Decoration} object that was created.
   onDidAddDecoration: (callback) ->
     @emitter.on 'did-add-decoration', callback
 
+  # Registers an event listener to the `did-remove-decoration` event.
+  #
+  # callback - The {Function} to call when the event is triggered.
+  #            The callback will be called with an object with the following
+  #            properties:
+  #            marker - The {Marker} object targeted by the decoration that
+  #                     was removed.
+  #            decoration - The {Decoration} object that was removed.
   onDidRemoveDecoration: (callback) ->
     @emitter.on 'did-remove-decoration', callback
 
+  # Registers an event listener to the `did-change-decoration` event.
+  #
+  # This event is triggered when the marker targeted by the decoration
+  # was changed.
+  #
+  # callback - The {Function} to call when the event is triggered.
+  #            The callback will be called with an object with the following
+  #            properties:
+  #            marker - The {Marker} object targeted by the decoration.
+  #            decoration - The {Decoration} object.
+  #            event - The original {Event} object dispatched by the {Marker}.
   onDidChangeDecoration: (callback) ->
     @emitter.on 'did-change-decoration', callback
 
+  # Registers an event listener to the `did-update-decoration` event.
+  #
+  # This event is triggered when the decoration itself is modified.
+  #
+  # callback - The {Function} to call when the event is triggered.
+  #            The callback will be called with the {Decoration} that was
+  #            updated.
   onDidUpdateDecoration: (callback) ->
     @emitter.on 'did-update-decoration', callback
 
@@ -235,7 +271,7 @@ class DecorationManagement extends Mixin
 
   # Removes all the decorations registered for the passed-in marker.
   #
-  # marker - The `marker` for which removing decorations.
+  # marker - The {Marker} for which removing decorations.
   removeAllDecorationsForMarker: (marker) ->
     return unless marker?
     decorations = @decorationsByMarkerId[marker.id]?.slice()
@@ -248,7 +284,7 @@ class DecorationManagement extends Mixin
 
   # Internal: Performs the removal of a decoration for a given marker.
   #
-  # marker - The `marker` for which removing decorations.
+  # marker - The {Marker} for which removing decorations.
   removedAllMarkerDecorations: (marker) ->
     return unless marker?
     @decorationMarkerChangedSubscriptions[marker.id].dispose()
@@ -258,6 +294,7 @@ class DecorationManagement extends Mixin
     delete @decorationMarkerChangedSubscriptions[marker.id]
     delete @decorationMarkerDestroyedSubscriptions[marker.id]
 
+  # Removes all the decorations that was created in the current {Minimap}.
   removeAllDecorations: ->
     sub.dispose() for id,sub of @decorationMarkerChangedSubscriptions
     sub.dispose() for id,sub of @decorationMarkerDestroyedSubscriptions

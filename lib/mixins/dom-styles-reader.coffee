@@ -1,8 +1,12 @@
 Mixin = require 'mixto'
 
+# Public: This mixin is used by the {CanvasRenderer} in {MinimapElement} to
+# read the styles informations from the DOM to use when rendering the {Minimap}.
 module.exports =
 class DOMStylesReader extends Mixin
-  # Internal: This function insert a dummy element in the DOM to compute
+  ### Public ###
+
+  # This function insert a dummy element in the DOM to compute
   # its style, return the specified property, and remove the element
   # from the DOM.
   #
@@ -39,7 +43,9 @@ class DOMStylesReader extends Mixin
     @constructor.domStylesCache[key][property] = value unless value is ""
     value
 
-  # Internal: Creates a DOM node container for all the operations that
+  ### Internal ###
+
+  # Creates a DOM node container for all the operations that
   # need to read styles properties from DOM.
   ensureDummyNodeExistence: (shadowRoot) ->
     unless @dummyNode?
@@ -48,12 +54,16 @@ class DOMStylesReader extends Mixin
 
     @getDummyDOMRoot(shadowRoot).appendChild(@dummyNode)
 
+  # Ensures the presence of the cache {Object} in the class that received
+  # this mixin.
   ensureCache: ->
     @constructor.domStylesCache ?= {}
 
+  # Invalidates the cache by emptying the cache {Object}.
   invalidateCache: ->
     @constructor.domStylesCache = {}
 
+  # Invalidates the cache only for the first tokenization event.
   invalidateIfFirstTokenization: ->
     return if @constructor.hasTokenizedOnce
 
