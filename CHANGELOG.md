@@ -1,3 +1,15 @@
+<a name="v4.6.0"></a>
+# v4.6.0 (2015-03-11)
+
+## :sparkles: Features
+
+- Add a setting for scroll animation duration ([32663de0](https://github.com/atom-minimap/minimap/commit/32663de09c39353c40b4a20fbbf5d41311968591))  <br>Useful in test so that we can override it. Also if people want to tweak
+  it, it’s now possible.
+
+## :bug: Bug Fixes
+
+- Fix missing forced update when minimap become visible again ([8ed9aae0](https://github.com/atom-minimap/minimap/commit/8ed9aae0ee5e0dfc5aebb506b1de75b2a11a5123))
+
 <a name="v4.5.0"></a>
 # v4.5.0 (2015-03-03)
 
