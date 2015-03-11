@@ -4,6 +4,8 @@ path = require 'path'
 {TextEditor, BufferedProcess} = require 'atom'
 {CompositeDisposable} = require 'event-kit'
 
+# Internal: The {MinimapPluginGeneratorElement} is used whenever the user
+# triggers the `minimap:generate-plugin` command.
 module.exports =
 class MinimapPluginGeneratorElement extends HTMLElement
   previouslyFocusedElement: null

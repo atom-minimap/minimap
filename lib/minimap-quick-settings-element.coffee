@@ -3,6 +3,8 @@
 
 Main = require './main'
 
+# Internal: The {MinimapQuickSettingsElement} class is used to display
+# the Minimap quick settings when clicking on the corresponding button.
 module.exports =
 class MinimapQuickSettingsElement extends HTMLElement
   SpacePenDSL.includeInto(this)
