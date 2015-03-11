@@ -423,9 +423,6 @@ class CanvasDrawer extends Mixin
     for change in @pendingChanges
       newIntactRanges = []
       for range in intactRanges
-        if isNaN(change.screenDelta)
-          change.screenDelta = change.end - change.start
-
         if change.end < range.start and change.screenDelta != 0
           newIntactRanges.push(
             start: range.start + change.screenDelta

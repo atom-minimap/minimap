@@ -198,7 +198,7 @@ class DecorationManagement extends Mixin
 
       [start, end] = [end, start] if start.row > end.row
 
-      @emitRangeChanges({start, end, screenDelta: end - start})
+      @emitRangeChanges({start, end})
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
@@ -229,14 +229,12 @@ class DecorationManagement extends Mixin
   # Internal: Emits a change for the specified range.
   #
   # range - The `Range` to emits changes for.
-  emitRangeChanges: (range) ->
+  emitRangeChanges: (range, screenDelta) ->
     startScreenRow = range.start.row
     endScreenRow = range.end.row
     lastRenderedScreenRow  = @getLastVisibleScreenRow()
     firstRenderedScreenRow = @getFirstVisibleScreenRow()
-    screenDelta = (lastRenderedScreenRow - firstRenderedScreenRow) - (endScreenRow - startScreenRow)
-
-    screenDelta = 0 if isNaN(screenDelta)
+    screenDelta ?= (lastRenderedScreenRow - firstRenderedScreenRow) - (endScreenRow - startScreenRow)
 
     changeEvent =
       start: startScreenRow
