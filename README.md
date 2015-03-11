@@ -12,7 +12,7 @@ apm install minimap
 
 ### Features
 
-* Plugin API: Use the plugin generation command and start developing your plugin right away.
+* Service-based Plugin API: Use the plugin generation command and start developing your plugin right away.
 * Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
 * Canvas-based Rendering: Simple, fast and flexible.
 
@@ -30,19 +30,19 @@ Below is the list of available plugins so far:
 
 ### Settings
 
-* `Auto Toggle`: If checked the minimap is toggled on at startup. (default=true)
+* `Auto Toggle`: If checked the Minimap is toggled on at startup. (default=true)
 * `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
-* `Display Minimap On Left`: If checked the minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
-* `Char Height`: The height of a character in the minimap in pixels. (default=2)
-* `Char Width`: The width of a character in the minimap in pixels. (default=1)
-* `Interline`: The space between lines in the minimap in pixels. (default=1)
-* `Text Opacity`: The opacity used to render the line text in the minimap. (default=0.6)
-* `Display Plugins Controls`: If checked, the minimap plugins can be activated/deactivated from the minimap settings view and a quick settings dropdown will be available on the top right corner of the minimap. **You need to restart Atom for this setting to be effective.** (default=true)
-* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. The side line appear only if the minimap height is bigger than the editor view height. (default=true)
-* `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the minimap settings view.
-* `Scroll Animation`: Enable animations when scrolling the editor by clicking on the minimap.
-* `Scroll Animation Duration`: Duration of the scroll animation when clicking on the minimap.
-* `Use Hardware Acceleration`: If checked the minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
+* `Display Minimap On Left`: If checked the Minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
+* `Char Height`: The height of a character in the Minimap in pixels. (default=2)
+* `Char Width`: The width of a character in the Minimap in pixels. (default=1)
+* `Interline`: The space between lines in the Minimap in pixels. (default=1)
+* `Text Opacity`: The opacity used to render the line text in the Minimap. (default=0.6)
+* `Display Plugins Controls`: If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. **You need to restart Atom for this setting to be effective.** (default=true)
+* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)
+* `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
+* `Scroll Animation`: Enable animations when scrolling the editor by clicking on the Minimap.
+* `Scroll Animation Duration`: Duration of the scroll animation when clicking on the Minimap.
+* `Use Hardware Acceleration`: If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
 
 For instance the following result is obtained by setting a `Char Height` of `1px`:
 
@@ -71,7 +71,7 @@ Use the `Minimap: Generate Plugin` command available in the command palette or a
 
 #### Plugins Controls
 
-When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the minimap package settings or by using the quick settings dropdown available on the mimimap itself:
+When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the Minimap package settings or by using the quick settings dropdown available on the Mimimap itself:
 
 ![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/plugins-list.gif?raw=true)
 
@@ -98,9 +98,9 @@ minimapView.decorateMarker(marker, type: 'line', class: 'the marker style')
 
 In that case, when rendering the decoration a scope will be build that will look like `.minimap .editor .the.marker.style`.
 
-The reason of using a scope rather than a class is that while editor's decorations are part of the dom and benefit of the styles cascading, minimap's decorations, rendered in a canvas, do not. In order to work around that, decoration's styles are defined using a `scope` property containing the selector allowing to retrieve the decoration style.
+The reason of using a scope rather than a class is that while editor's decorations are part of the DOM and benefit of the styles cascading, Minimap's decorations, rendered in a canvas, do not. In order to work around that, decoration's styles are defined using a `scope` property containing the selector allowing to retrieve the decoration style.
 
-This allow the minimap decorations to still be stylable using css. For instance, the scope used by the `minimap-selection` package is:
+This allow the Minimap decorations to still be styled using css. For instance, the scope used by the `minimap-selection` package is:
 
 ```css
 .minimap .editor .selection .region {
@@ -108,7 +108,7 @@ This allow the minimap decorations to still be stylable using css. For instance,
 }
 ```
 
-Note that the scope is prefixed with `.minimap` so that you can override the selection style in the minimap without impacting the editor's one.
+Note that the scope is prefixed with `.minimap` so that you can override the selection style in the Minimap without impacting the editor's one.
 
 Also note that only the `background` property will be retrieved to style a decoration.
 
@@ -122,12 +122,12 @@ In that case neither the scope nor the class will be used.
 
 #### Decorations Types
 
-Another non-trivial change is the list of available decoration's type. At the time, the available types on the minimap are:
+Another non-trivial change is the list of available decoration's type. At the time, the available types on the Minimap are:
 
 - `line`: Same as the editor one, it colors the line background with a color extracted from the decoration scope.
 - `highlight-under`: Correspond to an editor `highlight` decoration that is rendered before rendering the line content.
 - `highlight-over`, `highlight`: Correspond to an editor `highlight` decoration that is rendered after having rendered the line content.
-- `highlight-outline`: Correspond to an editor `highlight` decoration that is rendered only as an outline in the minimap.
+- `highlight-outline`: Correspond to an editor `highlight` decoration that is rendered only as an outline in the Minimap.
 
 ### Tweaking The Minimap
 
@@ -173,7 +173,7 @@ atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator {
 
 ### Contributing
 
-The `minimap` package try to follow the [Atom contribution guidelines](https://atom.io/docs/latest/contributing).
+The Minimap package try to follow the [Atom contribution guidelines](https://atom.io/docs/latest/contributing).
 
 Especially, the commits should follow the conventions defined in the *Git Commit Messages* section of the guideline.
 
