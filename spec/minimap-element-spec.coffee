@@ -305,6 +305,52 @@ describe 'MinimapElement', ->
         it 'relays the events to the editor view', ->
           expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
 
+      describe 'middle clicking the minimap', ->
+        [canvas, visibleArea, originalTop, originalLeft, maxScroll] = []
+
+        beforeEach ->
+          canvas = minimapElement.canvas
+          visibleArea = minimapElement.visibleArea
+          {top, left} = visibleArea.getBoundingClientRect()
+          [originalTop, originalLeft] = [top, left]
+          maxScroll = minimap.getTextEditorMaxScrollTop()
+
+        it 'scrolls to the top using the middle mouse button', ->
+          mousedown(canvas, x: originalLeft + 1, y: 0, btn: 1)
+          expect(editor.getScrollTop()).toEqual(0)
+
+        describe 'scrolling to the middle using the middle mouse button', ->
+          canvasMidY = undefined
+
+          beforeEach ->
+            editorMidY = editor.getHeight() / 2.0
+            {top, height} = canvas.getBoundingClientRect()
+            canvasMidY = top + (height / 2.0)
+            actualMidY = Math.min(canvasMidY, editorMidY)
+            mousedown(canvas, x: originalLeft + 1, y: actualMidY, btn: 1)
+
+          it 'scrolls the editor to the middle', ->
+            middleScrollTop = Math.round((maxScroll) / 2.0)
+            expect(editor.getScrollTop()).toEqual(middleScrollTop)
+
+          it 'updates the visible area to be centered', ->
+            nextAnimationFrame()
+            {top, height} = visibleArea.getBoundingClientRect()
+            visibleCenterY = top + (height / 2)
+            expect(visibleCenterY).toBeCloseTo(canvasMidY, 0)
+
+        it 'scrolls the editor to an arbitrary location', ->
+          scrollTo = 100 # pixels
+          scrollRatio = (scrollTo - minimap.getTextEditorScaledHeight()/2) /
+            (minimap.getVisibleHeight() - minimap.getTextEditorScaledHeight())
+          scrollRatio = Math.max(0, scrollRatio)
+          scrollRatio = Math.min(1, scrollRatio)
+
+          mousedown(canvas, x: originalLeft + 1, y: scrollTo, btn: 1)
+
+          expectedScroll = maxScroll * scrollRatio
+          expect(editor.getScrollTop()).toBeCloseTo(expectedScroll, 0)
+
       describe 'pressing the mouse on the minimap canvas (without scroll animation)', ->
         beforeEach ->
           t = 0

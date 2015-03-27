@@ -450,9 +450,14 @@ class MinimapElement extends HTMLElement
   # {MinimapElement} canvas.
   #
   # event - The {Event} object.
-  mousePressedOverCanvas: ({which, pageY, target}) ->
-    return if which isnt 1
+  mousePressedOverCanvas: (e) ->
+    if e.which is 1
+      @leftMousePressedOverCanvas(e)
+    else if e.which is 2
+      @middleMousePressedOverCanvas(e)
+    else return
 
+  leftMousePressedOverCanvas: ({pageY, target}) ->
     y = pageY - target.getBoundingClientRect().top
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
 
@@ -468,6 +473,16 @@ class MinimapElement extends HTMLElement
       @animate(from: from, to: to, duration: duration, step: step)
     else
       textEditor.setScrollTop(scrollTop)
+
+  middleMousePressedOverCanvas: ({pageY}) ->
+    {top: offsetTop} = @getBoundingClientRect()
+    y = pageY - offsetTop - @minimap.getTextEditorScaledHeight()/2
+
+    ratio = y /
+      (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
+
+    @minimap.textEditor.setScrollTop(
+      ratio * @minimap.getTextEditorMaxScrollTop())
 
   # Internal: A method that relays the `mousewheel` events received by
   # the {MinimapElement} to the {TextEditorElement}.
@@ -491,6 +506,9 @@ class MinimapElement extends HTMLElement
   #
   # event - The {Event} object.
   startDrag: ({which, pageY}) ->
+    if which is 2
+      @mousePressedOverCanvas({which, pageY})
+
     return if which isnt 1
     {top} = @visibleArea.getBoundingClientRect()
     {top: offsetTop} = @getBoundingClientRect()
