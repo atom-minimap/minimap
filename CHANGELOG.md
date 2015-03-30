@@ -1,3 +1,10 @@
+<a name="v4.7.0"></a>
+# v4.7.0 (2015-03-30)
+
+## :bug: Bug Fixes
+
+- Fix not update when user-styles reload, ([af961750](https://github.com/atom-minimap/minimap/commit/af9617505fe4b217b34dc2ce1c0bd3f01fc34b73), [#303](https://github.com/atom-minimap/minimap/issues/303))
+
 <a name="v4.6.0"></a>
 # v4.6.0 (2015-03-11)
 
