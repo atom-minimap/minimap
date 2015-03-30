@@ -448,13 +448,15 @@ describe 'MinimapElement', ->
     #    ##    ## ##     ## ##   ### ##        ##  ##    ##
     #     ######   #######  ##    ## ##       ####  ######
 
-    describe 'when the atom themes are changed', ->
+    describe 'when the atom styles are changed', ->
       beforeEach ->
         nextAnimationFrame()
         spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
         spyOn(minimapElement, 'invalidateCache').andCallThrough()
 
-        atom.themes.emitter.emit 'did-change-active-themes'
+        styleNode = document.createElement('style')
+        styleNode.textContent = 'body{ color: #233; }'
+        atom.styles.emitter.emit 'did-add-style-element', styleNode
 
         waitsFor -> minimapElement.frameRequested
 

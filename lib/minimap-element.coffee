@@ -40,7 +40,12 @@ class MinimapElement extends HTMLElement
     @subscriptions = new CompositeDisposable
     @initializeContent()
 
-    @subscriptions.add atom.themes.onDidChangeActiveThemes =>
+    # Uses of `atom.styles.onDidAddStyleElement` instead of
+    # `atom.themes.onDidChangeActiveThemes`.
+    # Why?
+    # Currently, The styleElement will be removed first,
+    # and then re-add. So the `change` event has not be triggered.
+    @subscriptions.add atom.styles.onDidAddStyleElement =>
       @invalidateCache()
       @requestForcedUpdate()
 
