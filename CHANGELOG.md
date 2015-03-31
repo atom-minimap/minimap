@@ -1,3 +1,10 @@
+<a name="v4.7.1"></a>
+# v4.7.1 (2015-03-31)
+
+## :bug: Bug Fixes
+
+- Fix minimap dragging stopped at the end of the canvas ([d4c02dfb](https://github.com/atom-minimap/minimap/commit/d4c02dfb73cda0b852f25720776bb151802407ee), [#306](https://github.com/atom-minimap/minimap/issues/306))
+
 <a name="v4.7.0"></a>
 # v4.7.0 (2015-03-30)
 
