@@ -244,8 +244,8 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
           expect(minimapElement.drawLines).toHaveBeenCalled()
-          expect(minimapElement.drawLines.argsForCall[1][1]).toEqual(110)
-          expect(minimapElement.drawLines.argsForCall[1][2]).toEqual(110)
+          expect(minimapElement.drawLines.argsForCall[1][1]).toEqual(100)
+          expect(minimapElement.drawLines.argsForCall[1][2]).toEqual(101)
 
       describe 'when the editor visibility change', ->
         it 'does not modify the size of the canvas', ->
