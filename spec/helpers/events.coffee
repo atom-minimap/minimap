@@ -15,6 +15,7 @@ mouseEvent = (type, properties) ->
     metaKey: false
     button: 0
     relatedTarget: `undefined`
+    which: 1
   }
 
   properties[k] = v for k,v of defaults when not properties[k]?
@@ -28,14 +29,14 @@ objectCenterCoordinates = (obj) ->
 module.exports = {objectCenterCoordinates, mouseEvent}
 
 ['mousedown', 'mousemove', 'mouseup', 'click'].forEach (key) ->
-  module.exports[key] = (obj, x, y, cx, cy) ->
+  module.exports[key] = (obj, {x, y, cx, cy, which}={}) ->
     {x,y} = objectCenterCoordinates(obj) unless x? and y?
 
     unless cx? and cy?
       cx = x
       cy = y
 
-    obj.dispatchEvent(mouseEvent key, {pageX: x, pageY: y, clientX: cx, clientY: cy})
+    obj.dispatchEvent(mouseEvent key, {pageX: x, pageY: y, clientX: cx, clientY: cy, which})
 
 module.exports.mousewheel = (obj, deltaX=0, deltaY=0) ->
   obj.dispatchEvent(mouseEvent 'mousewheel', {deltaX, deltaY})

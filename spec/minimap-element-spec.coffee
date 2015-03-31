@@ -244,8 +244,8 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
           expect(minimapElement.drawLines).toHaveBeenCalled()
-          expect(minimapElement.drawLines.calls[1].args[1]).toEqual(100)
-          expect(minimapElement.drawLines.calls[1].args[2]).toEqual(101)
+          expect(minimapElement.drawLines.argsForCall[1][1]).toEqual(110)
+          expect(minimapElement.drawLines.argsForCall[1][2]).toEqual(110)
 
       describe 'when the editor visibility change', ->
         it 'does not modify the size of the canvas', ->
@@ -343,8 +343,8 @@ describe 'MinimapElement', ->
           {top, left} = visibleArea.getBoundingClientRect()
           originalTop = top
 
-          mousedown(visibleArea, left + 10, top + 10)
-          mousemove(visibleArea, left + 10, top + 50)
+          mousedown(visibleArea, x: left + 10, y: top + 10)
+          mousemove(visibleArea, x: left + 10, y: top + 50)
 
           nextAnimationFrame()
 
@@ -357,10 +357,10 @@ describe 'MinimapElement', ->
 
         it 'stops the drag gesture when the mouse is released outside the minimap', ->
           {top, left} = visibleArea.getBoundingClientRect()
-          mouseup(jasmineContent, left - 10, top + 80)
+          mouseup(jasmineContent, x: left - 10, y: top + 80)
 
           spyOn(minimapElement, 'drag')
-          mousemove(visibleArea, left + 10, top + 50)
+          mousemove(visibleArea, x: left + 10, y: top + 50)
 
           expect(minimapElement.drag).not.toHaveBeenCalled()
 
@@ -380,8 +380,8 @@ describe 'MinimapElement', ->
             {top, left} = visibleArea.getBoundingClientRect()
             originalTop = top
 
-            mousedown(visibleArea, left + 10, top + 10)
-            mousemove(visibleArea, left + 10, top + 50)
+            mousedown(visibleArea, x: left + 10, y: top + 10)
+            mousemove(visibleArea, x: left + 10, y: top + 50)
 
             nextAnimationFrame()
 
@@ -405,8 +405,8 @@ describe 'MinimapElement', ->
             {top, left} = visibleArea.getBoundingClientRect()
             originalTop = top
 
-            mousedown(visibleArea, left + 10, top + 10)
-            mousemove(visibleArea, left + 10, top + 50)
+            mousedown(visibleArea, x: left + 10, y: top + 10)
+            mousemove(visibleArea, x: left + 10, y: top + 50)
 
             nextAnimationFrame()
 
