@@ -502,12 +502,12 @@ class MinimapElement extends HTMLElement
 
     document.body.addEventListener('mousemove', mousemoveHandler)
     document.body.addEventListener('mouseup', mouseupHandler)
-    document.body.addEventListener('mouseout', mouseupHandler)
+    document.body.addEventListener('mouseleave', mouseupHandler)
 
     @dragSubscription = new Disposable =>
       document.body.removeEventListener('mousemove', mousemoveHandler)
       document.body.removeEventListener('mouseup', mouseupHandler)
-      document.body.removeEventListener('mouseout', mouseupHandler)
+      document.body.removeEventListener('mouseleave', mouseupHandler)
 
   # Internal: The method called during the drag gesture.
   #
