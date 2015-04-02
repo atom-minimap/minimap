@@ -164,6 +164,12 @@ describe 'MinimapElement', ->
 
         expect(realOffsetTop(canvas)).toBeCloseTo(-2, -1)
 
+      it 'does not fail to update render the invisible char when modified', ->
+        atom.config.set 'editor.showInvisibles', true
+        atom.config.set 'editor.invisibles', cr: '*'
+
+        expect(-> nextAnimationFrame()).not.toThrow()
+
       it 'renders the visible line decorations', ->
         spyOn(minimapElement, 'drawLineDecorations').andCallThrough()
 

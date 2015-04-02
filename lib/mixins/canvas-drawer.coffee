@@ -1,3 +1,4 @@
+_ = require 'underscore-plus'
 Mixin = require 'mixto'
 
 # Public: The {CanvasDrawer} mixin is responsible for the rendering of a
@@ -153,13 +154,7 @@ class CanvasDrawer extends Mixin
 
     # Whitespaces can be substituted by other characters so we need
     # to replace them when that's the case.
-    if line? and line.invisibles?
-      re = ///
-      #{line.invisibles.cr}|
-      #{line.invisibles.eol}|
-      #{line.invisibles.space}|
-      #{line.invisibles.tab}
-      ///g
+    invisibleRegExp = @getInvisibleRegExp(line)
 
     for line, row in lines
       x = 0
@@ -188,7 +183,7 @@ class CanvasDrawer extends Mixin
             @getDefaultColor()
 
           value = token.value
-          value = value.replace(re, ' ') if re?
+          value = value.replace(invisibleRegExp, ' ') if invisibleRegExp?
 
           x = @drawToken(context, value, color, x, y0, charWidth, charHeight)
         else
@@ -209,6 +204,19 @@ class CanvasDrawer extends Mixin
           @drawHighlightOutlineDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
     context.fill()
+
+  # Internal: Returns the regexp to replace invisibles substitution characters
+  # in editor lines.
+  #
+  # line - The screen line for which replacing the invisibles characters.
+  getInvisibleRegExp: (line) ->
+    if line? and line.invisibles?
+      ///
+      #{_.escapeRegExp line.invisibles.cr}|
+      #{_.escapeRegExp line.invisibles.eol}|
+      #{_.escapeRegExp line.invisibles.space}|
+      #{_.escapeRegExp line.invisibles.tab}
+      ///g
 
   # Internal: Draws a single token on the given context.
   #
