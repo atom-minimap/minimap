@@ -74,10 +74,7 @@ class CanvasDrawer extends Mixin
   # token - A token {Object}.
   #
   # Returns a {String}.
-  getTokenColor: (token) ->
-    #Retrieve color from cache if available
-    flatScopes = (token.scopeDescriptor or token.scopes).join()
-    @retrieveTokenColorFromDom(token)
+  getTokenColor: (token) -> @retrieveTokenColorFromDom(token)
 
   # Returns the background color for the passed-in `decoration` object.
   #
