@@ -1,7 +1,14 @@
+<a name="v4.7.3"></a>
+# v4.7.3 (2015-04-02)
+
+## :bug: Bug Fixes
+
+- Fix unescaped invisibles regexp breaking render ([882ed5d7](https://github.com/atom-minimap/minimap/commit/882ed5d75d46532d676fb0276c33e131beda4771), [#308](https://github.com/atom-minimap/minimap/issues/308))
+
 <a name="v4.7.2"></a>
 # v4.7.2 (2015-04-02)
 
-- Improve cursor style when dnd ([b66ab37f](https://github.com/atom-minimap/minimap/commit/b66ab37f199fbd8f7abf188bdeebb824c405bd70), [#307](https://github.com/atom-minimap/minimap/issues/307))
+- Improve cursor style when dragging the minimap visible area ([b66ab37f](https://github.com/atom-minimap/minimap/commit/b66ab37f199fbd8f7abf188bdeebb824c405bd70), [#307](https://github.com/atom-minimap/minimap/issues/307))
 
 <a name="v4.7.1"></a>
 # v4.7.1 (2015-03-31)
