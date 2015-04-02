@@ -1,3 +1,14 @@
+<a name="v4.7.5"></a>
+# v4.7.5 (2015-04-02)
+
+## :bug: Bug Fixes
+
+- Fix DOM polling requesting an update on every call ([075d1a60](https://github.com/atom-minimap/minimap/commit/075d1a60987855bcfb9c43df8f24edc14e7b6c58))
+
+## :racehorse: Performances
+
+- Register to styles changes only after being attached ([f466703c](https://github.com/atom-minimap/minimap/commit/f466703c100800a11310db289693bc0ef0f138dc))
+
 <a name="v4.7.4"></a>
 # v4.7.4 (2015-04-02)
 
