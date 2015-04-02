@@ -267,6 +267,8 @@ describe 'MinimapElement', ->
 
         describe 'from hidden to visible', ->
           beforeEach ->
+            editorElement.style.display = 'none'
+            minimapElement.checkForVisibilityChange()
             spyOn(minimapElement, 'requestForcedUpdate')
             editorElement.style.display = ''
             minimapElement.pollDOM()

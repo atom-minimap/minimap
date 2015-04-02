@@ -370,7 +370,7 @@ class MinimapElement extends HTMLElement
   # Internal: Polling callback used to detect visibility and size changes.
   pollDOM: ->
     if @isVisible()
-      @requestForcedUpdate() unless !@wasVisible
+      @requestForcedUpdate() unless @wasVisible
 
       @measureHeightAndWidth(false)
 
