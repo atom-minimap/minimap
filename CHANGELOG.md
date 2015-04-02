@@ -1,3 +1,10 @@
+<a name="v4.7.4"></a>
+# v4.7.4 (2015-04-02)
+
+## :racehorse: Performances
+
+- Remove line causing method deoptimization ([2f945585](https://github.com/atom-minimap/minimap/commit/2f9455857bf329504f452321b20a62cc83cad686))
+
 <a name="v4.7.3"></a>
 # v4.7.3 (2015-04-02)
 
