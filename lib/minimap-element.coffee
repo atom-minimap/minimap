@@ -40,15 +40,6 @@ class MinimapElement extends HTMLElement
     @subscriptions = new CompositeDisposable
     @initializeContent()
 
-    # Uses of `atom.styles.onDidAddStyleElement` instead of
-    # `atom.themes.onDidChangeActiveThemes`.
-    # Why?
-    # Currently, The styleElement will be removed first,
-    # and then re-add. So the `change` event has not be triggered.
-    @subscriptions.add atom.styles.onDidAddStyleElement =>
-      @invalidateCache()
-      @requestForcedUpdate()
-
     @observeConfig
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
         swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft
@@ -88,6 +79,15 @@ class MinimapElement extends HTMLElement
     @subscriptions.add atom.views.pollDocument => @pollDOM()
     @measureHeightAndWidth()
     @attached = true
+
+    # Uses of `atom.styles.onDidAddStyleElement` instead of
+    # `atom.themes.onDidChangeActiveThemes`.
+    # Why?
+    # Currently, The styleElement will be removed first,
+    # and then re-add. So the `change` event has not be triggered.
+    @subscriptions.add atom.styles.onDidAddStyleElement =>
+      @invalidateCache()
+      @requestForcedUpdate()
 
   # Internal: DOM callback invoked when a new {MinimapElement} is detached
   # from the DOM.
