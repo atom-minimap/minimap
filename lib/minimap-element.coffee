@@ -330,14 +330,16 @@ class MinimapElement extends HTMLElement
 
     visibleAreaLeft = @minimap.getTextEditorScaledScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
+    visibleWidth = Math.min(@canvas.width / devicePixelRatio, @width)
+
 
     @applyStyles @visibleArea,
-      width: @clientWidth + 'px'
+      width: visibleWidth + 'px'
       height: @minimap.getTextEditorScaledHeight() + 'px'
       transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
-      width: Math.min(@canvas.width / devicePixelRatio, @width) + 'px'
+      width: visibleWidth + 'px'
 
     canvasTop = @minimap.getFirstVisibleScreenRow() * @minimap.getLineHeight() - @minimap.getScrollTop()
 
