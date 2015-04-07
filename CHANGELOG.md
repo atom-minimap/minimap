@@ -1,3 +1,11 @@
+<a name="v4.7.6"></a>
+# v4.7.6 (2015-04-08)
+
+## :bug: Bug Fixes
+
+- Fix misplacement of the quick settings view in one-dark-ui ([40e6f05a](https://github.com/atom-minimap/minimap/commit/40e6f05ae44ed536fb8c0a63de9cb85f8dea6b79))
+- Fix visible area spreading outside minimap in one-dark-ui ([12aadd2c](https://github.com/atom-minimap/minimap/commit/12aadd2cd227b7ffe36401ff7a2530f25c59c64e))
+
 <a name="v4.7.5"></a>
 # v4.7.5 (2015-04-02)
 
