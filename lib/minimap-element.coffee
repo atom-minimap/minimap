@@ -463,7 +463,7 @@ class MinimapElement extends HTMLElement
     if atom.config.get('minimap.scrollAnimation')
       from = textEditor.getScrollTop()
       to = scrollTop
-      step = (now) => textEditor.setScrollTop(now)
+      step = (now) -> textEditor.setScrollTop(now)
       duration = atom.config.get('minimap.scrollAnimationDuration')
       @animate(from: from, to: to, duration: duration, step: step)
     else
@@ -506,7 +506,7 @@ class MinimapElement extends HTMLElement
     document.body.addEventListener('mouseup', mouseupHandler)
     document.body.addEventListener('mouseleave', mouseupHandler)
 
-    @dragSubscription = new Disposable =>
+    @dragSubscription = new Disposable ->
       document.body.removeEventListener('mousemove', mousemoveHandler)
       document.body.removeEventListener('mouseup', mouseupHandler)
       document.body.removeEventListener('mouseleave', mouseupHandler)
