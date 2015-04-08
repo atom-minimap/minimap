@@ -32,7 +32,7 @@ Below is the list of available plugins so far:
 
 * `Auto Toggle`: If checked the Minimap is toggled on at startup. (default=true)
 * `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
-* `Display Minimap On Left`: If checked the Minimap appears on the left side of editors, otherwise it appears on the ride side. (default=false)
+* `Display Minimap On Left`: If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)
 * `Char Height`: The height of a character in the Minimap in pixels. (default=2)
 * `Char Width`: The width of a character in the Minimap in pixels. (default=1)
 * `Interline`: The space between lines in the Minimap in pixels. (default=1)
