@@ -505,6 +505,7 @@ class MinimapElement extends HTMLElement
     document.body.addEventListener('mousemove', mousemoveHandler)
     document.body.addEventListener('mouseup', mouseupHandler)
     document.body.addEventListener('mouseleave', mouseupHandler)
+    document.body.onblur = mouseupHandler
 
     @dragSubscription = new Disposable ->
       document.body.removeEventListener('mousemove', mousemoveHandler)
