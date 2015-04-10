@@ -309,10 +309,8 @@ describe 'MinimapElement', ->
         [canvas, visibleArea, originalLeft, maxScroll] = []
 
         beforeEach ->
-          canvas = minimapElement.canvas
-          visibleArea = minimapElement.visibleArea
-          {left} = visibleArea.getBoundingClientRect()
-          [originalLeft] = [left]
+          {canvas, visibleArea} = minimapElement
+          {left: originalLeft} = visibleArea.getBoundingClientRect()
           maxScroll = minimap.getTextEditorMaxScrollTop()
 
         it 'scrolls to the top using the middle mouse button', ->
@@ -343,7 +341,7 @@ describe 'MinimapElement', ->
           [scrollTo, scrollRatio] = []
 
           beforeEach ->
-            scrollTo = 100 # pixels
+            scrollTo = 101 # pixels
             scrollRatio = (scrollTo - minimap.getTextEditorScaledHeight()/2) /
               (minimap.getVisibleHeight() - minimap.getTextEditorScaledHeight())
             scrollRatio = Math.max(0, scrollRatio)
@@ -361,8 +359,7 @@ describe 'MinimapElement', ->
             [originalTop] = []
 
             beforeEach ->
-              {top} = visibleArea.getBoundingClientRect()
-              originalTop = top
+              {top: originalTop} = visibleArea.getBoundingClientRect()
               mousemove(visibleArea, x: originalLeft + 1, y: scrollTo + 40)
 
               nextAnimationFrame()
@@ -418,11 +415,10 @@ describe 'MinimapElement', ->
 
         beforeEach ->
           visibleArea = minimapElement.visibleArea
-          {top, left} = visibleArea.getBoundingClientRect()
-          originalTop = top
+          {top: originalTop, left} = visibleArea.getBoundingClientRect()
 
-          mousedown(visibleArea, x: left + 10, y: top + 10)
-          mousemove(visibleArea, x: left + 10, y: top + 50)
+          mousedown(visibleArea, x: left + 10, y: originalTop + 10)
+          mousemove(visibleArea, x: left + 10, y: originalTop + 50)
 
           nextAnimationFrame()
 
