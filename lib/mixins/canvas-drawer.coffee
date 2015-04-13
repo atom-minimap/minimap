@@ -25,6 +25,7 @@ class CanvasDrawer extends Mixin
   updateCanvas: ->
     firstRow = @minimap.getFirstVisibleScreenRow()
     lastRow = @minimap.getLastVisibleScreenRow()
+
     intactRanges = @computeIntactRanges(firstRow, lastRow)
 
     @context.clearRect(0,0,@canvas.width, @canvas.height)
