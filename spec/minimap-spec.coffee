@@ -82,6 +82,10 @@ describe 'Minimap', ->
     scrollSpy = jasmine.createSpy('didScroll')
     minimap.onDidChangeScrollLeft(scrollSpy)
 
+    # Seems like text without a view aren't able to scroll horizontally
+    # even when its width was set.
+    spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+
     editor.setScrollLeft(100)
 
     expect(scrollSpy).toHaveBeenCalled()
@@ -143,6 +147,11 @@ describe 'Minimap', ->
     [largeLineCount, editorHeight, editorScrollRatio] = []
 
     beforeEach ->
+      # Same here, without a view, the getScrollWidth method always returns 1
+      # and the test fails because the capped scroll left value always end up
+      # to be 0, inducing errors in computations.
+      spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+
       editor.setText(largeSample)
       editor.setScrollTop(1000)
       editor.setScrollLeft(200)
