@@ -1,3 +1,15 @@
+<a name="v4.8.0"></a>
+# v4.8.0 (2015-04-30)
+
+## :sparkles: Features
+
+- Implemented middle click click-and-drag behavior. Resolves #290 ([86c155b7](https://github.com/atom-minimap/minimap/commit/86c155b7996193b52c263f155921b3cb76ac13e0))
+- Implemented middle click to jump-to-location ([175d058e](https://github.com/atom-minimap/minimap/commit/175d058ee39e8383c42cbf243f78511f5bd8dbc7))
+
+## :bug: Bug Fixes
+
+- Fix typo ([daeb0834](https://github.com/atom-minimap/minimap/commit/daeb083452bc0267082a5c11e8552369dd3ccc19))
+
 <a name="v4.7.6"></a>
 # v4.7.6 (2015-04-08)
 
