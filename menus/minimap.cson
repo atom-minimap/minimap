@@ -10,3 +10,10 @@
     ]
   }
 ]
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle Minimap'
+      'command': 'minimap:toggle'
+    }
+  ]
