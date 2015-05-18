@@ -1,3 +1,11 @@
+<a name="v4.9.0"></a>
+# v4.9.0 (2015-05-18)
+
+## :sparkles: Features
+
+- Add context menu to toggle the minimap ([edcb74bc](https://github.com/atom-minimap/minimap/commit/edcb74bcbe4fd6cabcddbe279b2c982acb556cb8), [#326](https://github.com/atom-minimap/minimap/issues/326))
+- Add minimap-autohide to the list of plugins ([e17588ac](https://github.com/atom-minimap/minimap/commit/e17588acd93a8fd9471e0640db0be2b01b6de325))
+
 <a name="v4.8.0"></a>
 # v4.8.0 (2015-04-30)
 
