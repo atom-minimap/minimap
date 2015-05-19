@@ -451,8 +451,6 @@ class CanvasDrawer extends Mixin
             )
 
         intactRange = newIntactRanges[newIntactRanges.length - 1]
-        if intactRange? and (isNaN(intactRange.end) or isNaN(intactRange.start))
-          debugger
 
       intactRanges = newIntactRanges
 
