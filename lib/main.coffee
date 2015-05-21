@@ -272,11 +272,7 @@ class Main
     return unless iterator?
     @editorsMinimaps?.forEach (minimap) -> iterator(minimap)
     createdCallback = (minimap) -> iterator(minimap)
-    disposable = @onDidCreateMinimap(createdCallback)
-    disposable.off = ->
-      deprecate('Use Disposable::dispose instead')
-      disposable.dispose()
-    disposable
+    @onDidCreateMinimap(createdCallback)
 
   # Internal: Registers to the `observeTextEditors` method.
   initSubscriptions: ->
