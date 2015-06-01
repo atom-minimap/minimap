@@ -511,7 +511,7 @@ class MinimapElement extends HTMLElement
   startDrag: ({which, pageY}) ->
     # if which is 2
     #   @middleMousePressedOverCanvas({pageY})
-
+    return if @minimap.isDestroyed()
     return if which isnt 1 and which isnt 2
     {top} = @visibleArea.getBoundingClientRect()
     {top: offsetTop} = @getBoundingClientRect()
@@ -541,6 +541,7 @@ class MinimapElement extends HTMLElement
   #           offsetTop - The {MinimapElement} offset at the moment of the
   #                       drag start.
   drag: (e, initial) ->
+    return if @minimap.isDestroyed()
     return if e.which isnt 1 and e.which isnt 2
     y = e.pageY - initial.offsetTop - initial.dragOffset
 
@@ -557,6 +558,7 @@ class MinimapElement extends HTMLElement
   #           offsetTop - The {MinimapElement} offset at the moment of the
   #                       drag start.
   endDrag: (e, initial) ->
+    return if @minimap.isDestroyed()
     @dragSubscription.dispose()
 
   #     ######   ######   ######
