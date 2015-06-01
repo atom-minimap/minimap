@@ -1,3 +1,10 @@
+<a name="v0.9.2"></a>
+# v0.9.2 (2015-06-01)
+
+## :bug: Bug Fixes
+
+- Fix typo in method name ([da9dec45](https://github.com/atom-minimap/minimap/commit/da9dec4513d30ed4187fb1944c5abeb403b30b4b))
+
 <a name="v4.9.1"></a>
 # v4.9.1 (2015-06-01)
 
