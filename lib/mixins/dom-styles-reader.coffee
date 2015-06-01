@@ -80,7 +80,7 @@ class DOMStylesReader extends Mixin
 
     [r,g,b,a,hue] = [r,g,b,a,hue].map(Number)
 
-    [r,g,b] = rotate‡(r,g,b,hue)
+    [r,g,b] = rotate(r,g,b,hue)
 
     if isNaN(a)
       "rgb(#{r}, #{g}, #{b})"
@@ -108,7 +108,7 @@ rotate = (r,g,b,angle) ->
   hueRotateR = 0.143
   hueRotateG = 0.140
   hueRotateB = 0.283
-  
+
   cos = Math.cos(angle * Math.PI / 180)
   sin = Math.sin(angle * Math.PI / 180)
   matrix[0] = lumR + (1 - lumR) * cos - (lumR * sin)
