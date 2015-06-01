@@ -736,7 +736,9 @@ describe 'MinimapElement', ->
       describe 'and when preferredLineLength >= 16384', ->
         beforeEach ->
           atom.config.set 'minimap.preferredLineLength', 16384
-          nextAnimationFrame()
+          waitsFor -> minimapElement.frameRequested
+          runs ->
+            nextAnimationFrame()
 
         it 'adjusts the width of the minimap', ->
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, -1)
