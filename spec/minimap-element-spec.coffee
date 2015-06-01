@@ -145,7 +145,7 @@ describe 'MinimapElement', ->
     #    ##    ## ##    ## ##    ##
     #     ######   ######   ######
 
-    fdescribe 'with css filters', ->
+    describe 'with css filters', ->
       describe 'when a hue-rotate filter is applied to a rgb color', ->
         [additionnalStyleNode] = []
         beforeEach ->
