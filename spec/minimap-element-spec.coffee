@@ -137,6 +137,59 @@ describe 'MinimapElement', ->
     it 'requests an update', ->
       expect(minimapElement.frameRequested).toBeTruthy()
 
+    #     ######   ######   ######
+    #    ##    ## ##    ## ##    ##
+    #    ##       ##       ##
+    #    ##        ######   ######
+    #    ##             ##       ##
+    #    ##    ## ##    ## ##    ##
+    #     ######   ######   ######
+
+    fdescribe 'with css filters', ->
+      describe 'when a hue-rotate filter is applied to a rgb color', ->
+        [additionnalStyleNode] = []
+        beforeEach ->
+          minimapElement.invalidateCache()
+
+          additionnalStyleNode = document.createElement('style')
+          additionnalStyleNode.textContent = """
+            #{stylesheet}
+
+            .editor {
+              color: red;
+              -webkit-filter: hue-rotate(180deg);
+            }
+          """
+
+          jasmineContent.appendChild(additionnalStyleNode)
+
+        it 'computes the new color by applying the hue rotation', ->
+          nextAnimationFrame()
+          expect(minimapElement.retrieveStyleFromDom(['.editor'], 'color')).toEqual("rgb(0, #{0x6d}, #{0x6d})")
+
+      describe 'when a hue-rotate filter is applied to a rgba color', ->
+        [additionnalStyleNode] = []
+
+        beforeEach ->
+          minimapElement.invalidateCache()
+
+          additionnalStyleNode = document.createElement('style')
+          additionnalStyleNode.textContent = """
+            #{stylesheet}
+
+            .editor {
+              color: rgba(255,0,0,0);
+              -webkit-filter: hue-rotate(180deg);
+            }
+          """
+
+          jasmineContent.appendChild(additionnalStyleNode)
+
+        it 'computes the new color by applying the hue rotation', ->
+          nextAnimationFrame()
+          expect(minimapElement.retrieveStyleFromDom(['.editor'], 'color')).toEqual("rgba(0, #{0x6d}, #{0x6d}, 0)")
+
+
     #    ##     ## ########  ########     ###    ######## ########
     #    ##     ## ##     ## ##     ##   ## ##      ##    ##
     #    ##     ## ##     ## ##     ##  ##   ##     ##    ##
