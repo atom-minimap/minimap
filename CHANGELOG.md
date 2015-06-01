@@ -1,3 +1,10 @@
+<a name="v4.9.1"></a>
+# v4.9.1 (2015-06-01)
+
+## :bug: Bug Fixes
+
+- Fix hue-rotate filter not accounted when computing a token color ([53fa7062](https://github.com/atom-minimap/minimap/commit/53fa70628478f04e2e72aaa8bfa6627863114f9c), [#330](https://github.com/atom-minimap/minimap/issues/330))
+
 <a name="v4.9.0"></a>
 # v4.9.0 (2015-05-18)
 
