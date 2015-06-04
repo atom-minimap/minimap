@@ -28,6 +28,7 @@ Below is the list of available plugins so far:
   * [Selection](https://atom.io/packages/minimap-selection)
   * [Bookmarks](https://atom.io/packages/minimap-bookmarks)
   * [Auto-Hide](https://atom.io/packages/minimap-autohide)
+  * [Pigments](https://atom.io/packages/minimap-pigments)
 
 
 ### Settings
