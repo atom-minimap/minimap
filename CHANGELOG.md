@@ -1,3 +1,10 @@
+<a name="v4.9.3"></a>
+# v4.9.3 (2015-06-04)
+
+## :bug: Bug Fixes
+
+- Fix duplicated lines at the end of the minimap ([e048e168](https://github.com/atom-minimap/minimap/commit/e048e1682b71d95e5c40ffb9250f1e0aedd1b36b), [#292](https://github.com/atom-minimap/minimap/issues/292))
+
 <a name="v0.9.2"></a>
 # v0.9.2 (2015-06-01)
 
