@@ -438,11 +438,11 @@ class CanvasDrawer extends Mixin
         else if change.end < range.start or change.start > range.end
           newIntactRanges.push(range)
         else
-          if change.start > range.start
-            newIntactRanges.push(
-              start: range.start
-              end: change.start - 1
-              domStart: range.domStart)
+          # if change.start > range.start
+          #   newIntactRanges.push(
+          #     start: range.start
+          #     end: change.start - 1
+          #     domStart: range.domStart)
           if change.end < range.end
             newIntactRanges.push(
               start: change.end + change.screenDelta + 1
