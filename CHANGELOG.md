@@ -1,3 +1,10 @@
+<a name="v4.9.4"></a>
+# v4.9.4 (2015-06-05)
+
+## :bug: Bug Fixes
+
+- Fix error raised when creating a decoration ([6992530d](https://github.com/atom-minimap/minimap/commit/6992530d23fb84525808c1a02e1911dea93a4d52), [#335](https://github.com/atom-minimap/minimap/issues/335))
+
 <a name="v4.9.3"></a>
 # v4.9.3 (2015-06-04)
 
@@ -317,7 +324,7 @@ The following changes mostly concerns the implementation of the new minimap.
 - Implement minimap creation observer method for v4 ([e583763a](https://github.com/atom-minimap/minimap/commit/e583763a8f166f42f177dcb7df9379827ee0ce28))
 - Implement basic minimap scroll through dragging ([769fb815](https://github.com/atom-minimap/minimap/commit/769fb8153960baac29b4f1bc4ace419db852a14d))
 - Implement scroll on mouse pressed over canvas ([eb927855](https://github.com/atom-minimap/minimap/commit/eb9278552561539ce9d1ac87f45b738f12d6f573))
-- Implement sublime-like minimap scroll with scroll past end ([5d5185b7](https://github.com/atom-minimap/minimap/commit/5d5185b725ba399345cfba363b44b59825782e02))  
+- Implement sublime-like minimap scroll with scroll past end ([5d5185b7](https://github.com/atom-minimap/minimap/commit/5d5185b725ba399345cfba363b44b59825782e02))
   <br>It prevents the minimap from going past the end while the editor is.
 - Implement code highlight toggle from quick settings in element ([c779f6fd](https://github.com/atom-minimap/minimap/commit/c779f6fd0eb3c7dac950d423fe95480f4b765a8c))
 - Implement proper quick settings view life cycle ([9af0bd12](https://github.com/atom-minimap/minimap/commit/9af0bd12f6b9c6820c8b649f71517c4e6de79558))
