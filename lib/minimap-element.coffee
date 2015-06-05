@@ -44,6 +44,7 @@ class MinimapElement extends HTMLElement
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
         swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft
         @displayMinimapOnLeft = displayMinimapOnLeft
+        @classList.toggle('left', displayMinimapOnLeft and @absoluteMode)
 
         @swapMinimapPosition() if swapPosition
 
@@ -72,6 +73,10 @@ class MinimapElement extends HTMLElement
 
       'minimap.useHardwareAcceleration': (@useHardwareAcceleration) =>
         @requestUpdate() if @attached
+
+      'minimap.absoluteMode': (@absoluteMode) =>
+        @classList.toggle('absolute', @absoluteMode)
+        @classList.toggle('left', @displayMinimapOnLeft and @absoluteMode)
 
   # Internal: DOM callback invoked when a new {MinimapElement} is attached
   # to the DOM.

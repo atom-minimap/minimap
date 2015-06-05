@@ -14,6 +14,18 @@ atom-text-editor::shadow, atom-text-editor {
 
     -webkit-user-select: none;
 
+    &.absolute {
+      position: absolute;
+      right: 0;
+
+      // absolute mode do nothing when the minimap is on the left, because
+      // it would conflict with the editor's gutter
+      &.left {
+        position: relative;
+        right: initial;
+      }
+    }
+
     &::shadow {
       canvas {
         position: absolute;

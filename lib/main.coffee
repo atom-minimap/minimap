@@ -87,6 +87,10 @@ class Main
     createPluginInDevMode:
       type: 'boolean'
       default: false
+    absoluteMode:
+      type: 'boolean'
+      default: false
+      description: 'When enabled the text editor content will be able to flow below the minimap.'
 
   # Internal: The activation state of the minimap package.
   active: false

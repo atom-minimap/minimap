@@ -796,6 +796,20 @@ describe 'MinimapElement', ->
           it 'attaches the scroll indicator', ->
             expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
 
+    describe 'when minimap.absoluteMode setting is true', ->
+      beforeEach ->
+        atom.config.set('minimap.absoluteMode', true)
+
+      it 'adds a absolute class to the minimap element', ->
+        expect(minimapElement.classList.contains('absolute')).toBeTruthy()
+
+      describe 'when minimap.displayMinimapOnLeft setting is true', ->
+        it 'also adds a left class to the minmap element', ->
+          atom.config.set('minimap.displayMinimapOnLeft', true)
+          expect(minimapElement.classList.contains('absolute')).toBeTruthy()
+          expect(minimapElement.classList.contains('left')).toBeTruthy()
+
+
     #     #######  ##     ## ####  ######  ##    ##
     #    ##     ## ##     ##  ##  ##    ## ##   ##
     #    ##     ## ##     ##  ##  ##       ##  ##
