@@ -200,7 +200,7 @@ class DecorationManagement extends Mixin
 
       @emitRangeChanges({start, end})
 
-    decoration = new Decoration(marker, this, decorationParams)
+    decoration = new Decoration(marker, this.textEditor.displayBuffer, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
     @decorationsByMarkerId[marker.id].push(decoration)
     @decorationsById[decoration.id] = decoration
