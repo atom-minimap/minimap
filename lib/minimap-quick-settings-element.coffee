@@ -15,7 +15,8 @@ class MinimapQuickSettingsElement extends HTMLElement
       @input type: 'text', class: 'hidden-input', outlet: 'hiddenInput'
       @ol class: 'list-group mark-active', outlet: 'list', =>
         @li class: 'separator', outlet: 'separator'
-        @li class: '', outlet: 'codeHighlights', 'code-highlights'
+        @li class: 'code-highlights', outlet: 'codeHighlights', 'code-highlights'
+        @li class: 'absolute-mode', outlet: 'absoluteMode', 'absolute-mode'
       @div class: 'btn-group', =>
         @button class: 'btn btn-default', outlet: 'onLeftButton', 'On Left'
         @button class: 'btn btn-default', outlet: 'onRightButton', 'On Right'
@@ -53,6 +54,14 @@ class MinimapQuickSettingsElement extends HTMLElement
 
     @itemsActions.set @codeHighlights, =>
       atom.config.set('minimap.displayCodeHighlights', !@minimap.displayCodeHighlights)
+
+    @subscriptions.add @subscribeTo @absoluteMode,
+      'mousedown': (e) =>
+        e.preventDefault()
+        atom.config.set('minimap.absoluteMode', !atom.config.get('minimap.absoluteMode'))
+
+    @itemsActions.set @absoluteMode, =>
+      atom.config.set('minimap.absoluteMode', !atom.config.get('minimap.absoluteMode'))
 
     @subscriptions.add @subscribeTo @hiddenInput,
       'focusout': (e) =>

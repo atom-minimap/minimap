@@ -804,7 +804,7 @@ describe 'MinimapElement', ->
         expect(minimapElement.classList.contains('absolute')).toBeTruthy()
 
       describe 'when minimap.displayMinimapOnLeft setting is true', ->
-        it 'also adds a left class to the minmap element', ->
+        it 'also adds a left class to the minimap element', ->
           atom.config.set('minimap.displayMinimapOnLeft', true)
           expect(minimapElement.classList.contains('absolute')).toBeTruthy()
           expect(minimapElement.classList.contains('left')).toBeTruthy()
@@ -957,7 +957,7 @@ describe 'MinimapElement', ->
 
         describe 'clicking on the code highlight item', ->
           beforeEach ->
-            item = quickSettingsElement.querySelector('li:last-child')
+            item = quickSettingsElement.querySelector('li.code-highlights')
             mousedown(item)
 
           it 'toggles the code highlights on the minimap element', ->
@@ -965,6 +965,15 @@ describe 'MinimapElement', ->
 
           it 'requests an update', ->
             expect(minimapElement.frameRequested).toBeTruthy()
+
+        describe 'clicking on the absolute mode item', ->
+          beforeEach ->
+            item = quickSettingsElement.querySelector('li.absolute-mode')
+            mousedown(item)
+
+          it 'toggles the absolute-mode setting', ->
+            expect(atom.config.get('minimap.absoluteMode')).toBeTruthy()
+            expect(minimapElement.absoluteMode).toBeTruthy()
 
         describe 'clicking on the on left button', ->
           beforeEach ->
@@ -1055,7 +1064,7 @@ describe 'MinimapElement', ->
             quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
 
         it 'creates one list item for each registered plugin', ->
-          expect(quickSettingsElement.querySelectorAll('li').length).toEqual(4)
+          expect(quickSettingsElement.querySelectorAll('li').length).toEqual(5)
 
         it 'selects the first item of the list', ->
           expect(quickSettingsElement.querySelector('li.selected:first-child')).toExist()
@@ -1085,6 +1094,18 @@ describe 'MinimapElement', ->
             it 'toggles the code highlights on the minimap element', ->
               expect(minimapElement.displayCodeHighlights).toEqual(not initial)
 
+          describe 'on the absolute mode item', ->
+            [initial] = []
+            beforeEach ->
+              initial = atom.config.get('minimap.absoluteMode')
+              atom.commands.dispatch quickSettingsElement, 'core:move-down'
+              atom.commands.dispatch quickSettingsElement, 'core:move-down'
+              atom.commands.dispatch quickSettingsElement, 'core:move-down'
+              atom.commands.dispatch quickSettingsElement, 'core:confirm'
+
+            it 'toggles the code highlights on the minimap element', ->
+              expect(atom.config.get('minimap.absoluteMode')).toEqual(not initial)
+
         describe 'core:move-down', ->
           beforeEach ->
             atom.commands.dispatch quickSettingsElement, 'core:move-down'
@@ -1097,7 +1118,7 @@ describe 'MinimapElement', ->
               atom.commands.dispatch quickSettingsElement, 'core:move-down'
 
             it 'moves past the separator', ->
-              expect(quickSettingsElement.querySelector('li.selected:last-child')).toExist()
+              expect(quickSettingsElement.querySelector('li.code-highlights.selected')).toExist()
 
           describe 'then core:move-up', ->
             beforeEach ->
@@ -1115,6 +1136,7 @@ describe 'MinimapElement', ->
 
           describe 'reaching a separator', ->
             beforeEach ->
+              atom.commands.dispatch quickSettingsElement, 'core:move-up'
               atom.commands.dispatch quickSettingsElement, 'core:move-up'
 
             it 'moves past the separator', ->
