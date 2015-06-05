@@ -307,6 +307,10 @@ class DecorationManagement extends Mixin
     @decorationUpdatedSubscriptions = {}
     @decorationDestroyedSubscriptions = {}
 
+  # Internal: Introduced in the DisplayBuffer in v0.206.0 to handle change
+  # in overlay decorations. It does nothing here because we don't use the
+  # overlay type.
+  decorationDidChangeType: (decoration) ->
 
   # Internal: Receive the update event of a decoration and trigger
   # a `minimap:decoration-updated` event.
