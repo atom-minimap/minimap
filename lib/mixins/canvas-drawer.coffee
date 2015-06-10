@@ -172,22 +172,23 @@ class CanvasDrawer extends Mixin
           @drawHighlightDecoration(context, decoration, y, screenRow, lineHeight, charWidth, canvasWidth)
 
       # Then the line tokens are drawn
-      for token in line.tokens
-        w = token.screenDelta
-        unless token.isOnlyWhitespace()
-          color = if displayCodeHighlights
-            @getTokenColor(token)
+      if line?.tokens?
+        for token in line.tokens
+          w = token.screenDelta
+          unless token.isOnlyWhitespace()
+            color = if displayCodeHighlights
+              @getTokenColor(token)
+            else
+              @getDefaultColor()
+
+            value = token.value
+            value = value.replace(invisibleRegExp, ' ') if invisibleRegExp?
+
+            x = @drawToken(context, value, color, x, y0, charWidth, charHeight)
           else
-            @getDefaultColor()
+            x += w * charWidth
 
-          value = token.value
-          value = value.replace(invisibleRegExp, ' ') if invisibleRegExp?
-
-          x = @drawToken(context, value, color, x, y0, charWidth, charHeight)
-        else
-          x += w * charWidth
-
-        break if x > canvasWidth
+          break if x > canvasWidth
 
       # Finally the highlight over decorations are drawn.
       highlightDecorations = decorations['highlight-over']?[firstRow + row]
