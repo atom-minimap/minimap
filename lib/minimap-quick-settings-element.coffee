@@ -80,6 +80,9 @@ class MinimapQuickSettingsElement extends HTMLElement
     @subscriptions.add atom.config.observe 'minimap.displayCodeHighlights', (bool) =>
       @codeHighlights.classList.toggle('active', bool)
 
+    @subscriptions.add atom.config.observe 'minimap.absoluteMode', (bool) =>
+      @absoluteMode.classList.toggle('active', bool)
+
     @subscriptions.add atom.config.observe 'minimap.displayMinimapOnLeft', (bool) =>
       @onLeftButton.classList.toggle('selected', bool)
       @onRightButton.classList.toggle('selected', not bool)
