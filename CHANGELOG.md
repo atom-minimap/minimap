@@ -1,3 +1,15 @@
+<a name="v4.10.0"></a>
+# v4.10.0 (2015-06-10)
+
+## :sparkles: Features
+
+- Add control over absolute mode in the quick settings popup ([1ae73d91](https://github.com/atom-minimap/minimap/commit/1ae73d910cfb88ee01f02019816029eaf2cd2738))
+- Add an absolute mode setting allowing the text editor content to flow below the minimap ([2fa132f8](https://github.com/atom-minimap/minimap/commit/2fa132f8dec320759292f4cb69296d931497648a), [#337](https://github.com/atom-minimap/minimap/issues/337))
+
+## :bug: Bug Fixes
+
+- Fix reading tokens from undefined lines ([a5bcc7a2](https://github.com/atom-minimap/minimap/commit/a5bcc7a24bb07f96a8899b4d15f7eb724c0b4d4c), [#341](https://github.com/atom-minimap/minimap/issues/341))
+
 <a name="v4.9.4"></a>
 # v4.9.4 (2015-06-05)
 
