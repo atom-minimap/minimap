@@ -122,7 +122,8 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The mixin that provides the decorations API to the minimap editor view.</p>
+  <p>The mixin that provides the decorations API to the minimap editor view.</p><p>This mixin is injected into the <a href='../classes/Minimap.html'>Minimap</a> prototype, so every methods defined
+in this file will be available on any <a href='../classes/Minimap.html'>Minimap</a> instance. </p>
 </div>
 <div class='tags'>
 </div>
@@ -185,7 +186,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Registers an event listener to the <code>did-add-decoration</code> event.
     </span>
   </li>
   <li>
@@ -195,7 +196,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Registers an event listener to the <code>did-change-decoration</code> event.
     </span>
   </li>
   <li>
@@ -205,7 +206,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Registers an event listener to the <code>did-remove-decoration</code> event.
     </span>
   </li>
   <li>
@@ -215,7 +216,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Registers an event listener to the <code>did-update-decoration</code> event.
     </span>
   </li>
   <li>
@@ -225,7 +226,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Removes all the decorations that was created in the current <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
@@ -255,8 +256,8 @@
     <p class='signature' id='decorateMarker-instance'>
       ::<strong>decorateMarker</strong>(marker, decorationParams)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L130'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L170'>Source</a>
     </p>
     <div class='docstring'>
   <p>Adds a decoration that tracks a <code>Marker</code>. When the marker moves, is invalidated, or is destroyed, the decoration will be updated to reflect the marker&#39;s state.</p><p>There are three types of supported decorations:</p><ul>
@@ -266,6 +267,8 @@ is rendered above the line&#39;s text.</li>
 <li><strong>highlight-over</strong>: Same as <strong>highlight</strong>.</li>
 <li><strong>highlight-under</strong>: Renders a colored rectangle on the minimap. The
 highlight is rendered below the line&#39;s text.</li>
+<li><strong>highlight-outline</strong>: Renders a colored outline on the minimap. The
+highlight box is rendered above the line&#39;s text.</li>
 </ul>
 
 </div>
@@ -323,8 +326,8 @@ highlight is rendered below the line&#39;s text.</li>
     <p class='signature' id='decorationForId-instance'>
       ::<strong>decorationForId</strong>(id)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L38'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L76'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the decoration with the passed-in id.</p>
@@ -352,8 +355,8 @@ highlight is rendered below the line&#39;s text.</li>
     <p class='signature' id='decorationsForScreenRowRange-instance'>
       Array ::<strong>decorationsForScreenRowRange</strong>(startScreenRow, endScreenRow)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L47'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L85'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns all the decorations that intersect the passed-in row range.</p>
@@ -389,8 +392,8 @@ highlight is rendered below the line&#39;s text.</li>
     <p class='signature' id='decorationsForScreenRowRangeByTypeThenRows-instance'>
       Object ::<strong>decorationsForScreenRowRangeByTypeThenRows</strong>(startScreenRow, endScreenRow)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L81'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L119'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the decorations that intersects the passed-in row range in a structured way.</p><p>The returned object look like:</p><pre><code class="lang-coffee">{
@@ -435,8 +438,8 @@ decorations that intersects with the corresponding row.</p>
     <p class='signature' id='initializeDecorations-instance'>
       ::<strong>initializeDecorations</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L12'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L15'>Source</a>
     </p>
     <div class='docstring'>
   <p>Initializes the decorations related properties.</p>
@@ -448,58 +451,116 @@ decorations that intersects with the corresponding row.</p>
     <p class='signature' id='onDidAddDecoration-instance'>
       ::<strong>onDidAddDecoration</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L22'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L33'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Registers an event listener to the <code>did-add-decoration</code> event.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a> to call when the event is triggered. The callback will be called with an object with the following properties: marker - The {Marker} object that was decorated. decoration - The {Decoration} object that was created.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='onDidChangeDecoration-instance'>
       ::<strong>onDidChangeDecoration</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L28'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L58'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Registers an event listener to the <code>did-change-decoration</code> event.</p><p>This event is triggered when the marker targeted by the decoration
+was changed.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a> to call when the event is triggered. The callback will be called with an object with the following properties: marker - The {Marker} object targeted by the decoration. decoration - The {Decoration} object. event - The original {Event} object dispatched by the {Marker}.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='onDidRemoveDecoration-instance'>
       ::<strong>onDidRemoveDecoration</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L25'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L44'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Registers an event listener to the <code>did-remove-decoration</code> event.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a> to call when the event is triggered. The callback will be called with an object with the following properties: marker - The {Marker} object targeted by the decoration that was removed.</span>
+    </li>
+    <li>
+      <span class='type'>(Decoration)</span>
+      <span class='name'>decoration</span>
+      &mdash;
+      <span class='desc'>The {Decoration} object that was removed.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='onDidUpdateDecoration-instance'>
       ::<strong>onDidUpdateDecoration</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L31'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L68'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Registers an event listener to the <code>did-update-decoration</code> event.</p><p>This event is triggered when the decoration itself is modified.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Function)</span>
+      <span class='name'>callback</span>
+      &mdash;
+      <span class='desc'>The <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a> to call when the event is triggered. The callback will be called with the {Decoration} that was updated.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='removeAllDecorations-instance'>
       ::<strong>removeAllDecorations</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L255'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L293'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Removes all the decorations that was created in the current <a href='../classes/Minimap.html'>Minimap</a>.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='removeAllDecorationsForMarker-instance'>
       ::<strong>removeAllDecorationsForMarker</strong>(marker)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L232'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L270'>Source</a>
     </p>
     <div class='docstring'>
   <p>Removes all the decorations registered for the passed-in marker.</p>
@@ -508,9 +569,10 @@ decorations that intersects with the corresponding row.</p>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
+      <span class='type'>(Marker)</span>
       <span class='name'>marker</span>
       &mdash;
-      <span class='desc'>The <code>marker</code> for which removing decorations.</span>
+      <span class='desc'>The {Marker} for which removing decorations.</span>
     </li>
   </ul>
 </div>
@@ -519,8 +581,8 @@ decorations that intersects with the corresponding row.</p>
     <p class='signature' id='removeDecoration-instance'>
       ::<strong>removeDecoration</strong>(decoration)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;mixins&#47;decoration-management.coffee#L208'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;mixins&#47;decoration-management.coffee#L246'>Source</a>
     </p>
     <div class='docstring'>
   <p>Removes a <code>Decoration</code> from this minimap.</p>
@@ -540,11 +602,11 @@ decorations that intersects with the corresponding row.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 01 2015 18:01:36 GMT+0100 (CET)
+  Thu Jun 11 2015 22:43:29 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
-  (Node.js v0.10.21).
+  (Node.js v1.2.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>

@@ -15,7 +15,7 @@
     &raquo;
     <a href='..&#47;class_index.html' title='Index'>Index</a>
     &raquo;
-    <span class='title'>minimap-element.coffee</span>
+    <span class='title'>DOMStylesReader</span>
     <nav>
       <ul>
         <li class='noframes'>
@@ -105,47 +105,87 @@
 </div>
     <div id='content'>
       <h1>
-        File:
-        minimap-element.coffee
+        Class
+        DOMStylesReader
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td></td>
+          <td>lib&#47;mixins&#47;dom-styles-reader.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            Mixin
+          </td>
         </tr>
       </table>
-      <h2>Method Summary</h2>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>This mixin is used by the {CanvasRenderer} in <a href='../classes/MinimapElement.html'>MinimapElement</a> to read the styles informations from the DOM to use when rendering the <a href='../classes/Minimap.html'>Minimap</a>.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#MinimapElement.registerViewProvider-file'>
-        ? <strong>MinimapElement.registerViewProvider</strong>()
+      <a href='#retrieveStyleFromDom-instance'>
+        String ::<strong>retrieveStyleFromDom</strong>(scopes, property, shadowRoot = true, cache = true)
       </a>
     </span>
     <span class='desc'>
-      The method that registers the <a href='../classes/MinimapElement.html'>MinimapElement</a> factory in the <code>atom.views</code> registry with the passed-in model.
+      This function insert a dummy element in the DOM to compute its style, return the specified property, and remove the element from the DOM.
     </span>
   </li>
 </ul>
-      <h2>Method Details</h2>
+      <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='MinimapElement.registerViewProvider-file'>
-      ? <strong>MinimapElement.registerViewProvider</strong>()
+    <p class='signature' id='retrieveStyleFromDom-instance'>
+      String ::<strong>retrieveStyleFromDom</strong>(scopes, property, shadowRoot = true, cache = true)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
 &#47;blob&#47;v4.10.0
-/lib&#47;mixins&#47;plugin-management.coffee#L598'>Source</a>
+/lib&#47;mixins&#47;dom-styles-reader.coffee#L19'>Source</a>
     </p>
     <div class='docstring'>
-  <p>The method that registers the <a href='../classes/MinimapElement.html'>MinimapElement</a> factory in the <code>atom.views</code> registry with the passed-in model.</p>
+  <p>This function insert a dummy element in the DOM to compute its style, return the specified property, and remove the element from the DOM.</p>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>model</span>
+      <span class='type'>(Array)</span>
+      <span class='name'>scopes</span>
       &mdash;
-      <span class='desc'>The model class to registers the factory with.</span>
+      <span class='desc'>An <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array'>Array</a> of <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> reprensenting the scope to reproduce.</span>
+    </li>
+    <li>
+      <span class='type'>(String)</span>
+      <span class='name'>property</span>
+      &mdash;
+      <span class='desc'>The property <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> name.</span>
+    </li>
+    <li>
+      <span class='type'>(Boolean)</span>
+      <span class='name'>shadowRoot</span>
+      &mdash;
+      <span class='desc'>A <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a> of whether to evaluate the styles in the editor shadow DOM or not.</span>
+    </li>
+    <li>
+      <span class='type'>(Boolean)</span>
+      <span class='name'>cache</span>
+      &mdash;
+      <span class='desc'>A <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a> of whether to use the cache or not.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> of the property value.</span>
     </li>
   </ul>
 </div>

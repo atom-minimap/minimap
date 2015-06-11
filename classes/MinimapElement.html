@@ -120,28 +120,17 @@
           </td>
         </tr>
       </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>The <a href='../classes/MinimapElement.html'>MinimapElement</a> is the view meant to render a <a href='../classes/Minimap.html'>Minimap</a> instance in the DOM.</p><p>You can retrieve the <a href='../classes/MinimapElement.html'>MinimapElement</a> associated to a <a href='../classes/Minimap.html'>Minimap</a> as
+demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.views.getView(minimap)
+</code></pre><p>Note that most interactions with the Minimap package is done through the
+<a href='../classes/Minimap.html'>Minimap</a> model so you should never have to access <a href='../classes/MinimapElement.html'>MinimapElement</a> instances. </p>
+</div>
+<div class='tags'>
+</div>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
-  <li>
-    <span class='signature'>
-      <a href='#animate-instance'>
-        ::<strong>animate</strong>({from, to, duration, step})
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#applyStyles-instance'>
-        ::<strong>applyStyles</strong>(element, styles)
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
   <li>
     <span class='signature'>
       <a href='#attach-instance'>
@@ -149,7 +138,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the DOM.
     </span>
   </li>
   <li>
@@ -159,7 +148,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the left of the target {TextEditorElement}.
     </span>
   </li>
   <li>
@@ -169,47 +158,7 @@
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#attachedCallback-instance'>
-        ::<strong>attachedCallback</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#attributeChangedCallback-instance'>
-        ::<strong>attributeChangedCallback</strong>(attrName, oldValue, newValue)
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#checkForVisibilityChange-instance'>
-        ::<strong>checkForVisibilityChange</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#createdCallback-instance'>
-        ::<strong>createdCallback</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the right of the target {TextEditorElement}.
     </span>
   </li>
   <li>
@@ -219,7 +168,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Destroys this <a href='../classes/MinimapElement.html'>MinimapElement</a>.
     </span>
   </li>
   <li>
@@ -229,17 +178,7 @@
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#detachedCallback-instance'>
-        ::<strong>detachedCallback</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Detaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> from the DOM.
     </span>
   </li>
   <li>
@@ -249,7 +188,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Disposes the quick settings openener div when the <code>displayPluginsControls</code> setting is disabled.
     </span>
   </li>
   <li>
@@ -259,87 +198,37 @@
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#drag-instance'>
-        ::<strong>drag</strong>(e, initial)
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#endDrag-instance'>
-        ::<strong>endDrag</strong>(e, initial)
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#getDummyDOMRoot-instance'>
-        ::<strong>getDummyDOMRoot</strong>(shadowRoot)
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Disposes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is disabled.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#getModel-instance'>
-        ::<strong>getModel</strong>()
+        Minimap ::<strong>getModel</strong>()
       </a>
     </span>
     <span class='desc'>
-      
+      Returns the <a href='../classes/Minimap.html'>Minimap</a> for which this <a href='../classes/MinimapElement.html'>MinimapElement</a> was created.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#getTextEditor-instance'>
-        ::<strong>getTextEditor</strong>()
+        TextEditor ::<strong>getTextEditor</strong>()
       </a>
     </span>
     <span class='desc'>
-      
+      Returns the target {TextEditor} of the <a href='../classes/Minimap.html'>Minimap</a>.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#getTextEditorElement-instance'>
-        ::<strong>getTextEditorElement</strong>()
+        TextEditorElement ::<strong>getTextEditorElement</strong>()
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#getTextEditorElementRoot-instance'>
-        ::<strong>getTextEditorElementRoot</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#initializeContent-instance'>
-        ::<strong>initializeContent</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Returns the {TextEditorElement} for the <a href='../classes/Minimap.html'>Minimap</a>&#39;s {TextEditor}.
     </span>
   </li>
   <li>
@@ -349,7 +238,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Initializes the quick settings openener div when the <code>displayPluginsControls</code> setting is enabled.
     </span>
   </li>
   <li>
@@ -359,13 +248,23 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Initializes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is enabled.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#isVisible-instance'>
-        ::<strong>isVisible</strong>()
+        Boolean ::<strong>isVisible</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns <code>true</code> if the <a href='../classes/MinimapElement.html'>MinimapElement</a> is currently visible on screen.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#leftMousePressedOverCanvas-instance'>
+        ::<strong>leftMousePressedOverCanvas</strong>({pageY, target})
       </a>
     </span>
     <span class='desc'>
@@ -375,88 +274,27 @@
   <li>
     <span class='signature'>
       <a href='#makeScale-instance'>
-        ::<strong>makeScale</strong>(x = 0, y = x)
+        String ::<strong>makeScale</strong>(x = 0, y = x)
       </a>
     </span>
     <span class='desc'>
-      
+      Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS scale tranform value.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#makeTranslate-instance'>
-        ::<strong>makeTranslate</strong>(x = 0, y = 0)
+        String ::<strong>makeTranslate</strong>(x = 0, y = 0)
       </a>
     </span>
     <span class='desc'>
-      
+      Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS translation tranform value.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#measureHeightAndWidth-instance'>
-        ::<strong>measureHeightAndWidth</strong>(forceUpdate = true)
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#mousePressedOverCanvas-instance'>
-        ::<strong>mousePressedOverCanvas</strong>({which, pageY, target})
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#observeConfig-instance'>
-        ::<strong>observeConfig</strong>(configs = {})
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#pollDOM-instance'>
-        ::<strong>pollDOM</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#relayMousewheelEvent-instance'>
-        ::<strong>relayMousewheelEvent</strong>(e)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#requestForcedUpdate-instance'>
-        ::<strong>requestForcedUpdate</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#requestUpdate-instance'>
-        ::<strong>requestUpdate</strong>()
+      <a href='#middleMousePressedOverCanvas-instance'>
+        ::<strong>middleMousePressedOverCanvas</strong>({pageY})
       </a>
     </span>
     <span class='desc'>
@@ -470,7 +308,7 @@
       </a>
     </span>
     <span class='desc'>
-      
+      Defines whether to render the code highlights or not.
     </span>
   </li>
   <li>
@@ -480,17 +318,7 @@
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#startDrag-instance'>
-        ::<strong>startDrag</strong>({which, pageY})
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Defines the <a href='../classes/Minimap.html'>Minimap</a> model for this <a href='../classes/MinimapElement.html'>MinimapElement</a> instance.
     </span>
   </li>
   <li>
@@ -500,359 +328,308 @@
       </a>
     </span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#update-instance'>
-        ::<strong>update</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      
+      Swaps the <a href='../classes/MinimapElement.html'>MinimapElement</a> position based on the value of the <code>displayMinimapOnLeft</code> setting.
     </span>
   </li>
 </ul>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='animate-instance'>
-      ::<strong>animate</strong>({from, to, duration, step})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L402'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='applyStyles-instance'>
-      ::<strong>applyStyles</strong>(element, styles)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L382'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='attach-instance'>
       ::<strong>attach</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L76'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L100'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the DOM.</p><p>The position at which the element is attached is defined by the
+<code>displayMinimapOnLeft</code> setting. </p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='attachToLeft-instance'>
       ::<strong>attachToLeft</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L82'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L106'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the left of the target {TextEditorElement}.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='attachToRight-instance'>
       ::<strong>attachToRight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L86'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L112'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the right of the target {TextEditorElement}.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='attachedCallback-instance'>
-      ::<strong>attachedCallback</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L62'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='attributeChangedCallback-instance'>
-      ::<strong>attributeChangedCallback</strong>(attrName, oldValue, newValue)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L71'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='checkForVisibilityChange-instance'>
-      ::<strong>checkForVisibilityChange</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L272'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='createdCallback-instance'>
-      ::<strong>createdCallback</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L21'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='destroy-instance'>
       ::<strong>destroy</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L100'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L130'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Destroys this <a href='../classes/MinimapElement.html'>MinimapElement</a>.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='detach-instance'>
       ::<strong>detach</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L95'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L124'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Detaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> from the DOM.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='detachedCallback-instance'>
-      ::<strong>detachedCallback</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L68'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='disposeOpenQuickSettings-instance'>
       ::<strong>disposeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L170'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L212'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Disposes the quick settings openener div when the <code>displayPluginsControls</code> setting is disabled.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='disposeScrollIndicator-instance'>
       ::<strong>disposeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L138'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L175'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Disposes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is disabled.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='drag-instance'>
-      ::<strong>drag</strong>(e, initial)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L368'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='endDrag-instance'>
-      ::<strong>endDrag</strong>(e, initial)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L377'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='getDummyDOMRoot-instance'>
-      ::<strong>getDummyDOMRoot</strong>(shadowRoot)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L190'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='getModel-instance'>
-      ::<strong>getModel</strong>()
+      Minimap ::<strong>getModel</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L196'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L253'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Returns the <a href='../classes/Minimap.html'>Minimap</a> for which this <a href='../classes/MinimapElement.html'>MinimapElement</a> was created.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt><a href='../classes/Minimap.html'>Minimap</a></tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='../classes/Minimap.html'>Minimap</a>.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='getTextEditor-instance'>
-      ::<strong>getTextEditor</strong>()
+      TextEditor ::<strong>getTextEditor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L177'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L221'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Returns the target {TextEditor} of the <a href='../classes/Minimap.html'>Minimap</a>.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>TextEditor</tt>)
+      &mdash;
+      <span class='desc'>Returns a {TextEditor}.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='getTextEditorElement-instance'>
-      ::<strong>getTextEditorElement</strong>()
+      TextEditorElement ::<strong>getTextEditorElement</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L180'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L226'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Returns the {TextEditorElement} for the <a href='../classes/Minimap.html'>Minimap</a>&#39;s {TextEditor}.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='getTextEditorElementRoot-instance'>
-      ::<strong>getTextEditorElementRoot</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L184'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='initializeContent-instance'>
-      ::<strong>initializeContent</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L105'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>TextEditorElement</tt>)
+      &mdash;
+      <span class='desc'>Returns a {TextEditorElement}.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='initializeOpenQuickSettings-instance'>
       ::<strong>initializeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L142'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L180'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Initializes the quick settings openener div when the <code>displayPluginsControls</code> setting is enabled.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='initializeScrollIndicator-instance'>
       ::<strong>initializeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L132'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L168'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Initializes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is enabled.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='isVisible-instance'>
-      ::<strong>isVisible</strong>()
+      Boolean ::<strong>isVisible</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L74'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L94'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Returns <code>true</code> if the <a href='../classes/MinimapElement.html'>MinimapElement</a> is currently visible on screen.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Boolean</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='leftMousePressedOverCanvas-instance'>
+      ::<strong>leftMousePressedOverCanvas</strong>({pageY, target})
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L421'>Source</a>
     </p>
     <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='makeScale-instance'>
-      ::<strong>makeScale</strong>(x = 0, y = x)
+      String ::<strong>makeScale</strong>(x = 0, y = x)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L397'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L546'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS scale tranform value.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>x</span>
+      &mdash;
+      <span class='desc'>The scaling <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> on the x axis.</span>
+    </li>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>y</span>
+      &mdash;
+      <span class='desc'>The scaling <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> on the y axis.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='makeTranslate-instance'>
-      ::<strong>makeTranslate</strong>(x = 0, y = 0)
+      String ::<strong>makeTranslate</strong>(x = 0, y = 0)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L391'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L534'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS translation tranform value.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>x</span>
+      &mdash;
+      <span class='desc'>The translation <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> on the x axis.</span>
+    </li>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>y</span>
+      &mdash;
+      <span class='desc'>The translation <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a> on the y axis.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='measureHeightAndWidth-instance'>
-      ::<strong>measureHeightAndWidth</strong>(forceUpdate = true)
+    <p class='signature' id='middleMousePressedOverCanvas-instance'>
+      ::<strong>middleMousePressedOverCanvas</strong>({pageY})
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L284'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='mousePressedOverCanvas-instance'>
-      ::<strong>mousePressedOverCanvas</strong>({which, pageY, target})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L318'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='observeConfig-instance'>
-      ::<strong>observeConfig</strong>(configs = {})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L314'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='pollDOM-instance'>
-      ::<strong>pollDOM</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L268'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='relayMousewheelEvent-instance'>
-      ::<strong>relayMousewheelEvent</strong>(e)
-      (bound)
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L341'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='requestForcedUpdate-instance'>
-      ::<strong>requestForcedUpdate</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L219'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='requestUpdate-instance'>
-      ::<strong>requestUpdate</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L210'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L441'>Source</a>
     </p>
     <div class='tags'>
 </div>
@@ -861,61 +638,68 @@
     <p class='signature' id='setDisplayCodeHighlights-instance'>
       ::<strong>setDisplayCodeHighlights</strong>(displayCodeHighlights)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L264'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L336'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Defines whether to render the code highlights or not.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Boolean)</span>
+      <span class='name'>displayCodeHighlights</span>
+      &mdash;
+      <span class='desc'>A <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a>.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='setModel-instance'>
       ::<strong>setModel</strong>(minimap)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L198'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L258'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Defines the <a href='../classes/Minimap.html'>Minimap</a> model for this <a href='../classes/MinimapElement.html'>MinimapElement</a> instance.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='startDrag-instance'>
-      ::<strong>startDrag</strong>({which, pageY})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L348'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Minimap)</span>
+      <span class='name'>minimap</span>
+      &mdash;
+      <span class='desc'>The <a href='../classes/Minimap.html'>Minimap</a> model for this instance.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='swapMinimapPosition-instance'>
       ::<strong>swapMinimapPosition</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L89'>Source</a>
+&#47;blob&#47;v4.10.0
+/lib&#47;minimap-element.coffee#L117'>Source</a>
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Swaps the <a href='../classes/MinimapElement.html'>MinimapElement</a> position based on the value of the <code>displayMinimapOnLeft</code> setting.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='update-instance'>
-      ::<strong>update</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.4.0
-/lib&#47;minimap-element.coffee#L223'>Source</a>
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 01 2015 18:01:36 GMT+0100 (CET)
+  Thu Jun 11 2015 22:43:29 GMT+0200 (CEST)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
-  (Node.js v0.10.21).
+  (Node.js v1.2.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>
