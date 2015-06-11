@@ -141,7 +141,6 @@ Another non-trivial change is the list of available decoration's type. At the ti
 If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
 
 ```css
-atom-text-editor .vertical-scrollbar,
 atom-text-editor::shadow .vertical-scrollbar {
   opacity: 0;
   width: 0;
@@ -150,18 +149,20 @@ atom-text-editor::shadow .vertical-scrollbar {
 
 #### Changing the Minimap's background
 
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-background.png?raw=true)
+
 ```css
-atom-text-editor::shadow atom-text-editor-minimap,
-atom-text-editor atom-text-editor-minimap {
-  background: rgba(255,255,255, 0.1);
+atom-text-editor::shadow atom-text-editor-minimap, {
+  background: green;
 }
 ```
 
 #### Changing the color of the Minimap's `visible-area`
 
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-visible-area.png?raw=true)
+
 ```css
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area {
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
   background-color: green;
   opacity: .5;
 }
@@ -169,9 +170,10 @@ atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area {
 
 #### Changing the color of the Minimap's `scroll-indicator`
 
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-scroll-indicator.png?raw=true)
+
 ```css
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator,
-atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator {
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
   background-color: green;
 }
 ```
