@@ -152,7 +152,7 @@ atom-text-editor::shadow .vertical-scrollbar {
 ![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-background.png?raw=true)
 
 ```css
-atom-text-editor::shadow atom-text-editor-minimap, {
+atom-text-editor::shadow atom-text-editor-minimap {
   background: green;
 }
 ```
