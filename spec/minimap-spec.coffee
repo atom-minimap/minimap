@@ -220,10 +220,12 @@ describe 'Minimap', ->
     [marker, decoration, changeSpy] = []
 
     beforeEach ->
+      editor.setText(largeSample)
+
       changeSpy = jasmine.createSpy('didChange')
       minimap.onDidChange(changeSpy)
 
-      marker = minimap.markBufferRange [[0,6], [0,11]]
+      marker = minimap.markBufferRange [[0,6], [1,11]]
       decoration = minimap.decorateMarker marker, type: 'highlight', class: 'dummy'
 
     it 'creates a decoration for the given marker', ->
@@ -232,7 +234,20 @@ describe 'Minimap', ->
     it 'creates a change corresponding to the marker range', ->
       expect(changeSpy).toHaveBeenCalled()
       expect(changeSpy.calls[0].args[0].start).toEqual(0)
-      expect(changeSpy.calls[0].args[0].end).toEqual(0)
+      expect(changeSpy.calls[0].args[0].end).toEqual(1)
+
+    describe 'when the marker range changes', ->
+      beforeEach ->
+        markerChangeSpy = jasmine.createSpy('marker-did-change')
+        marker.onDidChange(markerChangeSpy)
+        marker.setBufferRange [[0,6], [3,11]]
+
+        waitsFor -> markerChangeSpy.calls.length > 0
+
+      it 'creates a change only for the dif between the two ranges', ->
+        expect(changeSpy).toHaveBeenCalled()
+        expect(changeSpy.calls[1].args[0].start).toEqual(1)
+        expect(changeSpy.calls[1].args[0].end).toEqual(3)
 
     describe 'destroying the marker', ->
       beforeEach ->
@@ -243,7 +258,7 @@ describe 'Minimap', ->
 
       it 'creates a change corresponding to the marker range', ->
         expect(changeSpy.calls[1].args[0].start).toEqual(0)
-        expect(changeSpy.calls[1].args[0].end).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
 
     describe 'destroying the decoration', ->
       beforeEach ->
@@ -254,7 +269,7 @@ describe 'Minimap', ->
 
       it 'creates a change corresponding to the marker range', ->
         expect(changeSpy.calls[1].args[0].start).toEqual(0)
-        expect(changeSpy.calls[1].args[0].end).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
 
     describe 'destroying all the decorations for the marker', ->
       beforeEach ->
@@ -265,7 +280,7 @@ describe 'Minimap', ->
 
       it 'creates a change corresponding to the marker range', ->
         expect(changeSpy.calls[1].args[0].start).toEqual(0)
-        expect(changeSpy.calls[1].args[0].end).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
 
     describe 'destroying the minimap', ->
       beforeEach ->

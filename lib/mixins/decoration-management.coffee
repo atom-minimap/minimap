@@ -193,12 +193,17 @@ class DecorationManagement extends Mixin
         for decoration in decorations
           @emitter.emit 'did-change-decoration', {marker, decoration, event}
 
-      start = event.oldTailScreenPosition
-      end = event.oldHeadScreenPosition
+      oldStart = event.oldTailScreenPosition
+      oldEnd = event.oldHeadScreenPosition
 
-      [start, end] = [end, start] if start.row > end.row
+      newStart = event.newTailScreenPosition
+      newEnd = event.newHeadScreenPosition
 
-      @emitRangeChanges({start, end})
+      [oldStart, oldEnd] = [oldEnd, oldStart] if oldStart.row > oldEnd.row
+      [newStart, newEnd] = [newEnd, newStart] if newStart.row > newEnd.row
+
+      rangesDiffs = @computeRangesDiffs(oldStart, oldEnd, newStart, newEnd)
+      @emitRangeChanges({start, end}, 0) for [start, end] in rangesDiffs
 
     decoration = new Decoration(marker, this, decorationParams)
     @decorationsByMarkerId[marker.id] ?= []
@@ -214,6 +219,21 @@ class DecorationManagement extends Mixin
     @emitDecorationChanges(decoration)
     @emitter.emit 'did-add-decoration', {marker, decoration}
     decoration
+
+  computeRangesDiffs: (oldStart, oldEnd, newStart, newEnd) ->
+    diffs = []
+
+    if oldStart.isLessThan(newStart)
+      diffs.push([oldStart, newStart])
+    else if newStart.isLessThan(oldStart)
+      diffs.push([newStart, oldStart])
+
+    if oldEnd.isLessThan(newEnd)
+      diffs.push([oldEnd, newEnd])
+    else if newEnd.isLessThan(oldEnd)
+      diffs.push([newEnd, oldEnd])
+
+    diffs
 
   # Internal: Emits a change in the {Minimap} corresponding to the
   # passed-in decoration.
