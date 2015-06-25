@@ -224,7 +224,7 @@ class DecorationManagement extends Mixin
     range = decoration.marker.getScreenRange()
     return unless range?
 
-    @emitRangeChanges(range)
+    @emitRangeChanges(range, 0)
 
   # Internal: Emits a change for the specified range.
   #
