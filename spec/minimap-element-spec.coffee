@@ -437,7 +437,7 @@ describe 'MinimapElement', ->
           mousedown(canvas)
 
         it 'scrolls the editor to the line below the mouse', ->
-          expect(editor.getScrollTop()).toEqual(360)
+          expect(editor.getScrollTop()).toEqual(400)
 
       describe 'pressing the mouse on the minimap canvas (with scroll animation)', ->
         beforeEach ->
@@ -461,7 +461,7 @@ describe 'MinimapElement', ->
             return nextAnimationFrame is noAnimationFrame
 
           runs ->
-            expect(editor.getScrollTop()).toEqual(360)
+            expect(editor.getScrollTop()).toEqual(400)
 
       describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []
