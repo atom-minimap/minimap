@@ -1,3 +1,18 @@
+<a name="v4.10.1"></a>
+# v4.10.1 (2015-06-29)
+
+## :bug: Bug Fixes
+
+- Fix invalid intact ranges computed when added a decoration ([178dca41](https://github.com/atom-minimap/minimap/commit/178dca41b271455976ce72c22af11df05cf3215a))
+
+## :racehorse: Performances
+
+- Speed up updates due to decoration's marker changes ([42307e7d](https://github.com/atom-minimap/minimap/commit/42307e7d22ef1988086bb500cd3e7343258987f7))
+
+## :arrow_up: Dependencies Update
+
+- Bump minimum Atom version ([efd6dc5f](https://github.com/atom-minimap/minimap/commit/efd6dc5f57980d838ed204a2f97118ee9d52c2b6))
+
 <a name="v4.10.0"></a>
 # v4.10.0 (2015-06-10)
 
