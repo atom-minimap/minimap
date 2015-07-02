@@ -1,3 +1,10 @@
+<a name="v4.10.2"></a>
+# v4.10.2 (2015-07-02)
+
+## :bug: Bug Fixes
+
+- Use owned version of the Decoration class ([a20dde78](https://github.com/atom-minimap/minimap/commit/a20dde7841987e0cf17270f2eed3145592e0f05a), [#357](https://github.com/atom-minimap/minimap/issues/357))
+
 <a name="v4.10.1"></a>
 # v4.10.1 (2015-06-29)
 
