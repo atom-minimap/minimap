@@ -22,7 +22,7 @@ class DecorationManagement extends Mixin
     @decorationUpdatedSubscriptions = {}
     @decorationDestroyedSubscriptions = {}
 
-    Decoration ?= require path.join(atom.config.resourcePath, 'src', 'decoration')
+    Decoration ?= require '../decoration'
 
   # Registers an event listener to the `did-add-decoration` event.
   #
