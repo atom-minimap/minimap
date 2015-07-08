@@ -1,0 +1,44 @@
+'use babel';
+
+import { CompositeDisposable } from 'event-kit';
+
+class __PackageName__ {
+  constructor() {
+    this.active = false;
+  }
+
+  isActive() { return this.active; }
+
+  activate(state) {
+    this.subscriptions = new CompositeDisposable;
+  }
+
+  consumeMinimapServiceV1(minimap1) {
+    this.minimap = minimap1;
+    this.minimap.registerPlugin('__package-name__', this);
+  }
+
+  deactivate() {
+    this.minimap.unregisterPlugin('__package-name__');
+    this.minimap = null;
+  }
+
+  activatePlugin() {
+    if (this.active) return;
+
+    this.active = true;
+    this.minimapsSubscription = this.minimap.observeMinimaps((minimap) => {
+      let minimapElement = atom.views.getView(minimap);
+    });
+  }
+
+  deactivatePlugin() {
+    if (!this.active) return;
+
+    this.active = false;
+    this.minimapsSubscription.dispose();
+    this.subscriptions.dispose();
+  }
+}
+
+export default new __PackageName__();

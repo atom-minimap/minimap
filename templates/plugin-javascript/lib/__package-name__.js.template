@@ -1,0 +1,31 @@
+var CompositeDisposable = require('event-kit').CompositeDisposable;
+
+module.exports = {
+  active: false,
+  isActive: function() { return this.active; },
+  activate: function(state) {
+    this.subscriptions = new CompositeDisposable;
+  },
+  consumeMinimapServiceV1: function(minimap1) {
+    this.minimap = minimap1;
+    this.minimap.registerPlugin('__package-name__', this);
+  },
+  deactivate: function() {
+    this.minimap.unregisterPlugin('__package-name__');
+    this.minimap = null;
+  },
+  activatePlugin: function() {
+    if (this.active) return;
+
+    this.active = true;
+    this.minimapsSubscription = this.minimap.observeMinimaps(function(minimap) {
+      var minimapElement = atom.views.getView(minimap);
+    });
+  },
+  deactivatePlugin: function() {
+    if (!this.active) return;
+    this.active = false;
+    this.minimapsSubscription.dispose();
+    this.subscriptions.dispose();
+  }
+};
