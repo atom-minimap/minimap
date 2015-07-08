@@ -21,15 +21,16 @@ apm install minimap
 
 Below is the list of available plugins so far:
 
+  * [Auto-Hide](https://atom.io/packages/minimap-autohide)
+  * [Bookmarks](https://atom.io/packages/minimap-bookmarks)
+  * [Code Glance](https://atom.io/packages/minimap-codeglance)
   * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
   * [Git Diff](https://atom.io/packages/minimap-git-diff)
-  * [Color Highlight](https://atom.io/packages/minimap-color-highlight)
+  * [Hide on inactive panes](https://atom.io/packages/minimap-hide)
   * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
-  * [Selection](https://atom.io/packages/minimap-selection)
-  * [Bookmarks](https://atom.io/packages/minimap-bookmarks)
-  * [Auto-Hide](https://atom.io/packages/minimap-autohide)
+  * [Linter](https://atom.io/packages/minimap-linter)
   * [Pigments](https://atom.io/packages/minimap-pigments)
-
+  * [Selection](https://atom.io/packages/minimap-selection)
 
 ### Settings
 
