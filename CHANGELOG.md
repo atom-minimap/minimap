@@ -1,3 +1,15 @@
+<a name="v4.11.0"></a>
+# v4.11.0 (2015-07-08)
+
+## :sparkles: Features
+
+- Add plugins templates for vanilla javascript and babel ([3511ef2b](https://github.com/atom-minimap/minimap/commit/3511ef2b55b323675e2ca1807cfd652f1f67fb17))
+
+## :bug: Bug Fixes
+
+- Fix quick settings button partially hidden by scrollbar in absolute mode ([a41f5d61](https://github.com/atom-minimap/minimap/commit/a41f5d61947ad02664d53882df70724a8236ce90), [#345](https://github.com/atom-minimap/minimap/issues/345))
+
+
 <a name="v4.10.2"></a>
 # v4.10.2 (2015-07-02)
 

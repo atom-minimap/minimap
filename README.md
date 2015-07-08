@@ -68,11 +68,17 @@ Customizing Key Bindings:
 
 #### Plugin Generation Command
 
-Use the `Minimap: Generate Plugin` command available in the command palette or add a binding to the `minimap:generate-plugin` event:
+Use the `Minimap: Generate Javascript Plugin`, `Minimap: Generate Coffee Plugin` or `Minimap: Generate Babel Plugin` commands, available in the command palette, to generate a new minimap plugin package.
+
+- `Minimap: Generate Javascript Plugin`: Will generate a vanilla JavaScript package.
+- `Minimap: Generate Coffee Plugin`: Will generate a CoffeeScript package.
+- `Minimap: Generate Babel Plugin`: Will generate a ES6 package that uses babel-js.
+
+You can also specify a keybinding for these commands:
 
 ```cson
 'atom-workspace':
-  'ctrl-alt-cmd-m': 'minimap:generate-plugin'
+  'ctrl-alt-cmd-m': 'minimap:generate-plugin-javascript'
 ```
 
 #### Plugins Controls

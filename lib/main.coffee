@@ -103,9 +103,9 @@ class Main
     @subscriptionsOfCommands = new CompositeDisposable
     @subscriptionsOfCommands.add atom.commands.add 'atom-workspace',
       'minimap:toggle': => @toggle()
-      'minimap:generate-plugin-coffee': => @generatePlugin('coffee')
-      'minimap:generate-plugin-javascript': => @generatePlugin('javascript')
-      'minimap:generate-plugin-babel': => @generatePlugin('babel')
+      'minimap:generate-coffee-plugin': => @generatePlugin('coffee')
+      'minimap:generate-javascript-plugin': => @generatePlugin('javascript')
+      'minimap:generate-babel-plugin': => @generatePlugin('babel')
 
     # Other Subscriptions
     @subscriptions = new CompositeDisposable
