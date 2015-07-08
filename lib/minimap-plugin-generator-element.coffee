@@ -89,7 +89,7 @@ class MinimapPluginGeneratorElement extends HTMLElement
       true
 
   initPackage: (packagePath, callback) ->
-    templatePath = path.resolve __dirname, path.join('..','templates','plugin')
+    templatePath = path.resolve __dirname, path.join('..','templates',"plugin-#{@template}")
     @runCommand(atom.packages.getApmPath(), ['init', "-p", "#{packagePath}", "--template", templatePath], callback)
 
   linkPackage: (packagePath, callback) ->
