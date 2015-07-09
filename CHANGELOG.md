@@ -1,3 +1,10 @@
+<a name="v4.11.1"></a>
+# v4.11.1 (2015-07-09)
+
+## :bug: Bug Fixes
+
+- Fix leak minimap ([7b3c65ba](https://github.com/atom-minimap/minimap/commit/7b3c65bac13c93474b934de10f542a5e64fe092f))
+
 <a name="v4.11.0"></a>
 # v4.11.0 (2015-07-08)
 
