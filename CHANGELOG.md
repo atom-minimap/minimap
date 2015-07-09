@@ -1,3 +1,10 @@
+<a name="v4.11.2"></a>
+# v4.11.2 (2015-07-10)
+
+## :bug: Bug Fixes
+
+- Fix minimap position relying upon node order ([89c3b035](https://github.com/atom-minimap/minimap/commit/89c3b035419a119bd00cc5dcded2b2064589a377), [#358](https://github.com/atom-minimap/minimap/issues/358))
+
 <a name="v4.11.1"></a>
 # v4.11.1 (2015-07-09)
 
