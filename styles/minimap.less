@@ -4,6 +4,10 @@ atom-notifications:empty {
   pointer-events: none
 }
 
+atom-text-editor::shadow .editor--private {
+  order: 2;
+}
+
 atom-text-editor::shadow, atom-text-editor {
   atom-text-editor-minimap {
     display: block;
@@ -11,8 +15,13 @@ atom-text-editor::shadow, atom-text-editor {
     height: 100%;
     overflow: hidden;
     position: relative;
+    order: 2;
 
     -webkit-user-select: none;
+
+    &.left {
+      order: 1;
+    }
 
     &.absolute {
       position: absolute;

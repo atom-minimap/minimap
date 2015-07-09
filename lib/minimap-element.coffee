@@ -44,9 +44,8 @@ class MinimapElement extends HTMLElement
       'minimap.displayMinimapOnLeft': (displayMinimapOnLeft) =>
         swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft
         @displayMinimapOnLeft = displayMinimapOnLeft
-        @classList.toggle('left', displayMinimapOnLeft and @absoluteMode)
 
-        @swapMinimapPosition() if swapPosition
+        @swapMinimapPosition()
 
       'minimap.minimapScrollIndicator': (@minimapScrollIndicator) =>
         if @minimapScrollIndicator and not @scrollIndicator?
@@ -76,7 +75,6 @@ class MinimapElement extends HTMLElement
 
       'minimap.absoluteMode': (@absoluteMode) =>
         @classList.toggle('absolute', @absoluteMode)
-        @classList.toggle('left', @displayMinimapOnLeft and @absoluteMode)
 
   # Internal: DOM callback invoked when a new {MinimapElement} is attached
   # to the DOM.
@@ -118,18 +116,18 @@ class MinimapElement extends HTMLElement
   # `displayMinimapOnLeft` setting.
   attach: ->
     return if @attached
+    @getTextEditorElementRoot().appendChild(this)
     @swapMinimapPosition()
     @attached = true
 
   # Attaches the {MinimapElement} to the left of the target {TextEditorElement}.
   attachToLeft: ->
-    root = @getTextEditorElementRoot()
-    root.insertBefore(this, root.children[0])
+    @classList.add('left')
 
   # Attaches the {MinimapElement} to the right of the target
   # {TextEditorElement}.
   attachToRight: ->
-    @getTextEditorElementRoot().appendChild(this)
+    @classList.remove('left')
 
   # Swaps the {MinimapElement} position based on the value of the
   # `displayMinimapOnLeft` setting.

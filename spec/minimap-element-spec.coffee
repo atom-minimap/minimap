@@ -644,7 +644,7 @@ describe 'MinimapElement', ->
     describe 'when minimap.displayMinimapOnLeft setting is true', ->
       it 'moves the attached minimap to the left', ->
         atom.config.set 'minimap.displayMinimapOnLeft', true
-        expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
+        expect(minimapElement.classList.contains('left')).toBeTruthy()
 
       describe 'when the minimap is not attached yet', ->
         beforeEach ->
@@ -663,7 +663,7 @@ describe 'MinimapElement', ->
           minimapElement.attach()
 
         it 'moves the attached minimap to the left', ->
-          expect(Array::indexOf.call(editorElement.shadowRoot.children, minimapElement)).toEqual(0)
+          expect(minimapElement.classList.contains('left')).toBeTruthy()
 
     describe 'when minimap.adjustMinimapWidthToSoftWrap is true', ->
       [minimapWidth] = []
@@ -920,7 +920,6 @@ describe 'MinimapElement', ->
         describe 'when the displayMinimapOnLeft setting is enabled', ->
           beforeEach ->
             atom.config.set('minimap.displayMinimapOnLeft', true)
-            nextAnimationFrame()
 
           it 'adjusts the size of the control div to fit in the minimap', ->
             expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth / devicePixelRatio)
