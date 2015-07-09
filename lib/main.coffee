@@ -24,9 +24,6 @@ class Main
 
   ### Public ###
 
-  # The minimap package version
-  version: require('../package.json').version
-
   # The default minimap settings
   config:
     plugins:
@@ -128,18 +125,6 @@ class Main
     @editorsMinimaps = undefined
     @toggled = false
     @active = false
-
-  # Verifies that the passed-in version expression is satisfied by
-  # the current minimap version.
-  #
-  # expectedVersion - A [semver](https://github.com/npm/node-semver)
-  #                   compatible expression to match agains the minimap
-  #                   version.
-  #
-  # Returns a {Boolean}.
-  versionMatch: (expectedVersion) ->
-    semver ?= require 'semver'
-    semver.satisfies(@version, expectedVersion)
 
   # Toggles the minimap display.
   toggle: ->
