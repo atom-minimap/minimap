@@ -3,7 +3,7 @@ path = require 'path'
 {TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
-{mousemove, mousedown, mouseup, mousewheel} = require './helpers/events'
+{mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'styles', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
@@ -488,6 +488,34 @@ describe 'MinimapElement', ->
 
           spyOn(minimapElement, 'drag')
           mousemove(visibleArea, x: left + 10, y: top + 50)
+
+          expect(minimapElement.drag).not.toHaveBeenCalled()
+
+      describe 'dragging the visible area using touch events', ->
+        [visibleArea, originalTop] = []
+
+        beforeEach ->
+          visibleArea = minimapElement.visibleArea
+          {top: originalTop, left} = visibleArea.getBoundingClientRect()
+
+          touchstart(visibleArea, x: left + 10, y: originalTop + 10)
+          touchmove(visibleArea, x: left + 10, y: originalTop + 50)
+
+          nextAnimationFrame()
+
+        afterEach ->
+          minimapElement.endDrag()
+
+        it 'scrolls the editor so that the visible area was moved down by 40 pixels', ->
+          {top} = visibleArea.getBoundingClientRect()
+          expect(top).toBeCloseTo(originalTop + 40, -1)
+
+        it 'stops the drag gesture when the mouse is released outside the minimap', ->
+          {top, left} = visibleArea.getBoundingClientRect()
+          mouseup(jasmineContent, x: left - 10, y: top + 80)
+
+          spyOn(minimapElement, 'drag')
+          touchmove(visibleArea, x: left + 10, y: top + 50)
 
           expect(minimapElement.drag).not.toHaveBeenCalled()
 

@@ -181,11 +181,13 @@ class MinimapElement extends HTMLElement
     @addEventListener 'mousewheel', elementMousewheel
     @canvas.addEventListener 'mousedown', canvasMousedown
     @visibleArea.addEventListener 'mousedown', visibleAreaMousedown
+    @visibleArea.addEventListener 'touchstart', visibleAreaMousedown
 
     @subscriptions.add new Disposable =>
       @removeEventListener 'mousewheel', elementMousewheel
       @canvas.removeEventListener 'mousedown', canvasMousedown
       @visibleArea.removeEventListener 'mousedown', visibleAreaMousedown
+      @visibleArea.removeEventListener 'touchstart', visibleAreaMousedown
 
   # Initializes the scroll indicator div when the `minimapScrollIndicator`
   # settings is enabled.
@@ -512,11 +514,11 @@ class MinimapElement extends HTMLElement
   # area that starts the dragging gesture.
   #
   # event - The {Event} object.
-  startDrag: ({which, pageY}) ->
-    # if which is 2
-    #   @middleMousePressedOverCanvas({pageY})
+  startDrag: (e) ->
+    {which, pageY} = e
     return unless @minimap
-    return if which isnt 1 and which isnt 2
+    return if which isnt 1 and which isnt 2 and not e.touches?
+
     {top} = @visibleArea.getBoundingClientRect()
     {top: offsetTop} = @getBoundingClientRect()
 
@@ -531,10 +533,16 @@ class MinimapElement extends HTMLElement
     document.body.addEventListener('mouseup', mouseupHandler)
     document.body.addEventListener('mouseleave', mouseupHandler)
 
+    document.body.addEventListener('touchmove', mousemoveHandler)
+    document.body.addEventListener('touchend', mouseupHandler)
+
     @dragSubscription = new Disposable ->
       document.body.removeEventListener('mousemove', mousemoveHandler)
       document.body.removeEventListener('mouseup', mouseupHandler)
       document.body.removeEventListener('mouseleave', mouseupHandler)
+
+      document.body.removeEventListener('touchmove', mousemoveHandler)
+      document.body.removeEventListener('touchend', mouseupHandler)
 
   # Internal: The method called during the drag gesture.
   #
@@ -546,7 +554,7 @@ class MinimapElement extends HTMLElement
   #                       drag start.
   drag: (e, initial) ->
     return unless @minimap
-    return if e.which isnt 1 and e.which isnt 2
+    return if e.which isnt 1 and e.which isnt 2 and not e.touches?
     y = e.pageY - initial.offsetTop - initial.dragOffset
 
     ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
