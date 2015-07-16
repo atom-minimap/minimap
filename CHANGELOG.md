@@ -1,3 +1,10 @@
+<a name="v4.12.0"></a>
+# v4.12.0 (2015-07-16)
+
+## :sparkles: Features
+
+- Add support for touch events for visible area dragging ([a6e0a8a1](https://github.com/atom-minimap/minimap/commit/a6e0a8a1838bffd675d7f249cc1e270b7400c09f), [#362](https://github.com/atom-minimap/minimap/issues/362))
+
 <a name="v4.11.2"></a>
 # v4.11.2 (2015-07-10)
 
