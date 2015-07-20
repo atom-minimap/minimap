@@ -69,10 +69,14 @@ class Minimap
 
   # Destroys the model.
   destroy: ->
-    @subscriptions.dispose()
+    return if @destroyed
+
     @removeAllDecorations()
+    @subscriptions.dispose()
+    @subscriptions = null
     @textEditor = null
     @emitter.emit 'did-destroy'
+    @emitter.dispose()
     @destroyed = true
 
   isDestroyed: -> @destroyed
