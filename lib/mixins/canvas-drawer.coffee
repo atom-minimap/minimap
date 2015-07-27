@@ -210,12 +210,13 @@ class CanvasDrawer extends Mixin
   # line - The screen line for which replacing the invisibles characters.
   getInvisibleRegExp: (line) ->
     if line? and line.invisibles?
-      ///
-      #{_.escapeRegExp line.invisibles.cr}|
-      #{_.escapeRegExp line.invisibles.eol}|
-      #{_.escapeRegExp line.invisibles.space}|
-      #{_.escapeRegExp line.invisibles.tab}
-      ///g
+      invisibles = []
+      invisibles.push line.invisibles.cr if line.invisibles.cr?
+      invisibles.push line.invisibles.eol if line.invisibles.eol?
+      invisibles.push line.invisibles.space if line.invisibles.space?
+      invisibles.push line.invisibles.tab if line.invisibles.tab?
+
+      ///#{invisibles.map(_.escapeRegExp).join('|')}///g
 
   # Internal: Draws a single token on the given context.
   #
