@@ -1,3 +1,10 @@
+<a name="v4.12.1"></a>
+# v4.12.1 (2015-07-27)
+
+## :bug: Bug Fixes
+
+- Fix error raised if some invisibles are undefined ([ee633703](https://github.com/atom-minimap/minimap/commit/ee6337034aae1c5b1330e553227b7d8e39410fc5), [#368](https://github.com/atom-minimap/minimap/issues/368))
+
 <a name="v4.12.0"></a>
 # v4.12.0 (2015-07-16)
 
