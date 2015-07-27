@@ -715,7 +715,8 @@ describe 'MinimapElement', ->
 
       describe 'the dom polling routine', ->
         it 'does not change the value', ->
-          sleep(150)
+          atom.views.performDocumentPoll()
+          waitsFor -> nextAnimationFrame isnt noAnimationFrame
           runs ->
             nextAnimationFrame()
             expect(minimapElement.canvas.width / devicePixelRatio).toEqual(4)
@@ -726,7 +727,8 @@ describe 'MinimapElement', ->
           editorElement.style.width = '100px'
           editorElement.style.height = '100px'
 
-          sleep(150)
+          atom.views.performDocumentPoll()
+          waitsFor -> nextAnimationFrame isnt noAnimationFrame
           runs -> nextAnimationFrame()
 
         it 'makes the minimap smaller than soft wrap', ->
@@ -737,10 +739,11 @@ describe 'MinimapElement', ->
         beforeEach ->
           editor.setText(mediumSample)
           editor.setScrollTop(50)
-          waitsFor -> minimapElement.frameRequested
-          runs -> nextAnimationFrame()
 
-          atom.config.set 'minimap.minimapScrollIndicator', true
+          waitsFor -> minimapElement.frameRequested
+          runs ->
+            nextAnimationFrame()
+            atom.config.set 'minimap.minimapScrollIndicator', true
 
           waitsFor -> minimapElement.frameRequested
           runs -> nextAnimationFrame()
@@ -752,8 +755,6 @@ describe 'MinimapElement', ->
       describe 'and when minimap.displayPluginsControls setting is true', ->
         beforeEach ->
           atom.config.set 'minimap.displayPluginsControls', true
-          waitsFor -> minimapElement.frameRequested
-          runs -> nextAnimationFrame()
 
         it 'offsets the scroll indicator by the difference', ->
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
@@ -771,7 +772,7 @@ describe 'MinimapElement', ->
 
       describe 'and when preferredLineLength >= 16384', ->
         beforeEach ->
-          atom.config.set 'minimap.preferredLineLength', 16384
+          atom.config.set 'editor.preferredLineLength', 16384
           waitsFor -> minimapElement.frameRequested
           runs -> nextAnimationFrame()
 
@@ -801,9 +802,10 @@ describe 'MinimapElement', ->
           height = editor.getHeight()
           editorElement.style.height = '500px'
 
-          waitsFor -> editor.getHeight() isnt height
+          # waitsFor -> editor.getHeight() isnt height
 
-          sleep(150)
+          runs -> atom.views.performDocumentPoll()
+          # waitsFor -> minimapElement.frameRequested
 
           runs -> nextAnimationFrame()
 
@@ -932,7 +934,7 @@ describe 'MinimapElement', ->
 
           editorElement.style.width = '1024px'
 
-          sleep(150)
+          atom.views.performDocumentPoll()
           waitsFor -> minimapElement.frameRequested
           runs -> nextAnimationFrame()
 

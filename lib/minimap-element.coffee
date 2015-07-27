@@ -76,6 +76,13 @@ class MinimapElement extends HTMLElement
       'minimap.absoluteMode': (@absoluteMode) =>
         @classList.toggle('absolute', @absoluteMode)
 
+      'editor.preferredLineLength': => @requestUpdate() if @attached
+
+      'editor.softWrap': => @requestUpdate() if @attached
+
+      'editor.softWrapAtPreferredLineLength': => @requestUpdate() if @attached
+
+
   # Internal: DOM callback invoked when a new {MinimapElement} is attached
   # to the DOM.
   attachedCallback: ->
