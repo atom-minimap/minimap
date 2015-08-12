@@ -117,22 +117,26 @@ class DecorationManagement extends Mixin
   # endScreenRow - The ending row index.
   #
   # Returns an {Object}.
-  decorationsForScreenRowRangeByTypeThenRows: (startScreenRow, endScreenRow) ->
-    decorationsByMarkerType = {}
-    for marker in @findMarkers(intersectsScreenRowRange: [startScreenRow, endScreenRow])
-      if decorations = @decorationsByMarkerId[marker.id]
-        range = marker.getScreenRange()
-        rows = [range.start.row..range.end.row]
+  decorationsByTypeThenRows: (startScreenRow, endScreenRow) ->
+    return @decorationsByTypeThenRowsCache if @decorationsByTypeThenRowsCache?
 
-        for decoration in decorations
-          {type} = decoration.getProperties()
-          decorationsByMarkerType[type] ?= {}
+    cache = {}
 
-          for row in rows
-            decorationsByMarkerType[type][row] ?= []
-            decorationsByMarkerType[type][row].push(decoration)
+    for id, decoration of @decorationsById
+      range = decoration.marker.getScreenRange()
+      rows = [range.start.row..range.end.row]
 
-    decorationsByMarkerType
+      {type} = decoration.getProperties()
+      cache[type] ?= {}
+
+      for row in rows
+        cache[type][row] ?= []
+        cache[type][row].push(decoration)
+
+    @decorationsByTypeThenRowsCache = cache
+
+  invalidateDecorationForScreenRowsCache: ->
+    @decorationsByTypeThenRowsCache = null
 
   # Public: Adds a decoration that tracks a `Marker`. When the marker moves,
   # is invalidated, or is destroyed, the decoration will be updated to reflect
@@ -186,6 +190,7 @@ class DecorationManagement extends Mixin
 
     @decorationMarkerChangedSubscriptions[marker.id] ?= marker.onDidChange (event) =>
       decorations = @decorationsByMarkerId[marker.id]
+      @invalidateDecorationForScreenRowsCache()
 
       # Why check existence? Markers may get destroyed or decorations removed
       # in the change handler. Bookmarks does this.
@@ -241,6 +246,7 @@ class DecorationManagement extends Mixin
   # decoration - The `Decoration` to register changes for.
   emitDecorationChanges: (decoration) ->
     return if decoration.marker.displayBuffer.isDestroyed()
+    @invalidateDecorationForScreenRowsCache()
     range = decoration.marker.getScreenRange()
     return unless range?
 
@@ -269,21 +275,21 @@ class DecorationManagement extends Mixin
   removeDecoration: (decoration) ->
     return unless decoration?
     {marker} = decoration
-    return unless decorations = @decorationsByMarkerId[marker.id]
+    delete @decorationsById[decoration.id]
 
-    @emitDecorationChanges(decoration)
-
-    @decorationUpdatedSubscriptions[decoration.id].dispose()
-    @decorationDestroyedSubscriptions[decoration.id].dispose()
+    @decorationUpdatedSubscriptions[decoration.id]?.dispose()
+    @decorationDestroyedSubscriptions[decoration.id]?.dispose()
 
     delete @decorationUpdatedSubscriptions[decoration.id]
     delete @decorationDestroyedSubscriptions[decoration.id]
 
+    return unless decorations = @decorationsByMarkerId[marker.id]
+
+    @emitDecorationChanges(decoration)
     index = decorations.indexOf(decoration)
 
     if index > -1
       decorations.splice(index, 1)
-      delete @decorationsById[decoration.id]
       @emitter.emit 'did-remove-decoration', {marker, decoration}
       @removedAllMarkerDecorations(marker) if decorations.length is 0
 

@@ -296,7 +296,7 @@ describe 'Minimap', ->
 
         expect(decoration).toBeUndefined()
 
-  describe '::decorationsForScreenRowRangeByTypeThenRows', ->
+  describe '::decorationsByTypeThenRows', ->
     [decorations] = []
 
     beforeEach ->
@@ -313,7 +313,7 @@ describe 'Minimap', ->
       createDecoration 'line', [[12,0], [12,0]]
       createDecoration 'highlight-under', [[0,0], [10,1]]
 
-      decorations = minimap.decorationsForScreenRowRangeByTypeThenRows(0, 12)
+      decorations = minimap.decorationsByTypeThenRows(0, 12)
 
     it 'returns an object whose keys are the decorations types', ->
       expect(Object.keys(decorations).sort()).toEqual(['highlight-over', 'highlight-under', 'line'])
