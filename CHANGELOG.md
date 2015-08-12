@@ -1,3 +1,10 @@
+<a name="v4.12.3"></a>
+# v4.12.3 (2015-08-12)
+
+## :racehorse: Performances
+
+- Speed up scrolling with lots of decorations ([7b495e9f](https://github.com/atom-minimap/minimap/commit/7b495e9f259d02aa02bb7c223a33138cc8c0f8cc))
+
 <a name="v4.12.2"></a>
 # v4.12.2 (2015-08-03)
 
