@@ -45,7 +45,7 @@ class MinimapElement extends HTMLElement
         swapPosition = @minimap? and displayMinimapOnLeft isnt @displayMinimapOnLeft
         @displayMinimapOnLeft = displayMinimapOnLeft
 
-        @swapMinimapPosition()
+        @updateMinimapFlexPosition()
 
       'minimap.minimapScrollIndicator': (@minimapScrollIndicator) =>
         if @minimapScrollIndicator and not @scrollIndicator?
@@ -88,6 +88,7 @@ class MinimapElement extends HTMLElement
   attachedCallback: ->
     @subscriptions.add atom.views.pollDocument => @pollDOM()
     @measureHeightAndWidth()
+    @updateMinimapFlexPosition()
     @attached = true
 
     # Uses of `atom.styles.onDidAddStyleElement` instead of
@@ -121,34 +122,20 @@ class MinimapElement extends HTMLElement
   #
   # The position at which the element is attached is defined by the
   # `displayMinimapOnLeft` setting.
-  attach: ->
+  attach: (parent) ->
     return if @attached
-    @getTextEditorElementRoot().appendChild(this)
-    @swapMinimapPosition()
-    @attached = true
-
-  # Attaches the {MinimapElement} to the left of the target {TextEditorElement}.
-  attachToLeft: ->
-    @classList.add('left')
-
-  # Attaches the {MinimapElement} to the right of the target
-  # {TextEditorElement}.
-  attachToRight: ->
-    @classList.remove('left')
-
-  # Swaps the {MinimapElement} position based on the value of the
-  # `displayMinimapOnLeft` setting.
-  swapMinimapPosition: ->
-    if @displayMinimapOnLeft
-      @attachToLeft()
-    else
-      @attachToRight()
+    (parent ? @getTextEditorElementRoot()).appendChild(this)
 
   # Detaches the {MinimapElement} from the DOM.
   detach: ->
     return unless @attached
     return unless @parentNode?
     @parentNode.removeChild(this)
+
+  # Toggles the minimap left/right position based on the value of the
+  # `displayMinimapOnLeft` setting.
+  updateMinimapFlexPosition: ->
+    @classList.toggle('left', @displayMinimapOnLeft)
 
   # Destroys this {MinimapElement}.
   destroy: ->
