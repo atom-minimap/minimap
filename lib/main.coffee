@@ -253,6 +253,11 @@ class Main
 
     minimap
 
+  # Returns a new stand-alone {Minimap} for the passed-in `TextEditor`.
+  #
+  # editorView - An `Editor` instance
+  #
+  # Returns a {Minimap}.
   standAloneMinimapForEditor: (textEditor) ->
     return unless textEditor?
 
