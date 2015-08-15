@@ -496,7 +496,7 @@ describe 'MinimapElement', ->
         it 'scrolls the editor gradually to the line below the mouse', ->
           # wait until all animations run out
           waitsFor ->
-            nextAnimationFrame()
+            nextAnimationFrame isnt noAnimationFrame and nextAnimationFrame()
             editor.getScrollTop() is 400
 
       describe 'dragging the visible area', ->
