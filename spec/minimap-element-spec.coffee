@@ -497,10 +497,7 @@ describe 'MinimapElement', ->
           # wait until all animations run out
           waitsFor ->
             nextAnimationFrame()
-            return nextAnimationFrame is noAnimationFrame
-
-          runs ->
-            expect(editor.getScrollTop()).toEqual(400)
+            editor.getScrollTop() is 400
 
       describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []
