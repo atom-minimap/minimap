@@ -645,6 +645,23 @@ describe 'MinimapElement', ->
         expect(minimap.width).toEqual(minimapElement.clientWidth)
         expect(minimap.height).toEqual(minimapElement.clientHeight)
 
+      describe 'when minimap.minimapScrollIndicator setting is true', ->
+        beforeEach ->
+          editor.setText(mediumSample)
+          editor.setScrollTop(50)
+
+          waitsFor -> minimapElement.frameRequested
+          runs ->
+            nextAnimationFrame()
+            atom.config.set 'minimap.minimapScrollIndicator', true
+
+          waitsFor -> minimapElement.frameRequested
+          runs -> nextAnimationFrame()
+
+        it 'offsets the scroll indicator by the difference', ->
+          indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+          expect(realOffsetLeft(indicator)).toBeCloseTo(16, -1)
+
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
     #    ##     ## ##       ##          ##    ##     ## ##     ##   ####

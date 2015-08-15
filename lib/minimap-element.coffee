@@ -352,9 +352,9 @@ class MinimapElement extends HTMLElement
       @initializeScrollIndicator()
 
     if @scrollIndicator?
-      editorHeight = @getTextEditor().getHeight()
-      indicatorHeight = editorHeight * (editorHeight / @minimap.getHeight())
-      indicatorScroll = (editorHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRatio()
+      minimapScreenHeight = @minimap.getScreenHeight()
+      indicatorHeight = minimapScreenHeight * (minimapScreenHeight / @minimap.getHeight())
+      indicatorScroll = (minimapScreenHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRatio()
 
       @applyStyles @scrollIndicator,
         height: indicatorHeight + 'px'
