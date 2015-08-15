@@ -253,6 +253,15 @@ class Main
 
     minimap
 
+  standAloneMinimapForEditor: (textEditor) ->
+    return unless textEditor?
+
+    Minimap ?= require './minimap'
+    new Minimap({
+      textEditor: atom.workspace.getActiveTextEditor()
+      standAlone: true
+    })
+
   # Returns the {Minimap} of the active `TextEditor`.
   #
   # Returns a {Minimap}.
