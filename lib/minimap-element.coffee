@@ -1,6 +1,6 @@
 {debounce} = require 'underscore-plus'
 {CompositeDisposable, Disposable} = require 'event-kit'
-{EventsDelegation} = require 'atom-utils'
+{EventsDelegation, AncestorsMethods} = require 'atom-utils'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
 
@@ -22,6 +22,7 @@ class MinimapElement extends HTMLElement
   DOMStylesReader.includeInto(this)
   CanvasDrawer.includeInto(this)
   EventsDelegation.includeInto(this)
+  AncestorsMethods.includeInto(this)
 
   ### Public ###
 
@@ -90,6 +91,7 @@ class MinimapElement extends HTMLElement
     @measureHeightAndWidth()
     @updateMinimapFlexPosition()
     @attached = true
+    @attachedToTextEditor = @parentNode is @getTextEditorElementRoot()
 
     # Uses of `atom.styles.onDidAddStyleElement` instead of
     # `atom.themes.onDidChangeActiveThemes`.
@@ -331,7 +333,6 @@ class MinimapElement extends HTMLElement
     visibleAreaLeft = @minimap.getTextEditorScaledScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
     visibleWidth = Math.min(@canvas.width / devicePixelRatio, @width)
-
 
     @applyStyles @visibleArea,
       width: visibleWidth + 'px'

@@ -130,6 +130,9 @@ describe 'MinimapElement', ->
       # and not 20px
       expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 11, 0)
 
+    it 'knows when attached to a text editor', ->
+      expect(minimapElement.attachedToTextEditor).toBeTruthy()
+
     it 'resizes the canvas to fit the minimap', ->
       expect(canvas.offsetHeight / devicePixelRatio).toBeCloseTo(minimapElement.offsetHeight + minimap.getLineHeight(), 0)
       expect(canvas.offsetWidth / devicePixelRatio).toBeCloseTo(minimapElement.offsetWidth, 0)
