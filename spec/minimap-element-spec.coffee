@@ -619,6 +619,31 @@ describe 'MinimapElement', ->
             {top} = visibleArea.getBoundingClientRect()
             expect(top).toBeCloseTo(originalTop + 40, -1)
 
+    #     ######  ########    ###    ##    ## ########
+    #    ##    ##    ##      ## ##   ###   ## ##     ##
+    #    ##          ##     ##   ##  ####  ## ##     ##
+    #     ######     ##    ##     ## ## ## ## ##     ##
+    #          ##    ##    ######### ##  #### ##     ##
+    #    ##    ##    ##    ##     ## ##   ### ##     ##
+    #     ######     ##    ##     ## ##    ## ########
+    #
+    #       ###    ##        #######  ##    ## ########
+    #      ## ##   ##       ##     ## ###   ## ##
+    #     ##   ##  ##       ##     ## ####  ## ##
+    #    ##     ## ##       ##     ## ## ## ## ######
+    #    ######### ##       ##     ## ##  #### ##
+    #    ##     ## ##       ##     ## ##   ### ##
+    #    ##     ## ########  #######  ##    ## ########
+
+    describe 'when the model is a stand-alone minimap', ->
+      beforeEach ->
+        minimap.standAlone = true
+
+      it 'sets the minimap size when measured', ->
+        minimapElement.measureHeightAndWidth()
+
+        expect(minimap.width).toEqual(minimapElement.clientWidth)
+        expect(minimap.height).toEqual(minimapElement.clientHeight)
 
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##

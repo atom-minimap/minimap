@@ -243,6 +243,15 @@ class Minimap
   getScreenWidth: ->
     if @isStandAlone() and @width? then @width else @getWidth()
 
+  # Internal: Sets the preferred height and width when in stand-alone mode.
+  #
+  # This method is called by the {MinimapElement} for this {Minimap} so that
+  # the model is kept in sync with the view.
+  #
+  # height - The height {Number} of pixels.
+  # width - The width {Number} of pixels.
+  setScreenHeightAndWidth: (@height, @width) ->
+
   # Returns the vertical scaling factor when converting coordinates from the
   # `TextEditor` to the {Minimap}.
   #

@@ -408,6 +408,8 @@ class MinimapElement extends HTMLElement
     @width = @clientWidth
     canvasWidth = @width
 
+    @minimap.setScreenHeightAndWidth(@height, @width)
+
     @requestForcedUpdate() if wasResized or visibilityChanged or forceUpdate
 
     return unless @isVisible()
