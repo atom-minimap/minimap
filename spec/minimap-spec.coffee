@@ -334,3 +334,107 @@ describe 'Minimap', ->
       expect(decorations['line']['3'].length).toEqual(1)
 
       expect(decorations['highlight-under']['5'].length).toEqual(1)
+
+##     ######  ########    ###    ##    ## ########
+##    ##    ##    ##      ## ##   ###   ## ##     ##
+##    ##          ##     ##   ##  ####  ## ##     ##
+##     ######     ##    ##     ## ## ## ## ##     ##
+##          ##    ##    ######### ##  #### ##     ##
+##    ##    ##    ##    ##     ## ##   ### ##     ##
+##     ######     ##    ##     ## ##    ## ########
+##
+##       ###    ##        #######  ##    ## ########
+##      ## ##   ##       ##     ## ###   ## ##
+##     ##   ##  ##       ##     ## ####  ## ##
+##    ##     ## ##       ##     ## ## ## ## ######
+##    ######### ##       ##     ## ##  #### ##
+##    ##     ## ##       ##     ## ##   ### ##
+##    ##     ## ########  #######  ##    ## ########
+
+describe 'Stand alone minimap', ->
+  [editor, minimap, largeSample, smallSample] = []
+
+  beforeEach ->
+    atom.config.set 'minimap.charHeight', 4
+    atom.config.set 'minimap.charWidth', 2
+    atom.config.set 'minimap.interline', 1
+
+    editor = new TextEditor({})
+    editor.setLineHeightInPixels(10)
+    editor.setHeight(50)
+    editor.setWidth(200)
+
+    dir = atom.project.getDirectories()[0]
+
+    minimap = new Minimap({
+      textEditor: editor
+      standAlone: true
+    })
+
+    largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
+    smallSample = fs.readFileSync(dir.resolve('sample.coffee')).toString()
+
+  it 'has an associated editor', ->
+    expect(minimap.getTextEditor()).toEqual(editor)
+
+  it 'measures the minimap size based on the current editor content', ->
+    editor.setText(smallSample)
+    expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
+
+    editor.setText(largeSample)
+    expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
+
+  it 'measures the scaling factor between the editor and the minimap', ->
+    expect(minimap.getVerticalScaleFactor()).toEqual(0.5)
+    expect(minimap.getHorizontalScaleFactor()).toEqual(2 / editor.getDefaultCharWidth())
+
+  it 'measures the editor visible area size at minimap scale', ->
+    editor.setText(largeSample)
+    expect(minimap.getTextEditorScaledHeight()).toEqual(25)
+
+  it 'has a visible height based on the passed-in options', ->
+    expect(minimap.getVisibleHeight()).toEqual(5)
+
+    editor.setText(smallSample)
+    expect(minimap.getVisibleHeight()).toEqual(20)
+
+    editor.setText(largeSample)
+    expect(minimap.getVisibleHeight()).toEqual(editor.getScreenLineCount() * 5)
+
+    minimap.height = 100
+    expect(minimap.getVisibleHeight()).toEqual(100)
+
+  it 'has a visible width based on the passed-in options', ->
+    expect(minimap.getVisibleWidth()).toEqual(0)
+
+    editor.setText(smallSample)
+    expect(minimap.getVisibleWidth()).toEqual(36)
+
+    editor.setText(largeSample)
+    expect(minimap.getVisibleWidth()).toEqual(editor.getMaxScreenLineLength() * 2)
+
+    minimap.width = 50
+    expect(minimap.getVisibleWidth()).toEqual(50)
+
+  it 'measures the available minimap scroll', ->
+    editor.setText(largeSample)
+    largeLineCount = editor.getScreenLineCount()
+
+    expect(minimap.getMaxScrollTop()).toEqual(0)
+    expect(minimap.canScroll()).toBeFalsy()
+
+    minimap.height = 100
+
+    expect(minimap.getMaxScrollTop()).toEqual(largeLineCount * 5 - 100)
+    expect(minimap.canScroll()).toBeTruthy()
+
+  it 'computes the first visible row in the minimap', ->
+    expect(minimap.getFirstVisibleScreenRow()).toEqual(0)
+
+  it 'computes the last visible row in the minimap', ->
+    editor.setText(largeSample)
+
+    expect(minimap.getLastVisibleScreenRow()).toEqual(editor.getScreenLineCount())
+
+    minimap.height = 100
+    expect(minimap.getLastVisibleScreenRow()).toEqual(20)
