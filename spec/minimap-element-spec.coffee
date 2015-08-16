@@ -15,6 +15,8 @@ realOffsetLeft = (o) ->
   transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   o.offsetLeft + transform.m41
 
+isVisible = (node) -> node.offsetWidth > 0 or node.offsetHeight > 0
+
 # Modify the global `devicePixelRatio` variable.
 window.devicePixelRatio = 2
 
@@ -90,6 +92,11 @@ describe 'MinimapElement', ->
       styleNode = document.createElement('style')
       styleNode.textContent = """
         #{stylesheet}
+
+        atom-text-editor-minimap[stand-alone] {
+          width: 100px;
+          height: 100px;
+        }
 
         atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
           background: rgba(255,0,0,0.3);
@@ -634,13 +641,22 @@ describe 'MinimapElement', ->
 
     describe 'when the model is a stand-alone minimap', ->
       beforeEach ->
-        minimap.standAlone = true
+        minimap.setStandAlone(true)
+
+      it 'has a stand-alone attribute', ->
+        expect(minimapElement.hasAttribute('stand-alone')).toBeTruthy()
 
       it 'sets the minimap size when measured', ->
         minimapElement.measureHeightAndWidth()
 
         expect(minimap.width).toEqual(minimapElement.clientWidth)
         expect(minimap.height).toEqual(minimapElement.clientHeight)
+
+      it 'does not display the visible area', ->
+        waitsFor -> nextAnimationFrame isnt noAnimationFrame
+        runs ->
+          nextAnimationFrame()
+          expect(isVisible(minimapElement.visibleArea)).toBeFalsy()
 
       describe 'when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->

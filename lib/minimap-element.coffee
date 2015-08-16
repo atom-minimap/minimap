@@ -291,9 +291,17 @@ class MinimapElement extends HTMLElement
     @subscriptions.add @minimap.onDidDestroy => @destroy()
     @subscriptions.add @minimap.onDidChangeConfig =>
       @requestForcedUpdate() if @attached
+    @subscriptions.add @minimap.onDidChangeStandAlone =>
+      if @minimap.isStandAlone()
+        @setAttribute('stand-alone', true)
+      else
+        @removeAttribute('stand-alone')
+      @requestUpdate()
     @subscriptions.add @minimap.onDidChange (change) =>
       @pendingChanges.push(change)
       @requestUpdate()
+
+    @setAttribute('stand-alone', true) if @minimap.isStandAlone()
 
     @minimap
 

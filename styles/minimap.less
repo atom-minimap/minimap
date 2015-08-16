@@ -39,6 +39,12 @@ atom-text-editor::shadow, atom-text-editor, html {
       }
     }
 
+    &[stand-alone]::shadow {
+      .minimap-visible-area {
+        display: none;
+      }
+    }
+
     &::shadow {
       canvas {
         position: absolute;
