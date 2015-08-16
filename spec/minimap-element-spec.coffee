@@ -497,7 +497,7 @@ describe 'MinimapElement', ->
           # wait until all animations run out
           waitsFor ->
             nextAnimationFrame isnt noAnimationFrame and nextAnimationFrame()
-            editor.getScrollTop() is 400
+            editor.getScrollTop() >= 400
 
       describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []
