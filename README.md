@@ -21,6 +21,8 @@ apm install minimap
 
 Below is the list of available plugins so far:
 
+Package|Description
+---|---
 [Auto-Hide](https://atom.io/packages/minimap-autohide)|Hides the Minimap while editing.
 [Bookmarks](https://atom.io/packages/minimap-bookmarks)|Displays Atom bookmarks.
 [Code Glance](https://atom.io/packages/minimap-codeglance)|Shows the code that's under the mouse cursor when hovering the Minimap.
@@ -34,6 +36,8 @@ Below is the list of available plugins so far:
 
 ### Settings
 
+Setting|Description
+---|---
 `Auto Toggle`|If checked the Minimap is toggled on at startup. (default=true)
 `Display Code Highlights`|If checked the code will be highlighted using the grammar tokens. (default=true)
 `Display Minimap On Left`|If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)
@@ -44,11 +48,10 @@ Below is the list of available plugins so far:
 `Display Plugins Controls`|If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. **You need to restart Atom for this setting to be effective.**(default=true)
 `Minimap Scroll Indicator`|Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)
 `Plugins *`|When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
-`Scroll Animation`|Enable animations when scrolling the editor by clicking on the Minimap.
-`Scroll Animation Duration`|Duration of the scroll animation when clicking on the Minimap.
+`Scroll Animation`|Enable animations when scrolling the editor by clicking on the Minimap. (default=false)
+`Scroll Animation Duration`|Duration of the scroll animation when clicking on the Minimap. (default=300)
 `Use Hardware Acceleration`|If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
-`Absolute Mode`|When enabled the Minimap uses an absolute positioning, letting the editor's content flow below the Minimap.
-  Note that this setting will do nothing if `Display Minimap On Left` is also enabled.
+`Absolute Mode`|When enabled the Minimap uses an absolute positioning, letting the editor's content flow below the Minimap.(default=true) <p>Note that this setting will do nothing if `Display Minimap On Left` is also enabled.</p>
 
 ### Key Bindings
 
@@ -61,6 +64,76 @@ The Minimap package doesn't provide any default keybindings. But you can define 
   'ctrl-alt-cmd-b': 'minimap:generate-babel-plugin'
   'ctrl-alt-cmd-c': 'minimap:generate-coffee-plugin'
 ```
+
+### Tweaking The Minimap
+
+#### Hiding scrollbars
+
+If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
+
+```css
+atom-text-editor .vertical-scrollbar,
+atom-text-editor::shadow .vertical-scrollbar {
+  opacity: 0;
+  width: 0;
+}
+```
+
+#### Changing the Minimap's background
+
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-background.png?raw=true)
+
+```css
+atom-text-editor atom-text-editor-minimap,
+atom-text-editor::shadow atom-text-editor-minimap {
+  background: green;
+}
+```
+
+#### Changing the color of the Minimap's `visible-area`
+
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true)
+
+```css
+atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+  background-color: green;
+  opacity: .5;
+}
+```
+
+#### Changing the color of the Minimap's `scroll-indicator`
+
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-scroll-indicator.png?raw=true)
+
+```css
+atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
+  background-color: green;
+}
+```
+
+#### Disabling mouse interactions when in absolute mode
+
+If you want to prevent to catch the mouse pointer when the `absoluteMode` setting is enabled you can use the following snippet to do so:
+
+```css
+atom-text-editor atom-text-editor-minimap,
+atom-text-editor::shadow atom-text-editor-minimap {
+  pointer-events: none;
+}
+
+atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+  pointer-events: auto;
+}
+```
+
+The visible area will still allow interaction but the Minimap track won't.
+
+----
+
+## Developpers Documentation
 
 ### Plugins
 
@@ -131,82 +204,6 @@ Another non-trivial change is the list of available decoration's type. At the ti
 - `highlight-under`: Correspond to an editor `highlight` decoration that is rendered before rendering the line content.
 - `highlight-over`, `highlight`: Correspond to an editor `highlight` decoration that is rendered after having rendered the line content.
 - `highlight-outline`: Correspond to an editor `highlight` decoration that is rendered only as an outline in the Minimap.
-
-### Tweaking The Minimap
-
-#### Hiding scrollbars
-
-If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
-
-```css
-atom-text-editor .vertical-scrollbar,
-atom-text-editor::shadow .vertical-scrollbar {
-  opacity: 0;
-  width: 0;
-}
-```
-
-#### Changing the Minimap's background
-
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-background.png?raw=true)
-
-```css
-atom-text-editor atom-text-editor-minimap,
-atom-text-editor::shadow atom-text-editor-minimap {
-  background: green;
-}
-```
-
-#### Changing the color of the Minimap's `visible-area`
-
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true)
-
-```css
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
-  background-color: green;
-  opacity: .5;
-}
-```
-
-#### Changing the color of the Minimap's `scroll-indicator`
-
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-scroll-indicator.png?raw=true)
-
-```css
-atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
-  background-color: green;
-}
-```
-
-#### Disabling mouse interactions when in absolute mode
-
-If you want to prevent to catch the mouse pointer when the `absoluteMode` setting is enabled you can use the following snippet to do so:
-
-```css
-atom-text-editor atom-text-editor-minimap,
-atom-text-editor::shadow atom-text-editor-minimap {
-  pointer-events: none;
-}
-
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
-  pointer-events: auto;
-}
-```
-
-The visible area will still allow interaction but the Minimap track won't.
-
-### Contributing
-
-The Minimap package try to follow the [Atom contribution guidelines](https://atom.io/docs/latest/contributing).
-
-Especially, the commits should follow the conventions defined in the *Git Commit Messages* section of the guideline.
-
-The `CHANGELOG` content is then generated using the [changelog-gen utils](https://github.com/abe33/changelog-gen).
-
-[See all contributors](https://github.com/atom-minimap/minimap/graphs/contributors)
 
 ### License
 
