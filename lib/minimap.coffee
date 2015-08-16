@@ -131,6 +131,16 @@ class Minimap
   onDidChangeScrollLeft: (callback) ->
     @emitter.on 'did-change-scroll-left', callback
 
+  # Calls the `callback` when the text editor stand-alone mode is modified
+  #
+  # callback - The callback {Function}. The event the callback will receive
+  #            the {Minimap} as the sole argument.
+  #
+  # Returns a `Disposable`.
+  onDidChangeStandAlone: (callback) ->
+    @emitter.on 'did-change-stand-alone', callback
+
+
   # Calls the `callback` when this {Minimap} was destroyed.
   #
   # callback - The callback {Function}.
@@ -146,6 +156,15 @@ class Minimap
   #
   # Returns a {Boolean}.
   isStandAlone: -> @standAlone
+
+  # Sets the stand-alone mode for this minimap.
+  #
+  # standAlone - A {Boolean} of whether the minimap operates in stand-alone
+  #              mode or not.
+  setStandAlone: (standAlone) ->
+    if standAlone isnt @standAlone
+      @standAlone = standAlone
+      @emitter.emit('did-change-stand-alone', this)
 
   # Returns the `TextEditor` that this minimap represents.
   #
