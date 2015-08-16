@@ -2,7 +2,7 @@
 
 A preview of the full source code.
 
-![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/screenshot.png?raw=true)
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true)
 
 ### Installation
 
@@ -15,77 +15,68 @@ apm install minimap
 * Service-based Plugin API: Use the plugin generation command and start developing your plugin right away.
 * Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
 * Canvas-based Rendering: Simple, fast and flexible.
-
+* Stand-alone Mode: Wants to display a preview of a text editor in your UIs, use a stand-alone version of the Minimap.
 
 ### Available Plugins
 
 Below is the list of available plugins so far:
 
-  * [Auto-Hide](https://atom.io/packages/minimap-autohide)
-  * [Bookmarks](https://atom.io/packages/minimap-bookmarks)
-  * [Code Glance](https://atom.io/packages/minimap-codeglance)
-  * [Find And Replace](https://atom.io/packages/minimap-find-and-replace)
-  * [Git Diff](https://atom.io/packages/minimap-git-diff)
-  * [Hide on inactive panes](https://atom.io/packages/minimap-hide)
-  * [Highlight Selected](https://atom.io/packages/minimap-highlight-selected)
-  * [Linter](https://atom.io/packages/minimap-linter)
-  * [Pigments](https://atom.io/packages/minimap-pigments)
-  * [Selection](https://atom.io/packages/minimap-selection)
+[Auto-Hide](https://atom.io/packages/minimap-autohide)|Hides the Minimap while editing.
+[Bookmarks](https://atom.io/packages/minimap-bookmarks)|Displays Atom bookmarks.
+[Code Glance](https://atom.io/packages/minimap-codeglance)|Shows the code that's under the mouse cursor when hovering the Minimap.
+[Find And Replace](https://atom.io/packages/minimap-find-and-replace)|Displays the search matches.
+[Git Diff](https://atom.io/packages/minimap-git-diff)|Displays the file diff.
+[Hide on inactive panes](https://atom.io/packages/minimap-hide)|Hide the Minimap when pane isn't focus.
+[Highlight Selected](https://atom.io/packages/minimap-highlight-selected)|A Minimap binding for the highlight-selected package.
+[Linter](https://atom.io/packages/minimap-linter)|Displays linter markers.
+[Pigments](https://atom.io/packages/minimap-pigments)|Displays the pigments colors.
+[Selection](https://atom.io/packages/minimap-selection)|Display the buffer's selections.
 
 ### Settings
 
-* `Auto Toggle`: If checked the Minimap is toggled on at startup. (default=true)
-* `Display Code Highlights`: If checked the code will be highlighted using the grammar tokens. (default=true)
-* `Display Minimap On Left`: If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)
-* `Char Height`: The height of a character in the Minimap in pixels. (default=2)
-* `Char Width`: The width of a character in the Minimap in pixels. (default=1)
-* `Interline`: The space between lines in the Minimap in pixels. (default=1)
-* `Text Opacity`: The opacity used to render the line text in the Minimap. (default=0.6)
-* `Display Plugins Controls`: If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. **You need to restart Atom for this setting to be effective.** (default=true)
-* `Minimap Scroll Indicator`: Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)
-* `Plugins *`: When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
-* `Scroll Animation`: Enable animations when scrolling the editor by clicking on the Minimap.
-* `Scroll Animation Duration`: Duration of the scroll animation when clicking on the Minimap.
-* `Use Hardware Acceleration`: If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
-* `Absolute Mode`: When enabled the minimap uses an absolute positioning, letting the editor's content flow below the minimap.
+`Auto Toggle`|If checked the Minimap is toggled on at startup. (default=true)
+`Display Code Highlights`|If checked the code will be highlighted using the grammar tokens. (default=true)
+`Display Minimap On Left`|If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)
+`Char Height`|The height of a character in the Minimap in pixels. (default=2)
+`Char Width`|The width of a character in the Minimap in pixels. (default=1)
+`Interline`|The space between lines in the Minimap in pixels. (default=1)
+`Text Opacity`|The opacity used to render the line text in the Minimap. (default=0.6)
+`Display Plugins Controls`|If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. **You need to restart Atom for this setting to be effective.**(default=true)
+`Minimap Scroll Indicator`|Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)
+`Plugins *`|When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
+`Scroll Animation`|Enable animations when scrolling the editor by clicking on the Minimap.
+`Scroll Animation Duration`|Duration of the scroll animation when clicking on the Minimap.
+`Use Hardware Acceleration`|If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
+`Absolute Mode`|When enabled the Minimap uses an absolute positioning, letting the editor's content flow below the Minimap.
   Note that this setting will do nothing if `Display Minimap On Left` is also enabled.
-
-For instance the following result is obtained by setting a `Char Height` of `1px`:
-
-![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/screenshot-alternate.png?raw=true)
 
 ### Key Bindings
 
-Customizing Key Bindings:
+The Minimap package doesn't provide any default keybindings. But you can define your own as demonstrated below:
 
 ```cson
 'atom-workspace':
   'cmd-m': 'minimap:toggle'
-  'ctrl-alt-cmd-m': 'minimap:generate-plugin'
+  'ctrl-alt-cmd-j': 'minimap:generate-javascript-plugin'
+  'ctrl-alt-cmd-b': 'minimap:generate-babel-plugin'
+  'ctrl-alt-cmd-c': 'minimap:generate-coffee-plugin'
 ```
 
 ### Plugins
 
 #### Plugin Generation Command
 
-Use the `Minimap: Generate Javascript Plugin`, `Minimap: Generate Coffee Plugin` or `Minimap: Generate Babel Plugin` commands, available in the command palette, to generate a new minimap plugin package.
+Use the `Generate Javascript Plugin`, `Generate Coffee Plugin` or `Generate Babel Plugin` commands, available in the command palette, to generate a new Minimap plugin package.
 
 - `Minimap: Generate Javascript Plugin`: Will generate a vanilla JavaScript package.
 - `Minimap: Generate Coffee Plugin`: Will generate a CoffeeScript package.
 - `Minimap: Generate Babel Plugin`: Will generate a ES6 package that uses babel-js.
 
-You can also specify a keybinding for these commands:
-
-```cson
-'atom-workspace':
-  'ctrl-alt-cmd-m': 'minimap:generate-plugin-javascript'
-```
-
 #### Plugins Controls
 
 When the `displayPluginsControls` setting is toggled on, plugins activation can be managed directly from the Minimap package settings or by using the quick settings dropdown available on the Mimimap itself:
 
-![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/plugins-list.gif?raw=true)
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/plugins-list.gif?raw=true)
 
 ### Minimap Decorations
 
@@ -157,7 +148,7 @@ atom-text-editor::shadow .vertical-scrollbar {
 
 #### Changing the Minimap's background
 
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-background.png?raw=true)
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-background.png?raw=true)
 
 ```css
 atom-text-editor atom-text-editor-minimap,
@@ -168,7 +159,7 @@ atom-text-editor::shadow atom-text-editor-minimap {
 
 #### Changing the color of the Minimap's `visible-area`
 
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-visible-area.png?raw=true)
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true)
 
 ```css
 atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
@@ -180,7 +171,7 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 
 #### Changing the color of the Minimap's `scroll-indicator`
 
-![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/minimap-custom-scroll-indicator.png?raw=true)
+![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-scroll-indicator.png?raw=true)
 
 ```css
 atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator,
@@ -205,7 +196,7 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 }
 ```
 
-The visible area will still allow interaction but the minimap track won't.
+The visible area will still allow interaction but the Minimap track won't.
 
 ### Contributing
 
