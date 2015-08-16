@@ -854,7 +854,7 @@ describe 'MinimapElement', ->
 
         it 'offsets the scroll indicator by the difference', ->
           openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
-          expect(realOffsetLeft(openQuickSettings)).toBeCloseTo(2 - openQuickSettings.offsetWidth, -1)
+          expect(realOffsetLeft(openQuickSettings)).not.toBeCloseTo(2, -1)
 
       describe 'and then disabled', ->
         beforeEach ->
