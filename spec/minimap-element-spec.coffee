@@ -658,6 +658,14 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
           expect(isVisible(minimapElement.visibleArea)).toBeFalsy()
 
+      it 'does not display the quick settings button', ->
+        atom.config.set 'minimap.displayPluginsControls', true
+
+        waitsFor -> nextAnimationFrame isnt noAnimationFrame
+        runs ->
+          nextAnimationFrame()
+          expect(isVisible(minimapElement.openQuickSettings)).toBeFalsy()
+
       describe 'when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->
           editor.setText(mediumSample)
