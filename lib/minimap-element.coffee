@@ -462,6 +462,7 @@ class MinimapElement extends HTMLElement
   #
   # event - The {Event} object.
   mousePressedOverCanvas: (e) ->
+    return if @minimap.isStandAlone()
     if e.which is 1
       @leftMousePressedOverCanvas(e)
     else if e.which is 2

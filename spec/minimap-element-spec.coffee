@@ -683,6 +683,22 @@ describe 'MinimapElement', ->
           indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
           expect(realOffsetLeft(indicator)).toBeCloseTo(16, -1)
 
+      describe 'pressing the mouse on the minimap canvas', ->
+        beforeEach ->
+          jasmineContent.appendChild(minimapElement)
+
+          t = 0
+          spyOn(minimapElement, 'getTime').andCallFake -> n = t; t += 100; n
+          spyOn(minimapElement, 'requestUpdate').andCallFake ->
+
+          atom.config.set 'minimap.scrollAnimation', false
+
+          canvas = minimapElement.canvas
+          mousedown(canvas)
+
+        it 'does not scroll the editor to the line below the mouse', ->
+          expect(editor.getScrollTop()).toEqual(1000)
+
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##
     #    ##     ## ##       ##          ##    ##     ## ##     ##   ####
