@@ -438,3 +438,42 @@ describe 'Stand alone minimap', ->
 
     minimap.height = 100
     expect(minimap.getLastVisibleScreenRow()).toEqual(20)
+
+  it 'does not relay scroll top events from the editor', ->
+    editor.setText(largeSample)
+
+    scrollSpy = jasmine.createSpy('didScroll')
+    minimap.onDidChangeScrollTop(scrollSpy)
+
+    editor.setScrollTop(100)
+
+    expect(scrollSpy).not.toHaveBeenCalled()
+
+  it 'does not relay scroll left events from the editor', ->
+    editor.setText(largeSample)
+
+    scrollSpy = jasmine.createSpy('didScroll')
+    minimap.onDidChangeScrollLeft(scrollSpy)
+
+    # Seems like text without a view aren't able to scroll horizontally
+    # even when its width was set.
+    spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+
+    editor.setScrollLeft(100)
+
+    expect(scrollSpy).not.toHaveBeenCalled()
+
+  it 'has a scroll top that is not bound to the text editor', ->
+    scrollSpy = jasmine.createSpy('didScroll')
+    minimap.onDidChangeScrollTop(scrollSpy)
+
+    editor.setText(largeSample)
+    editor.setScrollTop(1000)
+
+    expect(minimap.getScrollTop()).toEqual(0)
+    expect(scrollSpy).not.toHaveBeenCalled()
+
+    minimap.setScrollTop(10)
+
+    expect(minimap.getScrollTop()).toEqual(10)
+    expect(scrollSpy).toHaveBeenCalled()

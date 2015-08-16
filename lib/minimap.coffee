@@ -29,6 +29,9 @@ class Minimap
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
 
+    if @standAlone
+      @scrollTop = 0
+
     subs.add atom.config.observe 'editor.scrollPastEnd', (@scrollPastEnd) =>
       @emitter.emit('did-change-config', {
         config: 'editor.scrollPastEnd'
@@ -52,10 +55,10 @@ class Minimap
 
     subs.add @textEditor.onDidChange (changes) =>
       @emitChanges(changes)
-    subs.add @textEditor.onDidChangeScrollTop (scrollTop) =>
-      @emitter.emit('did-change-scroll-top', scrollTop)
-    subs.add @textEditor.onDidChangeScrollLeft (scrollLeft) =>
-      @emitter.emit('did-change-scroll-left', scrollLeft)
+    subs.add @textEditor.onDidChangeScrollTop =>
+      @emitter.emit('did-change-scroll-top', this) unless @standAlone
+    subs.add @textEditor.onDidChangeScrollLeft =>
+      @emitter.emit('did-change-scroll-left', this) unless @standAlone
     subs.add @textEditor.onDidDestroy =>
       @destroy()
 
@@ -108,7 +111,8 @@ class Minimap
     @emitter.on 'did-change-config', callback
 
   # Calls the `callback` when the text editor `scrollTop` value have been
-  # changed.
+  # changed or when the minimap scroll top have been changed in stand-alone
+  # mode.
   #
   # callback - The callback {Function}. The event the callback will receive
   #            the new `scrollTop` {Number} value.
@@ -305,7 +309,16 @@ class Minimap
   #
   # Returns a {Number}.
   getScrollTop: ->
-    Math.abs(@getCapedTextEditorScrollRatio() * @getMaxScrollTop())
+    if @standAlone
+      @scrollTop
+    else
+      Math.abs(@getCapedTextEditorScrollRatio() * @getMaxScrollTop())
+
+  # Sets the minimap scroll top value when in stand-alone mode.
+  #
+  # scrollTop - The {Number} of pixels of vertical scroll.
+  setScrollTop: (@scrollTop) ->
+    @emitter.emit('did-change-scroll-top', this) if @standAlone
 
   # Returns the maximum scroll value of the {Minimap}.
   #
