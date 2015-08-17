@@ -5,6 +5,10 @@
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
+  "keywords": [
+    "minimap",
+    "overview"
+  ],
   "contributors": [
     {
       "name": "Fangdun Cai",
