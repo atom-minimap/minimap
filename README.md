@@ -149,6 +149,39 @@ When the `displayPluginsControls` setting is toggled on, plugins activation can 
 
 ![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/plugins-list.gif?raw=true)
 
+### Stand-alone Mode
+
+Starting with version 4.13, the Minimap can operate in a stand-alone mode. Basically, it means that a Minimap can be appended to the DOM outside of a `TextEditor` and without being affected by it.
+
+The example below demonstrates how to retrieve and display a stand-alone Minimap:
+
+```coffee
+atom.packages.serviceHub.consume 'minimap', '1.0.0', (api) ->
+  editor = atom.workspace.getActiveTextEditor()
+  minimap = api.standAloneMinimapForEditor(editor)
+
+  minimapElement = atom.views.getView(minimap)
+  minimapElement.attach(document.body)
+  minimapElement.style.cssText = '''
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    top: 0;
+    right: 100px;
+    z-index: 10;
+  '''
+```
+
+In a nutshell, here's the main changes to expect when using a stand-alone Minimap:
+
+- In stand-alone mode, it's the `MinimapElement` that is responsible to sets the size of the underlying `Minimap` model, so you can give it any size and the Minimap will just adapt to it.
+- Scrolling in the target `TextEditor` won't change the Minimap display.
+- The mouse controls in the Minimap are disabled.
+- The visible area and the quick settings button are hidden.
+- Stand-alone Minimaps aren't dispatched in the `observeMinimaps` callback, so they won't be targeted by plugins and won't receive the decorations that plugins normally creates on Minimaps.
+
+For the moment, stand-alone Minimaps still need a target `TextEditor` but I hope to make it work with just a path at some point.
+
 ### Minimap Decorations
 
 The Minimap package mimic the decoration API available on editors so that you can easily add your own decorations on the Minimap.
