@@ -973,7 +973,7 @@ describe 'MinimapElement', ->
             runs -> nextAnimationFrame()
 
           it 'attaches the scroll indicator', ->
-            expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
+            waitsFor -> minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
 
     describe 'when minimap.absoluteMode setting is true', ->
       beforeEach ->
