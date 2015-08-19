@@ -1,3 +1,14 @@
+<a name="v4.13.0"></a>
+# v4.13.0 (2015-08-19)
+
+## :sparkles: Features
+
+- Add a `setStandAlone` method on minimaps and dispatch a dedicated event on change ([1e3e5f7b](https://github.com/atom-minimap/minimap/commit/1e3e5f7babc82574e3181d21e7aa0ef0e5376fb5))
+- Implement independent scroll top for stand-alone minimap ([6afdac4c](https://github.com/atom-minimap/minimap/commit/6afdac4c519096aa98548ec301c453e6eb1d8991))
+- Add `standAloneMinimapForEditor` method in API ([8970216c](https://github.com/atom-minimap/minimap/commit/8970216cb046360d3cfa54aabcb1608964a667da))
+- Add stand-alone mode in minimap ([5560408e](https://github.com/atom-minimap/minimap/commit/5560408ed1a9e40caaade197ea6abbcbf2da6b7e))  <br>In stand-alone mode the minimap can operate using a fixed width and height.
+- Add a flag in minimap element to know whether it has been attached to a text editor or not ([5f37e22c](https://github.com/atom-minimap/minimap/commit/5f37e22cc5ed9527689fa832a667fed59ffe2fb3))
+
 <a name="v4.12.3"></a>
 # v4.12.3 (2015-08-12)
 
