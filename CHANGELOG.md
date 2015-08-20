@@ -1,3 +1,10 @@
+<a name="v4.13.1"></a>
+# v4.13.1 (2015-08-20)
+
+## :bug: Bug Fixes
+
+- Prevent setting size of an undefined model ([a3ce4127](https://github.com/atom-minimap/minimap/commit/a3ce4127efd11d0d114e3edf782edc8307c3564b), [#373](https://github.com/atom-minimap/minimap/issues/373))
+
 <a name="v4.13.0"></a>
 # v4.13.0 (2015-08-19)
 
