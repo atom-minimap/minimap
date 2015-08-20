@@ -302,6 +302,7 @@ class MinimapElement extends HTMLElement
       @requestUpdate()
 
     @setAttribute('stand-alone', true) if @minimap.isStandAlone()
+    @minimap.setScreenHeightAndWidth(@height, @width) if @width? and @height?
 
     @minimap
 
@@ -416,7 +417,7 @@ class MinimapElement extends HTMLElement
     @width = @clientWidth
     canvasWidth = @width
 
-    @minimap.setScreenHeightAndWidth(@height, @width)
+    @minimap.setScreenHeightAndWidth(@height, @width) if @minimap?
 
     @requestForcedUpdate() if wasResized or visibilityChanged or forceUpdate
 
