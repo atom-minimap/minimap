@@ -411,6 +411,8 @@ class MinimapElement extends HTMLElement
   # forceUpdate - A {Boolean} that forces the update even when no changes were
   #               detected.
   measureHeightAndWidth: (visibilityChanged, forceUpdate=true) ->
+    return unless @minimap?
+
     wasResized = @width isnt @clientWidth or @height isnt @clientHeight
 
     @height = @clientHeight
