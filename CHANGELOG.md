@@ -1,3 +1,10 @@
+<a name="v4.13.2"></a>
+# v4.13.2 (2015-08-27)
+
+## :bug: Bug Fixes
+
+- Prevent any measuring when there's no minimap model ([892b7aaa](https://github.com/atom-minimap/minimap/commit/892b7aaadd51f28db166e376795d08fa568d1919), [#376](https://github.com/atom-minimap/minimap/issues/376))
+
 <a name="v4.13.1"></a>
 # v4.13.1 (2015-08-20)
 
