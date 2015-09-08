@@ -64,7 +64,7 @@ class CanvasDrawer extends Mixin
   #
   # Returns a {String}.
   getDefaultColor: ->
-    color = @retrieveStyleFromDom(['.editor'], 'color', false, false)
+    color = @retrieveStyleFromDom(['.editor'], 'color', false, true)
     @transparentize(color, @getTextOpacity())
 
   # Returns the text color for the passed-in `token` object.
