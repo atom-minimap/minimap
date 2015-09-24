@@ -63,7 +63,7 @@ describe 'Minimap package', ->
     it 'destroys all the minimap elements', ->
       expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
 
-  ##    ########  ##       ##     ##  ######   #### ##    ##  ######  
+  ##    ########  ##       ##     ##  ######   #### ##    ##  ######
   ##    ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
   ##    ##     ## ##       ##     ## ##         ##  ####  ## ##
   ##    ########  ##       ##     ## ##   ####  ##  ## ## ##  ######
@@ -74,6 +74,11 @@ describe 'Minimap package', ->
   describe 'service', ->
     it 'returns the minimap main module', ->
       expect(minimapPackage.provideMinimapServiceV1()).toEqual(minimapPackage)
+
+    it 'creates standalone minimap with provided text editor', ->
+      textEditor = new TextEditor({})
+      standaloneMinimap = minimapPackage.standAloneMinimapForEditor(textEditor)
+      expect(standaloneMinimap.getTextEditor()).toEqual(textEditor)
 
   describe 'plugins', ->
     [registerHandler, unregisterHandler, plugin] = []
