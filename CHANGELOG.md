@@ -1,3 +1,10 @@
+<a name="v4.13.4"></a>
+# v4.13.4 (2015-09-25)
+
+## :bug: Bug Fixes
+
+- Use provided text editor ([e2883013](https://github.com/atom-minimap/minimap/commit/e2883013edf707205a94b7aabf3f063f7ae42149))
+
 <a name="4.13.3"></a>
 # 4.13.3 (2015-09-08)
 
