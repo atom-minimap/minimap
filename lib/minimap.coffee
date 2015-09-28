@@ -21,6 +21,7 @@ class Minimap
   #           :textEditor - A `TextEditor` instance.
   constructor: (options={}) ->
     {@textEditor, @standAlone, @width, @height} = options
+    @textEditorElement = atom.views.getView(@textEditor)
     unless @textEditor?
       throw new Error('Cannot create a minimap without an editor')
 
@@ -78,6 +79,7 @@ class Minimap
     @subscriptions.dispose()
     @subscriptions = null
     @textEditor = null
+    @textEditorElement = null
     @emitter.emit 'did-destroy'
     @emitter.dispose()
     @destroyed = true
@@ -197,8 +199,8 @@ class Minimap
   #
   # Returns a {Number}.
   getTextEditorMaxScrollTop: ->
-    maxScrollTop = @textEditor.displayBuffer.getMaxScrollTop()
-    lineHeight = @textEditor.displayBuffer.getLineHeightInPixels()
+    maxScrollTop = @textEditorElement.getScrollHeight()
+    lineHeight = @textEditor.getLineHeightInPixels()
 
     maxScrollTop -= @textEditor.getHeight() - 3 * lineHeight if @scrollPastEnd
     maxScrollTop
