@@ -36,8 +36,9 @@ describe 'MinimapElement', ->
     MinimapElement.registerViewProvider()
 
     editor = new TextEditor({})
+    editorElement = atom.views.getView(editor)
     editor.setLineHeightInPixels(10)
-    editor.setHeight(50)
+    editorElement.setHeight(50)
 
     minimap = new Minimap({textEditor: editor})
     dir = atom.project.getDirectories()[0]
@@ -48,7 +49,6 @@ describe 'MinimapElement', ->
 
     editor.setText largeSample
 
-    editorElement = atom.views.getView(editor)
     minimapElement = atom.views.getView(minimap)
 
   it 'has been registered in the view registry', ->
@@ -124,8 +124,8 @@ describe 'MinimapElement', ->
       editorElement.style.height = '50px'
 
       jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
-      editor.setScrollTop(1000)
-      editor.setScrollLeft(200)
+      editorElement.setScrollTop(1000)
+      editorElement.setScrollLeft(200)
       minimapElement.attach()
 
     afterEach -> minimap.destroy()
@@ -228,7 +228,7 @@ describe 'MinimapElement', ->
         expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollLeft(), 0)
 
       it 'offsets the canvas when the scroll does not match line height', ->
-        editor.setScrollTop(1004)
+        editorElement.setScrollTop(1004)
 
         waitsFor -> nextAnimationFrame isnt noAnimationFrame
         runs ->
@@ -249,7 +249,7 @@ describe 'MinimapElement', ->
         minimap.decorateMarker(editor.markBufferRange([[10,0], [10,10]]), type: 'line', color: '#0000FF')
         minimap.decorateMarker(editor.markBufferRange([[100,0], [100,10]]), type: 'line', color: '#0000FF')
 
-        editor.setScrollTop(0)
+        editorElement.setScrollTop(0)
 
         waitsFor -> nextAnimationFrame isnt noAnimationFrame
         runs ->
@@ -265,7 +265,7 @@ describe 'MinimapElement', ->
         minimap.decorateMarker(editor.markBufferRange([[2,20], [2,30]]), type: 'highlight-over', color: '#0000FF')
         minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), type: 'highlight-under', color: '#0000FF')
 
-        editor.setScrollTop(0)
+        editorElement.setScrollTop(0)
 
         waitsFor -> nextAnimationFrame isnt noAnimationFrame
         runs ->
@@ -281,7 +281,7 @@ describe 'MinimapElement', ->
         minimap.decorateMarker(editor.markBufferRange([[6,0], [6,7]]), type: 'highlight-outline', color: '#0000ff')
         minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), type: 'highlight-outline', color: '#0000ff')
 
-        editor.setScrollTop(0)
+        editorElement.setScrollTop(0)
 
         waitsFor -> nextAnimationFrame isnt noAnimationFrame
         runs ->
@@ -292,8 +292,8 @@ describe 'MinimapElement', ->
 
       describe 'when the editor is scrolled', ->
         beforeEach ->
-          editor.setScrollTop(2000)
-          editor.setScrollLeft(50)
+          editorElement.setScrollTop(2000)
+          editorElement.setScrollLeft(50)
 
           waitsFor -> nextAnimationFrame isnt noAnimationFrame
           runs -> nextAnimationFrame()
@@ -322,8 +322,8 @@ describe 'MinimapElement', ->
 
       describe 'when the editor visible content is changed', ->
         beforeEach ->
-          editor.setScrollLeft(0)
-          editor.setScrollTop(1400)
+          editorElement.setScrollLeft(0)
+          editorElement.setScrollTop(1400)
           editor.setSelectedBufferRange [[101, 0], [102, 20]]
 
           waitsFor -> nextAnimationFrame isnt noAnimationFrame
@@ -382,8 +382,8 @@ describe 'MinimapElement', ->
         editorElement.style.width = '400px'
         editor.setWidth(400)
         editor.setHeight(400)
-        editor.setScrollTop(0)
-        editor.setScrollLeft(0)
+        editorElement.setScrollTop(0)
+        editorElement.setScrollLeft(0)
 
         minimapElement.measureHeightAndWidth()
 
@@ -570,7 +570,7 @@ describe 'MinimapElement', ->
         beforeEach ->
           sample = fs.readFileSync(dir.resolve('seventy.txt')).toString()
           editor.setText(sample)
-          editor.setScrollTop(0)
+          editorElement.setScrollTop(0)
 
         describe 'dragging the visible area', ->
           beforeEach ->
@@ -669,7 +669,7 @@ describe 'MinimapElement', ->
       describe 'when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->
           editor.setText(mediumSample)
-          editor.setScrollTop(50)
+          editorElement.setScrollTop(50)
 
           waitsFor -> minimapElement.frameRequested
           runs ->
@@ -874,7 +874,7 @@ describe 'MinimapElement', ->
       describe 'and when minimap.minimapScrollIndicator setting is true', ->
         beforeEach ->
           editor.setText(mediumSample)
-          editor.setScrollTop(50)
+          editorElement.setScrollTop(50)
 
           waitsFor -> minimapElement.frameRequested
           runs ->
@@ -921,7 +921,7 @@ describe 'MinimapElement', ->
     describe 'when minimap.minimapScrollIndicator setting is true', ->
       beforeEach ->
         editor.setText(mediumSample)
-        editor.setScrollTop(50)
+        editorElement.setScrollTop(50)
 
         waitsFor -> minimapElement.frameRequested
         runs -> nextAnimationFrame()

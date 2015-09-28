@@ -56,9 +56,9 @@ class Minimap
 
     subs.add @textEditor.onDidChange (changes) =>
       @emitChanges(changes)
-    subs.add @textEditor.onDidChangeScrollTop =>
+    subs.add @textEditorElement.onDidChangeScrollTop =>
       @emitter.emit('did-change-scroll-top', this) unless @standAlone
-    subs.add @textEditor.onDidChangeScrollLeft =>
+    subs.add @textEditorElement.onDidChangeScrollLeft =>
       @emitter.emit('did-change-scroll-left', this) unless @standAlone
     subs.add @textEditor.onDidDestroy =>
       @destroy()
@@ -177,19 +177,19 @@ class Minimap
   #
   # Returns a {Number}.
   getTextEditorScaledHeight: ->
-    @textEditor.getHeight() * @getVerticalScaleFactor()
+    @textEditorElement.getHeight() * @getVerticalScaleFactor()
 
   # Returns the `TextEditor::getScrollTop` value at the {Minimap} scale.
   #
   # Returns a {Number}.
   getTextEditorScaledScrollTop: ->
-    @textEditor.getScrollTop() * @getVerticalScaleFactor()
+    @textEditorElement.getScrollTop() * @getVerticalScaleFactor()
 
   # Returns the `TextEditor::getScrollLeft` value at the {Minimap} scale.
   #
   # Returns a {Number}.
   getTextEditorScaledScrollLeft: ->
-    @textEditor.getScrollLeft() * @getHorizontalScaleFactor()
+    @textEditorElement.getScrollLeft() * @getHorizontalScaleFactor()
 
   # Returns the maximum scroll the `TextEditor` can perform.
   #
@@ -202,7 +202,7 @@ class Minimap
     maxScrollTop = @textEditorElement.getScrollHeight()
     lineHeight = @textEditor.getLineHeightInPixels()
 
-    maxScrollTop -= @textEditor.getHeight() - 3 * lineHeight if @scrollPastEnd
+    maxScrollTop -= @textEditorElement.getHeight() - 3 * lineHeight if @scrollPastEnd
     maxScrollTop
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
@@ -215,7 +215,7 @@ class Minimap
   # Returns a {Number}.
   getTextEditorScrollRatio: ->
     # Because `0/0 = NaN`, so make sure that the denominator does not equal `0`.
-    @textEditor.getScrollTop() / (@getTextEditorMaxScrollTop() || 1)
+    @textEditorElement.getScrollTop() / (@getTextEditorMaxScrollTop() || 1)
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
   #
@@ -252,7 +252,7 @@ class Minimap
     if @isStandAlone()
       if @height? then @height else @getHeight()
     else
-      @textEditor.getHeight()
+      @textEditorElement.getHeight()
 
   # Returns the width the whole {Minimap} will take on screen.
   #
