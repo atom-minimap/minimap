@@ -480,17 +480,18 @@ class MinimapElement extends HTMLElement
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
 
     textEditor = @minimap.getTextEditor()
+    textEditorElement = @minimap.getTextEditorElement()
 
-    scrollTop = row * textEditor.getLineHeightInPixels() - textEditor.getHeight() / 2
+    scrollTop = row * textEditor.getLineHeightInPixels() - textEditorElement.getHeight() / 2
 
     if atom.config.get('minimap.scrollAnimation')
-      from = textEditor.getScrollTop()
+      from = textEditorElement.getScrollTop()
       to = scrollTop
-      step = (now) -> textEditor.setScrollTop(now)
+      step = (now) -> textEditorElement.setScrollTop(now)
       duration = atom.config.get('minimap.scrollAnimationDuration')
       @animate(from: from, to: to, duration: duration, step: step)
     else
-      textEditor.setScrollTop(scrollTop)
+      textEditorElement.setScrollTop(scrollTop)
 
   middleMousePressedOverCanvas: ({pageY}) ->
     {top: offsetTop} = @getBoundingClientRect()
@@ -499,7 +500,7 @@ class MinimapElement extends HTMLElement
     ratio = y /
       (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
 
-    @minimap.textEditor.setScrollTop(
+    @minimap.textEditorElement.setScrollTop(
       ratio * @minimap.getTextEditorMaxScrollTop())
 
   # Internal: A method that relays the `mousewheel` events received by
@@ -507,9 +508,7 @@ class MinimapElement extends HTMLElement
   #
   # e - The {Event} object.
   relayMousewheelEvent: (e) =>
-    editorElement = atom.views.getView(@minimap.textEditor)
-
-    editorElement.component.onMouseWheel(e)
+    @minimap.getTextEditorElement().component.onMouseWheel(e)
 
   #    ########    ####    ########
   #    ##     ##  ##  ##   ##     ##
@@ -568,7 +567,7 @@ class MinimapElement extends HTMLElement
 
     ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
 
-    @minimap.textEditor.setScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
+    @minimap.getTextEditorElement().setScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
 
   # Internal: The method that ends the drag gesture.
   #

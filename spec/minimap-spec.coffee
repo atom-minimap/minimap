@@ -118,9 +118,9 @@ describe 'Minimap', ->
       it 'getTextEditorScrollRatio() should return 0', ->
         editorElement.setScrollTop(0)
 
-        maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
+        maxScrollTop = (editorElement.getScrollHeight() - editorElement.getHeight()) - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
 
-        expect(maxScrollTop).toEqual(0)
+        expect(maxScrollTop).toEqual(10)
         expect(minimap.getTextEditorScrollRatio()).toEqual(0)
 
   describe 'when soft wrap is enabled', ->
@@ -161,7 +161,7 @@ describe 'Minimap', ->
 
       largeLineCount = editor.getScreenLineCount()
       editorHeight = largeLineCount * editor.getLineHeightInPixels()
-      editorScrollRatio = editorElement.getScrollTop() / editorElement.getScrollHeight()
+      editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
 
     it 'scales the editor scroll based on the minimap scale factor', ->
       expect(minimap.getTextEditorScaledScrollTop()).toEqual(500)
@@ -171,10 +171,10 @@ describe 'Minimap', ->
       expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
-      expect(minimap.getFirstVisibleScreenRow()).toEqual(Math.floor(99))
+      expect(minimap.getFirstVisibleScreenRow()).toEqual(66)
 
     it 'computes the last visible row in the minimap', ->
-      expect(minimap.getLastVisibleScreenRow()).toEqual(110)
+      expect(minimap.getLastVisibleScreenRow()).toEqual(77)
 
     describe 'down to the bottom', ->
       beforeEach ->

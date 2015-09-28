@@ -173,6 +173,11 @@ class Minimap
   # Returns a `TextEditor`.
   getTextEditor: -> @textEditor
 
+  # Returns the `TextEditorElement` of this minimap `textEditor`.
+  #
+  # Returns a `TextEditorElement`.
+  getTextEditorElement: -> @textEditorElement
+
   # Returns the height of the `TextEditor` at the {Minimap} scale.
   #
   # Returns a {Number}.
