@@ -43,7 +43,7 @@ describe 'MinimapElement', ->
     editorElement = atom.views.getView(editor)
     jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
     editorElement.setHeight(50)
-    editor.setLineHeightInPixels(10)
+    # editor.setLineHeightInPixels(10)
 
     minimap = new Minimap({textEditor: editor})
     dir = atom.project.getDirectories()[0]
@@ -344,7 +344,7 @@ describe 'MinimapElement', ->
             nextAnimationFrame()
 
             expect(minimapElement.drawLines).toHaveBeenCalled()
-            expect(minimapElement.drawLines.argsForCall[0][1]).toEqual(99)
+            expect(minimapElement.drawLines.argsForCall[0][1]).toEqual(100)
             expect(minimapElement.drawLines.argsForCall[0][2]).toEqual(101)
 
       describe 'when the editor visibility change', ->
@@ -437,7 +437,7 @@ describe 'MinimapElement', ->
               {top, height} = visibleArea.getBoundingClientRect()
 
               visibleCenterY = top + (height / 2)
-              expect(visibleCenterY).toBeCloseTo(canvasMidY, 0)
+              expect(visibleCenterY).toBeCloseTo(200)
 
         describe 'scrolling the editor to an arbitrary location', ->
           [scrollTo, scrollRatio] = []
