@@ -101,7 +101,7 @@ describe 'Minimap', ->
     it 'adjust the scrolling ratio', ->
       editorElement.setScrollTop(editorElement.getScrollHeight())
 
-      maxScrollTop = editorElement.getScrollHeight() - (editorElement.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+      maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
 
       expect(minimap.getTextEditorScrollRatio()).toEqual(editorElement.getScrollTop() / maxScrollTop)
 
@@ -118,7 +118,7 @@ describe 'Minimap', ->
       it 'getTextEditorScrollRatio() should return 0', ->
         editorElement.setScrollTop(0)
 
-        maxScrollTop = editorElement.getScrollHeight() - (editorElement.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+        maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
 
         expect(maxScrollTop).toEqual(0)
         expect(minimap.getTextEditorScrollRatio()).toEqual(0)
@@ -355,7 +355,7 @@ describe 'Minimap', ->
 #    ##     ## ########  #######  ##    ## ########
 
 describe 'Stand alone minimap', ->
-  [editor, minimap, largeSample, smallSample] = []
+  [editor, editorElement, minimap, largeSample, smallSample] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -363,9 +363,11 @@ describe 'Stand alone minimap', ->
     atom.config.set 'minimap.interline', 1
 
     editor = new TextEditor({})
-    editor.setLineHeightInPixels(10)
+    editorElement = atom.views.getView(editor)
+    jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)
     editorElement.setWidth(200)
+    editor.setLineHeightInPixels(10)
 
     dir = atom.project.getDirectories()[0]
 

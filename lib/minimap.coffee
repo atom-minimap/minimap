@@ -199,7 +199,7 @@ class Minimap
   #
   # Returns a {Number}.
   getTextEditorMaxScrollTop: ->
-    maxScrollTop = @textEditorElement.getScrollHeight()
+    maxScrollTop = @textEditorElement.getScrollHeight() - @textEditorElement.getHeight()
     lineHeight = @textEditor.getLineHeightInPixels()
 
     maxScrollTop -= @textEditorElement.getHeight() - 3 * lineHeight if @scrollPastEnd
