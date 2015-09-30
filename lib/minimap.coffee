@@ -191,10 +191,7 @@ class Minimap
     @getTextEditorScrollTop() * @getVerticalScaleFactor()
 
   getTextEditorScrollTop: ->
-    try
-      @textEditorElement.getScrollTop()
-    catch e
-      0
+    @textEditorElement.getScrollTop()
 
   # Returns the `TextEditor::getScrollLeft` value at the {Minimap} scale.
   #
@@ -210,14 +207,11 @@ class Minimap
   #
   # Returns a {Number}.
   getTextEditorMaxScrollTop: ->
-    try
-      maxScrollTop = @textEditorElement.getScrollHeight() - @textEditorElement.getHeight()
-      lineHeight = @textEditor.getLineHeightInPixels()
+    maxScrollTop = @textEditorElement.getScrollHeight() - @textEditorElement.getHeight()
+    lineHeight = @textEditor.getLineHeightInPixels()
 
-      maxScrollTop -= @textEditorElement.getHeight() - 3 * lineHeight if @scrollPastEnd
-      maxScrollTop
-    catch e
-      0
+    maxScrollTop -= @textEditorElement.getHeight() - 3 * lineHeight if @scrollPastEnd
+    maxScrollTop
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
   #
