@@ -1,5 +1,5 @@
 Mixin = require 'mixto'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable} = require 'atom'
 
 # Public: Provides methods to manage minimap plugins.
 #

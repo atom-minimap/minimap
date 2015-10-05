@@ -1,5 +1,5 @@
 {debounce} = require 'underscore-plus'
-{CompositeDisposable, Disposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'atom'
 {EventsDelegation, AncestorsMethods} = require 'atom-utils'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'

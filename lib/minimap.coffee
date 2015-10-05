@@ -1,4 +1,4 @@
-{Emitter, CompositeDisposable} = require 'event-kit'
+{Emitter, CompositeDisposable} = require 'atom'
 DecorationManagement = require './mixins/decoration-management'
 
 nextModelId = 1
