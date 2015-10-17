@@ -1,4 +1,16 @@
 <a name="v4.13.4"></a>
+# v4.13.4 (2015-10-17)
+
+## :bug: Bug Fixes
+
+- Fix all remaining depracations in specs and element ([a0e418d9](https://github.com/atom-minimap/minimap/commit/a0e418d967ae6d03a8599e570af4195cdcb69eb9))
+- Fix access to private API removed in latest master ([cf37f604](https://github.com/atom-minimap/minimap/commit/cf37f6041c2fb2a303ed43ec426223c2bb2a22a2), [#387](https://github.com/atom-minimap/minimap/issues/387))
+
+## :arrow_up: Dependencies Update
+
+- Bump minimum engine version ([a705ac6c](https://github.com/atom-minimap/minimap/commit/a705ac6cf32829b11c48145085d3396f010dee44))
+
+<a name="v4.13.4"></a>
 # v4.13.4 (2015-09-25)
 
 ## :bug: Bug Fixes
