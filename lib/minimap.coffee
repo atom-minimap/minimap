@@ -1,5 +1,7 @@
 {Emitter, CompositeDisposable} = require 'event-kit'
 DecorationManagement = require './mixins/decoration-management'
+LegacyAdater = require './adapters/legacy-adapter'
+BetaAdater = require './adapters/beta-adapter'
 
 nextModelId = 1
 
@@ -21,6 +23,7 @@ class Minimap
   #           :textEditor - A `TextEditor` instance.
   constructor: (options={}) ->
     {@textEditor, @standAlone, @width, @height} = options
+
     unless @textEditor?
       throw new Error('Cannot create a minimap without an editor')
 
@@ -29,10 +32,16 @@ class Minimap
     @subscriptions = subs = new CompositeDisposable
     @initializeDecorations()
 
+    if atom.views.getView(@textEditor).getScrollTop?
+      @adapter = new BetaAdater(@textEditor)
+    else
+      @adapter = new LegacyAdater(@textEditor)
+
     if @standAlone
       @scrollTop = 0
 
     subs.add atom.config.observe 'editor.scrollPastEnd', (@scrollPastEnd) =>
+      @adapter.scrollPastEnd = @scrollPastEnd
       @emitter.emit('did-change-config', {
         config: 'editor.scrollPastEnd'
         value: @scrollPastEnd
@@ -53,12 +62,13 @@ class Minimap
         value: @interline
       })
 
+    subs.add @adapter.onDidChangeScrollTop =>
+      @emitter.emit('did-change-scroll-top', this) unless @standAlone
+    subs.add @adapter.onDidChangeScrollLeft =>
+      @emitter.emit('did-change-scroll-left', this) unless @standAlone
+
     subs.add @textEditor.onDidChange (changes) =>
       @emitChanges(changes)
-    subs.add @textEditor.onDidChangeScrollTop =>
-      @emitter.emit('did-change-scroll-top', this) unless @standAlone
-    subs.add @textEditor.onDidChangeScrollLeft =>
-      @emitter.emit('did-change-scroll-left', this) unless @standAlone
     subs.add @textEditor.onDidDestroy =>
       @destroy()
 
@@ -175,19 +185,19 @@ class Minimap
   #
   # Returns a {Number}.
   getTextEditorScaledHeight: ->
-    @textEditor.getHeight() * @getVerticalScaleFactor()
+    @adapter.getHeight() * @getVerticalScaleFactor()
 
   # Returns the `TextEditor::getScrollTop` value at the {Minimap} scale.
   #
   # Returns a {Number}.
   getTextEditorScaledScrollTop: ->
-    @textEditor.getScrollTop() * @getVerticalScaleFactor()
+    @adapter.getScrollTop() * @getVerticalScaleFactor()
 
   # Returns the `TextEditor::getScrollLeft` value at the {Minimap} scale.
   #
   # Returns a {Number}.
   getTextEditorScaledScrollLeft: ->
-    @textEditor.getScrollLeft() * @getHorizontalScaleFactor()
+    @adapter.getScrollLeft() * @getHorizontalScaleFactor()
 
   # Returns the maximum scroll the `TextEditor` can perform.
   #
@@ -196,12 +206,15 @@ class Minimap
   # final value.
   #
   # Returns a {Number}.
-  getTextEditorMaxScrollTop: ->
-    maxScrollTop = @textEditor.displayBuffer.getMaxScrollTop()
-    lineHeight = @textEditor.displayBuffer.getLineHeightInPixels()
+  getTextEditorMaxScrollTop: -> @adapter.getMaxScrollTop()
 
-    maxScrollTop -= @textEditor.getHeight() - 3 * lineHeight if @scrollPastEnd
-    maxScrollTop
+  getTextEditorScrollTop: -> @adapter.getScrollTop()
+
+  setTextEditorScrollTop: (scrollTop) -> @adapter.setScrollTop(scrollTop)
+
+  getTextEditorScrollLeft: -> @adapter.getScrollLeft()
+
+  getTextEditorHeight: -> @adapter.getHeight()
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
   #
@@ -213,7 +226,7 @@ class Minimap
   # Returns a {Number}.
   getTextEditorScrollRatio: ->
     # Because `0/0 = NaN`, so make sure that the denominator does not equal `0`.
-    @textEditor.getScrollTop() / (@getTextEditorMaxScrollTop() || 1)
+    @adapter.getScrollTop() / (@getTextEditorMaxScrollTop() || 1)
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.
   #
@@ -250,7 +263,7 @@ class Minimap
     if @isStandAlone()
       if @height? then @height else @getHeight()
     else
-      @textEditor.getHeight()
+      @adapter.getHeight()
 
   # Returns the width the whole {Minimap} will take on screen.
   #

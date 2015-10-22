@@ -1,5 +1,5 @@
 {debounce} = require 'underscore-plus'
-{CompositeDisposable, Disposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'atom'
 {EventsDelegation, AncestorsMethods} = require 'atom-utils'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
@@ -481,16 +481,16 @@ class MinimapElement extends HTMLElement
 
     textEditor = @minimap.getTextEditor()
 
-    scrollTop = row * textEditor.getLineHeightInPixels() - textEditor.getHeight() / 2
+    scrollTop = row * textEditor.getLineHeightInPixels() - @minimap.getTextEditorHeight() / 2
 
     if atom.config.get('minimap.scrollAnimation')
-      from = textEditor.getScrollTop()
+      from = @minimap.getTextEditorScrollTop()
       to = scrollTop
-      step = (now) -> textEditor.setScrollTop(now)
+      step = (now) => @minimap.setTextEditorScrollTop(now)
       duration = atom.config.get('minimap.scrollAnimationDuration')
       @animate(from: from, to: to, duration: duration, step: step)
     else
-      textEditor.setScrollTop(scrollTop)
+      @minimap.setTextEditorScrollTop(scrollTop)
 
   middleMousePressedOverCanvas: ({pageY}) ->
     {top: offsetTop} = @getBoundingClientRect()
@@ -499,7 +499,7 @@ class MinimapElement extends HTMLElement
     ratio = y /
       (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
 
-    @minimap.textEditor.setScrollTop(
+    @minimap.setTextEditorScrollTop(
       ratio * @minimap.getTextEditorMaxScrollTop())
 
   # Internal: A method that relays the `mousewheel` events received by
@@ -568,7 +568,7 @@ class MinimapElement extends HTMLElement
 
     ratio = y / (@minimap.getVisibleHeight() - @minimap.getTextEditorScaledHeight())
 
-    @minimap.textEditor.setScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
+    @minimap.setTextEditorScrollTop(ratio * @minimap.getTextEditorMaxScrollTop())
 
   # Internal: The method that ends the drag gesture.
   #
