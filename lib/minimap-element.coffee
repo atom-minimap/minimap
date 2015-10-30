@@ -166,7 +166,7 @@ class MinimapElement extends HTMLElement
     @createControls()
 
     @subscriptions.add @subscribeTo this,
-      'mousewheel': (e) => @relayMousewheelEvent(e)
+      'mousewheel': (e) => @relayMousewheelEvent(e) unless @standAlone
 
     @subscriptions.add @subscribeTo @canvas,
       'mousedown': (e) => @mousePressedOverCanvas(e)
