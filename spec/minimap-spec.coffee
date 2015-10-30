@@ -482,3 +482,23 @@ describe 'Stand alone minimap', ->
 
     expect(minimap.getScrollTop()).toEqual(10)
     expect(scrollSpy).toHaveBeenCalled()
+
+  it 'has rendering properties that can overrides the config values', ->
+    minimap.setCharWidth(8.5)
+    minimap.setCharHeight(10.2)
+    minimap.setInterline(10.6)
+
+    expect(minimap.getCharWidth()).toEqual(8)
+    expect(minimap.getCharHeight()).toEqual(10)
+    expect(minimap.getInterline()).toEqual(10)
+    expect(minimap.getLineHeight()).toEqual(20)
+
+  it 'emits a config change event when a value is changed', ->
+    changeSpy = jasmine.createSpy('did-change')
+    minimap.onDidChangeConfig(changeSpy)
+
+    minimap.setCharWidth(8.5)
+    minimap.setCharHeight(10.2)
+    minimap.setInterline(10.6)
+
+    expect(changeSpy.callCount).toEqual(3)

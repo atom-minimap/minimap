@@ -46,20 +46,20 @@ class Minimap
         config: 'editor.scrollPastEnd'
         value: @scrollPastEnd
       })
-    subs.add atom.config.observe 'minimap.charHeight', (@charHeight) =>
+    subs.add atom.config.observe 'minimap.charHeight', (@configCharHeight) =>
       @emitter.emit('did-change-config', {
         config: 'minimap.charHeight'
-        value: @charHeight
+        value: @getCharHeight()
       })
-    subs.add atom.config.observe 'minimap.charWidth', (@charWidth) =>
+    subs.add atom.config.observe 'minimap.charWidth', (@configCharWidth) =>
       @emitter.emit('did-change-config', {
         config: 'minimap.charWidth'
-        value: @charWidth
+        value: @getCharWidth()
       })
-    subs.add atom.config.observe 'minimap.interline', (@interline) =>
+    subs.add atom.config.observe 'minimap.interline', (@configInterline) =>
       @emitter.emit('did-change-config', {
         config: 'minimap.interline'
-        value: @interline
+        value: @getInterline()
       })
 
     subs.add @adapter.onDidChangeScrollTop =>
@@ -305,22 +305,34 @@ class Minimap
   # Returns the height of a line in the {Minimap} in pixels.
   #
   # Returns a {Number}.
-  getLineHeight: -> @charHeight + @interline
+  getLineHeight: -> @getCharHeight() + @getInterline()
 
   # Returns the width of a character in the {Minimap} in pixels.
   #
   # Returns a {Number}.
-  getCharWidth: -> @charWidth
+  getCharWidth: -> @charWidth ? @configCharWidth
+
+  setCharWidth: (charWidth) ->
+    @charWidth = Math.floor(charWidth)
+    @emitter.emit('did-change-config')
 
   # Returns the height of a character in the {Minimap} in pixels.
   #
   # Returns a {Number}.
-  getCharHeight: -> @charHeight
+  getCharHeight: -> @charHeight ? @configCharHeight
+
+  setCharHeight: (charHeight) ->
+    @charHeight = Math.floor(charHeight)
+    @emitter.emit('did-change-config')
 
   # Returns the space between lines in the {Minimap} in pixels.
   #
   # Returns a {Number}.
-  getInterline: -> @interline
+  getInterline: -> @interline ? @configInterline
+
+  setInterline: (interline) ->
+    @interline = Math.floor(interline)
+    @emitter.emit('did-change-config')
 
   # Returns the index of the first visible row in the {Minimap}.
   #
