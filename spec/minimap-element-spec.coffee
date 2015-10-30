@@ -19,7 +19,7 @@ realOffsetLeft = (o) ->
 isVisible = (node) -> node.offsetWidth > 0 or node.offsetHeight > 0
 
 # Modify the global `devicePixelRatio` variable.
-window.devicePixelRatio = 2
+# window.devicePixelRatio = 2
 
 sleep = (duration) ->
   t = new Date
@@ -102,7 +102,7 @@ describe 'MinimapElement', ->
 
         atom-text-editor, atom-text-editor::shadow {
           height: 10px;
-          font-size: 9px;
+          /* font-size: 9px; */
         }
 
         atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
@@ -139,9 +139,7 @@ describe 'MinimapElement', ->
     it 'takes the height of the editor', ->
       expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
 
-      # Actually, when in a flex display of 200px width, 10% gives 18px
-      # and not 20px
-      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 11, 0)
+      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 10, 0)
 
     it 'knows when attached to a text editor', ->
       expect(minimapElement.attachedToTextEditor).toBeTruthy()
@@ -319,8 +317,8 @@ describe 'MinimapElement', ->
           waitsFor -> nextAnimationFrame isnt noAnimationFrame
           runs -> nextAnimationFrame()
 
-        it 'detect the resize and adjust itself', ->
-          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, 0)
+        it 'detects the resize and adjust itself', ->
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 10, 0)
           expect(minimapElement.offsetHeight).toEqual(editorElement.offsetHeight)
 
           expect(canvas.offsetWidth / devicePixelRatio).toBeCloseTo(minimapElement.offsetWidth, 0)
@@ -438,7 +436,7 @@ describe 'MinimapElement', ->
               {top, height} = visibleArea.getBoundingClientRect()
 
               visibleCenterY = top + (height / 2)
-              expect(visibleCenterY).toBeCloseTo(200)
+              expect(visibleCenterY).toBeCloseTo(200, 0)
 
         describe 'scrolling the editor to an arbitrary location', ->
           [scrollTo, scrollRatio] = []
@@ -490,7 +488,10 @@ describe 'MinimapElement', ->
           mousedown(canvas)
 
         it 'scrolls the editor to the line below the mouse', ->
-          expect(editorElement.getScrollTop()).toEqual(400)
+          {top, left, width, height} = minimapElement.canvas.getBoundingClientRect()
+          middle = top + height / 2
+          scrollTop =
+          expect(editorElement.getScrollTop()).toEqual(480)
 
       describe 'pressing the mouse on the minimap canvas (with scroll animation)', ->
         beforeEach ->
@@ -507,11 +508,11 @@ describe 'MinimapElement', ->
 
           waitsFor -> nextAnimationFrame isnt noAnimationFrame
 
-        xit 'scrolls the editor gradually to the line below the mouse', ->
+        it 'scrolls the editor gradually to the line below the mouse', ->
           # wait until all animations run out
           waitsFor ->
             nextAnimationFrame isnt noAnimationFrame and nextAnimationFrame()
-            editorElement.getScrollTop() >= 400
+            editorElement.getScrollTop() >= 480
 
       describe 'dragging the visible area', ->
         [visibleArea, originalTop] = []
@@ -688,7 +689,7 @@ describe 'MinimapElement', ->
 
         it 'offsets the scroll indicator by the difference', ->
           indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
-          expect(realOffsetLeft(indicator)).toBeCloseTo(16, -1)
+          expect(realOffsetLeft(indicator)).toBeCloseTo(minimapElement.offsetWidth, -1)
 
       describe 'pressing the mouse on the minimap canvas', ->
         beforeEach ->
@@ -851,7 +852,7 @@ describe 'MinimapElement', ->
 
       it 'offsets the minimap by the difference', ->
         expect(realOffsetLeft(minimapElement)).toBeCloseTo(editorElement.clientWidth - 4, -1)
-        expect(minimapElement.clientWidth).toBeCloseTo(minimapWidth, -1)
+        expect(minimapElement.clientWidth).toEqual(4)
 
       describe 'the dom polling routine', ->
         it 'does not change the value', ->
@@ -874,7 +875,7 @@ describe 'MinimapElement', ->
           runs -> nextAnimationFrame()
 
         it 'makes the minimap smaller than soft wrap', ->
-          expect(minimapElement.offsetWidth).toBeCloseTo(10, -1)
+          expect(minimapElement.offsetWidth).toBeCloseTo(12, -1)
           expect(minimapElement.style.marginRight).toEqual('')
 
       describe 'and when minimap.minimapScrollIndicator setting is true', ->
@@ -910,7 +911,7 @@ describe 'MinimapElement', ->
           runs -> nextAnimationFrame()
 
         it 'adjusts the width of the minimap', ->
-          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, -1)
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 10, -1)
           expect(minimapElement.style.width).toEqual('')
 
       describe 'and when preferredLineLength >= 16384', ->
@@ -921,7 +922,7 @@ describe 'MinimapElement', ->
           runs -> nextAnimationFrame()
 
         it 'adjusts the width of the minimap', ->
-          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 11, -1)
+          expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 10, -1)
           expect(minimapElement.style.width).toEqual('')
 
     describe 'when minimap.minimapScrollIndicator setting is true', ->

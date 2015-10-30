@@ -77,7 +77,8 @@ class MinimapElement extends HTMLElement
       'minimap.absoluteMode': (@absoluteMode) =>
         @classList.toggle('absolute', @absoluteMode)
 
-      'editor.preferredLineLength': => @requestUpdate() if @attached
+      'editor.preferredLineLength': =>
+        @measureHeightAndWidth() if @attached
 
       'editor.softWrap': => @requestUpdate() if @attached
 
@@ -334,14 +335,14 @@ class MinimapElement extends HTMLElement
   update: ->
     return unless @attached and @isVisible() and @minimap?
 
-    if @adjustToSoftWrap and @marginRight?
-      @style.marginRight = @marginRight + 'px'
-    else
-      @style.marginRight = null
-
     visibleAreaLeft = @minimap.getTextEditorScaledScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
     visibleWidth = Math.min(@canvas.width / devicePixelRatio, @width)
+
+    if @adjustToSoftWrap and @flexBasis
+      @style.flexBasis = @flexBasis + 'px'
+    else
+      @style.flexBasis = null
 
     if atom.inSpecMode()
       @applyStyles @visibleArea,
@@ -448,13 +449,13 @@ class MinimapElement extends HTMLElement
         softWrapAtPreferredLineLength = atom.config.get('editor.softWrapAtPreferredLineLength')
         width = lineLength * @minimap.getCharWidth()
 
-        if softWrap and softWrapAtPreferredLineLength and lineLength and width < @width
-          @marginRight = width - @width
+        if softWrap and softWrapAtPreferredLineLength and lineLength and width <= @width
+          @flexBasis = width
           canvasWidth = width
         else
-          @marginRight = null
+          delete @flexBasis
       else
-        delete @marginRight
+        delete @flexBasis
 
       if canvasWidth isnt @canvas.width or @height isnt @canvas.height
         @canvas.width = canvasWidth * devicePixelRatio
