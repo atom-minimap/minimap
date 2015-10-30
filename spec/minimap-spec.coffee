@@ -3,7 +3,7 @@ fs = require 'fs-plus'
 Minimap = require '../lib/minimap'
 
 describe 'Minimap', ->
-  [editor, minimap, largeSample, smallSample] = []
+  [editor, editorElement, minimap, largeSample, smallSample] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -11,9 +11,12 @@ describe 'Minimap', ->
     atom.config.set 'minimap.interline', 1
 
     editor = new TextEditor({})
+
+    editorElement = atom.views.getView(editor)
+    jasmine.attachToDOM(editorElement)
+    editorElement.setHeight(50)
+    editorElement.setWidth(200)
     editor.setLineHeightInPixels(10)
-    editor.setHeight(50)
-    editor.setWidth(200)
 
     dir = atom.project.getDirectories()[0]
 
@@ -72,7 +75,7 @@ describe 'Minimap', ->
     scrollSpy = jasmine.createSpy('didScroll')
     minimap.onDidChangeScrollTop(scrollSpy)
 
-    editor.setScrollTop(100)
+    editorElement.setScrollTop(100)
 
     expect(scrollSpy).toHaveBeenCalled()
 
@@ -84,9 +87,9 @@ describe 'Minimap', ->
 
     # Seems like text without a view aren't able to scroll horizontally
     # even when its width was set.
-    spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+    spyOn(editorElement, 'getScrollWidth').andReturn(10000)
 
-    editor.setScrollLeft(100)
+    editorElement.setScrollLeft(100)
 
     expect(scrollSpy).toHaveBeenCalled()
 
@@ -96,28 +99,28 @@ describe 'Minimap', ->
       atom.config.set 'editor.scrollPastEnd', true
 
     it 'adjust the scrolling ratio', ->
-      editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
+      editorElement.setScrollTop(editorElement.getScrollHeight())
 
-      maxScrollTop = editor.displayBuffer.getMaxScrollTop() - (editor.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+      maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
 
-      expect(minimap.getTextEditorScrollRatio()).toEqual(editor.getScrollTop() / maxScrollTop)
+      expect(minimap.getTextEditorScrollRatio()).toEqual(editorElement.getScrollTop() / maxScrollTop)
 
     it 'lock the minimap scroll top to 1', ->
-      editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
+      editorElement.setScrollTop(editorElement.getScrollHeight())
       expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
 
     describe 'when getScrollTop() and maxScrollTop both equal 0', ->
       beforeEach ->
         editor.setText(smallSample)
-        editor.setHeight(40)
+        editorElement.setHeight(40)
         atom.config.set 'editor.scrollPastEnd', true
 
       it 'getTextEditorScrollRatio() should return 0', ->
-        editor.setScrollTop(0)
+        editorElement.setScrollTop(0)
 
-        maxScrollTop = editor.displayBuffer.getMaxScrollTop() - (editor.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+        maxScrollTop = (editorElement.getScrollHeight() - editorElement.getHeight()) - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
 
-        expect(maxScrollTop).toEqual(0)
+        expect(maxScrollTop).toEqual(10)
         expect(minimap.getTextEditorScrollRatio()).toEqual(0)
 
   describe 'when soft wrap is enabled', ->
@@ -150,15 +153,15 @@ describe 'Minimap', ->
       # Same here, without a view, the getScrollWidth method always returns 1
       # and the test fails because the capped scroll left value always end up
       # to be 0, inducing errors in computations.
-      spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+      spyOn(editorElement, 'getScrollWidth').andReturn(10000)
 
       editor.setText(largeSample)
-      editor.setScrollTop(1000)
-      editor.setScrollLeft(200)
+      editorElement.setScrollTop(1000)
+      editorElement.setScrollLeft(200)
 
       largeLineCount = editor.getScreenLineCount()
       editorHeight = largeLineCount * editor.getLineHeightInPixels()
-      editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
+      editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
 
     it 'scales the editor scroll based on the minimap scale factor', ->
       expect(minimap.getTextEditorScaledScrollTop()).toEqual(500)
@@ -168,15 +171,15 @@ describe 'Minimap', ->
       expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
-      expect(minimap.getFirstVisibleScreenRow()).toEqual(Math.floor(99))
+      expect(minimap.getFirstVisibleScreenRow()).toEqual(66)
 
     it 'computes the last visible row in the minimap', ->
-      expect(minimap.getLastVisibleScreenRow()).toEqual(110)
+      expect(minimap.getLastVisibleScreenRow()).toEqual(77)
 
     describe 'down to the bottom', ->
       beforeEach ->
-        editor.setScrollTop(editor.displayBuffer.getMaxScrollTop())
-        editorScrollRatio = editor.getScrollTop() / editor.displayBuffer.getMaxScrollTop()
+        editorElement.setScrollTop(editorElement.getScrollHeight())
+        editorScrollRatio = editorElement.getScrollTop() / editorElement.getScrollHeight()
 
       it 'computes an offset that scrolls the minimap to the bottom edge', ->
         expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
@@ -352,7 +355,7 @@ describe 'Minimap', ->
 #    ##     ## ########  #######  ##    ## ########
 
 describe 'Stand alone minimap', ->
-  [editor, minimap, largeSample, smallSample] = []
+  [editor, editorElement, minimap, largeSample, smallSample] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -360,9 +363,11 @@ describe 'Stand alone minimap', ->
     atom.config.set 'minimap.interline', 1
 
     editor = new TextEditor({})
+    editorElement = atom.views.getView(editor)
+    jasmine.attachToDOM(editorElement)
+    editorElement.setHeight(50)
+    editorElement.setWidth(200)
     editor.setLineHeightInPixels(10)
-    editor.setHeight(50)
-    editor.setWidth(200)
 
     dir = atom.project.getDirectories()[0]
 
@@ -445,7 +450,7 @@ describe 'Stand alone minimap', ->
     scrollSpy = jasmine.createSpy('didScroll')
     minimap.onDidChangeScrollTop(scrollSpy)
 
-    editor.setScrollTop(100)
+    editorElement.setScrollTop(100)
 
     expect(scrollSpy).not.toHaveBeenCalled()
 
@@ -457,9 +462,9 @@ describe 'Stand alone minimap', ->
 
     # Seems like text without a view aren't able to scroll horizontally
     # even when its width was set.
-    spyOn(editor.displayBuffer, 'getScrollWidth').andReturn(10000)
+    spyOn(editorElement, 'getScrollWidth').andReturn(10000)
 
-    editor.setScrollLeft(100)
+    editorElement.setScrollLeft(100)
 
     expect(scrollSpy).not.toHaveBeenCalled()
 
@@ -468,7 +473,7 @@ describe 'Stand alone minimap', ->
     minimap.onDidChangeScrollTop(scrollSpy)
 
     editor.setText(largeSample)
-    editor.setScrollTop(1000)
+    editorElement.setScrollTop(1000)
 
     expect(minimap.getScrollTop()).toEqual(0)
     expect(scrollSpy).not.toHaveBeenCalled()
