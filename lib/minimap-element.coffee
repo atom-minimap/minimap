@@ -343,10 +343,17 @@ class MinimapElement extends HTMLElement
     visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
     visibleWidth = Math.min(@canvas.width / devicePixelRatio, @width)
 
-    @applyStyles @visibleArea,
-      width: visibleWidth + 'px'
-      height: @minimap.getTextEditorScaledHeight() + 'px'
-      transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
+    if atom.inSpecMode()
+      @applyStyles @visibleArea,
+        width: visibleWidth + 'px'
+        height: @minimap.getTextEditorScaledHeight() + 'px'
+        top: visibleAreaTop + 'px'
+        left: visibleAreaLeft + 'px'
+    else
+      @applyStyles @visibleArea,
+        width: visibleWidth + 'px'
+        height: @minimap.getTextEditorScaledHeight() + 'px'
+        transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
       width: visibleWidth + 'px'
@@ -355,7 +362,11 @@ class MinimapElement extends HTMLElement
 
     canvasTransform = @makeTranslate(0, canvasTop)
     canvasTransform += " " + @makeScale(1 / devicePixelRatio) if devicePixelRatio isnt 1
-    @applyStyles @canvas, transform: canvasTransform
+
+    if atom.inSpecMode()
+      @applyStyles @canvas, top: canvasTop + 'px'
+    else
+      @applyStyles @canvas, transform: canvasTransform
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
       @initializeScrollIndicator()
@@ -365,9 +376,14 @@ class MinimapElement extends HTMLElement
       indicatorHeight = minimapScreenHeight * (minimapScreenHeight / @minimap.getHeight())
       indicatorScroll = (minimapScreenHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRatio()
 
-      @applyStyles @scrollIndicator,
-        height: indicatorHeight + 'px'
-        transform: @makeTranslate(0, indicatorScroll)
+      if atom.inSpecMode()
+        @applyStyles @scrollIndicator,
+          height: indicatorHeight + 'px'
+          top: indicatorScroll + 'px'
+      else
+        @applyStyles @scrollIndicator,
+          height: indicatorHeight + 'px'
+          transform: @makeTranslate(0, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 

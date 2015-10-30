@@ -7,12 +7,14 @@ stylesheetPath = path.resolve __dirname, '..', 'styles', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
 realOffsetTop = (o) ->
-  transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
-  o.offsetTop + transform.m42
+  # transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
+  # o.offsetTop + transform.m42
+  o.offsetTop
 
 realOffsetLeft = (o) ->
-  transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
-  o.offsetLeft + transform.m41
+  # transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
+  # o.offsetLeft + transform.m41
+  o.offsetLeft
 
 isVisible = (node) -> node.offsetWidth > 0 or node.offsetHeight > 0
 
