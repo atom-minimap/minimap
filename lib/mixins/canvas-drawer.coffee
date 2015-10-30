@@ -216,7 +216,7 @@ class CanvasDrawer extends Mixin
       invisibles.push line.invisibles.space if line.invisibles.space?
       invisibles.push line.invisibles.tab if line.invisibles.tab?
 
-      ///#{invisibles.map(_.escapeRegExp).join('|')}///g
+      ///#{invisibles.filter((s) -> typeof s is 'string').map(_.escapeRegExp).join('|')}///g
 
   # Internal: Draws a single token on the given context.
   #
