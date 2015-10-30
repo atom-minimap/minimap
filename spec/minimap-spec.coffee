@@ -1,3 +1,5 @@
+require './helpers/workspace'
+
 fs = require 'fs-plus'
 Minimap = require '../lib/minimap'
 

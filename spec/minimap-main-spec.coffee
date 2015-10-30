@@ -1,3 +1,5 @@
+require './helpers/workspace'
+
 Minimap = require '../lib/minimap'
 
 describe 'Minimap package', ->

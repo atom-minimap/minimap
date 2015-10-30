@@ -1,3 +1,5 @@
+require './helpers/workspace'
+
 fs = require 'fs-plus'
 path = require 'path'
 Minimap = require '../lib/minimap'
@@ -5,6 +7,7 @@ MinimapElement = require '../lib/minimap-element'
 {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require './helpers/events'
 stylesheetPath = path.resolve __dirname, '..', 'styles', 'minimap.less'
 stylesheet = atom.themes.loadStylesheet(stylesheetPath)
+
 
 realOffsetTop = (o) ->
   # transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
