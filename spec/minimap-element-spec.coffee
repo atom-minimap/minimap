@@ -1,6 +1,5 @@
 fs = require 'fs-plus'
 path = require 'path'
-{TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
 {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require './helpers/events'
@@ -39,7 +38,7 @@ describe 'MinimapElement', ->
 
     MinimapElement.registerViewProvider()
 
-    editor = new TextEditor({})
+    editor = atom.workspace.buildTextEditor({})
     editorElement = atom.views.getView(editor)
     jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
     editorElement.setHeight(50)
@@ -815,7 +814,7 @@ describe 'MinimapElement', ->
 
       describe 'when the minimap is not attached yet', ->
         beforeEach ->
-          editor = new TextEditor({})
+          editor = atom.workspace.buildTextEditor({})
           editorElement = atom.views.getView(editor)
           editorElement.setHeight(50)
           editor.setLineHeightInPixels(10)

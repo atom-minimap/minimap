@@ -1,5 +1,4 @@
 fs = require 'fs-plus'
-{TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 
 describe 'Minimap', ->
@@ -10,7 +9,7 @@ describe 'Minimap', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
 
-    editor = new TextEditor({})
+    editor = atom.workspace.buildTextEditor({})
 
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
@@ -362,7 +361,7 @@ describe 'Stand alone minimap', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
 
-    editor = new TextEditor({})
+    editor = atom.workspace.buildTextEditor({})
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)
