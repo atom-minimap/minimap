@@ -1,4 +1,3 @@
-
 fs = require 'fs-plus'
 path = require 'path'
 Minimap = require '../lib/minimap'
