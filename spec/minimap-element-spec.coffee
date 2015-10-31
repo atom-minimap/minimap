@@ -1,13 +1,10 @@
-require './helpers/workspace'
 
 fs = require 'fs-plus'
 path = require 'path'
 Minimap = require '../lib/minimap'
 MinimapElement = require '../lib/minimap-element'
+{stylesheet} = require './helpers/workspace'
 {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require './helpers/events'
-stylesheetPath = path.resolve __dirname, '..', 'styles', 'minimap.less'
-stylesheet = atom.themes.loadStylesheet(stylesheetPath)
-
 
 realOffsetTop = (o) ->
   # transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
@@ -93,40 +90,6 @@ describe 'MinimapElement', ->
         nextAnimationFrame = ->
           nextAnimationFrame = noAnimationFrame
           fn()
-
-      styleNode = document.createElement('style')
-      styleNode.textContent = """
-        #{stylesheet}
-
-        atom-text-editor-minimap[stand-alone] {
-          width: 100px;
-          height: 100px;
-        }
-
-        atom-text-editor, atom-text-editor::shadow {
-          height: 10px;
-          /* font-size: 9px; */
-        }
-
-        atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
-          background: rgba(255,0,0,0.3);
-        }
-
-        atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator, atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
-          background: rgba(0,0,255,0.3);
-        }
-
-        atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area, atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
-          background: rgba(0,255,0,0.3);
-          opacity: 1;
-        }
-
-        atom-text-editor::shadow atom-text-editor-minimap::shadow .open-minimap-quick-settings {
-          opacity: 1 !important;
-        }
-      """
-
-      jasmineContent.appendChild(styleNode)
 
     beforeEach ->
       canvas = minimapElement.shadowRoot.querySelector('canvas')
