@@ -134,31 +134,11 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
   <li>
     <span class='signature'>
       <a href='#attach-instance'>
-        ::<strong>attach</strong>()
+        ::<strong>attach</strong>(parent)
       </a>
     </span>
     <span class='desc'>
       Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the DOM.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#attachToLeft-instance'>
-        ::<strong>attachToLeft</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the left of the target {TextEditorElement}.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#attachToRight-instance'>
-        ::<strong>attachToRight</strong>()
-      </a>
-    </span>
-    <span class='desc'>
-      Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the right of the target {TextEditorElement}.
     </span>
   </li>
   <li>
@@ -263,16 +243,6 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
   </li>
   <li>
     <span class='signature'>
-      <a href='#leftMousePressedOverCanvas-instance'>
-        ::<strong>leftMousePressedOverCanvas</strong>({pageY, target})
-      </a>
-    </span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#makeScale-instance'>
         String ::<strong>makeScale</strong>(x = 0, y = x)
       </a>
@@ -289,16 +259,6 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     </span>
     <span class='desc'>
       Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS translation tranform value.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#middleMousePressedOverCanvas-instance'>
-        ::<strong>middleMousePressedOverCanvas</strong>({pageY})
-      </a>
-    </span>
-    <span class='desc'>
-      
     </span>
   </li>
   <li>
@@ -323,12 +283,12 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
   </li>
   <li>
     <span class='signature'>
-      <a href='#swapMinimapPosition-instance'>
-        ::<strong>swapMinimapPosition</strong>()
+      <a href='#updateMinimapFlexPosition-instance'>
+        ::<strong>updateMinimapFlexPosition</strong>()
       </a>
     </span>
     <span class='desc'>
-      Swaps the <a href='../classes/MinimapElement.html'>MinimapElement</a> position based on the value of the <code>displayMinimapOnLeft</code> setting.
+      Toggles the minimap left/right position based on the value of the <code>displayMinimapOnLeft</code> setting.
     </span>
   </li>
 </ul>
@@ -336,10 +296,10 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='attach-instance'>
-      ::<strong>attach</strong>()
+      ::<strong>attach</strong>(parent)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L100'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L109'>Source</a>
     </p>
     <div class='docstring'>
   <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the DOM.</p><p>The position at which the element is attached is defined by the
@@ -349,37 +309,11 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='attachToLeft-instance'>
-      ::<strong>attachToLeft</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L106'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the left of the target {TextEditorElement}.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='attachToRight-instance'>
-      ::<strong>attachToRight</strong>()
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L112'>Source</a>
-    </p>
-    <div class='docstring'>
-  <p>Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the right of the target {TextEditorElement}.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='destroy-instance'>
       ::<strong>destroy</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L130'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L125'>Source</a>
     </p>
     <div class='docstring'>
   <p>Destroys this <a href='../classes/MinimapElement.html'>MinimapElement</a>.</p>
@@ -391,8 +325,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='detach-instance'>
       ::<strong>detach</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L124'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L114'>Source</a>
     </p>
     <div class='docstring'>
   <p>Detaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> from the DOM.</p>
@@ -404,8 +338,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='disposeOpenQuickSettings-instance'>
       ::<strong>disposeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L212'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L210'>Source</a>
     </p>
     <div class='docstring'>
   <p>Disposes the quick settings openener div when the <code>displayPluginsControls</code> setting is disabled.</p>
@@ -417,8 +351,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='disposeScrollIndicator-instance'>
       ::<strong>disposeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L175'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L173'>Source</a>
     </p>
     <div class='docstring'>
   <p>Disposes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is disabled.</p>
@@ -430,8 +364,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getModel-instance'>
       Minimap ::<strong>getModel</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L253'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L251'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the <a href='../classes/Minimap.html'>Minimap</a> for which this <a href='../classes/MinimapElement.html'>MinimapElement</a> was created.</p>
@@ -452,8 +386,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getTextEditor-instance'>
       TextEditor ::<strong>getTextEditor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L221'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L219'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the target {TextEditor} of the <a href='../classes/Minimap.html'>Minimap</a>.</p>
@@ -474,8 +408,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getTextEditorElement-instance'>
       TextEditorElement ::<strong>getTextEditorElement</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L226'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L224'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the {TextEditorElement} for the <a href='../classes/Minimap.html'>Minimap</a>&#39;s {TextEditor}.</p>
@@ -496,8 +430,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='initializeOpenQuickSettings-instance'>
       ::<strong>initializeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L180'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L178'>Source</a>
     </p>
     <div class='docstring'>
   <p>Initializes the quick settings openener div when the <code>displayPluginsControls</code> setting is enabled.</p>
@@ -509,8 +443,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='initializeScrollIndicator-instance'>
       ::<strong>initializeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L168'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L166'>Source</a>
     </p>
     <div class='docstring'>
   <p>Initializes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is enabled.</p>
@@ -522,8 +456,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='isVisible-instance'>
       Boolean ::<strong>isVisible</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L94'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L103'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns <code>true</code> if the <a href='../classes/MinimapElement.html'>MinimapElement</a> is currently visible on screen.</p>
@@ -541,21 +475,11 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='leftMousePressedOverCanvas-instance'>
-      ::<strong>leftMousePressedOverCanvas</strong>({pageY, target})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L421'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='makeScale-instance'>
       String ::<strong>makeScale</strong>(x = 0, y = x)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L546'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L589'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS scale tranform value.</p>
@@ -591,8 +515,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='makeTranslate-instance'>
       String ::<strong>makeTranslate</strong>(x = 0, y = 0)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L534'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L577'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS translation tranform value.</p>
@@ -625,21 +549,11 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='middleMousePressedOverCanvas-instance'>
-      ::<strong>middleMousePressedOverCanvas</strong>({pageY})
-      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L441'>Source</a>
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='setDisplayCodeHighlights-instance'>
       ::<strong>setDisplayCodeHighlights</strong>(displayCodeHighlights)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L336'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L358'>Source</a>
     </p>
     <div class='docstring'>
   <p>Defines whether to render the code highlights or not.</p>
@@ -660,8 +574,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='setModel-instance'>
       ::<strong>setModel</strong>(minimap)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L258'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L256'>Source</a>
     </p>
     <div class='docstring'>
   <p>Defines the <a href='../classes/Minimap.html'>Minimap</a> model for this <a href='../classes/MinimapElement.html'>MinimapElement</a> instance.</p>
@@ -679,14 +593,14 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='swapMinimapPosition-instance'>
-      ::<strong>swapMinimapPosition</strong>()
+    <p class='signature' id='updateMinimapFlexPosition-instance'>
+      ::<strong>updateMinimapFlexPosition</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.10.0
-/lib&#47;minimap-element.coffee#L117'>Source</a>
+&#47;blob&#47;v4.15.1
+/lib&#47;minimap-element.coffee#L121'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Swaps the <a href='../classes/MinimapElement.html'>MinimapElement</a> position based on the value of the <code>displayMinimapOnLeft</code> setting.</p>
+  <p>Toggles the minimap left/right position based on the value of the <code>displayMinimapOnLeft</code> setting.</p>
 </div>
 <div class='tags'>
 </div>
@@ -695,11 +609,11 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     </div>
     <div id='footer'>
   Generated on
-  Thu Jun 11 2015 22:43:29 GMT+0200 (CEST)
+  Sat Oct 31 2015 12:45:20 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
-  (Node.js v1.2.0).
+  (Node.js v4.1.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>

@@ -115,50 +115,198 @@
         </p>
       </nav>
       <div id='filecontents'>
-        <h1 id="minimap-package-build-status-https-travis-ci-org-atom-minimap-minimap-svg-branch-master-https-travis-ci-org-atom-minimap-minimap-">Minimap package <a href="https://travis-ci.org/atom-minimap/minimap"><img src="https://travis-ci.org/atom-minimap/minimap.svg?branch=master" alt="Build Status"></a></h1><p>A preview of the full source code.</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/screenshot.png?raw=true" alt="Minimap Screenshot"></p><h3 id="installation">Installation</h3>
+        <h1 id="minimap-package-build-status-https-travis-ci-org-atom-minimap-minimap-svg-branch-master-https-travis-ci-org-atom-minimap-minimap-">Minimap package <a href="https://travis-ci.org/atom-minimap/minimap"><img src="https://travis-ci.org/atom-minimap/minimap.svg?branch=master" alt="Build Status"></a></h1><p>A preview of the full source code.</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true" alt="Minimap Screenshot"></p><h3 id="installation">Installation</h3>
 <pre><code>apm install minimap
 </code></pre><h3 id="features">Features</h3>
 <ul>
 <li>Service-based Plugin API: Use the plugin generation command and start developing your plugin right away.</li>
 <li>Decoration API: Use the same API to manage <code>TextEditor</code> and <code>Minimap</code> decorations.</li>
 <li>Canvas-based Rendering: Simple, fast and flexible.</li>
+<li>Stand-alone Mode: Wants to display a preview of a text editor in your UIs, use a stand-alone version of the Minimap.</li>
 </ul>
-<h3 id="available-plugins">Available Plugins</h3><p>Below is the list of available plugins so far:</p><ul>
-<li><a href="https://atom.io/packages/minimap-find-and-replace">Find And Replace</a></li>
-<li><a href="https://atom.io/packages/minimap-git-diff">Git Diff</a></li>
-<li><a href="https://atom.io/packages/minimap-color-highlight">Color Highlight</a></li>
-<li><a href="https://atom.io/packages/minimap-highlight-selected">Highlight Selected</a></li>
-<li><a href="https://atom.io/packages/minimap-selection">Selection</a></li>
-<li><a href="https://atom.io/packages/minimap-bookmarks">Bookmarks</a></li>
-<li><a href="https://atom.io/packages/minimap-autohide">Auto-Hide</a></li>
-<li><a href="https://atom.io/packages/minimap-pigments">Pigments</a></li>
-</ul>
+<h3 id="available-plugins">Available Plugins</h3><p>Below is the list of available plugins so far:</p><table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://atom.io/packages/minimap-autohide">Auto-Hide</a></td>
+<td>Hides the Minimap while editing.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-bookmarks">Bookmarks</a></td>
+<td>Displays Atom bookmarks.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-codeglance">Code Glance</a></td>
+<td>Shows the code that&#39;s under the mouse cursor when hovering the Minimap.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-find-and-replace">Find And Replace</a></td>
+<td>Displays the search matches.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-git-diff">Git Diff</a></td>
+<td>Displays the file diff.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-hide">Hide on inactive panes</a></td>
+<td>Hide the Minimap when pane isn&#39;t focus.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-highlight-selected">Highlight Selected</a></td>
+<td>A Minimap binding for the highlight-selected package.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-linter">Linter</a></td>
+<td>Displays linter markers.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-pigments">Pigments</a></td>
+<td>Displays the pigments colors.</td>
+</tr>
+<tr>
+<td><a href="https://atom.io/packages/minimap-selection">Selection</a></td>
+<td>Display the buffer&#39;s selections.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="settings">Settings</h3>
-<ul>
-<li><code>Auto Toggle</code>: If checked the Minimap is toggled on at startup. (default=true)</li>
-<li><code>Display Code Highlights</code>: If checked the code will be highlighted using the grammar tokens. (default=true)</li>
-<li><code>Display Minimap On Left</code>: If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)</li>
-<li><code>Char Height</code>: The height of a character in the Minimap in pixels. (default=2)</li>
-<li><code>Char Width</code>: The width of a character in the Minimap in pixels. (default=1)</li>
-<li><code>Interline</code>: The space between lines in the Minimap in pixels. (default=1)</li>
-<li><code>Text Opacity</code>: The opacity used to render the line text in the Minimap. (default=0.6)</li>
-<li><code>Display Plugins Controls</code>: If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. <strong>You need to restart Atom for this setting to be effective.</strong> (default=true)</li>
-<li><code>Minimap Scroll Indicator</code>: Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)</li>
-<li><code>Plugins *</code>: When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.</li>
-<li><code>Scroll Animation</code>: Enable animations when scrolling the editor by clicking on the Minimap.</li>
-<li><code>Scroll Animation Duration</code>: Duration of the scroll animation when clicking on the Minimap.</li>
-<li><code>Use Hardware Acceleration</code>: If checked the Minimap scroll is done using a <code>translate3d</code> transform, otherwise the <code>translate</code> transform is used. (default=true)</li>
-<li><code>Absolute Mode</code>: When enabled the minimap uses an absolute positioning, letting the editor&#39;s content flow below the minimap.
-Note that this setting will do nothing if <code>Display Minimap On Left</code> is also enabled.</li>
-</ul><p>For instance the following result is obtained by setting a <code>Char Height</code> of <code>1px</code>:</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/screenshot-alternate.png?raw=true" alt="Minimap Screenshot"></p><h3 id="key-bindings">Key Bindings</h3><p>Customizing Key Bindings:</p><pre><code class="lang-cson">&#39;atom-workspace&#39;:
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Auto Toggle</code></td>
+<td>If checked the Minimap is toggled on at startup. (default=true)</td>
+</tr>
+<tr>
+<td><code>Display Code Highlights</code></td>
+<td><p>If checked the code will be highlighted using the grammar tokens. (default=true)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/with-code-highlights.png?raw=true" alt=""> = <code>true</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/without-code-highlights.png?raw=true" alt=""> = <code>false</code></p></td>
+</tr>
+<tr>
+<td><code>Display Minimap On Left</code></td>
+<td><p>If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-left.png?raw=true" alt=""> = <code>true</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-right.png?raw=true" alt=""> = <code>false</code></p></td>
+</tr>
+<tr>
+<td><code>Char Height</code></td>
+<td><p>The height of a character in the Minimap in pixels. (default=2)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-height.png?raw=true" alt=""> = <code>1px</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-height.png?raw=true" alt=""> = <code>2px</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/4px-char-height.png?raw=true" alt=""> = <code>4px</code></p></td>
+</tr>
+<tr>
+<td><code>Char Width</code></td>
+<td><p>The width of a character in the Minimap in pixels. (default=1)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-width.png?raw=true" alt=""> = <code>1px</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-width.png?raw=true" alt=""> = <code>2px</code></p></td>
+</tr>
+<tr>
+<td><code>Interline</code></td>
+<td><p>The space between lines in the Minimap in pixels. (default=1)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/1px-interline.png?raw=true" alt=""> = <code>1px</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/2px-interline.png?raw=true" alt=""> = <code>2px</code></p></td>
+</tr>
+<tr>
+<td><code>Text Opacity</code></td>
+<td><p>The opacity used to render the line text in the Minimap. (default=0.6)</p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-default.png?raw=true" alt=""> = <code>0.6</code></p><p> <img src="https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-1.png?raw=true" alt=""> = <code>1</code></p></td>
+</tr>
+<tr>
+<td><code>Display Plugins Controls</code></td>
+<td><p>If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. <br/><strong>You need to restart Atom for this setting to be effective.</strong> (default=true)</p> <p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/plugins-control.png?raw=true" alt=""></p></td>
+</tr>
+<tr>
+<td><code>Minimap Scroll Indicator</code></td>
+<td><p>Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)</p> <p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/scroll-indicator.png?raw=true" alt=""></p></td>
+</tr>
+<tr>
+<td><code>Plugins *</code></td>
+<td>When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.</td>
+</tr>
+<tr>
+<td><code>Scroll Animation</code></td>
+<td>Enable animations when scrolling the editor by clicking on the Minimap. (default=false)</td>
+</tr>
+<tr>
+<td><code>Scroll Animation Duration</code></td>
+<td>Duration of the scroll animation when clicking on the Minimap. (default=300)</td>
+</tr>
+<tr>
+<td><code>Use Hardware Acceleration</code></td>
+<td>If checked the Minimap scroll is done using a <code>translate3d</code> transform, otherwise the <code>translate</code> transform is used. (default=true)</td>
+</tr>
+<tr>
+<td><code>Absolute Mode</code></td>
+<td><p>When enabled the Minimap uses an absolute positioning, letting the editor&#39;s content flow below the Minimap. (default=true)</p><p>Note that this setting will do nothing if <code>Display Minimap On Left</code> is also enabled.</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/normal-mode.png?raw=true" alt=""> = <code>false</code></p><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/absolute-mode.png?raw=true" alt=""> = <code>true</code></p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-bindings">Key Bindings</h3><p>The Minimap package doesn&#39;t provide any default keybindings. But you can define your own as demonstrated below:</p><pre><code class="lang-cson">&#39;atom-workspace&#39;:
   &#39;cmd-m&#39;: &#39;minimap:toggle&#39;
-  &#39;ctrl-alt-cmd-m&#39;: &#39;minimap:generate-plugin&#39;
+  &#39;ctrl-alt-cmd-j&#39;: &#39;minimap:generate-javascript-plugin&#39;
+  &#39;ctrl-alt-cmd-b&#39;: &#39;minimap:generate-babel-plugin&#39;
+  &#39;ctrl-alt-cmd-c&#39;: &#39;minimap:generate-coffee-plugin&#39;
 </code></pre>
+<h3 id="tweaking-the-minimap">Tweaking The Minimap</h3>
+<h4 id="hiding-scrollbars">Hiding scrollbars</h4><p>If you want to hide the default editor scrollbar, edit your <code>style.less</code> (Open Your Stylesheet) and use the following snippet:</p><pre><code class="lang-css">atom-text-editor .vertical-scrollbar,
+atom-text-editor::shadow .vertical-scrollbar {
+  opacity: 0;
+  width: 0;
+}
+</code></pre>
+<h4 id="changing-the-minimap-s-background">Changing the Minimap&#39;s background</h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-background.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor atom-text-editor-minimap,
+atom-text-editor::shadow atom-text-editor-minimap {
+  background: green;
+}
+</code></pre>
+<h4 id="changing-the-color-of-the-minimap-s-visible-area-">Changing the color of the Minimap&#39;s <code>visible-area</code></h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+  background-color: green;
+  opacity: .5;
+}
+</code></pre>
+<h4 id="changing-the-color-of-the-minimap-s-scroll-indicator-">Changing the color of the Minimap&#39;s <code>scroll-indicator</code></h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-scroll-indicator.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
+  background-color: green;
+}
+</code></pre>
+<h4 id="disabling-mouse-interactions-when-in-absolute-mode">Disabling mouse interactions when in absolute mode</h4><p>If you want to prevent to catch the mouse pointer when the <code>absoluteMode</code> setting is enabled you can use the following snippet to do so:</p><pre><code class="lang-css">atom-text-editor atom-text-editor-minimap,
+atom-text-editor::shadow atom-text-editor-minimap {
+  pointer-events: none;
+}
+
+atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+  pointer-events: auto;
+}
+</code></pre><p>The visible area will still allow interaction but the Minimap track won&#39;t.</p><hr>
 <h3 id="plugins">Plugins</h3>
-<h4 id="plugin-generation-command">Plugin Generation Command</h4><p>Use the <code>Minimap: Generate Plugin</code> command available in the command palette or add a binding to the <code>minimap:generate-plugin</code> event:</p><pre><code class="lang-cson">&#39;atom-workspace&#39;:
-  &#39;ctrl-alt-cmd-m&#39;: &#39;minimap:generate-plugin&#39;
-</code></pre>
-<h4 id="plugins-controls">Plugins Controls</h4><p>When the <code>displayPluginsControls</code> setting is toggled on, plugins activation can be managed directly from the Minimap package settings or by using the quick settings dropdown available on the Mimimap itself:</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/plugins-list.gif?raw=true" alt="Minimap Screenshot"></p><h3 id="minimap-decorations">Minimap Decorations</h3><p>The Minimap package mimic the decoration API available on editors so that you can easily add your own decorations on the Minimap.</p><p>While the interface is the same, some details such as the available decorations types change relatively to the editor&#39;s decorations API.</p><h4 id="scope-and-styling">Scope And Styling</h4><p>The most important change is that decorations on the Minimap doesn&#39;t use a <code>class</code>, but rather a <code>scope</code></p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, scope: &#39;.scope .to .the.marker.style&#39;)
+<h4 id="plugin-generation-command">Plugin Generation Command</h4><p>Use the <code>Generate Javascript Plugin</code>, <code>Generate Coffee Plugin</code> or <code>Generate Babel Plugin</code> commands, available in the command palette, to generate a new Minimap plugin package.</p><ul>
+<li><code>Minimap: Generate Javascript Plugin</code>: Will generate a vanilla JavaScript package.</li>
+<li><code>Minimap: Generate Coffee Plugin</code>: Will generate a CoffeeScript package.</li>
+<li><code>Minimap: Generate Babel Plugin</code>: Will generate a ES6 package that uses babel-js.</li>
+</ul>
+<h4 id="plugins-controls">Plugins Controls</h4><p>When the <code>displayPluginsControls</code> setting is toggled on, plugins activation can be managed directly from the Minimap package settings or by using the quick settings dropdown available on the Mimimap itself:</p><p><img src="https://github.com/atom-minimap/minimap/blob/master/resources/plugins-list.gif?raw=true" alt="Minimap Screenshot"></p><h3 id="stand-alone-mode">Stand-alone Mode</h3><p>Starting with version 4.13, the Minimap can operate in a stand-alone mode. Basically, it means that a Minimap can be appended to the DOM outside of a <code>TextEditor</code> and without being affected by it.</p><p>The example below demonstrates how to retrieve and display a stand-alone Minimap:</p><pre><code class="lang-coffee">atom.packages.serviceHub.consume &#39;minimap&#39;, &#39;1.0.0&#39;, (api) -&gt;
+  editor = atom.workspace.getActiveTextEditor()
+  minimap = api.standAloneMinimapForEditor(editor)
+
+  minimapElement = atom.views.getView(minimap)
+  minimapElement.attach(document.body)
+  minimapElement.style.cssText = &#39;&#39;&#39;
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    top: 0;
+    right: 100px;
+    z-index: 10;
+  &#39;&#39;&#39;
+</code></pre><p>In a nutshell, here&#39;s the main changes to expect when using a stand-alone Minimap:</p><ul>
+<li>In stand-alone mode, it&#39;s the <code>MinimapElement</code> that is responsible to sets the size of the underlying <code>Minimap</code> model, so you can give it any size and the Minimap will just adapt to it.</li>
+<li>Scrolling in the target <code>TextEditor</code> won&#39;t change the Minimap display.</li>
+<li>The mouse controls in the Minimap are disabled.</li>
+<li>The visible area and the quick settings button are hidden.</li>
+<li>Stand-alone Minimaps aren&#39;t dispatched in the <code>observeMinimaps</code> callback, so they won&#39;t be targeted by plugins and won&#39;t receive the decorations that plugins normally creates on Minimaps.</li>
+</ul><p>For the moment, stand-alone Minimaps still need a target <code>TextEditor</code> but I hope to make it work with just a path at some point.</p><h3 id="minimap-decorations">Minimap Decorations</h3><p>The Minimap package mimic the decoration API available on editors so that you can easily add your own decorations on the Minimap.</p><p>While the interface is the same, some details such as the available decorations types change relatively to the editor&#39;s decorations API.</p><h4 id="scope-and-styling">Scope And Styling</h4><p>The most important change is that decorations on the Minimap doesn&#39;t use a <code>class</code>, but rather a <code>scope</code></p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, scope: &#39;.scope .to .the.marker.style&#39;)
 </code></pre><p>It&#39;s still possible to pass a class parameter to the decoration:</p><pre><code class="lang-coffee">minimapView.decorateMarker(marker, type: &#39;line&#39;, class: &#39;the marker style&#39;)
 </code></pre><p>In that case, when rendering the decoration a scope will be build that will look like <code>.minimap .editor .the.marker.style</code>.</p><p>The reason of using a scope rather than a class is that while editor&#39;s decorations are part of the DOM and benefit of the styles cascading, Minimap&#39;s decorations, rendered in a canvas, do not. In order to work around that, decoration&#39;s styles are defined using a <code>scope</code> property containing the selector allowing to retrieve the decoration style.</p><p>This allow the Minimap decorations to still be styled using css. For instance, the scope used by the <code>minimap-selection</code> package is:</p><pre><code class="lang-css">.minimap .editor .selection .region {
   /* ... */
@@ -170,35 +318,16 @@ Note that this setting will do nothing if <code>Display Minimap On Left</code> i
 <li><code>highlight-over</code>, <code>highlight</code>: Correspond to an editor <code>highlight</code> decoration that is rendered after having rendered the line content.</li>
 <li><code>highlight-outline</code>: Correspond to an editor <code>highlight</code> decoration that is rendered only as an outline in the Minimap.</li>
 </ul>
-<h3 id="tweaking-the-minimap">Tweaking The Minimap</h3>
-<h4 id="hiding-scrollbars">Hiding scrollbars</h4><p>If you want to hide the default editor scrollbar, edit your <code>style.less</code> (Open Your Stylesheet) and use the following snippet:</p><pre><code class="lang-css">atom-text-editor::shadow .vertical-scrollbar {
-  opacity: 0;
-  width: 0;
-}
-</code></pre>
-<h4 id="changing-the-minimap-s-background">Changing the Minimap&#39;s background</h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/minimap-custom-background.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor::shadow atom-text-editor-minimap {
-  background: green;
-}
-</code></pre>
-<h4 id="changing-the-color-of-the-minimap-s-visible-area-">Changing the color of the Minimap&#39;s <code>visible-area</code></h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/minimap-custom-visible-area.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
-  background-color: green;
-  opacity: .5;
-}
-</code></pre>
-<h4 id="changing-the-color-of-the-minimap-s-scroll-indicator-">Changing the color of the Minimap&#39;s <code>scroll-indicator</code></h4><p><img src="https://github.com/atom-minimap/minimap/blob/master/minimap-custom-scroll-indicator.png?raw=true" alt="minimap-custom-background"></p><pre><code class="lang-css">atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
-  background-color: green;
-}
-</code></pre>
-<h3 id="contributing">Contributing</h3><p>The Minimap package try to follow the <a href="https://atom.io/docs/latest/contributing">Atom contribution guidelines</a>.</p><p>Especially, the commits should follow the conventions defined in the <em>Git Commit Messages</em> section of the guideline.</p><p>The <code>CHANGELOG</code> content is then generated using the <a href="https://github.com/abe33/changelog-gen">changelog-gen utils</a>.</p><p><a href="https://github.com/atom-minimap/minimap/graphs/contributors">See all contributors</a></p><h3 id="license">License</h3><p>MIT</p>
+<h3 id="license">License</h3><p>MIT</p>
       </div>
     </div>
     <div id='footer'>
   Generated on
-  Thu Jun 11 2015 22:43:29 GMT+0200 (CEST)
+  Sat Oct 31 2015 12:45:20 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
-  (Node.js v1.2.0).
+  (Node.js v4.1.0).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
 </div>
