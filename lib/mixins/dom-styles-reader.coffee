@@ -1,6 +1,6 @@
 Mixin = require 'mixto'
 
-# Public: This mixin is used by the {CanvasRenderer} in {MinimapElement} to
+# Public: This mixin is used by the {CanvasDrawer} in {MinimapElement} to
 # read the styles informations from the DOM to use when rendering the {Minimap}.
 module.exports =
 class DOMStylesReader extends Mixin

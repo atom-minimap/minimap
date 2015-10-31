@@ -1,3 +1,4 @@
+# Internal: 
 module.exports =
 class LegacyAdater
   constructor: (@textEditor) ->
