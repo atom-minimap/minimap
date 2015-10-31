@@ -4,7 +4,7 @@ fs = require 'fs-plus'
 Minimap = require '../lib/minimap'
 
 describe 'Minimap', ->
-  [editor, editorElement, minimap, largeSample, smallSample] = []
+  [editor, editorElement, minimap, largeSample, smallSample, minimapVerticalScaleFactor, minimapHorizontalScaleFactor] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
@@ -17,7 +17,9 @@ describe 'Minimap', ->
     jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)
     editorElement.setWidth(200)
-    editor.setLineHeightInPixels(10)
+
+    minimapVerticalScaleFactor = 5 / editor.getLineHeightInPixels()
+    minimapHorizontalScaleFactor = 2 / editor.getDefaultCharWidth()
 
     dir = atom.project.getDirectories()[0]
 
@@ -42,12 +44,12 @@ describe 'Minimap', ->
     expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
-    expect(minimap.getVerticalScaleFactor()).toEqual(0.5)
-    expect(minimap.getHorizontalScaleFactor()).toEqual(2 / editor.getDefaultCharWidth())
+    expect(minimap.getVerticalScaleFactor()).toEqual(minimapVerticalScaleFactor)
+    expect(minimap.getHorizontalScaleFactor()).toEqual(minimapHorizontalScaleFactor)
 
   it 'measures the editor visible area size at minimap scale', ->
     editor.setText(largeSample)
-    expect(minimap.getTextEditorScaledHeight()).toEqual(25)
+    expect(minimap.getTextEditorScaledHeight()).toEqual(50 * minimapVerticalScaleFactor)
 
   it 'measures the available minimap scroll', ->
     editor.setText(largeSample)
@@ -161,8 +163,8 @@ describe 'Minimap', ->
       editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
 
     it 'scales the editor scroll based on the minimap scale factor', ->
-      expect(minimap.getTextEditorScaledScrollTop()).toEqual(500)
-      expect(minimap.getTextEditorScaledScrollLeft()).toEqual(200 * minimap.getHorizontalScaleFactor())
+      expect(minimap.getTextEditorScaledScrollTop()).toEqual(1000 * minimapVerticalScaleFactor)
+      expect(minimap.getTextEditorScaledScrollLeft()).toEqual(200 * minimapHorizontalScaleFactor)
 
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
