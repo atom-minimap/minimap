@@ -20,8 +20,7 @@ beforeEach ->
     }
 
     atom-text-editor, atom-text-editor::shadow {
-      height: 10px;
-      /* font-size: 9px; */
+      line-height: 17px;
     }
 
     atom-text-editor atom-text-editor-minimap, atom-text-editor::shadow atom-text-editor-minimap {
