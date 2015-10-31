@@ -1,22 +1,25 @@
+require './helpers/workspace'
+
 fs = require 'fs-plus'
-{TextEditor} = require 'atom'
 Minimap = require '../lib/minimap'
 
 describe 'Minimap', ->
-  [editor, editorElement, minimap, largeSample, smallSample] = []
+  [editor, editorElement, minimap, largeSample, smallSample, minimapVerticalScaleFactor, minimapHorizontalScaleFactor] = []
 
   beforeEach ->
     atom.config.set 'minimap.charHeight', 4
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
 
-    editor = new TextEditor({})
+    editor = atom.workspace.buildTextEditor({})
 
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)
     editorElement.setWidth(200)
-    editor.setLineHeightInPixels(10)
+
+    minimapVerticalScaleFactor = 5 / editor.getLineHeightInPixels()
+    minimapHorizontalScaleFactor = 2 / editor.getDefaultCharWidth()
 
     dir = atom.project.getDirectories()[0]
 
@@ -41,12 +44,12 @@ describe 'Minimap', ->
     expect(minimap.getHeight()).toEqual(editor.getScreenLineCount() * 5)
 
   it 'measures the scaling factor between the editor and the minimap', ->
-    expect(minimap.getVerticalScaleFactor()).toEqual(0.5)
-    expect(minimap.getHorizontalScaleFactor()).toEqual(2 / editor.getDefaultCharWidth())
+    expect(minimap.getVerticalScaleFactor()).toEqual(minimapVerticalScaleFactor)
+    expect(minimap.getHorizontalScaleFactor()).toEqual(minimapHorizontalScaleFactor)
 
   it 'measures the editor visible area size at minimap scale', ->
     editor.setText(largeSample)
-    expect(minimap.getTextEditorScaledHeight()).toEqual(25)
+    expect(minimap.getTextEditorScaledHeight()).toEqual(50 * minimapVerticalScaleFactor)
 
   it 'measures the available minimap scroll', ->
     editor.setText(largeSample)
@@ -109,18 +112,14 @@ describe 'Minimap', ->
       editorElement.setScrollTop(editorElement.getScrollHeight())
       expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
 
-    describe 'when getScrollTop() and maxScrollTop both equal 0', ->
+    describe 'getTextEditorScrollRatio(), when getScrollTop() and maxScrollTop both equal 0', ->
       beforeEach ->
         editor.setText(smallSample)
         editorElement.setHeight(40)
         atom.config.set 'editor.scrollPastEnd', true
 
-      it 'getTextEditorScrollRatio() should return 0', ->
+      it 'returns 0', ->
         editorElement.setScrollTop(0)
-
-        maxScrollTop = (editorElement.getScrollHeight() - editorElement.getHeight()) - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
-
-        expect(maxScrollTop).toEqual(10)
         expect(minimap.getTextEditorScrollRatio()).toEqual(0)
 
   describe 'when soft wrap is enabled', ->
@@ -164,17 +163,17 @@ describe 'Minimap', ->
       editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
 
     it 'scales the editor scroll based on the minimap scale factor', ->
-      expect(minimap.getTextEditorScaledScrollTop()).toEqual(500)
-      expect(minimap.getTextEditorScaledScrollLeft()).toEqual(200 * minimap.getHorizontalScaleFactor())
+      expect(minimap.getTextEditorScaledScrollTop()).toEqual(1000 * minimapVerticalScaleFactor)
+      expect(minimap.getTextEditorScaledScrollLeft()).toEqual(200 * minimapHorizontalScaleFactor)
 
     it 'computes the offset to apply based on the editor scroll top', ->
       expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
-      expect(minimap.getFirstVisibleScreenRow()).toEqual(66)
+      expect(minimap.getFirstVisibleScreenRow()).toEqual(58)
 
     it 'computes the last visible row in the minimap', ->
-      expect(minimap.getLastVisibleScreenRow()).toEqual(77)
+      expect(minimap.getLastVisibleScreenRow()).toEqual(69)
 
     describe 'down to the bottom', ->
       beforeEach ->
@@ -362,7 +361,7 @@ describe 'Stand alone minimap', ->
     atom.config.set 'minimap.charWidth', 2
     atom.config.set 'minimap.interline', 1
 
-    editor = new TextEditor({})
+    editor = atom.workspace.buildTextEditor({})
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)

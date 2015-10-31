@@ -1,4 +1,5 @@
-{TextEditor} = require 'atom'
+require './helpers/workspace'
+
 Minimap = require '../lib/minimap'
 
 describe 'Minimap package', ->
@@ -26,7 +27,7 @@ describe 'Minimap package', ->
       workspaceElement.querySelector('atom-text-editor::shadow atom-text-editor-minimap')
 
   it 'registers the minimap views provider', ->
-    textEditor = new TextEditor({})
+    textEditor = atom.workspace.buildTextEditor({})
     minimap = new Minimap({textEditor})
     minimapElement = atom.views.getView(minimap)
 
@@ -76,7 +77,7 @@ describe 'Minimap package', ->
       expect(minimapPackage.provideMinimapServiceV1()).toEqual(minimapPackage)
 
     it 'creates standalone minimap with provided text editor', ->
-      textEditor = new TextEditor({})
+      textEditor = atom.workspace.buildTextEditor({})
       standaloneMinimap = minimapPackage.standAloneMinimapForEditor(textEditor)
       expect(standaloneMinimap.getTextEditor()).toEqual(textEditor)
 

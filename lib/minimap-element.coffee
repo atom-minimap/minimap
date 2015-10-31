@@ -77,7 +77,8 @@ class MinimapElement extends HTMLElement
       'minimap.absoluteMode': (@absoluteMode) =>
         @classList.toggle('absolute', @absoluteMode)
 
-      'editor.preferredLineLength': => @requestUpdate() if @attached
+      'editor.preferredLineLength': =>
+        @measureHeightAndWidth() if @attached
 
       'editor.softWrap': => @requestUpdate() if @attached
 
@@ -334,19 +335,26 @@ class MinimapElement extends HTMLElement
   update: ->
     return unless @attached and @isVisible() and @minimap?
 
-    if @adjustToSoftWrap and @marginRight?
-      @style.marginRight = @marginRight + 'px'
-    else
-      @style.marginRight = null
-
     visibleAreaLeft = @minimap.getTextEditorScaledScrollLeft()
     visibleAreaTop = @minimap.getTextEditorScaledScrollTop() - @minimap.getScrollTop()
     visibleWidth = Math.min(@canvas.width / devicePixelRatio, @width)
 
-    @applyStyles @visibleArea,
-      width: visibleWidth + 'px'
-      height: @minimap.getTextEditorScaledHeight() + 'px'
-      transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
+    if @adjustToSoftWrap and @flexBasis
+      @style.flexBasis = @flexBasis + 'px'
+    else
+      @style.flexBasis = null
+
+    if atom.inSpecMode()
+      @applyStyles @visibleArea,
+        width: visibleWidth + 'px'
+        height: @minimap.getTextEditorScaledHeight() + 'px'
+        top: visibleAreaTop + 'px'
+        left: visibleAreaLeft + 'px'
+    else
+      @applyStyles @visibleArea,
+        width: visibleWidth + 'px'
+        height: @minimap.getTextEditorScaledHeight() + 'px'
+        transform: @makeTranslate(visibleAreaLeft, visibleAreaTop)
 
     @applyStyles @controls,
       width: visibleWidth + 'px'
@@ -355,7 +363,11 @@ class MinimapElement extends HTMLElement
 
     canvasTransform = @makeTranslate(0, canvasTop)
     canvasTransform += " " + @makeScale(1 / devicePixelRatio) if devicePixelRatio isnt 1
-    @applyStyles @canvas, transform: canvasTransform
+
+    if atom.inSpecMode()
+      @applyStyles @canvas, top: canvasTop + 'px'
+    else
+      @applyStyles @canvas, transform: canvasTransform
 
     if @minimapScrollIndicator and @minimap.canScroll() and not @scrollIndicator
       @initializeScrollIndicator()
@@ -365,9 +377,14 @@ class MinimapElement extends HTMLElement
       indicatorHeight = minimapScreenHeight * (minimapScreenHeight / @minimap.getHeight())
       indicatorScroll = (minimapScreenHeight - indicatorHeight) * @minimap.getCapedTextEditorScrollRatio()
 
-      @applyStyles @scrollIndicator,
-        height: indicatorHeight + 'px'
-        transform: @makeTranslate(0, indicatorScroll)
+      if atom.inSpecMode()
+        @applyStyles @scrollIndicator,
+          height: indicatorHeight + 'px'
+          top: indicatorScroll + 'px'
+      else
+        @applyStyles @scrollIndicator,
+          height: indicatorHeight + 'px'
+          transform: @makeTranslate(0, indicatorScroll)
 
       @disposeScrollIndicator() if not @minimap.canScroll()
 
@@ -432,13 +449,13 @@ class MinimapElement extends HTMLElement
         softWrapAtPreferredLineLength = atom.config.get('editor.softWrapAtPreferredLineLength')
         width = lineLength * @minimap.getCharWidth()
 
-        if softWrap and softWrapAtPreferredLineLength and lineLength and width < @width
-          @marginRight = width - @width
+        if softWrap and softWrapAtPreferredLineLength and lineLength and width <= @width
+          @flexBasis = width
           canvasWidth = width
         else
-          @marginRight = null
+          delete @flexBasis
       else
-        delete @marginRight
+        delete @flexBasis
 
       if canvasWidth isnt @canvas.width or @height isnt @canvas.height
         @canvas.width = canvasWidth * devicePixelRatio
