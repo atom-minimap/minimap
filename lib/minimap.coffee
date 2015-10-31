@@ -92,6 +92,9 @@ class Minimap
     @emitter.dispose()
     @destroyed = true
 
+  # Returns `true` when this `Minimap` has benn destroyed.
+  #
+  # Returns a {Boolean}.
   isDestroyed: -> @destroyed
 
   # Calls the `callback` when changes have been made in the buffer or in the
@@ -208,12 +211,26 @@ class Minimap
   # Returns a {Number}.
   getTextEditorMaxScrollTop: -> @adapter.getMaxScrollTop()
 
+  # Returns the scroll top of the `TextEditor`.
+  #
+  # Returns a {Number}.
   getTextEditorScrollTop: -> @adapter.getScrollTop()
 
+  # Sets the scroll top of the `TextEditor`.
+  #
+  # scrollTop - The new scroll top {Number}.
+  #
+  # Returns a {Number}.
   setTextEditorScrollTop: (scrollTop) -> @adapter.setScrollTop(scrollTop)
 
+  # Returns the scroll left of the `TextEditor`.
+  #
+  # Returns a {Number}.
   getTextEditorScrollLeft: -> @adapter.getScrollLeft()
 
+  # Returns the height of the `TextEditor`.
+  #
+  # Returns a {Number}.
   getTextEditorHeight: -> @adapter.getHeight()
 
   # Returns the `TextEditor` scroll as a value normalized between `0` and `1`.

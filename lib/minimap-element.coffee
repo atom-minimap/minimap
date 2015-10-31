@@ -492,6 +492,10 @@ class MinimapElement extends HTMLElement
       @startDrag({which: 2, pageY: top + height/2}) # ugly hack
     else return
 
+  # Internal: Callback triggered when the mouse left button is pressed on the
+  # {MinimapElement} canvas.
+  #
+  # event - The {Event} object.
   leftMousePressedOverCanvas: ({pageY, target}) ->
     y = pageY - target.getBoundingClientRect().top
     row = Math.floor(y / @minimap.getLineHeight()) + @minimap.getFirstVisibleScreenRow()
@@ -509,6 +513,10 @@ class MinimapElement extends HTMLElement
     else
       @minimap.setTextEditorScrollTop(scrollTop)
 
+  # Internal: Callback triggered when the mouse middle button is pressed on the
+  # {MinimapElement} canvas.
+  #
+  # event - The {Event} object.
   middleMousePressedOverCanvas: ({pageY}) ->
     {top: offsetTop} = @getBoundingClientRect()
     y = pageY - offsetTop - @minimap.getTextEditorScaledHeight()/2

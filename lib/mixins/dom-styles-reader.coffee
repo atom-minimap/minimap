@@ -74,6 +74,12 @@ class DOMStylesReader extends Mixin
     @invalidateCache()
     @constructor.hasTokenizedOnce = true
 
+  # Computes the output color of `value` with a rotated hue defined in `filter`.
+  #
+  # value - the CSS {String} value.
+  # filter - the CSS {String} filter.
+  #
+  # Returns a CSS {String}.
   rotateHue: (value, filter) ->
     [_,_,r,g,b,_,a] = value.match(/rgb(a?)\((\d+), (\d+), (\d+)(, (\d+(\.\d+)?))?\)/)
     [_,hue] = filter.match(/hue-rotate\((\d+)deg\)/)
@@ -95,6 +101,15 @@ class DOMStylesReader extends Mixin
 #    ##     ## ##       ##       ##        ##       ##    ##  ##    ##
 #    ##     ## ######## ######## ##        ######## ##     ##  ######
 
+# Internal: Computes the hue rotation on the provided `r`, `g` and `b` channels
+# by the amount of `angle`.
+#
+# r - the red channel {Number} value.
+# g - the green channel {Number} value.
+# b - the blue channel {Number} value.
+# angle - the angle {Number} of hue rotation.
+#
+# Returns an {Array}.
 rotate = (r,g,b,angle) ->
   clamp = (num) -> Math.ceil(Math.max(0, Math.min(255, num)))
   matrix = [1, 0, 0, 0, 1, 0, 0, 0, 1]
