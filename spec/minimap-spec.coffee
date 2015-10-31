@@ -170,10 +170,10 @@ describe 'Minimap', ->
       expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
 
     it 'computes the first visible row in the minimap', ->
-      expect(minimap.getFirstVisibleScreenRow()).toEqual(66)
+      expect(minimap.getFirstVisibleScreenRow()).toEqual(58)
 
     it 'computes the last visible row in the minimap', ->
-      expect(minimap.getLastVisibleScreenRow()).toEqual(77)
+      expect(minimap.getLastVisibleScreenRow()).toEqual(69)
 
     describe 'down to the bottom', ->
       beforeEach ->
