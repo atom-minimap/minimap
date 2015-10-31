@@ -1,3 +1,11 @@
+<a name="v4.15.2"></a>
+# v4.15.2 (2015-10-31)
+
+## :bug: Bug Fixes
+
+- Fix minimap broken with changes in flex box behaviour ([0c9389d8](https://github.com/atom-minimap/minimap/commit/0c9389d8141de337dec32724f85ec9d58271124d))
+- Fix deprecations in tests ([3bb81d39](https://github.com/atom-minimap/minimap/commit/3bb81d39261271347dfb4bd58873879b0262659d))
+
 <a name="v4.15.1"></a>
 # v4.15.1 (2015-10-30)
 
