@@ -113,12 +113,6 @@
           <td>Defined in:</td>
           <td>lib&#47;minimap-element.coffee</td>
         </tr>
-        <tr>
-          <td>Inherits:</td>
-          <td>
-            HTMLElement
-          </td>
-        </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
@@ -139,6 +133,26 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     </span>
     <span class='desc'>
       Attaches the <a href='../classes/MinimapElement.html'>MinimapElement</a> to the DOM.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#createControls-instance'>
+        ::<strong>createControls</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Creates the controls container div.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#createVisibleArea-instance'>
+        ::<strong>createVisibleArea</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Initializes the visible area div.
     </span>
   </li>
   <li>
@@ -263,6 +277,26 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
   </li>
   <li>
     <span class='signature'>
+      <a href='#removeControls-instance'>
+        ::<strong>removeControls</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeVisibleArea-instance'>
+        ::<strong>removeVisibleArea</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Removes the visible area div.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#setDisplayCodeHighlights-instance'>
         ::<strong>setDisplayCodeHighlights</strong>(displayCodeHighlights)
       </a>
@@ -283,6 +317,16 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
   </li>
   <li>
     <span class='signature'>
+      <a href='#setStandAlone-instance'>
+        ::<strong>setStandAlone</strong>(standAlone)
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#updateMinimapFlexPosition-instance'>
         ::<strong>updateMinimapFlexPosition</strong>()
       </a>
@@ -298,7 +342,7 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='attach-instance'>
       ::<strong>attach</strong>(parent)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap-element.coffee#L109'>Source</a>
     </p>
     <div class='docstring'>
@@ -309,10 +353,36 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='createControls-instance'>
+      ::<strong>createControls</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L173'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Creates the controls container div.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='createVisibleArea-instance'>
+      ::<strong>createVisibleArea</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L150'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Initializes the visible area div.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='destroy-instance'>
       ::<strong>destroy</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap-element.coffee#L125'>Source</a>
     </p>
     <div class='docstring'>
@@ -325,7 +395,7 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='detach-instance'>
       ::<strong>detach</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap-element.coffee#L114'>Source</a>
     </p>
     <div class='docstring'>
@@ -338,8 +408,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='disposeOpenQuickSettings-instance'>
       ::<strong>disposeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L210'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L237'>Source</a>
     </p>
     <div class='docstring'>
   <p>Disposes the quick settings openener div when the <code>displayPluginsControls</code> setting is disabled.</p>
@@ -351,8 +421,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='disposeScrollIndicator-instance'>
       ::<strong>disposeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L173'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L198'>Source</a>
     </p>
     <div class='docstring'>
   <p>Disposes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is disabled.</p>
@@ -364,8 +434,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getModel-instance'>
       Minimap ::<strong>getModel</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L251'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L278'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the <a href='../classes/Minimap.html'>Minimap</a> for which this <a href='../classes/MinimapElement.html'>MinimapElement</a> was created.</p>
@@ -386,8 +456,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getTextEditor-instance'>
       TextEditor ::<strong>getTextEditor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L219'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L246'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the target {TextEditor} of the <a href='../classes/Minimap.html'>Minimap</a>.</p>
@@ -408,8 +478,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='getTextEditorElement-instance'>
       TextEditorElement ::<strong>getTextEditorElement</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L224'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L251'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the {TextEditorElement} for the <a href='../classes/Minimap.html'>Minimap</a>&#39;s {TextEditor}.</p>
@@ -430,8 +500,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='initializeOpenQuickSettings-instance'>
       ::<strong>initializeOpenQuickSettings</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L178'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L206'>Source</a>
     </p>
     <div class='docstring'>
   <p>Initializes the quick settings openener div when the <code>displayPluginsControls</code> setting is enabled.</p>
@@ -443,8 +513,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='initializeScrollIndicator-instance'>
       ::<strong>initializeScrollIndicator</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L166'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L189'>Source</a>
     </p>
     <div class='docstring'>
   <p>Initializes the scroll indicator div when the <code>minimapScrollIndicator</code> settings is enabled.</p>
@@ -456,7 +526,7 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='isVisible-instance'>
       Boolean ::<strong>isVisible</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap-element.coffee#L103'>Source</a>
     </p>
     <div class='docstring'>
@@ -478,8 +548,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='makeScale-instance'>
       String ::<strong>makeScale</strong>(x = 0, y = x)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L589'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L632'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS scale tranform value.</p>
@@ -515,8 +585,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='makeTranslate-instance'>
       String ::<strong>makeTranslate</strong>(x = 0, y = 0)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L577'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L620'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> with a CSS translation tranform value.</p>
@@ -549,11 +619,34 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='removeControls-instance'>
+      ::<strong>removeControls</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L181'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeVisibleArea-instance'>
+      ::<strong>removeVisibleArea</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L164'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Removes the visible area div.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='setDisplayCodeHighlights-instance'>
       ::<strong>setDisplayCodeHighlights</strong>(displayCodeHighlights)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L358'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L400'>Source</a>
     </p>
     <div class='docstring'>
   <p>Defines whether to render the code highlights or not.</p>
@@ -574,8 +667,8 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     <p class='signature' id='setModel-instance'>
       ::<strong>setModel</strong>(minimap)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap-element.coffee#L256'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L283'>Source</a>
     </p>
     <div class='docstring'>
   <p>Defines the <a href='../classes/Minimap.html'>Minimap</a> model for this <a href='../classes/MinimapElement.html'>MinimapElement</a> instance.</p>
@@ -593,10 +686,20 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='setStandAlone-instance'>
+      ::<strong>setStandAlone</strong>(standAlone)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap-element.coffee#L305'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='updateMinimapFlexPosition-instance'>
       ::<strong>updateMinimapFlexPosition</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap-element.coffee#L121'>Source</a>
     </p>
     <div class='docstring'>
@@ -609,7 +712,7 @@ demonstrated below:</p><pre><code class="lang-coffee">minimapElement = atom.view
     </div>
     <div id='footer'>
   Generated on
-  Sat Oct 31 2015 12:45:20 GMT+0100 (CET)
+  Sun Nov 01 2015 20:57:21 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4

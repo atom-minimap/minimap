@@ -496,6 +496,36 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#setCharHeight-instance'>
+        ::<strong>setCharHeight</strong>(charHeight)
+      </a>
+    </span>
+    <span class='desc'>
+      Sets the char height for this <code>Minimap</code>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setCharWidth-instance'>
+        ::<strong>setCharWidth</strong>(charWidth)
+      </a>
+    </span>
+    <span class='desc'>
+      Sets the char width for this <code>Minimap</code>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setInterline-instance'>
+        ::<strong>setInterline</strong>(interline)
+      </a>
+    </span>
+    <span class='desc'>
+      Sets the interline for this <code>Minimap</code>.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#setScrollTop-instance'>
         ::<strong>setScrollTop</strong>(scrollTop)
       </a>
@@ -531,7 +561,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='constructor-instance'>
       ::<strong>constructor</strong>(options = {})
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L24'>Source</a>
     </p>
     <div class='docstring'>
@@ -563,8 +593,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='canScroll-instance'>
       Boolean ::<strong>canScroll</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L375'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L402'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns <code>true</code> when the <a href='../classes/Minimap.html'>Minimap</a> can scroll.</p>
@@ -585,7 +615,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='destroy-instance'>
       ::<strong>destroy</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L79'>Source</a>
     </p>
     <div class='docstring'>
@@ -598,7 +628,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getCapedTextEditorScrollRatio-instance'>
       Number ::<strong>getCapedTextEditorScrollRatio</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L247'>Source</a>
     </p>
     <div class='docstring'>
@@ -620,8 +650,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getCharHeight-instance'>
       Number ::<strong>getCharHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L329'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L338'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the height of a character in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.</p>
@@ -642,7 +672,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getCharWidth-instance'>
       Number ::<strong>getCharWidth</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L324'>Source</a>
     </p>
     <div class='docstring'>
@@ -664,8 +694,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getFirstVisibleScreenRow-instance'>
       Number ::<strong>getFirstVisibleScreenRow</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L339'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L366'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the index of the first visible row in the <a href='../classes/Minimap.html'>Minimap</a>.</p>
@@ -686,7 +716,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getHeight-instance'>
       Number ::<strong>getHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L253'>Source</a>
     </p>
     <div class='docstring'>
@@ -708,7 +738,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getHorizontalScaleFactor-instance'>
       Number ::<strong>getHorizontalScaleFactor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L313'>Source</a>
     </p>
     <div class='docstring'>
@@ -730,8 +760,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getInterline-instance'>
       Number ::<strong>getInterline</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L334'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L352'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the space between lines in the <a href='../classes/Minimap.html'>Minimap</a> in pixels.</p>
@@ -752,8 +782,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getLastVisibleScreenRow-instance'>
       Number ::<strong>getLastVisibleScreenRow</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L345'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L372'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the index of the last visible row in the <a href='../classes/Minimap.html'>Minimap</a>.</p>
@@ -774,7 +804,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getLineHeight-instance'>
       Number ::<strong>getLineHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L319'>Source</a>
     </p>
     <div class='docstring'>
@@ -796,8 +826,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getMaxScrollTop-instance'>
       Number ::<strong>getMaxScrollTop</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L369'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L396'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the maximum scroll value of the <a href='../classes/Minimap.html'>Minimap</a>.</p>
@@ -818,7 +848,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getScreenHeight-instance'>
       Number ::<strong>getScreenHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L273'>Source</a>
     </p>
     <div class='docstring'>
@@ -840,7 +870,7 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getScreenWidth-instance'>
       Number ::<strong>getScreenWidth</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L290'>Source</a>
     </p>
     <div class='docstring'>
@@ -862,8 +892,8 @@ destroyed whenever their <code>TextEditor</code> is destroyed. </p>
     <p class='signature' id='getScrollTop-instance'>
       Number ::<strong>getScrollTop</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L354'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L381'>Source</a>
     </p>
     <div class='docstring'>
   <p>Returns the current scroll of the <a href='../classes/Minimap.html'>Minimap</a>.</p><p>The <a href='../classes/Minimap.html'>Minimap</a> can scroll only when its height is greater that the height
@@ -885,7 +915,7 @@ of its <code>TextEditor</code>.</p>
     <p class='signature' id='getTextEditor-instance'>
       ::<strong>getTextEditor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L180'>Source</a>
     </p>
     <div class='docstring'>
@@ -905,7 +935,7 @@ of its <code>TextEditor</code>.</p>
     <p class='signature' id='getTextEditorHeight-instance'>
       Number ::<strong>getTextEditorHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L229'>Source</a>
     </p>
     <div class='docstring'>
@@ -927,7 +957,7 @@ of its <code>TextEditor</code>.</p>
     <p class='signature' id='getTextEditorMaxScrollTop-instance'>
       Number ::<strong>getTextEditorMaxScrollTop</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L207'>Source</a>
     </p>
     <div class='docstring'>
@@ -951,7 +981,7 @@ final value.</p>
     <p class='signature' id='getTextEditorScaledHeight-instance'>
       Number ::<strong>getTextEditorScaledHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L185'>Source</a>
     </p>
     <div class='docstring'>
@@ -973,7 +1003,7 @@ final value.</p>
     <p class='signature' id='getTextEditorScaledScrollLeft-instance'>
       Number ::<strong>getTextEditorScaledScrollLeft</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L197'>Source</a>
     </p>
     <div class='docstring'>
@@ -995,7 +1025,7 @@ final value.</p>
     <p class='signature' id='getTextEditorScaledScrollTop-instance'>
       Number ::<strong>getTextEditorScaledScrollTop</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L191'>Source</a>
     </p>
     <div class='docstring'>
@@ -1017,7 +1047,7 @@ final value.</p>
     <p class='signature' id='getTextEditorScrollLeft-instance'>
       Number ::<strong>getTextEditorScrollLeft</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L224'>Source</a>
     </p>
     <div class='docstring'>
@@ -1039,7 +1069,7 @@ final value.</p>
     <p class='signature' id='getTextEditorScrollRatio-instance'>
       Number ::<strong>getTextEditorScrollRatio</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L239'>Source</a>
     </p>
     <div class='docstring'>
@@ -1064,7 +1094,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='getTextEditorScrollTop-instance'>
       Number ::<strong>getTextEditorScrollTop</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L212'>Source</a>
     </p>
     <div class='docstring'>
@@ -1086,7 +1116,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='getVerticalScaleFactor-instance'>
       Number ::<strong>getVerticalScaleFactor</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L306'>Source</a>
     </p>
     <div class='docstring'>
@@ -1108,7 +1138,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='getVisibleHeight-instance'>
       Number ::<strong>getVisibleHeight</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L267'>Source</a>
     </p>
     <div class='docstring'>
@@ -1131,7 +1161,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='getVisibleWidth-instance'>
       Number ::<strong>getVisibleWidth</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L282'>Source</a>
     </p>
     <div class='docstring'>
@@ -1153,7 +1183,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='getWidth-instance'>
       Number ::<strong>getWidth</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L259'>Source</a>
     </p>
     <div class='docstring'>
@@ -1175,7 +1205,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='isDestroyed-instance'>
       Boolean ::<strong>isDestroyed</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L93'>Source</a>
     </p>
     <div class='docstring'>
@@ -1197,7 +1227,7 @@ need a value that is strictly between <code>0</code> and <code>1</code>.</strong
     <p class='signature' id='isStandAlone-instance'>
       Boolean ::<strong>isStandAlone</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L166'>Source</a>
     </p>
     <div class='docstring'>
@@ -1220,7 +1250,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidChange-instance'>
       ::<strong>onDidChange</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L105'>Source</a>
     </p>
     <div class='docstring'>
@@ -1269,7 +1299,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidChangeConfig-instance'>
       ::<strong>onDidChangeConfig</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L118'>Source</a>
     </p>
     <div class='docstring'>
@@ -1311,7 +1341,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidChangeScrollLeft-instance'>
       ::<strong>onDidChangeScrollLeft</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L139'>Source</a>
     </p>
     <div class='docstring'>
@@ -1340,7 +1370,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidChangeScrollTop-instance'>
       ::<strong>onDidChangeScrollTop</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L129'>Source</a>
     </p>
     <div class='docstring'>
@@ -1369,7 +1399,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidChangeStandAlone-instance'>
       ::<strong>onDidChangeStandAlone</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L148'>Source</a>
     </p>
     <div class='docstring'>
@@ -1398,7 +1428,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='onDidDestroy-instance'>
       ::<strong>onDidDestroy</strong>(callback)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L157'>Source</a>
     </p>
     <div class='docstring'>
@@ -1424,11 +1454,77 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='setCharHeight-instance'>
+      ::<strong>setCharHeight</strong>(charHeight)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L345'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Sets the char height for this <code>Minimap</code>. This value will override the value from the config for this instance only. A <code>did-change-config</code> event is dispatched.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>charHeight</span>
+      &mdash;
+      <span class='desc'>The char height <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setCharWidth-instance'>
+      ::<strong>setCharWidth</strong>(charWidth)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L331'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Sets the char width for this <code>Minimap</code>. This value will override the value from the config for this instance only. A <code>did-change-config</code> event is dispatched.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>charWidth</span>
+      &mdash;
+      <span class='desc'>The char width <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setInterline-instance'>
+      ::<strong>setInterline</strong>(interline)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L359'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Sets the interline for this <code>Minimap</code>. This value will override the value from the config for this instance only. A <code>did-change-config</code> event is dispatched.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Number)</span>
+      <span class='name'>interline</span>
+      &mdash;
+      <span class='desc'>The interline <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Number'>Number</a>.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='setScrollTop-instance'>
       ::<strong>setScrollTop</strong>(scrollTop)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
-/lib&#47;minimap.coffee#L363'>Source</a>
+&#47;blob&#47;v4.15.2
+/lib&#47;minimap.coffee#L390'>Source</a>
     </p>
     <div class='docstring'>
   <p>Sets the minimap scroll top value when in stand-alone mode.</p>
@@ -1449,7 +1545,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='setStandAlone-instance'>
       ::<strong>setStandAlone</strong>(standAlone)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L172'>Source</a>
     </p>
     <div class='docstring'>
@@ -1471,7 +1567,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     <p class='signature' id='setTextEditorScrollTop-instance'>
       Number ::<strong>setTextEditorScrollTop</strong>(scrollTop)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;atom-minimap&#47;minimap
-&#47;blob&#47;v4.15.1
+&#47;blob&#47;v4.15.2
 /lib&#47;minimap.coffee#L219'>Source</a>
     </p>
     <div class='docstring'>
@@ -1502,7 +1598,7 @@ to the <code>TextEditor</code> but based on the specified options instead.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sat Oct 31 2015 12:45:20 GMT+0100 (CET)
+  Sun Nov 01 2015 20:57:21 GMT+0100 (CET)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.2.4
