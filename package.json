@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "atom-utils": "0.5.x",
+    "atom-utils": "0.7.x",
     "delegato": "1.x",
     "event-kit": "1.x",
     "fs-plus": "2.x",
