@@ -329,6 +329,11 @@ class Minimap
   # Returns a {Number}.
   getCharWidth: -> @charWidth ? @configCharWidth
 
+  # Sets the char width for this `Minimap`. This value will override the
+  # value from the config for this instance only. A `did-change-config` event
+  # is dispatched.
+  #
+  # charWidth - The char width {Number}.
   setCharWidth: (charWidth) ->
     @charWidth = Math.floor(charWidth)
     @emitter.emit('did-change-config')
@@ -338,6 +343,11 @@ class Minimap
   # Returns a {Number}.
   getCharHeight: -> @charHeight ? @configCharHeight
 
+  # Sets the char height for this `Minimap`. This value will override the
+  # value from the config for this instance only. A `did-change-config` event
+  # is dispatched.
+  #
+  # charHeight - The char height {Number}.
   setCharHeight: (charHeight) ->
     @charHeight = Math.floor(charHeight)
     @emitter.emit('did-change-config')
@@ -347,6 +357,11 @@ class Minimap
   # Returns a {Number}.
   getInterline: -> @interline ? @configInterline
 
+  # Sets the interline for this `Minimap`. This value will override the
+  # value from the config for this instance only. A `did-change-config` event
+  # is dispatched.
+  #
+  # interline - The interline {Number}.
   setInterline: (interline) ->
     @interline = Math.floor(interline)
     @emitter.emit('did-change-config')
