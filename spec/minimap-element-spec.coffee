@@ -630,36 +630,33 @@ describe 'MinimapElement', ->
         expect(minimap.width).toEqual(minimapElement.clientWidth)
         expect(minimap.height).toEqual(minimapElement.clientHeight)
 
-      it 'does not display the visible area', ->
-        waitsFor -> nextAnimationFrame isnt noAnimationFrame
-        runs ->
-          nextAnimationFrame()
-          expect(isVisible(minimapElement.visibleArea)).toBeFalsy()
+      it 'removes the controls div', ->
+        expect(minimapElement.shadowRoot.querySelector('.minimap-controls')).toBeNull()
 
-      it 'does not display the quick settings button', ->
+      it 'removes the visible area', ->
+        expect(minimapElement.visibleArea).toBeUndefined()
+
+      it 'removes the quick settings button', ->
         atom.config.set 'minimap.displayPluginsControls', true
 
         waitsFor -> nextAnimationFrame isnt noAnimationFrame
         runs ->
           nextAnimationFrame()
-          expect(isVisible(minimapElement.openQuickSettings)).toBeFalsy()
+          expect(minimapElement.openQuickSettings).toBeUndefined()
 
-      describe 'when minimap.minimapScrollIndicator setting is true', ->
-        beforeEach ->
-          editor.setText(mediumSample)
-          editorElement.setScrollTop(50)
+      it 'removes the scroll indicator', ->
+        editor.setText(mediumSample)
+        editorElement.setScrollTop(50)
 
-          waitsFor -> minimapElement.frameRequested
-          runs ->
-            nextAnimationFrame()
-            atom.config.set 'minimap.minimapScrollIndicator', true
+        waitsFor -> minimapElement.frameRequested
+        runs ->
+          nextAnimationFrame()
+          atom.config.set 'minimap.minimapScrollIndicator', true
 
-          waitsFor -> minimapElement.frameRequested
-          runs -> nextAnimationFrame()
-
-        it 'offsets the scroll indicator by the difference', ->
-          indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
-          expect(realOffsetLeft(indicator)).toBeCloseTo(minimapElement.offsetWidth, -1)
+        waitsFor -> minimapElement.frameRequested
+        runs ->
+          nextAnimationFrame()
+          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toBeNull()
 
       describe 'pressing the mouse on the minimap canvas', ->
         beforeEach ->
@@ -676,6 +673,19 @@ describe 'MinimapElement', ->
 
         it 'does not scroll the editor to the line below the mouse', ->
           expect(editorElement.getScrollTop()).toEqual(1000)
+
+      describe 'and is changed to be a classical minimap again', ->
+        beforeEach ->
+          atom.config.set 'minimap.displayPluginsControls', true
+          atom.config.set 'minimap.minimapScrollIndicator', true
+
+          minimap.setStandAlone(false)
+
+        it 'recreates the destroyed elements', ->
+          expect(minimapElement.shadowRoot.querySelector('.minimap-controls')).toExist()
+          expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
+          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
+          expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).toExist()
 
     #    ########  ########  ######  ######## ########   #######  ##    ##
     #    ##     ## ##       ##    ##    ##    ##     ## ##     ##  ##  ##

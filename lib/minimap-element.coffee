@@ -49,7 +49,7 @@ class MinimapElement
         @updateMinimapFlexPosition()
 
       'minimap.minimapScrollIndicator': (@minimapScrollIndicator) =>
-        if @minimapScrollIndicator and not @scrollIndicator?
+        if @minimapScrollIndicator and not @scrollIndicator? and not @standAlone
           @initializeScrollIndicator()
         else if @scrollIndicator?
           @disposeScrollIndicator()
@@ -57,7 +57,7 @@ class MinimapElement
         @requestUpdate() if @attached
 
       'minimap.displayPluginsControls': (@displayPluginsControls) =>
-        if @displayPluginsControls and not @openQuickSettings?
+        if @displayPluginsControls and not @openQuickSettings? and not @standAlone
           @initializeOpenQuickSettings()
         else if @openQuickSettings?
           @disposeOpenQuickSettings()
@@ -163,32 +163,57 @@ class MinimapElement
 
     @shadowRoot.appendChild(@canvas)
 
+    @createVisibleArea()
+    @createControls()
+
+    @subscriptions.add @subscribeTo this,
+      'mousewheel': (e) => @relayMousewheelEvent(e) unless @standAlone
+
+    @subscriptions.add @subscribeTo @canvas,
+      'mousedown': (e) => @mousePressedOverCanvas(e)
+
+  # Initializes the visible area div.
+  createVisibleArea: ->
+    return if @visibleArea?
+
     @visibleArea = document.createElement('div')
     @visibleArea.classList.add('minimap-visible-area')
     @shadowRoot.appendChild(@visibleArea)
+
+    @visibleAreaSubscription = @subscribeTo @visibleArea,
+      'mousedown': (e) => @startDrag(e)
+      'touchstart': (e) => @startDrag(e)
+
+    @subscriptions.add(@visibleAreaSubscription)
+
+  # Removes the visible area div.
+  removeVisibleArea: ->
+    return unless @visibleArea?
+
+    @subscriptions.remove(@visibleAreaSubscription)
+    @visibleAreaSubscription.dispose()
+    @shadowRoot.removeChild(@visibleArea)
+    delete @visibleArea
+
+  # Creates the controls container div.
+  createControls: ->
+    return if @controls? or @standAlone
 
     @controls = document.createElement('div')
     @controls.classList.add('minimap-controls')
     @shadowRoot.appendChild(@controls)
 
-    elementMousewheel = (e) => @relayMousewheelEvent(e)
-    canvasMousedown = (e) => @mousePressedOverCanvas(e)
-    visibleAreaMousedown = (e) => @startDrag(e)
+  removeControls: ->
+    return unless @controls?
 
-    @addEventListener 'mousewheel', elementMousewheel
-    @canvas.addEventListener 'mousedown', canvasMousedown
-    @visibleArea.addEventListener 'mousedown', visibleAreaMousedown
-    @visibleArea.addEventListener 'touchstart', visibleAreaMousedown
-
-    @subscriptions.add new Disposable =>
-      @removeEventListener 'mousewheel', elementMousewheel
-      @canvas.removeEventListener 'mousedown', canvasMousedown
-      @visibleArea.removeEventListener 'mousedown', visibleAreaMousedown
-      @visibleArea.removeEventListener 'touchstart', visibleAreaMousedown
+    @shadowRoot.removeChild(@controls)
+    delete @controls
 
   # Initializes the scroll indicator div when the `minimapScrollIndicator`
   # settings is enabled.
   initializeScrollIndicator: ->
+    return if @scrollIndicator? or @standAlone
+
     @scrollIndicator = document.createElement('div')
     @scrollIndicator.classList.add 'minimap-scroll-indicator'
     @controls.appendChild(@scrollIndicator)
@@ -196,13 +221,15 @@ class MinimapElement
   # Disposes the scroll indicator div when the `minimapScrollIndicator`
   # settings is disabled.
   disposeScrollIndicator: ->
+    return unless @scrollIndicator?
+
     @controls.removeChild(@scrollIndicator)
-    @scrollIndicator = undefined
+    delete @scrollIndicator
 
   # Initializes the quick settings openener div when the
   # `displayPluginsControls` setting is enabled.
   initializeOpenQuickSettings: ->
-    return if @openQuickSettings?
+    return if @openQuickSettings? or @standAlone
 
     @openQuickSettings = document.createElement('div')
     @openQuickSettings.classList.add 'open-minimap-quick-settings'
@@ -292,20 +319,35 @@ class MinimapElement
     @subscriptions.add @minimap.onDidDestroy => @destroy()
     @subscriptions.add @minimap.onDidChangeConfig =>
       @requestForcedUpdate() if @attached
+
     @subscriptions.add @minimap.onDidChangeStandAlone =>
-      if @minimap.isStandAlone()
-        @setAttribute('stand-alone', true)
-      else
-        @removeAttribute('stand-alone')
+      @setStandAlone(@minimap.isStandAlone())
       @requestUpdate()
+
     @subscriptions.add @minimap.onDidChange (change) =>
       @pendingChanges.push(change)
       @requestUpdate()
 
-    @setAttribute('stand-alone', true) if @minimap.isStandAlone()
+    @setStandAlone(@minimap.isStandAlone())
+
     @minimap.setScreenHeightAndWidth(@height, @width) if @width? and @height?
 
     @minimap
+
+  setStandAlone: (@standAlone) ->
+    if @standAlone
+      @setAttribute('stand-alone', true)
+      @disposeScrollIndicator()
+      @disposeOpenQuickSettings()
+      @removeControls()
+      @removeVisibleArea()
+
+    else
+      @removeAttribute('stand-alone')
+      @createVisibleArea()
+      @createControls()
+      @initializeScrollIndicator() if @minimapScrollIndicator
+      @initializeOpenQuickSettings() if @displayPluginsControls
 
   #    ##     ## ########  ########     ###    ######## ########
   #    ##     ## ##     ## ##     ##   ## ##      ##    ##
@@ -621,10 +663,10 @@ class MinimapElement
   # styles - An {Object} where the keys are the properties name and the values
   #          are the CSS values for theses properties.
   applyStyles: (element, styles) ->
-    cssText = ''
+    return unless element?
 
-    for property,value of styles
-      cssText += "#{property}: #{value}; "
+    cssText = ''
+    cssText += "#{property}: #{value}; " for property,value of styles
 
     element.style.cssText = cssText
 
