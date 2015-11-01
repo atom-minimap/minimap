@@ -1,12 +1,11 @@
-{EventsDelegation, SpacePenDSL} = require 'atom-utils'
+{registerOrUpdateElement, EventsDelegation, SpacePenDSL} = require 'atom-utils'
 {CompositeDisposable, Emitter} = require 'event-kit'
 
 Main = require './main'
 
 # Internal: The {MinimapQuickSettingsElement} class is used to display
 # the Minimap quick settings when clicking on the corresponding button.
-module.exports =
-class MinimapQuickSettingsElement extends HTMLElement
+class MinimapQuickSettingsElement
   SpacePenDSL.includeInto(this)
   EventsDelegation.includeInto(this)
 
@@ -155,4 +154,5 @@ class MinimapQuickSettingsElement extends HTMLElement
   deactivateItem: (name, plugin) ->
     @plugins[name].classList.remove('active')
 
-module.exports = MinimapQuickSettingsElement = document.registerElement 'minimap-quick-settings', prototype: MinimapQuickSettingsElement.prototype
+module.exports =
+MinimapQuickSettingsElement = registerOrUpdateElement 'minimap-quick-settings', MinimapQuickSettingsElement.prototype

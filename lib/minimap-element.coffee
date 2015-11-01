@@ -1,6 +1,6 @@
 {debounce} = require 'underscore-plus'
 {CompositeDisposable, Disposable} = require 'atom'
-{EventsDelegation, AncestorsMethods} = require 'atom-utils'
+{registerOrUpdateElement, EventsDelegation, AncestorsMethods} = require 'atom-utils'
 DOMStylesReader = require './mixins/dom-styles-reader'
 CanvasDrawer = require './mixins/canvas-drawer'
 
@@ -18,7 +18,7 @@ MinimapQuickSettingsElement = null
 #
 # Note that most interactions with the Minimap package is done through the
 # {Minimap} model so you should never have to access {MinimapElement} instances.
-class MinimapElement extends HTMLElement
+class MinimapElement
   DOMStylesReader.includeInto(this)
   CanvasDrawer.includeInto(this)
   EventsDelegation.includeInto(this)
@@ -698,7 +698,8 @@ class MinimapElement extends HTMLElement
 #    ##       ##       ##       ##     ## ##       ##   ###    ##
 #    ######## ######## ######## ##     ## ######## ##    ##    ##
 
-module.exports = MinimapElement = document.registerElement 'atom-text-editor-minimap', prototype: MinimapElement.prototype
+module.exports =
+MinimapElement = registerOrUpdateElement 'atom-text-editor-minimap', MinimapElement.prototype
 
 # Public: The method that registers the {MinimapElement} factory in the
 # `atom.views` registry with the passed-in model.
