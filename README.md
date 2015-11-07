@@ -30,10 +30,11 @@ Package|Description
 [Find And Replace](https://atom.io/packages/minimap-find-and-replace)|Displays the search matches.
 [Git Diff](https://atom.io/packages/minimap-git-diff)|Displays the file diff.
 [Hide on inactive panes](https://atom.io/packages/minimap-hide)|Hide the Minimap when pane isn't focus.
-[Highlight Selected](https://atom.io/packages/minimap-highlight-selected)|A Minimap binding for the highlight-selected package.
-[Linter](https://atom.io/packages/minimap-linter)|Displays linter markers.
-[Pigments](https://atom.io/packages/minimap-pigments)|Displays the pigments colors.
+[Highlight Selected](https://atom.io/packages/minimap-highlight-selected)|A Minimap binding for the [highlight-selected](http://atom.io/packages/highlight-selected) package.
+[Linter](https://atom.io/packages/minimap-linter)|Displays [linter](https://atom.io/packages/linter) markers.
+[Pigments](https://atom.io/packages/minimap-pigments)|Displays the [Pigments](https://atom.io/packages/pigments) colors.
 [Selection](https://atom.io/packages/minimap-selection)|Display the buffer's selections.
+[Split-Diff](https://atom.io/packages/minimap-split-diff)|A Minimap binding for the [split-diff](https://atom.io/packages/split-diff) package.
 
 ### Settings
 
