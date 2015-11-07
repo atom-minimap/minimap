@@ -210,6 +210,19 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 
 The visible area will still allow interaction but the Minimap track won't.
 
+### ASCII Art Comments
+
+One neat trick is to use ASCII art to create huge comments visible in the minimap. This is really efficient when navigating huge files.
+
+![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/ascii-comments?raw=true)
+
+To generate these comments you can use on these useful Atom packages:
+
+- [Figlet](https://atom.io/packages/figlet)
+- [Figletify](https://atom.io/packages/figletify)
+- [Minimap Titles](https://atom.io/packages/minimap-titles)
+- [Draw Package](https://atom.io/packages/draw-package)
+
 ----
 
 ## Developers Documentation
