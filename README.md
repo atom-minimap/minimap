@@ -3,6 +3,7 @@
 A preview of the full source code.
 
 ![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true)
+<small>In the screenshot above the minimap-git-diff and minimap-highlight-selected plugins are activated.</small>
 
 ### Installation
 
