@@ -38,22 +38,99 @@ Package|Description
 
 ### Settings
 
-Setting|Description
+#### Auto Toggle
+
+If checked the Minimap is toggled on at startup. `(default=true)`
+
+#### Display Code Highlights
+
+If checked the code will be highlighted using the grammar tokens. `(default=true)`
+
+`true`|`false`
 ---|---
-`Auto Toggle`|If checked the Minimap is toggled on at startup. (default=true)
-`Display Code Highlights`|<p>If checked the code will be highlighted using the grammar tokens. (default=true)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/with-code-highlights.png?raw=true) = `true`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/without-code-highlights.png?raw=true) = `false`</p>
-`Display Minimap On Left`|<p>If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. (default=false)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-left.png?raw=true) = `true`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-right.png?raw=true) = `false`</p>
-`Char Height`|<p>The height of a character in the Minimap in pixels. (default=2)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-height.png?raw=true) = `1px`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-height.png?raw=true) = `2px`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/4px-char-height.png?raw=true) = `4px`</p>
-`Char Width`|<p>The width of a character in the Minimap in pixels. (default=1)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-width.png?raw=true) = `1px`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-width.png?raw=true) = `2px`</p>
-`Interline`|<p>The space between lines in the Minimap in pixels. (default=1)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-interline.png?raw=true) = `1px`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-interline.png?raw=true) = `2px`</p>
-`Text Opacity`|<p>The opacity used to render the line text in the Minimap. (default=0.6)</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-default.png?raw=true) = `0.6`</p><p> ![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-1.png?raw=true) = `1`</p>
-`Display Plugins Controls`|<p>If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. <br/>**You need to restart Atom for this setting to be effective.** (default=true)</p> <p>![](https://github.com/atom-minimap/minimap/blob/master/resources/plugins-control.png?raw=true)</p>
-`Minimap Scroll Indicator`|<p>Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. (default=true)</p> <p>![](https://github.com/atom-minimap/minimap/blob/master/resources/scroll-indicator.png?raw=true)</p>
-`Plugins *`|When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
-`Scroll Animation`|Enable animations when scrolling the editor by clicking on the Minimap. (default=false)
-`Scroll Animation Duration`|Duration of the scroll animation when clicking on the Minimap. (default=300)
-`Use Hardware Acceleration`|If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. (default=true)
-`Absolute Mode`|<p>When enabled the Minimap uses an absolute positioning, letting the editor's content flow below the Minimap. (default=true)</p><p>Note that this setting will do nothing if `Display Minimap On Left` is also enabled.</p><p>![](https://github.com/atom-minimap/minimap/blob/master/resources/normal-mode.png?raw=true) = `false`</p><p>![](https://github.com/atom-minimap/minimap/blob/master/resources/absolute-mode.png?raw=true) = `true`</p>
+![](https://github.com/atom-minimap/minimap/blob/master/resources/with-code-highlights.png?raw=true)| ![](https://github.com/atom-minimap/minimap/blob/master/resources/without-code-highlights.png?raw=true)
+
+#### Display Minimap On Left
+
+If checked the Minimap appears on the left side of editors, otherwise it appears on the right side. `(default=false)`
+
+`true`|`false`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-left.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-on-right.png?raw=true)
+
+#### Char Height
+
+The height of a character in the Minimap in pixels. `(default=2)`
+
+`1px`|`2px`|`4px`
+---|---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-height.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-height.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/4px-char-height.png?raw=true)
+
+#### Char Width
+
+The width of a character in the Minimap in pixels. `(default=1)`
+
+`1px`|`2px`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-char-width.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-char-width.png?raw=true)
+
+#### Interline
+
+The space between lines in the Minimap in pixels. `(default=1)`
+
+`1px`|`2px`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/1px-interline.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/2px-interline.png?raw=true)
+
+#### Text Opacity
+
+The opacity used to render the line text in the Minimap. `(default=0.6)`
+
+`0.6`|`1`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-default.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-1.png?raw=true)
+
+### Display Plugins Controls
+
+If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. `(default=true)`
+
+**You need to restart Atom for this setting to be effective.**
+
+![](https://github.com/atom-minimap/minimap/blob/master/resources/plugins-control.png?raw=true)
+
+#### Minimap Scroll Indicator
+
+Toggles the display of a side line showing which part of the buffer is currently displayed by the Minimap. The side line appear only if the Minimap height is bigger than the editor view height. `(default=true)`
+
+![](https://github.com/atom-minimap/minimap/blob/master/resources/scroll-indicator.png?raw=true)
+
+#### Plugins *
+
+When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
+
+
+#### Scroll Animation
+
+Enable animations when scrolling the editor by clicking on the Minimap. `(default=false)`
+
+#### Scroll Animation Duration
+
+Duration of the scroll animation when clicking on the Minimap. `(default=300)`
+
+
+#### Use Hardware Acceleration
+
+If checked the Minimap scroll is done using a `translate3d` transform, otherwise the `translate` transform is used. `(default=true)`
+
+#### Absolute Mode
+
+When enabled the Minimap uses an absolute positioning, letting the editor's content flow below the Minimap. `(default=true)`
+
+Note that this setting will do nothing if `Display Minimap On Left` is also enabled.
+
+`false`|`true`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/normal-mode.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/absolute-mode.png?raw=true)
 
 ### Key Bindings
 
@@ -135,7 +212,15 @@ The visible area will still allow interaction but the Minimap track won't.
 
 ----
 
+## Developers Documentation
+
+You can find below the developers documentation on how to create Minimap's plugins and how to use decorations and stand-alone Minimaps.
+
+For a more detailled documentation of the API make sure to check the [Minimap API Documentation](http://atom-minimap.github.io/minimap/).
+
 ### Plugins
+
+The Minimap comes with a plugin system used to extend the features displayed in it. Minimap plugins, once activated, are known and can be managed through the Minimap settings.
 
 #### Plugin Generation Command
 
@@ -178,8 +263,8 @@ In a nutshell, here's the main changes to expect when using a stand-alone Minima
 
 - In stand-alone mode, it's the `MinimapElement` that is responsible to sets the size of the underlying `Minimap` model, so you can give it any size and the Minimap will just adapt to it.
 - Scrolling in the target `TextEditor` won't change the Minimap display.
-- The mouse controls in the Minimap are disabled.
-- The visible area and the quick settings button are hidden.
+- The mouse controls in the Minimap are removed.
+- The visible area and the quick settings button are removed.
 - Stand-alone Minimaps aren't dispatched in the `observeMinimaps` callback, so they won't be targeted by plugins and won't receive the decorations that plugins normally creates on Minimaps.
 
 For the moment, stand-alone Minimaps still need a target `TextEditor` but I hope to make it work with just a path at some point.
