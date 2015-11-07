@@ -214,7 +214,7 @@ The visible area will still allow interaction but the Minimap track won't.
 
 One neat trick is to use ASCII art to create huge comments visible in the minimap. This is really efficient when navigating huge files.
 
-![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/ascii-comments?raw=true)
+![ASCII Art Comments](https://github.com/atom-minimap/minimap/blob/master/resources/ascii-comments.png?raw=true)
 
 To generate these comments you can use on these useful Atom packages:
 
