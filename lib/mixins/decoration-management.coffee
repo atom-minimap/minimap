@@ -24,6 +24,8 @@ class DecorationManagement extends Mixin
 
     Decoration ?= require '../decoration'
 
+  getDecorations: -> decoration for id,decoration of @decorationsById
+
   # Registers an event listener to the `did-add-decoration` event.
   #
   # callback - The {Function} to call when the event is triggered.
@@ -231,7 +233,7 @@ class DecorationManagement extends Mixin
   #
   # oldStart - The row index of the first range start.
   # oldEnd - The row index of the first range end.
-  # newStart - The row index of the second range start. 
+  # newStart - The row index of the second range start.
   # newEnd - The row index of the second range end.
   #
   # Returns an {Array}.

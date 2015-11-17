@@ -424,3 +424,9 @@ class Minimap
 
   # Internal: Emits a change events with the passed-in changes as data.
   emitChanges: (changes) -> @emitter.emit('did-change', changes)
+
+  # Internal:
+  enableCache: -> @adapter.enableCache()
+
+  # Internal:
+  clearCache: -> @adapter.clearCache()
