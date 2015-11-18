@@ -1,3 +1,14 @@
+<a name="v4.16.1"></a>
+# v4.16.1 (2015-11-18)
+
+## :bug: Bug Fixes
+
+- Store minimap locally in update to prevent racing conditions ([8a7179f3](https://github.com/atom-minimap/minimap/commit/8a7179f3949c3eb57dc38f4978eb3a1557813121))
+
+## :racehorse: Performances
+
+- Implement a basic cache of editor dimension during update ([5aeb5ce3](https://github.com/atom-minimap/minimap/commit/5aeb5ce3905d51fa70862720ec0acd191d06f719))
+
 <a name="v4.16.0"></a>
 # v4.16.0 (2015-11-01)
 
