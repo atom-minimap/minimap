@@ -9,6 +9,9 @@
     "minimap",
     "overview"
   ],
+  "scripts":{
+    "standard": "standard"
+  },
   "contributors": [
     {
       "name": "Fangdun Cai",
@@ -40,5 +43,24 @@
     "mixto": "1.x",
     "semver": "^4.3.0",
     "underscore-plus": "1.x"
+  },
+  "devDependencies": {
+    "standard": "^5.1.0"
+  },
+  "standard": {
+    "globals": [
+      "advanceClock",
+      "atom",
+      "beforeEach",
+      "expect",
+      "describe",
+      "it",
+      "jasmine",
+      "MouseEvent",
+      "runs",
+      "spyOn",
+      "waits",
+      "waitsForPromise"
+    ]
   }
 }
