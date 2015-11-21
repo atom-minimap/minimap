@@ -10,7 +10,8 @@
     "overview"
   ],
   "scripts":{
-    "standard": "standard"
+    "standard": "standard lib/**/*.js",
+    "esdoc": "esdoc -c esdoc.json"
   },
   "contributors": [
     {
@@ -45,7 +46,8 @@
     "underscore-plus": "1.x"
   },
   "devDependencies": {
-    "standard": "^5.1.0"
+    "standard": "^5.1.0",
+    "esdoc": "^0.4.0"
   },
   "standard": {
     "globals": [
