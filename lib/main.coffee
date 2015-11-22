@@ -95,6 +95,7 @@ class Main
   # Internal: Used only at export time.
   constructor: ->
     @emitter = new Emitter
+    @initializePlugins()
 
   # Activates the minimap package.
   activate: ->
