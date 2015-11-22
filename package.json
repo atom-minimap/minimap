@@ -10,7 +10,7 @@
     "overview"
   ],
   "scripts":{
-    "standard": "standard lib/**/*.js",
+    "standard": "standard lib/**/*.js spec/**/*.js",
     "esdoc": "esdoc -c esdoc.json"
   },
   "contributors": [
@@ -61,6 +61,7 @@
       "runs",
       "spyOn",
       "waits",
+      "waitsFor",
       "waitsForPromise"
     ]
   }
