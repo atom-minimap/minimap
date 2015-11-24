@@ -12,17 +12,19 @@ atom-text-editor::shadow .editor--private {
 atom-text-editor::shadow, atom-text-editor, html {
   atom-text-editor-minimap {
     display: block;
-    width: 10%;
-    height: 100%;
     overflow: hidden;
     position: relative;
-    order: 3;
-    flex: 0 0 10%;
-
     -webkit-user-select: none;
 
-    &.left {
-      order: 1;
+    &:not([stand-alone]) {
+      height: 100%;
+      order: 3;
+      width: 10%;
+      flex: 0 0 10%;
+
+      &.left {
+        order: 1;
+      }
     }
 
     &.absolute {
