@@ -1,5 +1,5 @@
 {registerOrUpdateElement, EventsDelegation, SpacePenDSL} = require 'atom-utils'
-{CompositeDisposable, Emitter} = require 'event-kit'
+{CompositeDisposable, Emitter} = require 'atom'
 
 Main = require './main'
 

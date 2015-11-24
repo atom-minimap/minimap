@@ -1,4 +1,4 @@
-{Emitter, CompositeDisposable} = require 'event-kit'
+{Emitter, CompositeDisposable} = require 'atom'
 
 PluginManagement = require './mixins/plugin-management'
 
