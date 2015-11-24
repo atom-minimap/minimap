@@ -385,11 +385,7 @@ class CanvasDrawer extends Mixin
   # rowCount - The {Number} of rows to copy.
   copyBitmapPart: (context, bitmapCanvas, srcRow, destRow, rowCount) ->
     lineHeight = @minimap.getLineHeight() * devicePixelRatio
-    context.drawImage(bitmapCanvas,
-        0, srcRow * lineHeight,
-        bitmapCanvas.width, rowCount * lineHeight,
-        0, destRow * lineHeight,
-        bitmapCanvas.width, rowCount * lineHeight)
+    context.drawImage(bitmapCanvas, 0, srcRow * lineHeight, bitmapCanvas.width, rowCount * lineHeight, 0, destRow * lineHeight, bitmapCanvas.width, rowCount * lineHeight)
 
   #    ########     ###    ##    ##  ######   ########  ######
   #    ##     ##   ## ##   ###   ## ##    ##  ##       ##    ##

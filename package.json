@@ -62,7 +62,8 @@
       "spyOn",
       "waits",
       "waitsFor",
-      "waitsForPromise"
+      "waitsForPromise",
+      "devicePixelRatio"
     ]
   }
 }
