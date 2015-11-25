@@ -613,6 +613,7 @@ class MinimapElement
     document.body.addEventListener('mousemove', mousemoveHandler)
     document.body.addEventListener('mouseup', mouseupHandler)
     document.body.addEventListener('mouseleave', mouseupHandler)
+    document.body.onblur = mouseupHandler
 
     document.body.addEventListener('touchmove', mousemoveHandler)
     document.body.addEventListener('touchend', mouseupHandler)
