@@ -1,6 +1,6 @@
 Mixin = require 'mixto'
 path = require 'path'
-{Emitter} = require 'event-kit'
+{Emitter} = require 'atom'
 Decoration = null
 
 # Public: The mixin that provides the decorations API to the minimap editor

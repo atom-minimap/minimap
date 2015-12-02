@@ -1,5 +1,5 @@
 _ = require 'underscore-plus'
-{Emitter} = require 'event-kit'
+{Emitter} = require 'atom'
 
 idCounter = 0
 nextId = -> idCounter++

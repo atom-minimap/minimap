@@ -1,3 +1,11 @@
+<a name="v4.16.2"></a>
+# v4.16.2 (2015-11-24)
+
+## :bug: Bug Fixes
+
+- Prevent stand alone minimap to have width, height and flex properties ([fd7a9dd0](https://github.com/atom-minimap/minimap/commit/fd7a9dd003aa0c113ee0bc84165da49449c0dcb1))
+- Prevent generation of a returned array in drawLineDecorations method ([04fdd35c](https://github.com/atom-minimap/minimap/commit/04fdd35c01752ac0b1a13b280f2880ed72f8c14f))
+
 <a name="v4.16.1"></a>
 # v4.16.1 (2015-11-18)
 

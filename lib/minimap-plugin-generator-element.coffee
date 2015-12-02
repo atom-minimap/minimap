@@ -2,7 +2,7 @@ _ = require 'underscore-plus'
 fs = require 'fs-plus'
 path = require 'path'
 {TextEditor, BufferedProcess} = require 'atom'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable} = require 'atom'
 {registerOrUpdateElement} = require 'atom-utils'
 
 # Internal: The {MinimapPluginGeneratorElement} is used whenever the user

@@ -258,6 +258,8 @@ class CanvasDrawer extends Mixin
       context.fillStyle = @getDecorationColor(decoration)
       context.fillRect(0,y,canvasWidth,lineHeight)
 
+    return
+
   # Internal: Draws a highlight decoration on the passed-in context.
   #
   # It renders only the part of the highlight corresponding to the specified
