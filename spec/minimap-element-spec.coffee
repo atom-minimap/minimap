@@ -212,7 +212,7 @@ describe 'MinimapElement', ->
         expect(-> nextAnimationFrame()).not.toThrow()
 
       it 'renders the visible line decorations', ->
-        spyOn(minimapElement, 'drawLineDecorations').andCallThrough()
+        spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
 
         minimap.decorateMarker(editor.markBufferRange([[1,0], [1,10]]), type: 'line', color: '#0000FF')
         minimap.decorateMarker(editor.markBufferRange([[10,0], [10,10]]), type: 'line', color: '#0000FF')
@@ -224,8 +224,8 @@ describe 'MinimapElement', ->
         runs ->
           nextAnimationFrame()
 
-          expect(minimapElement.drawLineDecorations).toHaveBeenCalled()
-          expect(minimapElement.drawLineDecorations.calls.length).toEqual(2)
+          expect(minimapElement.drawLineDecoration).toHaveBeenCalled()
+          expect(minimapElement.drawLineDecoration.calls.length).toEqual(3)
 
       it 'renders the visible highlight decorations', ->
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
