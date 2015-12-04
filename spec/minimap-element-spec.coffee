@@ -225,7 +225,7 @@ describe 'MinimapElement', ->
           nextAnimationFrame()
 
           expect(minimapElement.drawLineDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawLineDecoration.calls.length).toEqual(3)
+          expect(minimapElement.drawLineDecoration.calls.length).toEqual(2)
 
       it 'renders the visible highlight decorations', ->
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
