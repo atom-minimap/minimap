@@ -1,6 +1,6 @@
 # Internal:
 module.exports =
-class BetaAdater
+class StableAdapter
   constructor: (@textEditor) ->
     @textEditorElement = atom.views.getView(@textEditor)
 

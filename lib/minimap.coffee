@@ -1,7 +1,7 @@
 {Emitter, CompositeDisposable} = require 'atom'
 DecorationManagement = require './mixins/decoration-management'
 LegacyAdater = require './adapters/legacy-adapter'
-BetaAdater = require './adapters/beta-adapter'
+StableAdapter = require './adapters/stable-adapter'
 
 nextModelId = 1
 
@@ -33,7 +33,7 @@ class Minimap
     @initializeDecorations()
 
     if atom.views.getView(@textEditor).getScrollTop?
-      @adapter = new BetaAdater(@textEditor)
+      @adapter = new StableAdapter(@textEditor)
     else
       @adapter = new LegacyAdater(@textEditor)
 
