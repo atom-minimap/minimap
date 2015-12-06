@@ -1,7 +1,7 @@
 _ = require 'underscore-plus'
 fs = require 'fs-plus'
 path = require 'path'
-{TextEditor, BufferedProcess} = require 'atom'
+{BufferedProcess} = require 'atom'
 {CompositeDisposable} = require 'atom'
 {registerOrUpdateElement} = require 'atom-utils'
 
@@ -17,7 +17,7 @@ class MinimapPluginGeneratorElement
     @classList.add('overlay')
     @classList.add('from-top')
 
-    @editor = new TextEditor(mini: true)
+    @editor = atom.workspace.buildTextEditor(mini: true)
     @editorElement = atom.views.getView(@editor)
 
     @error = document.createElement('div')
