@@ -116,7 +116,6 @@ class Decoration
     oldProperties = @properties
     @properties = newProperties
     @properties.id = @id
-    @minimap.decorationDidChangeType(this) if newProperties.type?
 
     @emitter.emit 'did-change-properties', {oldProperties, newProperties}
 
