@@ -5,8 +5,7 @@ StableAdapter = require './adapters/stable-adapter'
 
 nextModelId = 1
 
-# Public: The {Minimap} class is the underlying model of a {MinimapElement}.
-# Most manipulations of the minimap is done through the model.
+# Public: The {Minimap} class is the underlying model of a {MinimapElement}. Most manipulations of the minimap is done through the model.
 #
 # Any {Minimap} instance is tied to a `TextEditor`.
 # Their lifecycle follow the one of their target `TextEditor`, so they are
