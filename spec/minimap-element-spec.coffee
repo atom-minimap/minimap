@@ -128,7 +128,7 @@ describe 'MinimapElement', ->
       describe 'when a hue-rotate filter is applied to a rgb color', ->
         [additionnalStyleNode] = []
         beforeEach ->
-          minimapElement.invalidateCache()
+          minimapElement.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = """
@@ -152,7 +152,7 @@ describe 'MinimapElement', ->
         [additionnalStyleNode] = []
 
         beforeEach ->
-          minimapElement.invalidateCache()
+          minimapElement.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = """
@@ -723,7 +723,7 @@ describe 'MinimapElement', ->
         runs ->
           nextAnimationFrame()
           spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
-          spyOn(minimapElement, 'invalidateCache').andCallThrough()
+          spyOn(minimapElement, 'invalidateDOMStylesCache').andCallThrough()
 
           styleNode = document.createElement('style')
           styleNode.textContent = 'body{ color: #233; }'
@@ -733,7 +733,7 @@ describe 'MinimapElement', ->
 
       it 'forces a refresh with cache invalidation', ->
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-        expect(minimapElement.invalidateCache).toHaveBeenCalled()
+        expect(minimapElement.invalidateDOMStylesCache).toHaveBeenCalled()
 
     describe 'when minimap.textOpacity is changed', ->
       beforeEach ->

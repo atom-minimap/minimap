@@ -64,14 +64,14 @@ class DOMStylesReader extends Mixin
     @constructor.domStylesCache ?= {}
 
   # Invalidates the cache by emptying the cache {Object}.
-  invalidateCache: ->
+  invalidateDOMStylesCache: ->
     @constructor.domStylesCache = {}
 
   # Invalidates the cache only for the first tokenization event.
   invalidateIfFirstTokenization: ->
     return if @constructor.hasTokenizedOnce
 
-    @invalidateCache()
+    @invalidateDOMStylesCache()
     @constructor.hasTokenizedOnce = true
 
   # Computes the output color of `value` with a rotated hue defined in `filter`.

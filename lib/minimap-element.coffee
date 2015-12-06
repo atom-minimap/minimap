@@ -102,7 +102,7 @@ class MinimapElement
     # Currently, The styleElement will be removed first,
     # and then re-add. So the `change` event has not be triggered.
     @subscriptions.add atom.styles.onDidAddStyleElement =>
-      @invalidateCache()
+      @invalidateDOMStylesCache()
       @requestForcedUpdate()
 
   # Internal: DOM callback invoked when a new {MinimapElement} is detached
