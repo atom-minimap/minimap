@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/minimap-plugin-generator-element.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/atom-minimap/minimap" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/decoration.js~Decoration.html">Decoration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/main.js~Main.html">Main</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap-element.js~MinimapElement.html">MinimapElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap.js~Minimap.html">Minimap</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-element">element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-include">include</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">mixins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html">CanvasDrawer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html">DecorationManagement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/dom-styles-reader.js~DOMStylesReader.html">DOMStylesReader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/plugin-management.js~PluginManagement.html">PluginManagement</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/minimap-plugin-generator-element.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use babel&apos;
+
+import _ from &apos;underscore-plus&apos;
+import fs from &apos;fs-plus&apos;
+import path from &apos;path&apos;
+import {BufferedProcess} from &apos;atom&apos;
+import element from &apos;./decorators/element&apos;
+
+/**
+ * @access private
+ */
+@element(&apos;minimap-plugin-generator&apos;)
+export default class MinimapPluginGeneratorElement {
+
+  createdCallback () {
+    this.previouslyFocusedElement = null
+    this.mode = null
+
+    this.modal = document.createElement(&apos;atom-panel&apos;)
+
+    this.modal.classList.add(&apos;minimap-plugin-generator&apos;)
+    this.modal.classList.add(&apos;modal&apos;)
+    this.modal.classList.add(&apos;overlay&apos;)
+    this.modal.classList.add(&apos;from-top&apos;)
+
+    this.editor = atom.workspace.buildTextEditor({mini: true})
+    this.editorElement = atom.views.getView(this.editor)
+
+    this.error = document.createElement(&apos;div&apos;)
+    this.error.classList.add(&apos;error&apos;)
+
+    this.message = document.createElement(&apos;div&apos;)
+    this.message.classList.add(&apos;message&apos;)
+
+    this.modal.appendChild(this.editorElement)
+    this.modal.appendChild(this.error)
+    this.modal.appendChild(this.message)
+
+    this.appendChild(this.modal)
+  }
+
+  attachedCallback () {
+    this.previouslyFocusedElement = document.activeElement
+    this.message.textContent = &apos;Enter plugin path&apos;
+    this.setPathText(&apos;my-minimap-plugin&apos;)
+    this.editorElement.focus()
+  }
+
+  attach () {
+    atom.views.getView(atom.workspace).appendChild(this)
+  }
+
+  setPathText (placeholderName, rangeToSelect) {
+    if (!rangeToSelect) { rangeToSelect = [0, placeholderName.length] }
+
+    let packagesDirectory = this.getPackagesDirectory()
+
+    this.editor.setText(path.join(packagesDirectory, placeholderName))
+
+    let pathLength = this.editor.getText().length
+    let endOfDirectoryIndex = pathLength - placeholderName.length
+
+    this.editor.setSelectedBufferRange([
+      [0, endOfDirectoryIndex + rangeToSelect[0]],
+      [0, endOfDirectoryIndex + rangeToSelect[1]]
+    ])
+  }
+
+  detach () {
+    if (!this.parentNode) { return }
+
+    if (this.previouslyFocusedElement) {
+      this.previouslyFocusedElement.focus()
+    }
+
+    this.parentNode.removeChild(this)
+  }
+
+  confirm () {
+    if (this.validPackagePath()) {
+      this.removeChild(this.editorElement)
+      this.message.innerHTML = `
+        &lt;span class=&apos;loading loading-spinner-tiny inline-block&apos;&gt;&lt;/span&gt;
+        Generate plugin at &lt;span class=&quot;text-primary&quot;&gt;${this.getPackagePath()}&lt;/span&gt;
+      `
+
+      this.createPackageFiles(() =&gt; {
+        let packagePath = this.getPackagePath()
+        atom.open({pathsToOpen: [packagePath], devMode: atom.config.get(&apos;minimap.createPluginInDevMode&apos;)})
+
+        this.message.innerHTML = &apos;&lt;span class=&quot;text-success&quot;&gt;Plugin successfully generated, opening it now...&lt;/span&gt;&apos;
+
+        setTimeout(() =&gt; { this.detach() }, 2000)
+      })
+    }
+  }
+
+  getPackagePath () {
+    let packagePath = this.editor.getText()
+    let packageName = _.dasherize(path.basename(packagePath))
+
+    return path.join(path.dirname(packagePath), packageName)
+  }
+
+  getPackagesDirectory () {
+    return atom.config.get(&apos;core.projectHome&apos;) ||
+           process.env.ATOM_REPOS_HOME ||
+           path.join(fs.getHomeDirectory(), &apos;github&apos;)
+  }
+
+  validPackagePath () {
+    if (fs.existsSync(this.getPackagePath())) {
+      this.error.textContent = `Path already exists at &apos;${this.getPackagePath()}&apos;`
+      this.error.style.display = &apos;block&apos;
+      return false
+    } else {
+      return true
+    }
+  }
+
+  initPackage (packagePath, callback) {
+    let templatePath = path.resolve(__dirname, path.join(&apos;..&apos;, &apos;templates&apos;, `plugin-${this.template}`))
+    this.runCommand(atom.packages.getApmPath(), [&apos;init&apos;, &apos;-p&apos;, `${packagePath}`, &apos;--template&apos;, templatePath], callback)
+  }
+
+  linkPackage (packagePath, callback) {
+    let args = [&apos;link&apos;]
+    if (atom.config.get(&apos;minimap.createPluginInDevMode&apos;)) { args.push(&apos;--dev&apos;) }
+    args.push(packagePath.toString())
+
+    this.runCommand(atom.packages.getApmPath(), args, callback)
+  }
+
+  installPackage (packagePath, callback) {
+    let args = [&apos;install&apos;]
+
+    this.runCommand(atom.packages.getApmPath(), args, callback, {cwd: packagePath})
+  }
+
+  isStoredInDotAtom (packagePath) {
+    let packagesPath = path.join(atom.getConfigDirPath(), &apos;packages&apos;, path.sep)
+    if (packagePath.indexOf(packagesPath) === 0) { return true }
+
+    let devPackagesPath = path.join(atom.getConfigDirPath(), &apos;dev&apos;, &apos;packages&apos;, path.sep)
+
+    return packagePath.indexOf(devPackagesPath) === 0
+  }
+
+  createPackageFiles (callback) {
+    let packagePath = this.getPackagePath()
+
+    if (this.isStoredInDotAtom(packagePath)) {
+      this.initPackage(packagePath, () =&gt; {
+        this.installPackage(packagePath, callback)
+      })
+    } else {
+      this.initPackage(packagePath, () =&gt; {
+        this.linkPackage(packagePath, () =&gt; {
+          this.installPackage(packagePath, callback)
+        })
+      })
+    }
+  }
+
+  runCommand (command, args, exit, options = {}) {
+    return new BufferedProcess({command, args, exit, options})
+  }
+}
+
+atom.commands.add(&apos;minimap-plugin-generator&apos;, {
+  &apos;core:confirm&apos; () { this.confirm() },
+  &apos;core:cancel&apos; () { this.detach() }
+})
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

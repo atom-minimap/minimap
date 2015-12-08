@@ -1,0 +1,57 @@
+{
+  "coverage": "100%",
+  "expectCount": 126,
+  "actualCount": 126,
+  "files": {
+    "lib/mixins/canvas-drawer.js": {
+      "expectCount": 9,
+      "actualCount": 9,
+      "undocumentLines": []
+    },
+    "lib/mixins/dom-styles-reader.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "lib/decoration.js": {
+      "expectCount": 12,
+      "actualCount": 12,
+      "undocumentLines": []
+    },
+    "lib/mixins/decoration-management.js": {
+      "expectCount": 15,
+      "actualCount": 15,
+      "undocumentLines": []
+    },
+    "lib/main.js": {
+      "expectCount": 18,
+      "actualCount": 18,
+      "undocumentLines": []
+    },
+    "lib/minimap.js": {
+      "expectCount": 45,
+      "actualCount": 45,
+      "undocumentLines": []
+    },
+    "lib/minimap-element.js": {
+      "expectCount": 15,
+      "actualCount": 15,
+      "undocumentLines": []
+    },
+    "lib/mixins/plugin-management.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "lib/decorators/element.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "lib/decorators/include.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}

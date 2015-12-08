@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">lib/mixins/plugin-management.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/atom-minimap/minimap" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/decoration.js~Decoration.html">Decoration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/main.js~Main.html">Main</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap-element.js~MinimapElement.html">MinimapElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap.js~Minimap.html">Minimap</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-element">element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-include">include</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">mixins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html">CanvasDrawer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html">DecorationManagement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/dom-styles-reader.js~DOMStylesReader.html">DOMStylesReader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/plugin-management.js~PluginManagement.html">PluginManagement</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/mixins/plugin-management.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use babel&apos;
+
+import Mixin from &apos;mixto&apos;
+import { CompositeDisposable } from &apos;atom&apos;
+
+/**
+ * Provides methods to manage minimap plugins.
+ * Minimap plugins are Atom packages that will augment the minimap.
+ * They have a secondary activation cycle going on constrained by the minimap
+ * package activation. A minimap plugin life cycle will generally look
+ * like this:
+ *
+ * 1. The plugin module is activated by Atom through the `activate` method
+ * 2. The plugin then register itself as a minimap plugin using `registerPlugin`
+ * 3. The plugin is activated/deactivated according to the minimap settings.
+ * 4. On the plugin module deactivation, the plugin must unregisters itself
+ *    from the minimap using the `unregisterPlugin`.
+ *
+ * @access public
+ */
+export default class PluginManagement extends Mixin {
+  /**
+   * Returns the Minimap main module instance.
+   *
+   * @return {Main} The Minimap main module instance.
+   */
+  provideMinimapServiceV1 () { return this }
+
+  /**
+   * Initializes the properties for plugins&apos; management.
+   *
+   * @access private
+   */
+  initializePlugins () {
+    /**
+     * The registered Minimap plugins stored using their name as key.
+     *
+     * @type {Object}
+     * @access private
+     */
+    this.plugins = {}
+    /**
+     * The plugins&apos; subscriptions stored using the plugin names as keys.
+     *
+     * @type {Object}
+     * @access private
+     */
+    this.pluginsSubscriptions = {}
+  }
+
+  /**
+   * Registers a minimap `plugin` with the given `name`.
+   *
+   * @param {string} name The identifying name of the plugin.
+   *                      It will be used as activation settings name
+   *                      as well as the key to unregister the module.
+   * @param {MinimapPlugin} plugin The plugin to register.
+   * @emits {did-add-plugin} with the name and a reference to the added plugin.
+   * @emits {did-activate-plugin} if the plugin was activated during
+   *                              the registration.
+   */
+  registerPlugin (name, plugin) {
+    this.plugins[name] = plugin
+    this.pluginsSubscriptions[name] = new CompositeDisposable()
+
+    let event = { name: name, plugin: plugin }
+    this.emitter.emit(&apos;did-add-plugin&apos;, event)
+
+    if (atom.config.get(&apos;minimap.displayPluginsControls&apos;)) {
+      this.registerPluginControls(name, plugin)
+    }
+
+    this.updatesPluginActivationState(name)
+  }
+
+  /**
+   * Unregisters a plugin from the minimap.
+   *
+   * @param {string} name The identifying name of the plugin to unregister.
+   * @emits {did-remove-plugin} with the name and a reference
+   *        to the added plugin.
+   */
+  unregisterPlugin (name) {
+    let plugin = this.plugins[name]
+
+    if (atom.config.get(&apos;minimap.displayPluginsControls&apos;)) {
+      this.unregisterPluginControls(name)
+    }
+
+    delete this.plugins[name]
+
+    let event = { name: name, plugin: plugin }
+    this.emitter.emit(&apos;did-remove-plugin&apos;, event)
+  }
+
+  /**
+   * Toggles the specified plugin activation state.
+   *
+   * @param  {string} name     The name of the plugin.
+   * @param  {boolean} boolean An optional boolean to set the activation
+   *                           state of the plugin. If ommitted the new plugin
+   *                           state will be the the inverse of its current
+   *                           state.
+   * @emits {did-activate-plugin} if the plugin was activated by the call.
+   * @emits {did-deactivate-plugin} if the plugin was deactivated by the call.
+   */
+  togglePluginActivation (name, boolean) {
+    let settingsKey = `minimap.plugins.${name}`
+
+    if (boolean !== undefined &amp;&amp; boolean !== null) {
+      atom.config.set(settingsKey, boolean)
+    } else {
+      atom.config.set(settingsKey, !atom.config.get(settingsKey))
+    }
+
+    this.updatesPluginActivationState(name)
+  }
+
+  /**
+   * Deactivates all the plugins registered in the minimap package so far.
+   *
+   * @emits {did-deactivate-plugin} for each plugin deactivated by the call.
+   */
+  deactivateAllPlugins () {
+    for (let [name, plugin] of this.eachPlugin()) {
+      plugin.deactivatePlugin()
+      this.emitter.emit(&apos;did-deactivate-plugin&apos;, { name: name, plugin: plugin })
+    }
+  }
+
+  /**
+   * A generator function to iterate over registered plugins.
+   *
+   * @return An iterable that yield the name and reference to every plugin
+   *         as an array in each iteration.
+   */
+  * eachPlugin () {
+    for (let name in this.plugins) {
+      yield [name, this.plugins[name]]
+    }
+  }
+
+  /**
+   * Updates the plugin activation state according to the current config.
+   *
+   * @param {string} name The identifying name of the plugin to update.
+   * @emits {did-activate-plugin} if the plugin was activated by the call.
+   * @emits {did-deactivate-plugin} if the plugin was deactivated by the call.
+   * @access private
+   */
+  updatesPluginActivationState (name) {
+    let plugin = this.plugins[name]
+    let pluginActive = plugin.isActive()
+    let settingActive = atom.config.get(`minimap.plugins.${name}`)
+    let event = { name: name, plugin: plugin }
+
+    if (settingActive &amp;&amp; !pluginActive) {
+      plugin.activatePlugin()
+      this.emitter.emit(&apos;did-activate-plugin&apos;, event)
+    } else if (pluginActive &amp;&amp; !settingActive) {
+      plugin.deactivatePlugin()
+      this.emitter.emit(&apos;did-deactivate-plugin&apos;, event)
+    }
+  }
+
+  /**
+   * When the `minimap.displayPluginsControls` setting is toggled,
+   * this function will register the commands and setting to manage the plugin
+   * activation from the minimap settings.
+   *
+   * @param {string} name The identifying name of the plugin.
+   * @param {MinimapPlugin} plugin The plugin instance to register
+   *        controls for.
+   * @listens {minimap.plugins.${name}} listen to the setting to update
+   *          the plugin state accordingly.
+   * @listens {minimap:toggle-${name}} listen to the command on `atom-workspace`
+   *          to toggle the plugin state.
+   * @access private
+   */
+  registerPluginControls (name, plugin) {
+    let settingsKey = `minimap.plugins.${name}`
+
+    this.config.plugins.properties[name] = {
+      type: &apos;boolean&apos;,
+      default: true
+    }
+
+    if (atom.config.get(settingsKey) === undefined) {
+      atom.config.set(settingsKey, true)
+    }
+
+    this.pluginsSubscriptions[name].add(atom.config.observe(settingsKey, () =&gt; {
+      this.updatesPluginActivationState(name)
+    }))
+
+    this.pluginsSubscriptions[name].add(atom.commands.add(&apos;atom-workspace&apos;, {
+      [`minimap:toggle-${name}`]: () =&gt; {
+        this.togglePluginActivation(name)
+      }
+    }))
+  }
+
+  /**
+   * When the `minimap.displayPluginsControls` setting is toggled,
+   * this function will unregister the commands and setting that
+   * was created previously.
+   *
+   * @param {string} name The identifying name of the plugin.
+   * @access private
+   */
+  unregisterPluginControls (name) {
+    this.pluginsSubscriptions[name].dispose()
+    delete this.pluginsSubscriptions[name]
+    delete this.config.plugins.properties[name]
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

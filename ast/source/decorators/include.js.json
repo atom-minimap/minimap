@@ -1,0 +1,565 @@
+{
+  "type": "Program",
+  "start": 0,
+  "end": 576,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 21,
+      "column": 0
+    }
+  },
+  "sourceType": "module",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "start": 0,
+      "end": 11,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 11
+        }
+      },
+      "expression": {
+        "type": "Literal",
+        "start": 0,
+        "end": 11,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 11
+          }
+        },
+        "value": "use babel",
+        "rawValue": "use babel",
+        "raw": "'use babel'",
+        "leadingComments": null,
+        "trailingComments": null
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Generates a decorator function to includes many `mixto` mixins into a class.\n *\n * @param  {...Mixin} mixins the mixins to include in the class\n * @return {function(cls:Function):Function} the decorator function that will\n *                                           include the specified mixins\n * @example\n * @include(SomeMixin)\n * export default class SomeClass {\n *   // ...\n * }\n ",
+          "start": 13,
+          "end": 407,
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 14,
+              "column": 3
+            }
+          },
+          "range": [
+            13,
+            407
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "start": 408,
+      "end": 575,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 20,
+          "column": 1
+        }
+      },
+      "declaration": {
+        "type": "FunctionDeclaration",
+        "start": 423,
+        "end": 575,
+        "loc": {
+          "start": {
+            "line": 15,
+            "column": 15
+          },
+          "end": {
+            "line": 20,
+            "column": 1
+          }
+        },
+        "id": {
+          "type": "Identifier",
+          "start": 432,
+          "end": 439,
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 24
+            },
+            "end": {
+              "line": 15,
+              "column": 31
+            }
+          },
+          "name": "include",
+          "leadingComments": null
+        },
+        "generator": false,
+        "expression": false,
+        "async": false,
+        "params": [
+          {
+            "type": "RestElement",
+            "start": 441,
+            "end": 450,
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 33
+              },
+              "end": {
+                "line": 15,
+                "column": 42
+              }
+            },
+            "argument": {
+              "type": "Identifier",
+              "start": 444,
+              "end": 450,
+              "loc": {
+                "start": {
+                  "line": 15,
+                  "column": 36
+                },
+                "end": {
+                  "line": 15,
+                  "column": 42
+                }
+              },
+              "name": "mixins"
+            }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "start": 452,
+          "end": 575,
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 44
+            },
+            "end": {
+              "line": 20,
+              "column": 1
+            }
+          },
+          "body": [
+            {
+              "type": "ReturnStatement",
+              "start": 456,
+              "end": 573,
+              "loc": {
+                "start": {
+                  "line": 16,
+                  "column": 2
+                },
+                "end": {
+                  "line": 19,
+                  "column": 3
+                }
+              },
+              "argument": {
+                "type": "FunctionExpression",
+                "start": 463,
+                "end": 573,
+                "loc": {
+                  "start": {
+                    "line": 16,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 19,
+                    "column": 3
+                  }
+                },
+                "id": {
+                  "type": "Identifier",
+                  "start": 472,
+                  "end": 488,
+                  "loc": {
+                    "start": {
+                      "line": 16,
+                      "column": 18
+                    },
+                    "end": {
+                      "line": 16,
+                      "column": 34
+                    }
+                  },
+                  "name": "performInclusion"
+                },
+                "generator": false,
+                "expression": false,
+                "async": false,
+                "params": [
+                  {
+                    "type": "Identifier",
+                    "start": 490,
+                    "end": 493,
+                    "loc": {
+                      "start": {
+                        "line": 16,
+                        "column": 36
+                      },
+                      "end": {
+                        "line": 16,
+                        "column": 39
+                      }
+                    },
+                    "name": "cls"
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 495,
+                  "end": 573,
+                  "loc": {
+                    "start": {
+                      "line": 16,
+                      "column": 41
+                    },
+                    "end": {
+                      "line": 19,
+                      "column": 3
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ExpressionStatement",
+                      "start": 501,
+                      "end": 554,
+                      "loc": {
+                        "start": {
+                          "line": 17,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 17,
+                          "column": 57
+                        }
+                      },
+                      "expression": {
+                        "type": "CallExpression",
+                        "start": 501,
+                        "end": 554,
+                        "loc": {
+                          "start": {
+                            "line": 17,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 17,
+                            "column": 57
+                          }
+                        },
+                        "callee": {
+                          "type": "MemberExpression",
+                          "start": 501,
+                          "end": 515,
+                          "loc": {
+                            "start": {
+                              "line": 17,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 17,
+                              "column": 18
+                            }
+                          },
+                          "object": {
+                            "type": "Identifier",
+                            "start": 501,
+                            "end": 507,
+                            "loc": {
+                              "start": {
+                                "line": 17,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 17,
+                                "column": 10
+                              }
+                            },
+                            "name": "mixins"
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "start": 508,
+                            "end": 515,
+                            "loc": {
+                              "start": {
+                                "line": 17,
+                                "column": 11
+                              },
+                              "end": {
+                                "line": 17,
+                                "column": 18
+                              }
+                            },
+                            "name": "forEach"
+                          },
+                          "computed": false
+                        },
+                        "arguments": [
+                          {
+                            "type": "ArrowFunctionExpression",
+                            "start": 516,
+                            "end": 553,
+                            "loc": {
+                              "start": {
+                                "line": 17,
+                                "column": 19
+                              },
+                              "end": {
+                                "line": 17,
+                                "column": 56
+                              }
+                            },
+                            "id": null,
+                            "generator": false,
+                            "expression": false,
+                            "async": false,
+                            "params": [
+                              {
+                                "type": "Identifier",
+                                "start": 517,
+                                "end": 522,
+                                "loc": {
+                                  "start": {
+                                    "line": 17,
+                                    "column": 20
+                                  },
+                                  "end": {
+                                    "line": 17,
+                                    "column": 25
+                                  }
+                                },
+                                "name": "mixin"
+                              }
+                            ],
+                            "body": {
+                              "type": "BlockStatement",
+                              "start": 527,
+                              "end": 553,
+                              "loc": {
+                                "start": {
+                                  "line": 17,
+                                  "column": 30
+                                },
+                                "end": {
+                                  "line": 17,
+                                  "column": 56
+                                }
+                              },
+                              "body": [
+                                {
+                                  "type": "ExpressionStatement",
+                                  "start": 529,
+                                  "end": 551,
+                                  "loc": {
+                                    "start": {
+                                      "line": 17,
+                                      "column": 32
+                                    },
+                                    "end": {
+                                      "line": 17,
+                                      "column": 54
+                                    }
+                                  },
+                                  "expression": {
+                                    "type": "CallExpression",
+                                    "start": 529,
+                                    "end": 551,
+                                    "loc": {
+                                      "start": {
+                                        "line": 17,
+                                        "column": 32
+                                      },
+                                      "end": {
+                                        "line": 17,
+                                        "column": 54
+                                      }
+                                    },
+                                    "callee": {
+                                      "type": "MemberExpression",
+                                      "start": 529,
+                                      "end": 546,
+                                      "loc": {
+                                        "start": {
+                                          "line": 17,
+                                          "column": 32
+                                        },
+                                        "end": {
+                                          "line": 17,
+                                          "column": 49
+                                        }
+                                      },
+                                      "object": {
+                                        "type": "Identifier",
+                                        "start": 529,
+                                        "end": 534,
+                                        "loc": {
+                                          "start": {
+                                            "line": 17,
+                                            "column": 32
+                                          },
+                                          "end": {
+                                            "line": 17,
+                                            "column": 37
+                                          }
+                                        },
+                                        "name": "mixin"
+                                      },
+                                      "property": {
+                                        "type": "Identifier",
+                                        "start": 535,
+                                        "end": 546,
+                                        "loc": {
+                                          "start": {
+                                            "line": 17,
+                                            "column": 38
+                                          },
+                                          "end": {
+                                            "line": 17,
+                                            "column": 49
+                                          }
+                                        },
+                                        "name": "includeInto"
+                                      },
+                                      "computed": false
+                                    },
+                                    "arguments": [
+                                      {
+                                        "type": "Identifier",
+                                        "start": 547,
+                                        "end": 550,
+                                        "loc": {
+                                          "start": {
+                                            "line": 17,
+                                            "column": 50
+                                          },
+                                          "end": {
+                                            "line": 17,
+                                            "column": 53
+                                          }
+                                        },
+                                        "name": "cls"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "ReturnStatement",
+                      "start": 559,
+                      "end": 569,
+                      "loc": {
+                        "start": {
+                          "line": 18,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 18,
+                          "column": 14
+                        }
+                      },
+                      "argument": {
+                        "type": "Identifier",
+                        "start": 566,
+                        "end": 569,
+                        "loc": {
+                          "start": {
+                            "line": 18,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 18,
+                            "column": 14
+                          }
+                        },
+                        "name": "cls"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * Generates a decorator function to includes many `mixto` mixins into a class.\n *\n * @param  {...Mixin} mixins the mixins to include in the class\n * @return {function(cls:Function):Function} the decorator function that will\n *                                           include the specified mixins\n * @example\n * @include(SomeMixin)\n * export default class SomeClass {\n *   // ...\n * }\n ",
+            "start": 13,
+            "end": 407,
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 0
+              },
+              "end": {
+                "line": 14,
+                "column": 3
+              }
+            },
+            "range": [
+              13,
+              407
+            ]
+          }
+        ],
+        "trailingComments": []
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Generates a decorator function to includes many `mixto` mixins into a class.\n *\n * @param  {...Mixin} mixins the mixins to include in the class\n * @return {function(cls:Function):Function} the decorator function that will\n *                                           include the specified mixins\n * @example\n * @include(SomeMixin)\n * export default class SomeClass {\n *   // ...\n * }\n ",
+          "start": 13,
+          "end": 407,
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 14,
+              "column": 3
+            }
+          },
+          "range": [
+            13,
+            407
+          ]
+        }
+      ]
+    }
+  ]
+}

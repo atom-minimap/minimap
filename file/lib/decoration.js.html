@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/decoration.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/atom-minimap/minimap" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/decoration.js~Decoration.html">Decoration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/main.js~Main.html">Main</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap-element.js~MinimapElement.html">MinimapElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap.js~Minimap.html">Minimap</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-element">element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-include">include</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">mixins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html">CanvasDrawer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html">DecorationManagement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/dom-styles-reader.js~DOMStylesReader.html">DOMStylesReader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/plugin-management.js~PluginManagement.html">PluginManagement</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/decoration.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use babel&apos;
+
+import _ from &apos;underscore-plus&apos;
+import {Emitter} from &apos;atom&apos;
+
+var idCounter = 0
+var nextId = function () { return idCounter++ }
+
+/**
+ * The `Decoration` class represents a decoration in the Minimap.
+ *
+ * It has the same API than the `Decoration` class of a text editor.
+ */
+export default class Decoration {
+
+  /**
+   * Returns `true` if the passed-in decoration properties matches the
+   * specified type.
+   *
+   * @param  {Object} decorationProperties the decoration properties to match
+   * @param  {string} type the decoration type to match
+   * @return {boolean} whether the decoration properties match the type
+   */
+  static isType (decorationProperties, type) {
+    if (_.isArray(decorationProperties.type)) {
+      if (decorationProperties.type.indexOf(type) &gt;= 0) { return true }
+      return false
+    } else {
+      return type === decorationProperties.type
+    }
+  }
+
+  /**
+   * Creates a new decoration.
+   *
+   * @param  {Marker} marker the target marker for the decoration
+   * @param  {Minimap} minimap the Minimap where the decoration will
+   *                           be displayed
+   * @param  {Object} properties the decoration&apos;s properties
+   */
+  constructor (marker, minimap, properties) {
+    /**
+     * @access private
+     */
+    this.marker = marker
+    /**
+     * @access private
+     */
+    this.minimap = minimap
+    /**
+     * @access private
+     */
+    this.emitter = new Emitter()
+    /**
+     * @access private
+     */
+    this.id = nextId()
+    /**
+     * @access private
+     */
+    this.properties = null
+    this.setProperties(properties)
+    this.properties.id = this.id
+    /**
+     * @access private
+     */
+    this.destroyed = false
+    /**
+     * @access private
+     */
+    this.markerDestroyDisposable = this.marker.onDidDestroy(() =&gt; {
+      this.destroy()
+    })
+  }
+
+  /**
+   * Destroy this marker.
+   *
+   * If you own the marker, you should use `Marker#destroy` which will destroy
+   * this decoration.
+   */
+  destroy () {
+    if (this.destroyed) { return }
+
+    this.markerDestroyDisposable.dispose()
+    this.markerDestroyDisposable = null
+    this.destroyed = true
+    this.emitter.emit(&apos;did-destroy&apos;)
+    this.emitter.dispose()
+  }
+
+  /**
+   * Returns whether this decoration is destroyed or not.
+   *
+   * @return {boolean} whether this decoration is destroyed or not
+   */
+  isDestroyed () { return this.destroyed }
+
+  /**
+   * Registers an event listener to the `did-change-properties` event.
+   *
+   * This event is triggered when the decoration update method is called.
+   *
+   * @param  {function(change:Object):void} callback a function to call
+   *                                        when the event is triggered
+   * @return {Disposable} a disposable to stop listening to the event
+   */
+  onDidChangeProperties (callback) {
+    return this.emitter.on(&apos;did-change-properties&apos;, callback)
+  }
+
+  /**
+   * Registers an event listener to the `did-destroy` event.
+   *
+   * @param  {function():void} callback a function to call when the event
+   *                                    is triggered
+   * @return {Disposable} a disposable to stop listening to the event
+   */
+  onDidDestroy (callback) {
+    return this.emitter.on(&apos;did-destroy&apos;, callback)
+  }
+
+  /**
+   * An id unique across all Decoration objects.
+   *
+   * @return {number} the decoration id
+   */
+  getId () { return this.id }
+
+  /**
+   * Returns the marker associated with this Decoration.
+   *
+   * @return {Marker} the decoration&apos;s marker
+   */
+  getMarker () { return this.marker }
+
+  /**
+   * Check if this decoration is of type `type`.
+   *
+   * @param  {string|Array} type a type like `&apos;line-number&apos;`, `&apos;line&apos;`, etc.
+   *                             `type` can also be an Array of Strings, where
+   *                             it will return true if the decoration&apos;s type
+   *                             matches any in the array.
+   * @return {boolean} whether this decoration match the passed-in type
+   */
+  isType (type) {
+    return Decoration.isType(this.properties, type)
+  }
+
+  /**
+   * Returns the Decoration&apos;s properties.
+   *
+   * @return {Object} the decoration&apos;s properties
+   */
+  getProperties () {
+    return this.properties
+  }
+
+  /**
+   * Update the marker with new properties. Allows you to change the
+   * decoration&apos;s class.
+   *
+   * @param {Object} newProperties the new properties for the decoration
+   */
+  setProperties (newProperties) {
+    if (this.destroyed) { return }
+
+    let oldProperties = this.properties
+    this.properties = newProperties
+    this.properties.id = this.id
+
+    this.emitter.emit(&apos;did-change-properties&apos;, {oldProperties, newProperties})
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

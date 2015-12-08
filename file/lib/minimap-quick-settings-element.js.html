@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/minimap-quick-settings-element.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/atom-minimap/minimap" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/decoration.js~Decoration.html">Decoration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/main.js~Main.html">Main</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap-element.js~MinimapElement.html">MinimapElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap.js~Minimap.html">Minimap</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-element">element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-include">include</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">mixins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html">CanvasDrawer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html">DecorationManagement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/dom-styles-reader.js~DOMStylesReader.html">DOMStylesReader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/plugin-management.js~PluginManagement.html">PluginManagement</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/minimap-quick-settings-element.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use babel&apos;
+
+import {CompositeDisposable, Emitter} from &apos;atom&apos;
+import {EventsDelegation, SpacePenDSL} from &apos;atom-utils&apos;
+
+import Main from &apos;./main&apos;
+import element from &apos;./decorators/element&apos;
+import include from &apos;./decorators/include&apos;
+
+/**
+ * @access private
+ */
+@element(&apos;minimap-quick-settings&apos;)
+@include(EventsDelegation, SpacePenDSL.Babel)
+export default class MinimapQuickSettingsElement {
+
+  static content () {
+    this.div({class: &apos;select-list popover-list minimap-quick-settings&apos;}, () =&gt; {
+      this.input({type: &apos;text&apos;, class: &apos;hidden-input&apos;, outlet: &apos;hiddenInput&apos;})
+      this.ol({class: &apos;list-group mark-active&apos;, outlet: &apos;list&apos;}, () =&gt; {
+        this.li({class: &apos;separator&apos;, outlet: &apos;separator&apos;})
+        this.li({class: &apos;code-highlights&apos;, outlet: &apos;codeHighlights&apos;}, &apos;code-highlights&apos;)
+        this.li({class: &apos;absolute-mode&apos;, outlet: &apos;absoluteMode&apos;}, &apos;absolute-mode&apos;)
+      })
+      this.div({class: &apos;btn-group&apos;}, () =&gt; {
+        this.button({class: &apos;btn btn-default&apos;, outlet: &apos;onLeftButton&apos;}, &apos;On Left&apos;)
+        this.button({class: &apos;btn btn-default&apos;, outlet: &apos;onRightButton&apos;}, &apos;On Right&apos;)
+      })
+    })
+  }
+
+  createdCallback () {
+    this.buildContent()
+  }
+
+  setModel (minimap) {
+    this.selectedItem = null
+    this.minimap = minimap
+    this.emitter = new Emitter()
+    this.subscriptions = new CompositeDisposable()
+    this.plugins = {}
+    this.itemsActions = new WeakMap()
+
+    this.subscriptions.add(Main.onDidAddPlugin(({name, plugin}) =&gt; {
+      return this.addItemFor(name, plugin)
+    }))
+    this.subscriptions.add(Main.onDidRemovePlugin(({name, plugin}) =&gt; {
+      return this.removeItemFor(name, plugin)
+    }))
+    this.subscriptions.add(Main.onDidActivatePlugin(({name, plugin}) =&gt; {
+      return this.activateItem(name, plugin)
+    }))
+    this.subscriptions.add(Main.onDidDeactivatePlugin(({name, plugin}) =&gt; {
+      return this.deactivateItem(name, plugin)
+    }))
+
+    this.subscriptions.add(atom.commands.add(&apos;minimap-quick-settings&apos;, {
+      &apos;core:move-up&apos;: () =&gt; { this.selectPreviousItem() },
+      &apos;core:move-down&apos;: () =&gt; { this.selectNextItem() },
+      &apos;core:move-left&apos;: () =&gt; {
+        atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, true)
+      },
+      &apos;core:move-right&apos;: () =&gt; {
+        atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, false)
+      },
+      &apos;core:cancel&apos;: () =&gt; { this.destroy() },
+      &apos;core:confirm&apos;: () =&gt; { this.toggleSelectedItem() }
+    }))
+
+    this.codeHighlights.classList.toggle(&apos;active&apos;, this.minimap.displayCodeHighlights)
+    this.subscriptions.add(this.subscribeTo(this.codeHighlights, {
+      &apos;mousedown&apos;: (e) =&gt; {
+        e.preventDefault()
+        atom.config.set(&apos;minimap.displayCodeHighlights&apos;, !this.minimap.displayCodeHighlights)
+      }
+    }))
+
+    this.itemsActions.set(this.codeHighlights, () =&gt; {
+      atom.config.set(&apos;minimap.displayCodeHighlights&apos;, !this.minimap.displayCodeHighlights)
+    })
+
+    this.subscriptions.add(this.subscribeTo(this.absoluteMode, {
+      &apos;mousedown&apos;: (e) =&gt; {
+        e.preventDefault()
+        atom.config.set(&apos;minimap.absoluteMode&apos;, !atom.config.get(&apos;minimap.absoluteMode&apos;))
+      }
+    }))
+
+    this.itemsActions.set(this.absoluteMode, () =&gt; {
+      atom.config.set(&apos;minimap.absoluteMode&apos;, !atom.config.get(&apos;minimap.absoluteMode&apos;))
+    })
+
+    this.subscriptions.add(this.subscribeTo(this.hiddenInput, {
+      &apos;focusout&apos;: (e) =&gt; { this.destroy() }
+    }))
+
+    this.subscriptions.add(this.subscribeTo(this.onLeftButton, {
+      &apos;mousedown&apos;: (e) =&gt; {
+        e.preventDefault()
+        atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, true)
+      }
+    }))
+
+    this.subscriptions.add(this.subscribeTo(this.onRightButton, {
+      &apos;mousedown&apos;: (e) =&gt; {
+        e.preventDefault()
+        atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, false)
+      }
+    }))
+
+    this.subscriptions.add(atom.config.observe(&apos;minimap.displayCodeHighlights&apos;, (bool) =&gt; {
+      this.codeHighlights.classList.toggle(&apos;active&apos;, bool)
+    }))
+
+    this.subscriptions.add(atom.config.observe(&apos;minimap.absoluteMode&apos;, (bool) =&gt; {
+      this.absoluteMode.classList.toggle(&apos;active&apos;, bool)
+    }))
+
+    this.subscriptions.add(atom.config.observe(&apos;minimap.displayMinimapOnLeft&apos;, (bool) =&gt; {
+      this.onLeftButton.classList.toggle(&apos;selected&apos;, bool)
+      this.onRightButton.classList.toggle(&apos;selected&apos;, !bool)
+    }))
+
+    this.initList()
+  }
+
+  onDidDestroy (callback) {
+    return this.emitter.on(&apos;did-destroy&apos;, callback)
+  }
+
+  attach () {
+    var workspaceElement = atom.views.getView(atom.workspace)
+    workspaceElement.appendChild(this)
+    this.hiddenInput.focus()
+  }
+
+  destroy () {
+    this.emitter.emit(&apos;did-destroy&apos;)
+    this.subscriptions.dispose()
+    this.parentNode.removeChild(this)
+  }
+
+  initList () {
+    this.itemsDisposables = new WeakMap()
+    for (var name in Main.plugins) {
+      var plugin = Main.plugins[name]
+      this.addItemFor(name, plugin)
+    }
+  }
+
+  toggleSelectedItem () {
+    let fn = this.itemsActions.get(this.selectedItem)
+    typeof fn === &apos;function&apos; ? fn() : undefined
+  }
+
+  selectNextItem () {
+    this.selectedItem.classList.remove(&apos;selected&apos;)
+    if ((this.selectedItem.nextSibling != null)) {
+      this.selectedItem = this.selectedItem.nextSibling
+      if (this.selectedItem.matches(&apos;.separator&apos;)) { this.selectedItem = this.selectedItem.nextSibling }
+    } else {
+      this.selectedItem = this.list.firstChild
+    }
+    this.selectedItem.classList.add(&apos;selected&apos;)
+  }
+
+  selectPreviousItem () {
+    this.selectedItem.classList.remove(&apos;selected&apos;)
+    if ((this.selectedItem.previousSibling != null)) {
+      this.selectedItem = this.selectedItem.previousSibling
+      if (this.selectedItem.matches(&apos;.separator&apos;)) { this.selectedItem = this.selectedItem.previousSibling }
+    } else {
+      this.selectedItem = this.list.lastChild
+    }
+    this.selectedItem.classList.add(&apos;selected&apos;)
+  }
+
+  addItemFor (name, plugin) {
+    var item = document.createElement(&apos;li&apos;)
+    if (plugin.isActive()) { item.classList.add(&apos;active&apos;) }
+    item.textContent = name
+
+    var action = () =&gt; { Main.togglePluginActivation(name) }
+
+    this.itemsActions.set(item, action)
+    this.itemsDisposables.set(item, this.addDisposableEventListener(item, &apos;mousedown&apos;, (e) =&gt; {
+      e.preventDefault()
+      action()
+    }))
+
+    this.plugins[name] = item
+    this.list.insertBefore(item, this.separator)
+
+    if (!(this.selectedItem != null)) {
+      this.selectedItem = item
+      this.selectedItem.classList.add(&apos;selected&apos;)
+    }
+  }
+
+  removeItemFor (name, plugin) {
+    try { this.list.removeChild(this.plugins[name]) } catch (error) {}
+    delete this.plugins[name]
+  }
+
+  activateItem (name, plugin) {
+    this.plugins[name].classList.add(&apos;active&apos;)
+  }
+
+  deactivateItem (name, plugin) {
+    this.plugins[name].classList.remove(&apos;active&apos;)
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">lib/mixins/dom-styles-reader.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/atom-minimap/minimap" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/decoration.js~Decoration.html">Decoration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/main.js~Main.html">Main</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap-element.js~MinimapElement.html">MinimapElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/minimap.js~Minimap.html">Minimap</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-element">element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-include">include</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">mixins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html">CanvasDrawer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html">DecorationManagement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/dom-styles-reader.js~DOMStylesReader.html">DOMStylesReader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/mixins/plugin-management.js~PluginManagement.html">PluginManagement</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/mixins/dom-styles-reader.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use babel&apos;
+
+import Mixin from &apos;mixto&apos;
+
+/**
+ * This mixin is used by the `CanvasDrawer` in `MinimapElement` to
+ * read the styles informations from the DOM to use when rendering
+ * the `Minimap`.
+ */
+export default class DOMStylesReader extends Mixin {
+  /**
+   * Returns the computed values for the given property and scope in the DOM.
+   *
+   * This function insert a dummy element in the DOM to compute
+   * its style, return the specified property, and clear the content of the
+   * dummy element.
+   *
+   * @param  {Array&lt;string&gt;} scopes a list of classes reprensenting the scope
+   *                                to build
+   * @param  {string} property the name of the style property to compute
+   * @param  {boolean} [shadowRoot=true] whether to compute the style inside
+   *                                     a shadow DOM or not
+   * @param  {boolean} [cache=true] whether to cache the computed value or not
+   * @return {string} the computed property&apos;s value
+   */
+  retrieveStyleFromDom (scopes, property, shadowRoot = true, cache = true) {
+    this.ensureCache()
+
+    let key = scopes.join(&apos; &apos;)
+    let cachedData = this.constructor.domStylesCache[key]
+
+    if (cache &amp;&amp; (cachedData ? cachedData[property] : void 0) != null) {
+      return cachedData[property]
+    }
+
+    this.ensureDummyNodeExistence(shadowRoot)
+
+    if (!cachedData) {
+      this.constructor.domStylesCache[key] = cachedData = {}
+    }
+
+    let parent = this.dummyNode
+    for (let i = 0, len = scopes.length; i &lt; len; i++) {
+      let scope = scopes[i]
+      let node = document.createElement(&apos;span&apos;)
+      node.className = scope.replace(/\.+/g, &apos; &apos;)
+
+      if (parent != null) { parent.appendChild(node) }
+
+      parent = node
+    }
+
+    let style = window.getComputedStyle(parent)
+    let filter = style.getPropertyValue(&apos;-webkit-filter&apos;)
+    let value = style.getPropertyValue(property)
+
+    if (filter.indexOf(&apos;hue-rotate&apos;) &gt; -1) {
+      value = this.rotateHue(value, filter)
+    }
+
+    if (value !== &apos;&apos;) { cachedData[property] = value }
+
+    this.dummyNode.innerHTML = &apos;&apos;
+    return value
+  }
+
+  /**
+   * Creates a DOM node container for all the operations that need to read
+   * styles properties from DOM.
+   *
+   * @param  {boolean} shadowRoot whether to create the dummy node in the shadow
+   *                              DOM or not
+   * @access private
+   */
+  ensureDummyNodeExistence (shadowRoot) {
+    if (this.dummyNode == null) {
+      /**
+       * @access private
+       */
+      this.dummyNode = document.createElement(&apos;span&apos;)
+      this.dummyNode.style.visibility = &apos;hidden&apos;
+    }
+
+    this.getDummyDOMRoot(shadowRoot).appendChild(this.dummyNode)
+  }
+
+  /**
+   * Ensures the presence of the cache object in the class that received
+   * this mixin.
+   *
+   * @access private
+   */
+  ensureCache () {
+    if (!this.constructor.domStylesCache) {
+      this.constructor.domStylesCache = {}
+    }
+  }
+
+  /**
+   * Invalidates the cache by emptying the cache object.
+   */
+  invalidateDOMStylesCache () {
+    this.constructor.domStylesCache = {}
+  }
+
+  /**
+   * Invalidates the cache only for the first tokenization event.
+   *
+   * @access private
+   */
+  invalidateIfFirstTokenization () {
+    if (this.constructor.hasTokenizedOnce) { return }
+    this.invalidateDOMStylesCache()
+    this.constructor.hasTokenizedOnce = true
+  }
+
+  /**
+   * Computes the output color of `value` with a rotated hue defined
+   * in `filter`.
+   *
+   * @param  {string} value the CSS color to apply the rotation on
+   * @param  {string} filter the CSS hue rotate filter declaration
+   * @return {string} the rotated CSS color
+   * @access private
+   */
+  rotateHue (value, filter) {
+    let match = value.match(/rgb(a?)\((\d+), (\d+), (\d+)(, (\d+(\.\d+)?))?\)/)
+    let [, , r, g, b, , a] = match
+
+    let [, hue] = filter.match(/hue-rotate\((\d+)deg\)/)
+
+    ;[r, g, b, a, hue] = [r, g, b, a, hue].map(Number)
+    ;[r, g, b] = rotate(r, g, b, hue)
+
+    if (isNaN(a)) {
+      return `rgb(${r}, ${g}, ${b})`
+    } else {
+      return `rgba(${r}, ${g}, ${b}, ${a})`
+    }
+  }
+}
+
+//    ##     ## ######## ##       ########  ######## ########   ######
+//    ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
+//    ##     ## ##       ##       ##     ## ##       ##     ## ##
+//    ######### ######   ##       ########  ######   ########   ######
+//    ##     ## ##       ##       ##        ##       ##   ##         ##
+//    ##     ## ##       ##       ##        ##       ##    ##  ##    ##
+//    ##     ## ######## ######## ##        ######## ##     ##  ######
+
+/**
+ * Computes the hue rotation on the provided `r`, `g` and `b` channels
+ * by the amount of `angle`.
+ *
+ * @param  {number} r the red channel of the color to rotate
+ * @param  {number} g the green channel of the color to rotate
+ * @param  {number} b the blue channel of the color to rotate
+ * @param  {number} angle the angle to rotate the hue with
+ * @return {Array&lt;number&gt;} the rotated color channels
+ * @access private
+ */
+function rotate (r, g, b, angle) {
+  let matrix = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+  const lumR = 0.2126
+  const lumG = 0.7152
+  const lumB = 0.0722
+  const hueRotateR = 0.143
+  const hueRotateG = 0.140
+  const hueRotateB = 0.283
+  const cos = Math.cos(angle * Math.PI / 180)
+  const sin = Math.sin(angle * Math.PI / 180)
+
+  matrix[0] = lumR + (1 - lumR) * cos - (lumR * sin)
+  matrix[1] = lumG - (lumG * cos) - (lumG * sin)
+  matrix[2] = lumB - (lumB * cos) + (1 - lumB) * sin
+  matrix[3] = lumR - (lumR * cos) + hueRotateR * sin
+  matrix[4] = lumG + (1 - lumG) * cos + hueRotateG * sin
+  matrix[5] = lumB - (lumB * cos) - (hueRotateB * sin)
+  matrix[6] = lumR - (lumR * cos) - ((1 - lumR) * sin)
+  matrix[7] = lumG - (lumG * cos) + lumG * sin
+  matrix[8] = lumB + (1 - lumB) * cos + lumB * sin
+
+  return [
+    clamp(matrix[0] * r + matrix[1] * g + matrix[2] * b),
+    clamp(matrix[3] * r + matrix[4] * g + matrix[5] * b),
+    clamp(matrix[6] * r + matrix[7] * g + matrix[8] * b)
+  ]
+
+  function clamp (num) {
+    return Math.ceil(Math.max(0, Math.min(255, num)))
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
