@@ -1,3 +1,27 @@
+<a name="v4.17.0"></a>
+# v4.17.0 (2015-12-08)
+
+:sparkles: **Starting with this version, the Minimap is now totally written in ES6 with Babel** :sparkles:
+
+We're also using the decorator feature from ES7 for mixin inclusion and custom elements registration.
+
+## :sparkles: Features
+
+- Add a element decorator to handle creating custom elements ([f1823116](https://github.com/atom-minimap/minimap/commit/f18231168b8b63298390d1e4000577e329aa18b4))
+- Add a helper function to generate decorators for mixin inclusion ([d2ed7591](https://github.com/atom-minimap/minimap/commit/d2ed759189fa43ece70cc96f6f2d1bde8fe6a8d8))
+- Add new dependency to support ES7 features linter and docs ([dc758103](https://github.com/atom-minimap/minimap/commit/dc75810314e153f992b7fd1a38863bde7ee67893))
+- Add esdoc to generate documentation for es6 version ([68142570](https://github.com/atom-minimap/minimap/commit/681425707d7398f979ba988f605a1030ed6a04dd))
+- Add standard linter for es6 conversion ([f0bb6561](https://github.com/atom-minimap/minimap/commit/f0bb6561cdafa2f4447a558b673787bf0c91f552))
+- Use new Babel-friendly space-pen DSL ([e4be4483](https://github.com/atom-minimap/minimap/commit/e4be4483b2d7b9d0ef99d955052c357f4efaec69))
+
+## :racehorse: Performances
+
+- Avoid reading directly from the line's token property ([e8235235](https://github.com/atom-minimap/minimap/commit/e823523526a3502dc8e781bf67a8bebd1a51f1d1))
+
+## :arrow_up: Dependencies Update
+
+- Bump atom-utils version ([b15fce7a](https://github.com/atom-minimap/minimap/commit/b15fce7a7f106d70c316721e06f21bb5eb56fe9b))
+
 <a name="v4.16.2"></a>
 # v4.16.2 (2015-11-24)
 
