@@ -1,0 +1,80 @@
+{
+  "plugins":{
+    "type":"object",
+    "properties":{}
+  },
+  "autoToggle":{
+    "type":"boolean",
+    "default":true
+  },
+  "displayMinimapOnLeft":{
+    "type":"boolean",
+    "default":false
+  },
+  "displayCodeHighlights":{
+    "type":"boolean",
+    "default":true,
+    "description":"Toggles the render of the buffer tokens in the minimap."
+  },
+  "displayPluginsControls":{
+    "type":"boolean",
+    "default":true,
+    "description":"You need to restart Atom for this setting to be effective."
+  },
+  "minimapScrollIndicator":{
+    "type":"boolean",
+    "default":true,
+    "description":"Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. This side line will only appear if the minimap is taller than the editor view height."
+  },
+  "useHardwareAcceleration":{
+    "type":"boolean",
+    "default":true
+  },
+  "adjustMinimapWidthToSoftWrap":{
+    "type":"boolean",
+    "default":true,
+    "description":"If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value."
+  },
+  "charWidth":{
+    "type":"number",
+    "default":1,
+    "minimum":0.5
+  },
+  "charHeight":{
+    "type":"number",
+    "default":2,
+    "minimum":0.5
+  },
+  "interline":{
+    "type":"number",
+    "default":1,
+    "minimum":0,
+    "description":"The space between lines in the minimap in pixels."
+  },
+  "textOpacity":{
+    "type":"number",
+    "default":0.6,
+    "minimum":0,
+    "maximum":1,
+    "description":"The opacity used to render the line's text in the minimap."
+  },
+  "scrollAnimation":{
+    "type":"boolean",
+    "default":false,
+    "description":"Enables animations when scrolling by clicking on the minimap."
+  },
+  "scrollAnimationDuration":{
+    "type":"integer",
+    "default":300,
+    "description":"The duration of scrolling animations when clicking on the minimap."
+  },
+  "createPluginInDevMode":{
+    "type":"boolean",
+    "default":false
+  },
+  "absoluteMode":{
+    "type":"boolean",
+    "default":false,
+    "description":"When enabled the text editor content will be able to flow below the minimap."
+  }
+}

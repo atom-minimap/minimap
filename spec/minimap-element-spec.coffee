@@ -128,7 +128,7 @@ describe 'MinimapElement', ->
       describe 'when a hue-rotate filter is applied to a rgb color', ->
         [additionnalStyleNode] = []
         beforeEach ->
-          minimapElement.invalidateCache()
+          minimapElement.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = """
@@ -152,7 +152,7 @@ describe 'MinimapElement', ->
         [additionnalStyleNode] = []
 
         beforeEach ->
-          minimapElement.invalidateCache()
+          minimapElement.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = """
@@ -212,7 +212,7 @@ describe 'MinimapElement', ->
         expect(-> nextAnimationFrame()).not.toThrow()
 
       it 'renders the visible line decorations', ->
-        spyOn(minimapElement, 'drawLineDecorations').andCallThrough()
+        spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
 
         minimap.decorateMarker(editor.markBufferRange([[1,0], [1,10]]), type: 'line', color: '#0000FF')
         minimap.decorateMarker(editor.markBufferRange([[10,0], [10,10]]), type: 'line', color: '#0000FF')
@@ -224,8 +224,8 @@ describe 'MinimapElement', ->
         runs ->
           nextAnimationFrame()
 
-          expect(minimapElement.drawLineDecorations).toHaveBeenCalled()
-          expect(minimapElement.drawLineDecorations.calls.length).toEqual(2)
+          expect(minimapElement.drawLineDecoration).toHaveBeenCalled()
+          expect(minimapElement.drawLineDecoration.calls.length).toEqual(2)
 
       it 'renders the visible highlight decorations', ->
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
@@ -723,7 +723,7 @@ describe 'MinimapElement', ->
         runs ->
           nextAnimationFrame()
           spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
-          spyOn(minimapElement, 'invalidateCache').andCallThrough()
+          spyOn(minimapElement, 'invalidateDOMStylesCache').andCallThrough()
 
           styleNode = document.createElement('style')
           styleNode.textContent = 'body{ color: #233; }'
@@ -733,7 +733,7 @@ describe 'MinimapElement', ->
 
       it 'forces a refresh with cache invalidation', ->
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-        expect(minimapElement.invalidateCache).toHaveBeenCalled()
+        expect(minimapElement.invalidateDOMStylesCache).toHaveBeenCalled()
 
     describe 'when minimap.textOpacity is changed', ->
       beforeEach ->

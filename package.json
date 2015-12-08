@@ -9,6 +9,10 @@
     "minimap",
     "overview"
   ],
+  "scripts": {
+    "standard": "standard lib/*.js lib/**/*.js spec/**/*.js",
+    "esdoc": "esdoc -c esdoc.json"
+  },
   "contributors": [
     {
       "name": "Fangdun Cai",
@@ -33,11 +37,37 @@
     }
   },
   "dependencies": {
-    "atom-utils": "0.7.x",
+    "atom-utils": "0.9.x",
     "delegato": "1.x",
     "fs-plus": "2.x",
     "mixto": "1.x",
     "semver": "^4.3.0",
     "underscore-plus": "1.x"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.6",
+    "esdoc": "^0.4.0",
+    "esdoc-es7-plugin": "0.0.3",
+    "standard": "^5.1.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "advanceClock",
+      "atom",
+      "beforeEach",
+      "expect",
+      "describe",
+      "it",
+      "jasmine",
+      "MouseEvent",
+      "runs",
+      "spyOn",
+      "waits",
+      "waitsFor",
+      "waitsForPromise",
+      "devicePixelRatio",
+      "requestAnimationFrame"
+    ]
   }
 }

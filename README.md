@@ -137,7 +137,7 @@ Note that this setting will do nothing if `Display Minimap On Left` is also enab
 
 The Minimap package doesn't provide any default keybindings. But you can define your own as demonstrated below:
 
-```cson
+```coffee
 'atom-workspace':
   'cmd-m': 'minimap:toggle'
   'ctrl-alt-cmd-j': 'minimap:generate-javascript-plugin'
@@ -256,21 +256,22 @@ Starting with version 4.13, the Minimap can operate in a stand-alone mode. Basic
 
 The example below demonstrates how to retrieve and display a stand-alone Minimap:
 
-```coffee
-atom.packages.serviceHub.consume 'minimap', '1.0.0', (api) ->
+```js
+atom.packages.serviceHub.consume('minimap', '1.0.0', (api) => {
   editor = atom.workspace.getActiveTextEditor()
   minimap = api.standAloneMinimapForEditor(editor)
 
   minimapElement = atom.views.getView(minimap)
   minimapElement.attach(document.body)
-  minimapElement.style.cssText = '''
+  minimapElement.style.cssText = `
     width: 300px;
     height: 300px;
     position: fixed;
     top: 0;
     right: 100px;
     z-index: 10;
-  '''
+  `
+})
 ```
 
 In a nutshell, here's the main changes to expect when using a stand-alone Minimap:
@@ -293,15 +294,15 @@ While the interface is the same, some details such as the available decorations 
 
 The most important change is that decorations on the Minimap doesn't use a `class`, but rather a `scope`
 
-```coffee
-minimapView.decorateMarker(marker, type: 'line', scope: '.scope .to .the.marker.style')
+```js
+minimapView.decorateMarker(marker, {type: 'line', scope: '.scope .to .the.marker.style'})
 ```
 
 It's still possible to pass a class parameter to the decoration:
 
 
-```coffee
-minimapView.decorateMarker(marker, type: 'line', class: 'the marker style')
+```js
+minimapView.decorateMarker(marker, {type: 'line', class: 'the marker style'})
 ```
 
 In that case, when rendering the decoration a scope will be build that will look like `.minimap .editor .the.marker.style`.
@@ -322,8 +323,8 @@ Also note that only the `background` property will be retrieved to style a decor
 
 A last option is to pass a css color directly in a `color` option, such as:
 
-```coffee
-minimapView.decorateMarker(marker, type: 'line', color: '#ff0000')
+```js
+minimapView.decorateMarker(marker, {type: 'line', color: '#ff0000'})
 ```
 
 In that case neither the scope nor the class will be used.
