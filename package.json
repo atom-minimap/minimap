@@ -67,7 +67,9 @@
       "waitsFor",
       "waitsForPromise",
       "devicePixelRatio",
-      "requestAnimationFrame"
+      "requestAnimationFrame",
+      "Event",
+      "MouseEvent"
     ]
   }
 }
