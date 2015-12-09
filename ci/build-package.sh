@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo "Downloading node v0.10.22..."
-curl -s -O http://nodejs.org/dist/v0.10.22/node-v0.10.22-darwin-x64.tar.gz
-tar -zxf node-v0.10.22-darwin-x64.tar.gz
-export PATH=$PATH:$PWD/node-v0.10.22-darwin-x64/bin
+echo "Downloading node v4.2.3..."
+curl -s -O http://nodejs.org/dist/v4.2.3/node-v4.2.3-darwin-x64.tar.gz
+tar -zxf node-v4.2.3-darwin-x64.tar.gz
+export PATH=$PATH:$PWD/node-v4.2.3-darwin-x64/bin
 
 echo "Downloading latest Atom release..."
 curl -s -L "https://atom.io/download/mac" \
