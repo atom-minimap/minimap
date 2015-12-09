@@ -269,7 +269,7 @@ describe('Minimap', () => {
       editor.setText(largeSample)
 
       changeSpy = jasmine.createSpy('didChange')
-      minimap.onDidChange(changeSpy)
+      minimap.onDidChangeDecorationRange(changeSpy)
 
       marker = minimap.markBufferRange([[0,6], [1,11]])
       decoration = minimap.decorateMarker(marker, {type: 'highlight', class: 'dummy'})
