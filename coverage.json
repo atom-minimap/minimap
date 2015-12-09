@@ -1,11 +1,11 @@
 {
   "coverage": "100%",
-  "expectCount": 126,
-  "actualCount": 126,
+  "expectCount": 129,
+  "actualCount": 129,
   "files": {
     "lib/mixins/canvas-drawer.js": {
-      "expectCount": 9,
-      "actualCount": 9,
+      "expectCount": 11,
+      "actualCount": 11,
       "undocumentLines": []
     },
     "lib/mixins/dom-styles-reader.js": {
@@ -19,8 +19,8 @@
       "undocumentLines": []
     },
     "lib/mixins/decoration-management.js": {
-      "expectCount": 15,
-      "actualCount": 15,
+      "expectCount": 16,
+      "actualCount": 16,
       "undocumentLines": []
     },
     "lib/main.js": {

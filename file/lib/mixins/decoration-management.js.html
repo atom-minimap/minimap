@@ -183,6 +183,25 @@ export default class DecorationManagement extends Mixin {
   }
 
   /**
+   * Registers an event listener to the `did-change-decoration-range` event.
+   *
+   * This event is triggered when the marker range targeted by the decoration
+   * was changed.
+   *
+   * @param  {function(event:Object):void} callback a function to call when the
+   *                                               event is triggered.
+   *                                               the callback will be called
+   *                                               with an event object with
+   *                                               the following properties:
+   * - marker: the marker object that was decorated
+   * - decoration: the decoration object that was created
+   * @return {Disposable} a disposable to stop listening to the event
+   */
+  onDidChangeDecorationRange (callback) {
+    return this.emitter.on(&apos;did-change-decoration-range&apos;, callback)
+  }
+
+  /**
    * Registers an event listener to the `did-update-decoration` event.
    *
    * This event is triggered when the decoration itself is modified.
@@ -331,8 +350,7 @@ export default class DecorationManagement extends Mixin {
   decorateMarker (marker, decorationParams) {
     if (this.destroyed || marker == null) { return }
 
-    marker = this.getMarker(marker.id)
-    if (marker == null) { return }
+    let {id} = marker
 
     if (decorationParams.type === &apos;highlight&apos;) {
       decorationParams.type = &apos;highlight-over&apos;
@@ -343,17 +361,17 @@ export default class DecorationManagement extends Mixin {
       decorationParams.scope = `.minimap .${cls}`
     }
 
-    if (this.decorationMarkerDestroyedSubscriptions[marker.id] == null) {
-      this.decorationMarkerDestroyedSubscriptions[marker.id] =
+    if (this.decorationMarkerDestroyedSubscriptions[id] == null) {
+      this.decorationMarkerDestroyedSubscriptions[id] =
       marker.onDidDestroy(() =&gt; {
         this.removeAllDecorationsForMarker(marker)
       })
     }
 
-    if (this.decorationMarkerChangedSubscriptions[marker.id] == null) {
-      this.decorationMarkerChangedSubscriptions[marker.id] =
+    if (this.decorationMarkerChangedSubscriptions[id] == null) {
+      this.decorationMarkerChangedSubscriptions[id] =
       marker.onDidChange((event) =&gt; {
-        let decorations = this.decorationsByMarkerId[marker.id]
+        let decorations = this.decorationsByMarkerId[id]
 
         this.invalidateDecorationForScreenRowsCache()
 
@@ -396,11 +414,11 @@ export default class DecorationManagement extends Mixin {
 
     let decoration = new Decoration(marker, this, decorationParams)
 
-    if (this.decorationsByMarkerId[marker.id] == null) {
-      this.decorationsByMarkerId[marker.id] = []
+    if (this.decorationsByMarkerId[id] == null) {
+      this.decorationsByMarkerId[id] = []
     }
 
-    this.decorationsByMarkerId[marker.id].push(decoration)
+    this.decorationsByMarkerId[id].push(decoration)
     this.decorationsById[decoration.id] = decoration
 
     if (this.decorationUpdatedSubscriptions[decoration.id] == null) {
@@ -496,7 +514,7 @@ export default class DecorationManagement extends Mixin {
       screenDelta: screenDelta
     }
 
-    this.emitChanges(changeEvent)
+    this.emitter.emit(&apos;did-change-decoration-range&apos;, changeEvent)
   }
 
   /**

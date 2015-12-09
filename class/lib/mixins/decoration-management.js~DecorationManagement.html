@@ -342,6 +342,32 @@ in a structured way.</p>
     <td>
       <div>
         <p>
+           <span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html#instance-method-onDidChangeDecorationRange">onDidChangeDecorationRange</a></span></span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span>void</span></span>): <span>Disposable</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Registers an event listener to the <code>did-change-decoration-range</code> event.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
            <span data-ice="name"><span><a href="class/lib/mixins/decoration-management.js~DecorationManagement.html#instance-method-onDidRemoveDecoration">onDidRemoveDecoration</a></span></span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span>void</span></span>): <span>Disposable</span></span>
         </p>
       </div>
@@ -484,7 +510,7 @@ in a structured way.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber282">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber301">source</a></span></span>
     </span>
   </h3>
 
@@ -627,7 +653,7 @@ highlight box is rendered above the line&apos;s text.</li>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber156">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber175">source</a></span></span>
     </span>
   </h3>
 
@@ -696,7 +722,7 @@ highlight box is rendered above the line&apos;s text.</li>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber213">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber232">source</a></span></span>
     </span>
   </h3>
 
@@ -827,7 +853,7 @@ decorations that intersects with the corresponding row.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber168">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber187">source</a></span></span>
     </span>
   </h3>
 
@@ -997,7 +1023,7 @@ decorations that intersects with the corresponding row.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber245">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber264">source</a></span></span>
     </span>
   </h3>
 
@@ -1184,6 +1210,85 @@ was changed.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-onDidChangeDecorationRange">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">onDidChangeDecorationRange</span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span>void</span></span>): <span>Disposable</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber151">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Registers an event listener to the <code>did-change-decoration-range</code> event.</p>
+<p>This event is triggered when the marker range targeted by the decoration
+was changed.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">callback</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span>void</span></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>a function to call when the
+                                              event is triggered.
+                                              the callback will be called
+                                              with an event object with
+                                              the following properties:</p>
+<ul>
+<li>marker: the marker object that was decorated</li>
+<li>decoration: the decoration object that was created</li>
+</ul>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>Disposable</span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>a disposable to stop listening to the event</p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-onDidRemoveDecoration">
     <span class="access" data-ice="access">public</span>
     
@@ -1271,7 +1376,7 @@ was changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber146">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber165">source</a></span></span>
     </span>
   </h3>
 
@@ -1343,7 +1448,7 @@ was changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber543">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber561">source</a></span></span>
     </span>
   </h3>
 
@@ -1384,7 +1489,7 @@ was changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber504">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber522">source</a></span></span>
     </span>
   </h3>
 
@@ -1459,7 +1564,7 @@ was changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber460">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/decoration-management.js.html#lineNumber478">source</a></span></span>
     </span>
   </h3>
 

@@ -402,6 +402,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "lib/canvas-layer.js",
+    "file/lib/canvas-layer.js.html",
+    "lib/canvas-layer.js",
+    "file"
+  ],
+  [
     "lib/decoration.js",
     "file/lib/decoration.js.html",
     "lib/decoration.js",
@@ -972,15 +978,15 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "lib/mixins/canvas-drawer.js~canvasdrawer#canvas",
-    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-canvas",
-    "lib/mixins/canvas-drawer.js~CanvasDrawer#canvas",
+    "lib/mixins/canvas-drawer.js~canvasdrawer#backlayer",
+    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-backLayer",
+    "lib/mixins/canvas-drawer.js~CanvasDrawer#backLayer",
     "member"
   ],
   [
-    "lib/mixins/canvas-drawer.js~canvasdrawer#context",
-    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-context",
-    "lib/mixins/canvas-drawer.js~CanvasDrawer#context",
+    "lib/mixins/canvas-drawer.js~canvasdrawer#frontlayer",
+    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-frontLayer",
+    "lib/mixins/canvas-drawer.js~CanvasDrawer#frontLayer",
     "member"
   ],
   [
@@ -993,6 +999,12 @@ window.esdocSearchIndex = [
     "lib/mixins/canvas-drawer.js~canvasdrawer#getdefaultcolor",
     "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-method-getDefaultColor",
     "lib/mixins/canvas-drawer.js~CanvasDrawer#getDefaultColor",
+    "method"
+  ],
+  [
+    "lib/mixins/canvas-drawer.js~canvasdrawer#getfrontcanvas",
+    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-method-getFrontCanvas",
+    "lib/mixins/canvas-drawer.js~CanvasDrawer#getFrontCanvas",
     "method"
   ],
   [
@@ -1012,6 +1024,12 @@ window.esdocSearchIndex = [
     "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-method-initializeCanvas",
     "lib/mixins/canvas-drawer.js~CanvasDrawer#initializeCanvas",
     "method"
+  ],
+  [
+    "lib/mixins/canvas-drawer.js~canvasdrawer#tokenslayer",
+    "class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-tokensLayer",
+    "lib/mixins/canvas-drawer.js~CanvasDrawer#tokensLayer",
+    "member"
   ],
   [
     "lib/mixins/canvas-drawer.js~canvasdrawer#updatecanvas",
@@ -1077,6 +1095,12 @@ window.esdocSearchIndex = [
     "lib/mixins/decoration-management.js~decorationmanagement#ondidchangedecoration",
     "class/lib/mixins/decoration-management.js~DecorationManagement.html#instance-method-onDidChangeDecoration",
     "lib/mixins/decoration-management.js~DecorationManagement#onDidChangeDecoration",
+    "method"
+  ],
+  [
+    "lib/mixins/decoration-management.js~decorationmanagement#ondidchangedecorationrange",
+    "class/lib/mixins/decoration-management.js~DecorationManagement.html#instance-method-onDidChangeDecorationRange",
+    "lib/mixins/decoration-management.js~DecorationManagement#onDidChangeDecorationRange",
     "method"
   ],
   [

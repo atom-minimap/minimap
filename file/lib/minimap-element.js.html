@@ -434,7 +434,7 @@ export default class MinimapElement {
     this.initializeCanvas()
 
     this.shadowRoot = this.createShadowRoot()
-    this.shadowRoot.appendChild(this.canvas)
+    this.attachCanvases(this.shadowRoot)
 
     this.createVisibleArea()
     this.createControls()
@@ -445,7 +445,7 @@ export default class MinimapElement {
       }
     }))
 
-    this.subscriptions.add(this.subscribeTo(this.canvas, {
+    this.subscriptions.add(this.subscribeTo(this.getFrontCanvas(), {
       &apos;mousedown&apos;: (e) =&gt; { this.mousePressedOverCanvas(e) }
     }))
   }
@@ -563,7 +563,7 @@ export default class MinimapElement {
             this.quickSettingsElement = null
           })
 
-          let {top, left, right} = this.canvas.getBoundingClientRect()
+          let {top, left, right} = this.getFrontCanvas().getBoundingClientRect()
           this.quickSettingsElement.style.top = top + &apos;px&apos;
           this.quickSettingsElement.attach()
 
@@ -690,6 +690,11 @@ export default class MinimapElement {
       this.requestUpdate()
     }))
 
+    this.subscriptions.add(this.minimap.onDidChangeDecorationRange((change) =&gt; {
+      this.pendingDecorationChanges.push(change)
+      this.requestUpdate()
+    }))
+
     this.setStandAlone(this.minimap.isStandAlone())
 
     if (this.width != null &amp;&amp; this.height != null) {
@@ -762,10 +767,11 @@ export default class MinimapElement {
     if (!(this.attached &amp;&amp; this.isVisible() &amp;&amp; this.minimap)) { return }
     let minimap = this.minimap
     minimap.enableCache()
+    let canvas = this.getFrontCanvas()
 
     let visibleAreaLeft = minimap.getTextEditorScaledScrollLeft()
     let visibleAreaTop = minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop()
-    let visibleWidth = Math.min(this.canvas.width / devicePixelRatio, this.width)
+    let visibleWidth = Math.min(canvas.width / devicePixelRatio, this.width)
 
     if (this.adjustToSoftWrap &amp;&amp; this.flexBasis) {
       this.style.flexBasis = this.flexBasis + &apos;px&apos;
@@ -798,9 +804,13 @@ export default class MinimapElement {
     }
 
     if (SPEC_MODE) {
-      this.applyStyles(this.canvas, {top: canvasTop + &apos;px&apos;})
+      this.applyStyles(this.backLayer.canvas, {top: canvasTop + &apos;px&apos;})
+      this.applyStyles(this.tokensLayer.canvas, {top: canvasTop + &apos;px&apos;})
+      this.applyStyles(this.frontLayer.canvas, {top: canvasTop + &apos;px&apos;})
     } else {
-      this.applyStyles(this.canvas, {transform: canvasTransform})
+      this.applyStyles(this.backLayer.canvas, {transform: canvasTransform})
+      this.applyStyles(this.tokensLayer.canvas, {transform: canvasTransform})
+      this.applyStyles(this.frontLayer.canvas, {transform: canvasTransform})
     }
 
     if (this.minimapScrollIndicator &amp;&amp; minimap.canScroll() &amp;&amp; !this.scrollIndicator) {
@@ -925,9 +935,12 @@ export default class MinimapElement {
         delete this.flexBasis
       }
 
-      if (canvasWidth !== this.canvas.width || this.height !== this.canvas.height) {
-        this.canvas.width = canvasWidth * devicePixelRatio
-        this.canvas.height = (this.height + this.minimap.getLineHeight()) * devicePixelRatio
+      let canvas = this.getFrontCanvas()
+      if (canvasWidth !== canvas.width || this.height !== canvas.height) {
+        this.setCanvasesSize(
+          canvasWidth * devicePixelRatio,
+          (this.height + this.minimap.getLineHeight()) * devicePixelRatio
+        )
       }
     }
   }
@@ -940,10 +953,6 @@ export default class MinimapElement {
   //    ##         ## ##   ##       ##   ###    ##    ##    ##
   //    ########    ###    ######## ##    ##    ##     ######
 
-  // Internal:
-  //
-  // config - An {Object} mapping the config name to observe with the listener
-  //          {Function} to call when the setting was changed.
   /**
    * Helper method to register config observers.
    *

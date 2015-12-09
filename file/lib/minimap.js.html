@@ -399,6 +399,8 @@ export default class Minimap {
    *
    * @param {boolean} standAlone the new state of the stand-alone mode for this
    *                             Minimap
+   * @emits {did-change-stand-alone} if the stand-alone mode have been toggled
+   *        on or off by the call
    */
   setStandAlone (standAlone) {
     if (standAlone !== this.standAlone) {
@@ -641,6 +643,7 @@ export default class Minimap {
    * event is dispatched.
    *
    * @param {number} charWidth the new width of a char in the Minimap
+   * @emits {did-change-config} when the value is changed
    */
   setCharWidth (charWidth) {
     this.charWidth = Math.floor(charWidth)
@@ -666,6 +669,7 @@ export default class Minimap {
    * event is dispatched.
    *
    * @param {number} charHeight the new height of a char in the Minimap
+   * @emits {did-change-config} when the value is changed
    */
   setCharHeight (charHeight) {
     this.charHeight = Math.floor(charHeight)
@@ -691,6 +695,7 @@ export default class Minimap {
    * event is dispatched.
    *
    * @param {number} interline the new height of an interline in the Minimap
+   * @emits {did-change-config} when the value is changed
    */
   setInterline (interline) {
     this.interline = Math.floor(interline)
@@ -739,10 +744,13 @@ export default class Minimap {
    * Sets the minimap scroll top value when in stand-alone mode.
    *
    * @param {number} scrollTop the new scroll top for the Minimap
+   * @emits {did-change-scroll-top} if the Minimap&apos;s stand-alone mode is enabled
    */
   setScrollTop (scrollTop) {
     this.scrollTop = scrollTop
-    if (this.standAlone) { this.emitter.emit(&apos;did-change-scroll-top&apos;, this) }
+    if (this.standAlone) {
+      this.emitter.emit(&apos;did-change-scroll-top&apos;, this)
+    }
   }
 
   /**

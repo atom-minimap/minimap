@@ -90,34 +90,45 @@ export default class MinimapQuickSettingsElement {
     this.plugins = {}
     this.itemsActions = new WeakMap()
 
-    this.subscriptions.add(Main.onDidAddPlugin(({name, plugin}) =&gt; {
+    let subs = this.subscriptions
+
+    subs.add(Main.onDidAddPlugin(({name, plugin}) =&gt; {
       return this.addItemFor(name, plugin)
     }))
-    this.subscriptions.add(Main.onDidRemovePlugin(({name, plugin}) =&gt; {
+    subs.add(Main.onDidRemovePlugin(({name, plugin}) =&gt; {
       return this.removeItemFor(name, plugin)
     }))
-    this.subscriptions.add(Main.onDidActivatePlugin(({name, plugin}) =&gt; {
+    subs.add(Main.onDidActivatePlugin(({name, plugin}) =&gt; {
       return this.activateItem(name, plugin)
     }))
-    this.subscriptions.add(Main.onDidDeactivatePlugin(({name, plugin}) =&gt; {
+    subs.add(Main.onDidDeactivatePlugin(({name, plugin}) =&gt; {
       return this.deactivateItem(name, plugin)
     }))
 
-    this.subscriptions.add(atom.commands.add(&apos;minimap-quick-settings&apos;, {
-      &apos;core:move-up&apos;: () =&gt; { this.selectPreviousItem() },
-      &apos;core:move-down&apos;: () =&gt; { this.selectNextItem() },
+    subs.add(atom.commands.add(&apos;minimap-quick-settings&apos;, {
+      &apos;core:move-up&apos;: () =&gt; {
+        this.selectPreviousItem()
+      },
+      &apos;core:move-down&apos;: () =&gt; {
+        this.selectNextItem()
+      },
       &apos;core:move-left&apos;: () =&gt; {
         atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, true)
       },
       &apos;core:move-right&apos;: () =&gt; {
         atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, false)
       },
-      &apos;core:cancel&apos;: () =&gt; { this.destroy() },
-      &apos;core:confirm&apos;: () =&gt; { this.toggleSelectedItem() }
+      &apos;core:cancel&apos;: () =&gt; {
+        this.destroy()
+      },
+      &apos;core:confirm&apos;: () =&gt; {
+        this.toggleSelectedItem()
+      }
     }))
 
     this.codeHighlights.classList.toggle(&apos;active&apos;, this.minimap.displayCodeHighlights)
-    this.subscriptions.add(this.subscribeTo(this.codeHighlights, {
+
+    subs.add(this.subscribeTo(this.codeHighlights, {
       &apos;mousedown&apos;: (e) =&gt; {
         e.preventDefault()
         atom.config.set(&apos;minimap.displayCodeHighlights&apos;, !this.minimap.displayCodeHighlights)
@@ -128,7 +139,7 @@ export default class MinimapQuickSettingsElement {
       atom.config.set(&apos;minimap.displayCodeHighlights&apos;, !this.minimap.displayCodeHighlights)
     })
 
-    this.subscriptions.add(this.subscribeTo(this.absoluteMode, {
+    subs.add(this.subscribeTo(this.absoluteMode, {
       &apos;mousedown&apos;: (e) =&gt; {
         e.preventDefault()
         atom.config.set(&apos;minimap.absoluteMode&apos;, !atom.config.get(&apos;minimap.absoluteMode&apos;))
@@ -139,33 +150,33 @@ export default class MinimapQuickSettingsElement {
       atom.config.set(&apos;minimap.absoluteMode&apos;, !atom.config.get(&apos;minimap.absoluteMode&apos;))
     })
 
-    this.subscriptions.add(this.subscribeTo(this.hiddenInput, {
+    subs.add(this.subscribeTo(this.hiddenInput, {
       &apos;focusout&apos;: (e) =&gt; { this.destroy() }
     }))
 
-    this.subscriptions.add(this.subscribeTo(this.onLeftButton, {
+    subs.add(this.subscribeTo(this.onLeftButton, {
       &apos;mousedown&apos;: (e) =&gt; {
         e.preventDefault()
         atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, true)
       }
     }))
 
-    this.subscriptions.add(this.subscribeTo(this.onRightButton, {
+    subs.add(this.subscribeTo(this.onRightButton, {
       &apos;mousedown&apos;: (e) =&gt; {
         e.preventDefault()
         atom.config.set(&apos;minimap.displayMinimapOnLeft&apos;, false)
       }
     }))
 
-    this.subscriptions.add(atom.config.observe(&apos;minimap.displayCodeHighlights&apos;, (bool) =&gt; {
+    subs.add(atom.config.observe(&apos;minimap.displayCodeHighlights&apos;, (bool) =&gt; {
       this.codeHighlights.classList.toggle(&apos;active&apos;, bool)
     }))
 
-    this.subscriptions.add(atom.config.observe(&apos;minimap.absoluteMode&apos;, (bool) =&gt; {
+    subs.add(atom.config.observe(&apos;minimap.absoluteMode&apos;, (bool) =&gt; {
       this.absoluteMode.classList.toggle(&apos;active&apos;, bool)
     }))
 
-    this.subscriptions.add(atom.config.observe(&apos;minimap.displayMinimapOnLeft&apos;, (bool) =&gt; {
+    subs.add(atom.config.observe(&apos;minimap.displayMinimapOnLeft&apos;, (bool) =&gt; {
       this.onLeftButton.classList.toggle(&apos;selected&apos;, bool)
       this.onRightButton.classList.toggle(&apos;selected&apos;, !bool)
     }))
@@ -178,7 +189,7 @@ export default class MinimapQuickSettingsElement {
   }
 
   attach () {
-    var workspaceElement = atom.views.getView(atom.workspace)
+    let workspaceElement = atom.views.getView(atom.workspace)
     workspaceElement.appendChild(this)
     this.hiddenInput.focus()
   }
@@ -191,22 +202,23 @@ export default class MinimapQuickSettingsElement {
 
   initList () {
     this.itemsDisposables = new WeakMap()
-    for (var name in Main.plugins) {
-      var plugin = Main.plugins[name]
-      this.addItemFor(name, plugin)
+    for (let name in Main.plugins) {
+      this.addItemFor(name, Main.plugins[name])
     }
   }
 
   toggleSelectedItem () {
     let fn = this.itemsActions.get(this.selectedItem)
-    typeof fn === &apos;function&apos; ? fn() : undefined
+    if (typeof fn === &apos;function&apos;) { fn() }
   }
 
   selectNextItem () {
     this.selectedItem.classList.remove(&apos;selected&apos;)
     if ((this.selectedItem.nextSibling != null)) {
       this.selectedItem = this.selectedItem.nextSibling
-      if (this.selectedItem.matches(&apos;.separator&apos;)) { this.selectedItem = this.selectedItem.nextSibling }
+      if (this.selectedItem.matches(&apos;.separator&apos;)) {
+        this.selectedItem = this.selectedItem.nextSibling
+      }
     } else {
       this.selectedItem = this.list.firstChild
     }
@@ -217,7 +229,9 @@ export default class MinimapQuickSettingsElement {
     this.selectedItem.classList.remove(&apos;selected&apos;)
     if ((this.selectedItem.previousSibling != null)) {
       this.selectedItem = this.selectedItem.previousSibling
-      if (this.selectedItem.matches(&apos;.separator&apos;)) { this.selectedItem = this.selectedItem.previousSibling }
+      if (this.selectedItem.matches(&apos;.separator&apos;)) {
+        this.selectedItem = this.selectedItem.previousSibling
+      }
     } else {
       this.selectedItem = this.list.lastChild
     }
@@ -225,11 +239,12 @@ export default class MinimapQuickSettingsElement {
   }
 
   addItemFor (name, plugin) {
-    var item = document.createElement(&apos;li&apos;)
-    if (plugin.isActive()) { item.classList.add(&apos;active&apos;) }
-    item.textContent = name
+    let item = document.createElement(&apos;li&apos;)
+    let action = () =&gt; { Main.togglePluginActivation(name) }
 
-    var action = () =&gt; { Main.togglePluginActivation(name) }
+    if (plugin.isActive()) { item.classList.add(&apos;active&apos;) }
+
+    item.textContent = name
 
     this.itemsActions.set(item, action)
     this.itemsDisposables.set(item, this.addDisposableEventListener(item, &apos;mousedown&apos;, (e) =&gt; {
@@ -247,7 +262,10 @@ export default class MinimapQuickSettingsElement {
   }
 
   removeItemFor (name, plugin) {
-    try { this.list.removeChild(this.plugins[name]) } catch (error) {}
+    try {
+      this.list.removeChild(this.plugins[name])
+    } catch (error) {}
+
     delete this.plugins[name]
   }
 

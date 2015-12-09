@@ -254,7 +254,7 @@
 </table>
 <h3 id="key-bindings">Key Bindings</h3>
 <p>The Minimap package doesn&apos;t provide any default keybindings. But you can define your own as demonstrated below:</p>
-<pre><code class="lang-cson"><code class="source-code prettyprint">&apos;atom-workspace&apos;:
+<pre><code class="lang-coffee"><code class="source-code prettyprint">&apos;atom-workspace&apos;:
   &apos;cmd-m&apos;: &apos;minimap:toggle&apos;
   &apos;ctrl-alt-cmd-j&apos;: &apos;minimap:generate-javascript-plugin&apos;
   &apos;ctrl-alt-cmd-b&apos;: &apos;minimap:generate-babel-plugin&apos;
@@ -333,20 +333,21 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 <h3 id="stand-alone-mode">Stand-alone Mode</h3>
 <p>Starting with version 4.13, the Minimap can operate in a stand-alone mode. Basically, it means that a Minimap can be appended to the DOM outside of a <code>TextEditor</code> and without being affected by it.</p>
 <p>The example below demonstrates how to retrieve and display a stand-alone Minimap:</p>
-<pre><code class="lang-coffee"><code class="source-code prettyprint">atom.packages.serviceHub.consume &apos;minimap&apos;, &apos;1.0.0&apos;, (api) -&gt;
+<pre><code class="lang-js"><code class="source-code prettyprint">atom.packages.serviceHub.consume(&apos;minimap&apos;, &apos;1.0.0&apos;, (api) =&gt; {
   editor = atom.workspace.getActiveTextEditor()
   minimap = api.standAloneMinimapForEditor(editor)
 
   minimapElement = atom.views.getView(minimap)
   minimapElement.attach(document.body)
-  minimapElement.style.cssText = &apos;&apos;&apos;
+  minimapElement.style.cssText = `
     width: 300px;
     height: 300px;
     position: fixed;
     top: 0;
     right: 100px;
     z-index: 10;
-  &apos;&apos;&apos;</code>
+  `
+})</code>
 </code></pre>
 <p>In a nutshell, here&apos;s the main changes to expect when using a stand-alone Minimap:</p>
 <ul>
@@ -362,10 +363,10 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 <p>While the interface is the same, some details such as the available decorations types change relatively to the editor&apos;s decorations API.</p>
 <h4 id="scope-and-styling">Scope And Styling</h4>
 <p>The most important change is that decorations on the Minimap doesn&apos;t use a <code>class</code>, but rather a <code>scope</code></p>
-<pre><code class="lang-coffee"><code class="source-code prettyprint">minimapView.decorateMarker(marker, type: &apos;line&apos;, scope: &apos;.scope .to .the.marker.style&apos;)</code>
+<pre><code class="lang-js"><code class="source-code prettyprint">minimapView.decorateMarker(marker, {type: &apos;line&apos;, scope: &apos;.scope .to .the.marker.style&apos;})</code>
 </code></pre>
 <p>It&apos;s still possible to pass a class parameter to the decoration:</p>
-<pre><code class="lang-coffee"><code class="source-code prettyprint">minimapView.decorateMarker(marker, type: &apos;line&apos;, class: &apos;the marker style&apos;)</code>
+<pre><code class="lang-js"><code class="source-code prettyprint">minimapView.decorateMarker(marker, {type: &apos;line&apos;, class: &apos;the marker style&apos;})</code>
 </code></pre>
 <p>In that case, when rendering the decoration a scope will be build that will look like <code>.minimap .editor .the.marker.style</code>.</p>
 <p>The reason of using a scope rather than a class is that while editor&apos;s decorations are part of the DOM and benefit of the styles cascading, Minimap&apos;s decorations, rendered in a canvas, do not. In order to work around that, decoration&apos;s styles are defined using a <code>scope</code> property containing the selector allowing to retrieve the decoration style.</p>
@@ -377,7 +378,7 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 <p>Note that the scope is prefixed with <code>.minimap</code> so that you can override the selection style in the Minimap without impacting the editor&apos;s one.</p>
 <p>Also note that only the <code>background</code> property will be retrieved to style a decoration.</p>
 <p>A last option is to pass a css color directly in a <code>color</code> option, such as:</p>
-<pre><code class="lang-coffee"><code class="source-code prettyprint">minimapView.decorateMarker(marker, type: &apos;line&apos;, color: &apos;#ff0000&apos;)</code>
+<pre><code class="lang-js"><code class="source-code prettyprint">minimapView.decorateMarker(marker, {type: &apos;line&apos;, color: &apos;#ff0000&apos;})</code>
 </code></pre>
 <p>In that case neither the scope nor the class will be used.</p>
 <h4 id="decorations-types">Decorations Types</h4>

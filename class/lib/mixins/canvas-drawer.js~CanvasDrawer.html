@@ -47,13 +47,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CanvasDrawer from &apos;<span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber13">minimap/lib/mixins/canvas-drawer.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CanvasDrawer from &apos;<span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber14">minimap/lib/mixins/canvas-drawer.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber13">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber14">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -106,13 +106,13 @@ methods  are available on any <code>MinimapElement</code> instance.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-canvas">canvas</a></span></span><span data-ice="signature">: <span>HTMLCanvasElement</span></span>
+           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-backLayer">backLayer</a></span></span><span data-ice="signature">: <span>CanvasLayer</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>The onscreen canvas.</p>
+        <div data-ice="description"><p>The canvas layer for decorations below the text.</p>
 </div>
       </div>
     </td>
@@ -132,13 +132,39 @@ methods  are available on any <code>MinimapElement</code> instance.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-context">context</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a></span></span>
+           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-frontLayer">frontLayer</a></span></span><span data-ice="signature">: <span>CanvasLayer</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>The onscreen canvas context.</p>
+        <div data-ice="description"><p>The canvas layer for decorations above the text.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-member-tokensLayer">tokensLayer</a></span></span><span data-ice="signature">: <span>CanvasLayer</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>The main canvas layer where lines are rendered.</p>
 </div>
       </div>
     </td>
@@ -198,6 +224,32 @@ methods  are available on any <code>MinimapElement</code> instance.</p>
         
         
         <div data-ice="description"><p>Returns the default text color for an editor content.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/mixins/canvas-drawer.js~CanvasDrawer.html#instance-method-getFrontCanvas">getFrontCanvas</a></span></span><span data-ice="signature">(): <span>HTMLCanvasElement</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns the uppermost canvas in the MinimapElement.</p>
 </div>
       </div>
     </td>
@@ -323,24 +375,24 @@ registered in the instance.</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-canvas">
+  <h3 data-ice="anchor" id="instance-member-backLayer">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">canvas</span><span data-ice="signature">: <span>HTMLCanvasElement</span></span>
+    <span data-ice="name">backLayer</span><span data-ice="signature">: <span>CanvasLayer</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>The onscreen canvas.</p>
+  <div data-ice="description"><p>The canvas layer for decorations below the text.</p>
 </div>
 
   
@@ -364,24 +416,65 @@ registered in the instance.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-context">
+  <h3 data-ice="anchor" id="instance-member-frontLayer">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">context</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a></span></span>
+    <span data-ice="name">frontLayer</span><span data-ice="signature">: <span>CanvasLayer</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>The onscreen canvas context.</p>
+  <div data-ice="description"><p>The canvas layer for decorations above the text.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-tokensLayer">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">tokensLayer</span><span data-ice="signature">: <span>CanvasLayer</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber23">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>The main canvas layer where lines are rendered.</p>
 </div>
 
   
@@ -418,7 +511,7 @@ registered in the instance.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber148">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber253">source</a></span></span>
     </span>
   </h3>
 
@@ -490,7 +583,7 @@ its own <code>color</code> property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber117">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber222">source</a></span></span>
     </span>
   </h3>
 
@@ -533,6 +626,58 @@ its own <code>color</code> property.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getFrontCanvas">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">getFrontCanvas</span><span data-ice="signature">(): <span>HTMLCanvasElement</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber59">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns the uppermost canvas in the MinimapElement.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>HTMLCanvasElement</span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>the html canvas element</p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-getTextOpacity">
     <span class="access" data-ice="access">public</span>
     
@@ -543,7 +688,7 @@ its own <code>color</code> property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber213">source</a></span></span>
     </span>
   </h3>
 
@@ -595,7 +740,7 @@ its own <code>color</code> property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber131">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber236">source</a></span></span>
     </span>
   </h3>
 
@@ -666,7 +811,7 @@ match the token <code>scope</code> property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
@@ -707,7 +852,7 @@ match the token <code>scope</code> property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/mixins/canvas-drawer.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
