@@ -366,8 +366,8 @@ describe('MinimapElement', () => {
 
       describe('when the editor visibility change', () => {
         it('does not modify the size of the canvas', () => {
-          let canvasWidth = minimapElement.canvas.width
-          let canvasHeight = minimapElement.canvas.height
+          let canvasWidth = minimapElement.getFrontCanvas().width
+          let canvasHeight = minimapElement.getFrontCanvas().height
           editorElement.style.display = 'none'
 
           minimapElement.measureHeightAndWidth()
@@ -376,8 +376,8 @@ describe('MinimapElement', () => {
           runs(() => {
             nextAnimationFrame()
 
-            expect(minimapElement.canvas.width).toEqual(canvasWidth)
-            expect(minimapElement.canvas.height).toEqual(canvasHeight)
+            expect(minimapElement.getFrontCanvas().width).toEqual(canvasWidth)
+            expect(minimapElement.getFrontCanvas().height).toEqual(canvasHeight)
           })
         })
 
@@ -436,7 +436,7 @@ describe('MinimapElement', () => {
         let [canvas, visibleArea, originalLeft, maxScroll] = []
 
         beforeEach(() => {
-          canvas = minimapElement.canvas
+          canvas = minimapElement.getFrontCanvas()
           visibleArea = minimapElement.visibleArea
           originalLeft = visibleArea.getBoundingClientRect().left
           maxScroll = minimap.getTextEditorMaxScrollTop()
@@ -530,13 +530,13 @@ describe('MinimapElement', () => {
 
           atom.config.set('minimap.scrollAnimation', false)
 
-          canvas = minimapElement.canvas
+          canvas = minimapElement.getFrontCanvas()
           mousedown(canvas)
         })
 
         it('scrolls the editor to the line below the mouse', () => {
           let scrollTop
-          let {top, left, width, height} = minimapElement.canvas.getBoundingClientRect()
+          let {top, left, width, height} = minimapElement.getFrontCanvas().getBoundingClientRect()
           let middle = top + height / 2
 
           // Should be 400 on stable and 480 on beta.
@@ -556,7 +556,7 @@ describe('MinimapElement', () => {
           atom.config.set('minimap.scrollAnimation', true)
           atom.config.set('minimap.scrollAnimationDuration', 300)
 
-          canvas = minimapElement.canvas
+          canvas = minimapElement.getFrontCanvas()
           mousedown(canvas)
 
           waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
@@ -795,7 +795,7 @@ describe('MinimapElement', () => {
 
           atom.config.set('minimap.scrollAnimation', false)
 
-          canvas = minimapElement.canvas
+          canvas = minimapElement.getFrontCanvas()
           mousedown(canvas)
         })
 
@@ -991,7 +991,7 @@ describe('MinimapElement', () => {
       })
 
       it('adjusts the width of the minimap canvas', () => {
-        expect(minimapElement.canvas.width / devicePixelRatio).toEqual(4)
+        expect(minimapElement.getFrontCanvas().width / devicePixelRatio).toEqual(4)
       })
 
       it('offsets the minimap by the difference', () => {
@@ -1006,7 +1006,7 @@ describe('MinimapElement', () => {
           waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.canvas.width / devicePixelRatio).toEqual(4)
+            expect(minimapElement.getFrontCanvas().width / devicePixelRatio).toEqual(4)
           })
         })
       })
@@ -1225,7 +1225,7 @@ describe('MinimapElement', () => {
         })
 
         it('positions the quick settings view next to the minimap', () => {
-          let minimapBounds = minimapElement.canvas.getBoundingClientRect()
+          let minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
           let settingsBounds = quickSettingsElement.getBoundingClientRect()
 
           expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
@@ -1252,7 +1252,7 @@ describe('MinimapElement', () => {
           })
 
           it('positions the quick settings view next to the minimap', () => {
-            let minimapBounds = minimapElement.canvas.getBoundingClientRect()
+            let minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
             let settingsBounds = quickSettingsElement.getBoundingClientRect()
 
             expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
@@ -1282,12 +1282,12 @@ describe('MinimapElement', () => {
         })
 
         it('adjusts the size of the control div to fit in the minimap', () => {
-          expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth / devicePixelRatio)
+          expect(controls.clientWidth).toEqual(minimapElement.getFrontCanvas().clientWidth / devicePixelRatio)
         })
 
         it('positions the controls div over the canvas', () => {
           let controlsRect = controls.getBoundingClientRect()
-          let canvasRect = minimapElement.canvas.getBoundingClientRect()
+          let canvasRect = minimapElement.getFrontCanvas().getBoundingClientRect()
           expect(controlsRect.left).toEqual(canvasRect.left)
           expect(controlsRect.right).toEqual(canvasRect.right)
         })
@@ -1298,12 +1298,12 @@ describe('MinimapElement', () => {
           })
 
           it('adjusts the size of the control div to fit in the minimap', () => {
-            expect(controls.clientWidth).toEqual(minimapElement.canvas.clientWidth / devicePixelRatio)
+            expect(controls.clientWidth).toEqual(minimapElement.getFrontCanvas().clientWidth / devicePixelRatio)
           })
 
           it('positions the controls div over the canvas', () => {
             let controlsRect = controls.getBoundingClientRect()
-            let canvasRect = minimapElement.canvas.getBoundingClientRect()
+            let canvasRect = minimapElement.getFrontCanvas().getBoundingClientRect()
             expect(controlsRect.left).toEqual(canvasRect.left)
             expect(controlsRect.right).toEqual(canvasRect.right)
           })
@@ -1324,7 +1324,7 @@ describe('MinimapElement', () => {
             })
 
             it('positions the quick settings view next to the minimap', () => {
-              let minimapBounds = minimapElement.canvas.getBoundingClientRect()
+              let minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
               let settingsBounds = quickSettingsElement.getBoundingClientRect()
 
               expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
