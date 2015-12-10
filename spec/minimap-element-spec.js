@@ -23,7 +23,7 @@ function isVisible (node) {
   return node.offsetWidth > 0 || node.offsetHeight > 0
 }
 
-// Modify the global `devicePixelRatio` letiable.
+// Modify the global `devicePixelRatio` litiable.
 // window.devicePixelRatio = 2
 
 function sleep (duration) {
