@@ -35,6 +35,11 @@
     "default":true,
     "description":"If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value."
   },
+  "devicePixelRatioRounding":{
+    "type":"boolean",
+    "default":true,
+    "description":"Toggles the rounding of the devicePixelRatio in the minimap."
+  },
   "charWidth":{
     "type":"number",
     "default":1,
