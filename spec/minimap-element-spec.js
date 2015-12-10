@@ -23,9 +23,6 @@ function isVisible (node) {
   return node.offsetWidth > 0 || node.offsetHeight > 0
 }
 
-// Modify the global `devicePixelRatio` letiable.
-// window.devicePixelRatio = 2
-
 function sleep (duration) {
   let t = new Date()
   waitsFor(() => { return new Date() - t > duration })
