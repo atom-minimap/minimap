@@ -512,10 +512,8 @@ describe('MinimapElement', () => {
             'by 40 pixels from the arbitrary location', () => {
               let {top} = visibleArea.getBoundingClientRect()
               expect(top).toBeCloseTo(originalTop + 40, -1)
-            }
-            )
-          }
-          )
+            })
+          })
         })
       })
 
