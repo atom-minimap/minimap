@@ -43,6 +43,10 @@ Package|Description
 
 If checked the Minimap is toggled on at startup. `(default=true)`
 
+#### Device Pixel Ratio Rounding
+
+If checked the `devicePixelRatio` will be rounded using `Math.floor`. `(default=true)`
+
 #### Display Code Highlights
 
 If checked the code will be highlighted using the grammar tokens. `(default=true)`
