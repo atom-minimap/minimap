@@ -1,3 +1,20 @@
+<a name="v4.18.0"></a>
+# v4.18.0 (2015-12-11)
+
+## :racehorse: Performances
+
+- Add a CanvasLayer class to handle onscreen/offscreen canvases ([b339e73e](https://github.com/atom-minimap/minimap/commit/b339e73ebbae0a93279bd002d046b069578cf282))<br/>
+  Render is now separate into three layers to reduce accesses to line tokens.
+
+## :bug: Bug Fixes
+
+- Fix over-blurring of the Minimap for device with a float for pixel raio ([77f3b38f9](https://github.com/atom-minimap/minimap/commit/77f3b38f99f3a3998ea3ef6d3a72d38e2186caf5))
+
+
+## :arrow_up: Dependencies Update
+
+- Bump atom-utils version ([d42fe50d](https://github.com/atom-minimap/minimap/commit/d42fe50d083ba4212f2f5295f01b34a910de1560))
+
 <a name="v4.17.0"></a>
 # v4.17.0 (2015-12-08)
 
