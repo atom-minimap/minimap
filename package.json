@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "atom-utils": "0.9.x",
+    "atom-utils": ">=0.9.2",
     "delegato": "1.x",
     "fs-plus": "2.x",
     "mixto": "1.x",
