@@ -269,7 +269,7 @@ describe('Minimap', () => {
       editor.setText(largeSample)
 
       changeSpy = jasmine.createSpy('didChange')
-      minimap.onDidChange(changeSpy)
+      minimap.onDidChangeDecorationRange(changeSpy)
 
       marker = minimap.markBufferRange([[0,6], [1,11]])
       decoration = minimap.decorateMarker(marker, {type: 'highlight', class: 'dummy'})
@@ -590,5 +590,23 @@ describe('Stand alone minimap', () => {
     minimap.setInterline(10.6)
 
     expect(changeSpy.callCount).toEqual(3)
+  })
+
+  it('returns the rounding number of devicePixelRatio', () => {
+    devicePixelRatio = 1.25
+
+    minimap.setDevicePixelRatioRounding(true)
+
+    expect(minimap.getDevicePixelRatioRounding()).toEqual(true)
+    expect(minimap.getDevicePixelRatio()).toEqual(1)
+  })
+
+  it('prevents the rounding number of devicePixelRatio', () => {
+    devicePixelRatio = 1.25
+
+    minimap.setDevicePixelRatioRounding(false)
+
+    expect(minimap.getDevicePixelRatioRounding()).toEqual(false)
+    expect(minimap.getDevicePixelRatio()).toEqual(1.25)
   })
 })
