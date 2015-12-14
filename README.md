@@ -1,4 +1,8 @@
-# Minimap package [![Build Status](https://travis-ci.org/atom-minimap/minimap.svg?branch=master)](https://travis-ci.org/atom-minimap/minimap)
+[![Build Status](https://travis-ci.org/atom-minimap/minimap.svg?branch=master)](https://travis-ci.org/atom-minimap/minimap)
+[![APM Version](https://img.shields.io/apm/v/minimap.svg)](https://atom.io/packages/minimap)
+[![APM Downloads](https://img.shields.io/apm/dm/minimap.svg)](https://atom.io/packages/minimap)
+
+# Minimap package 
 
 A preview of the full source code.
 
