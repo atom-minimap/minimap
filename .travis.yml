@@ -1,5 +1,3 @@
-language: objective-c
-
 notifications:
   email:
     on_success: never
@@ -14,6 +12,7 @@ sudo: false
 
 os:
   - osx
+  - linux
 
 env:
   global:
