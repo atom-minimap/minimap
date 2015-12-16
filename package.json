@@ -41,7 +41,7 @@
     "delegato": "1.x",
     "fs-plus": "2.x",
     "mixto": "1.x",
-    "semver": "^4.3.0",
+    "semver": "^5.1.0",
     "underscore-plus": "1.x"
   },
   "devDependencies": {
