@@ -16,9 +16,9 @@ os:
   - linux
   - osx
 
-  matrix:
-    - ATOM_CHANNEL=stable
-    - ATOM_CHANNEL=beta
+matrix:
+  - ATOM_CHANNEL=stable
+  - ATOM_CHANNEL=beta
 
 addons:
   apt:
