@@ -41,7 +41,7 @@ describe('MinimapElement', () => {
     atom.config.set('minimap.interline', 1)
     atom.config.set('minimap.textOpacity', 1)
 
-    MinimapElement.registerViewProvider()
+    MinimapElement.registerViewProvider(Minimap)
 
     editor = atom.workspace.buildTextEditor({})
     editorElement = atom.views.getView(editor)
