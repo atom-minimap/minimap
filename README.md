@@ -350,4 +350,4 @@ Another non-trivial change is the list of available decoration's type. At the ti
 
 ### License
 
-MIT
+[MIT](./LICENSE)
