@@ -12,16 +12,11 @@ git:
 
 sudo: false
 
-matrix:
-  include:
-    - os: linux
-      env: ATOM_CHANNEL=stable
-    - os: linux
-      env: ATOM_CHANNEL=beta
-    - os: osx
-      env: ATOM_CHANNEL=stable
-    - os: osx
-      env: ATOM_CHANNEL=beta
+env:
+  matrix:
+    - ATOM_CHANNEL=stable
+    - ATOM_CHANNEL=beta
+
 
 addons:
   apt:
