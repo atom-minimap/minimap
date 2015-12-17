@@ -1,3 +1,10 @@
+<a name="v4.18.2"></a>
+# v4.18.2 (2015-12-17)
+
+## :racehorse: Performances
+
+- Lazy load model and views ([e0b11276](https://github.com/atom-minimap/minimap/commit/e0b11276ebd2d28581f85114e40d8d59590b84ca), [#430](https://github.com/atom-minimap/minimap/issues/430))
+
 <a name="v4.18.1"></a>
 # v4.18.1 (2015-12-16)
 
