@@ -29,8 +29,7 @@ function mouseEvent (type, properties) {
 }
 
 function touchEvent (type, touches) {
-
-  let event = new UIEvent(type, {
+  let event = new Event(type, {
     bubbles: true,
     cancelable: true,
     view: window,
@@ -81,19 +80,19 @@ module.exports.mousewheel = function (obj, deltaX = 0, deltaY = 0) {
 
 ;['touchstart', 'touchmove', 'touchend'].forEach((key) => {
   module.exports[key] = function (obj, touches) {
-    if(!Array.isArray(touches)) {
+    if (!Array.isArray(touches)) {
       touches = [touches]
     }
 
     touches.forEach((touch) => {
-      if(!exists(touch.target)) {
-        touch.target = obj;
+      if (!exists(touch.target)) {
+        touch.target = obj
       }
 
       if (!(exists(touch.pageX) && exists(touch.pageY))) {
         let o = objectCenterCoordinates(obj)
-        touch.pageX = exists(touch.x) ? touch.x : o.x;
-        touch.pageY = exists(touch.y) ? touch.y : o.y;
+        touch.pageX = exists(touch.x) ? touch.x : o.x
+        touch.pageY = exists(touch.y) ? touch.y : o.y
       }
 
       if (!(exists(touch.clientX) && exists(touch.clientY))) {
