@@ -5,7 +5,7 @@ import path from 'path'
 import Minimap from '../lib/minimap'
 import MinimapElement from '../lib/minimap-element'
 import {stylesheet} from './helpers/workspace'
-import {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove, touchend} from './helpers/events'
+import {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} from './helpers/events'
 
 function realOffsetTop (o) {
   // transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
@@ -505,7 +505,7 @@ describe('MinimapElement', () => {
             })
 
             afterEach(() => {
-              mouseup(visibleArea, {x: originalLeft + 1, y: scrollTo + 40, btn: 1})
+              minimapElement.endDrag()
             })
 
             it( 'scrolls the editor so that the visible area was moved down ' +
@@ -569,23 +569,23 @@ describe('MinimapElement', () => {
       })
 
       describe('dragging the visible area', () => {
-        let [visibleArea, originalTop, originalLeft] = []
+        let [visibleArea, originalTop] = []
 
         beforeEach(() => {
           visibleArea = minimapElement.visibleArea
           let o = visibleArea.getBoundingClientRect()
-          originalLeft = o.left
+          let left = o.left
           originalTop = o.top
 
-          mousedown(visibleArea, {x: originalLeft + 10, y: originalTop + 10})
-          mousemove(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+          mousedown(visibleArea, {x: left + 10, y: originalTop + 10})
+          mousemove(visibleArea, {x: left + 10, y: originalTop + 50})
 
           waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
           runs(() => { nextAnimationFrame() })
         })
 
         afterEach(() => {
-          mouseup(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+          minimapElement.endDrag()
         })
 
         it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
@@ -605,23 +605,23 @@ describe('MinimapElement', () => {
       })
 
       describe('dragging the visible area using touch events', () => {
-        let [visibleArea, originalTop, originalLeft] = []
+        let [visibleArea, originalTop] = []
 
         beforeEach(() => {
           visibleArea = minimapElement.visibleArea
           let o = visibleArea.getBoundingClientRect()
-          originalLeft = o.left
+          let left = o.left
           originalTop = o.top
 
-          touchstart(visibleArea, {x: originalLeft + 10, y: originalTop + 10})
-          touchmove(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+          touchstart(visibleArea, {x: left + 10, y: originalTop + 10})
+          touchmove(visibleArea, {x: left + 10, y: originalTop + 50})
 
           waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
           runs(() => { nextAnimationFrame() })
         })
 
         afterEach(() => {
-          touchend(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+          minimapElement.endDrag()
         })
 
         it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
@@ -642,7 +642,6 @@ describe('MinimapElement', () => {
 
       describe('when the minimap cannot scroll', () => {
         let [visibleArea, originalTop] = []
-        let [top, left] = []
 
         beforeEach(() => {
           let sample = fs.readFileSync(dir.resolve('seventy.txt')).toString()
@@ -657,9 +656,7 @@ describe('MinimapElement', () => {
               nextAnimationFrame()
 
               visibleArea = minimapElement.visibleArea
-              let o = visibleArea.getBoundingClientRect()
-              top = o.top
-              left = o.left
+              let {top, left} = visibleArea.getBoundingClientRect()
               originalTop = top
 
               mousedown(visibleArea, {x: left + 10, y: top + 10})
@@ -671,7 +668,7 @@ describe('MinimapElement', () => {
           })
 
           afterEach(() => {
-            mousemove(visibleArea, {x: left + 10, y: top + 50})
+            minimapElement.endDrag()
           })
 
           it('scrolls based on a ratio adjusted to the minimap height', () => {
@@ -692,23 +689,22 @@ describe('MinimapElement', () => {
 
 
         describe('dragging the visible area', () => {
-          let [originalTop, originalLeft, visibleArea] = []
+          let [originalTop, visibleArea] = []
 
           beforeEach(() => {
             visibleArea = minimapElement.visibleArea
-            let o = visibleArea.getBoundingClientRect()
-            originalTop = o.top
-            originalLeft = o.left
+            let {top, left} = visibleArea.getBoundingClientRect()
+            originalTop = top
 
-            mousedown(visibleArea, {x: originalLeft + 10, y: originalTop + 10})
-            mousemove(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+            mousedown(visibleArea, {x: left + 10, y: top + 10})
+            mousemove(visibleArea, {x: left + 10, y: top + 50})
 
             waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
             runs(() => { nextAnimationFrame() })
           })
 
           afterEach(() => {
-            mouseup(visibleArea, {x: originalLeft + 10, y: originalTop + 50})
+            minimapElement.endDrag()
           })
 
           it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
