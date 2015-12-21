@@ -566,6 +566,14 @@ describe('MinimapElement', () => {
             return editorElement.getScrollTop() >= 380
           })
         })
+
+        it('stops the animation if the text editor is destroyed', () => {
+          editor.destroy()
+
+          nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
+
+          expect(nextAnimationFrame === noAnimationFrame)
+        })
       })
 
       describe('dragging the visible area', () => {
