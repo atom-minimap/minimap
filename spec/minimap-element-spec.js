@@ -498,7 +498,7 @@ describe('MinimapElement', () => {
 
             beforeEach(() => {
               originalTop = visibleArea.getBoundingClientRect().top
-              mousemove(visibleArea, {x: originalLeft + 1, y: scrollTo + 40})
+              mousemove(visibleArea, {x: originalLeft + 1, y: scrollTo + 40, btn: 1})
 
               waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
               runs(() => { nextAnimationFrame() })
@@ -686,8 +686,10 @@ describe('MinimapElement', () => {
           runs(() => { nextAnimationFrame() })
         })
 
+
+
         describe('dragging the visible area', () => {
-          let [visibleArea, originalTop] = []
+          let [originalTop, visibleArea] = []
 
           beforeEach(() => {
             visibleArea = minimapElement.visibleArea

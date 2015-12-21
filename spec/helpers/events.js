@@ -29,9 +29,7 @@ function mouseEvent (type, properties) {
 }
 
 function touchEvent (type, touches) {
-  let firstTouch = touches[0]
-
-  let properties = {
+  let event = new Event(type, {
     bubbles: true,
     cancelable: true,
     view: window,
@@ -40,20 +38,19 @@ function touchEvent (type, touches) {
     shiftKey: false,
     metaKey: false,
     relatedTarget: undefined
-  }
+  })
+  event.touches = event.changedTouches = event.targetTouches = touches
 
-  let e = new Event(type, properties)
-  e.pageX = firstTouch.pageX
-  e.pageY = firstTouch.pageY
-  e.clientX = firstTouch.clientX
-  e.clientY = firstTouch.clientY
-  e.touches = e.targetTouches = e.changedTouches = touches
-  return e
+  return event
 }
 
 function objectCenterCoordinates (obj) {
   let {top, left, width, height} = obj.getBoundingClientRect()
   return {x: left + width / 2, y: top + height / 2}
+}
+
+function exists (value) {
+  return (typeof value !== 'undefined' && value !== null)
 }
 
 module.exports = {objectCenterCoordinates, mouseEvent}
@@ -82,20 +79,28 @@ module.exports.mousewheel = function (obj, deltaX = 0, deltaY = 0) {
 }
 
 ;['touchstart', 'touchmove', 'touchend'].forEach((key) => {
-  module.exports[key] = function (obj, {x, y, cx, cy} = {}) {
-    if (!((typeof x !== 'undefined' && x !== null) && (typeof y !== 'undefined' && y !== null))) {
-      let o = objectCenterCoordinates(obj)
-      x = o.x
-      y = o.y
+  module.exports[key] = function (obj, touches) {
+    if (!Array.isArray(touches)) {
+      touches = [touches]
     }
 
-    if (!((typeof cx !== 'undefined' && cx !== null) && (typeof cy !== 'undefined' && cy !== null))) {
-      cx = x
-      cy = y
-    }
+    touches.forEach((touch) => {
+      if (!exists(touch.target)) {
+        touch.target = obj
+      }
 
-    obj.dispatchEvent(touchEvent(key, [
-      {pageX: x, pageY: y, clientX: cx, clientY: cy}
-    ]))
+      if (!(exists(touch.pageX) && exists(touch.pageY))) {
+        let o = objectCenterCoordinates(obj)
+        touch.pageX = exists(touch.x) ? touch.x : o.x
+        touch.pageY = exists(touch.y) ? touch.y : o.y
+      }
+
+      if (!(exists(touch.clientX) && exists(touch.clientY))) {
+        touch.clientX = touch.pageX
+        touch.clientY = touch.pageY
+      }
+    })
+
+    obj.dispatchEvent(touchEvent(key, touches))
   }
 })
