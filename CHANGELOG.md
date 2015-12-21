@@ -1,3 +1,10 @@
+<a name="v4.18.4"></a>
+# v4.18.4 (2015-12-21)
+
+## :bug: Bug Fixes
+
+- Fix error raised when editor is destroyed during animation ([cb215b68](https://github.com/atom-minimap/minimap/commit/cb215b68427264586fd8b56874e7d8e8a71853ae), [#438](https://github.com/atom-minimap/minimap/issues/438))
+
 <a name="v4.18.3"></a>
 # v4.18.3 (2015-12-21)
 
