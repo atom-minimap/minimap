@@ -119,6 +119,13 @@ Toggles the display of a side line showing which part of the buffer is currently
 
 When plugins are installed, a setting is created for each to enable/disable them directly from the Minimap settings view.
 
+#### Smooth Scrolling
+
+Whether to offset the minimap canvas when scrolling to keep the scroll smooth. When `true` the minimap canvas will be offseted, resulting in a smoother scroll, but with the side-effect of a blurry minimap when the canvas is placed between pixels. When `false` the canvas will always stay at the same position, and will never look blurry, but the scroll will appear more jagged. `(default=true)`
+
+`true`|`false`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/smooth-scroll.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/no-smooth-scroll.png?raw=true)
 
 #### Scroll Animation
 
