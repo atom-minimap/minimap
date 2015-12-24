@@ -1,3 +1,10 @@
+<a name="v4.19.0"></a>
+# v4.19.0 (2015-12-24)
+
+## :sparkles: Features
+
+- Add a smoothScrolling setting to enable/disable canvas offset ([18f57c80](https://github.com/atom-minimap/minimap/commit/18f57c80fd248e4e888e87da692bb71bb8109689))
+
 <a name="v4.18.4"></a>
 # v4.18.4 (2015-12-21)
 
