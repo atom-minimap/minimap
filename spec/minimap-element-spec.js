@@ -40,6 +40,7 @@ describe('MinimapElement', () => {
     atom.config.set('minimap.charWidth', 2)
     atom.config.set('minimap.interline', 1)
     atom.config.set('minimap.textOpacity', 1)
+    atom.config.set('minimap.smoothScrolling', true)
 
     MinimapElement.registerViewProvider(Minimap)
 
@@ -1180,6 +1181,22 @@ describe('MinimapElement', () => {
           atom.config.set('minimap.displayMinimapOnLeft', true)
           expect(minimapElement.classList.contains('absolute')).toBeTruthy()
           expect(minimapElement.classList.contains('left')).toBeTruthy()
+        })
+      })
+    })
+
+    describe('when the smoothScrolling setting is disabled', () => {
+      beforeEach(() => {
+        atom.config.set('minimap.smoothScrolling', false)
+      })
+      it('does not offset the canvas when the scroll does not match line height', () => {
+        editorElement.setScrollTop(1004)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(realOffsetTop(canvas)).toEqual(0)
         })
       })
     })
