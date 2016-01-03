@@ -228,6 +228,28 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 
 The visible area will still allow interaction but the Minimap track won't.
 
+#### Making the minimap visible only in the focused pane
+
+You can put the following code in your user stylesheet to achieve this effect:
+
+```css
+atom-text-editor {
+  &, &::shadow {
+    atom-text-editor-minimap {
+      display: none;
+    }
+  }
+
+  &.is-focused {
+    &, &::shadow {
+      atom-text-editor-minimap {
+        display: block;
+      }
+    }
+  }
+}
+```
+
 ### ASCII Art Comments
 
 One neat trick is to use ASCII art to create huge comments visible in the minimap. This is really efficient when navigating huge files.
