@@ -228,7 +228,7 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area 
 
 The visible area will still allow interaction but the Minimap track won't.
 
-#### Making the minimap visible only in the focused pane
+#### Making Minimap visible only in the focused pane
 
 You can put the following code in your user stylesheet to achieve this effect:
 
