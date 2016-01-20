@@ -299,6 +299,34 @@ describe('MinimapElement', () => {
         })
       })
 
+      it('renders the visible custom decorations', () => {
+        spyOn(minimapElement, 'drawCustomDecoration').andCallThrough()
+
+        const renderRoutine = jasmine.createSpy('renderRoutine')
+
+        const properties = {
+          type: 'custom',
+          render: renderRoutine
+        }
+
+        minimap.decorateMarker(editor.markBufferRange([[1,4], [3,6]]), properties)
+        minimap.decorateMarker(editor.markBufferRange([[6,0], [6,7]]), properties)
+        minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), properties)
+
+        editorElement.setScrollTop(0)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+
+          expect(renderRoutine).toHaveBeenCalled()
+          expect(renderRoutine.calls.length).toEqual(2)
+        })
+      })
+
       describe('when the editor is scrolled', () => {
         beforeEach(() => {
           editorElement.setScrollTop(2000)
