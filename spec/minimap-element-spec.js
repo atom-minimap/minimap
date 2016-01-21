@@ -323,7 +323,7 @@ describe('MinimapElement', () => {
           expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
 
           expect(renderRoutine).toHaveBeenCalled()
-          expect(renderRoutine.calls.length).toEqual(2)
+          expect(renderRoutine.calls.length).toEqual(4)
         })
       })
 
