@@ -55,7 +55,7 @@ describe('CanvasLayer', () => {
   })
 
   describe('.prototype.copyToOffscreen', () => {
-    it('copies the onscreen bitmap onto the offscreen canvas', () => {
+    it('copies the onscreen bitmap onto the offscreen canvas', () => {
       spyOn(layer.offscreenContext, 'drawImage')
 
       layer.copyToOffscreen()
@@ -65,7 +65,7 @@ describe('CanvasLayer', () => {
   })
 
   describe('.prototype.copyFromOffscreen', () => {
-    it('copies the offscreen bitmap onto the onscreen canvas', () => {
+    it('copies the offscreen bitmap onto the onscreen canvas', () => {
       spyOn(layer.context, 'drawImage')
 
       layer.copyFromOffscreen()

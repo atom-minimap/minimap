@@ -10,7 +10,7 @@
     "overview"
   ],
   "scripts": {
-    "standard": "standard lib/*.js lib/**/*.js spec/**/*.js",
+    "standard": "standard lib/*.js lib/**/*.js spec/*.js spec/**/*.js",
     "esdoc": "esdoc -c esdoc.json"
   },
   "contributors": [
@@ -55,6 +55,7 @@
       "advanceClock",
       "atom",
       "beforeEach",
+      "afterEach",
       "expect",
       "describe",
       "it",
