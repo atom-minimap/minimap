@@ -4,7 +4,8 @@ atom-notifications:empty {
   pointer-events: none
 }
 
-atom-text-editor::shadow .editor--private {
+atom-text-editor:not([mini])::shadow .editor--private,
+atom-text-editor:not([mini]).editor--private {
   order: 2;
   flex: 1 0 0;
 }
