@@ -10,7 +10,7 @@
     "overview"
   ],
   "scripts": {
-    "standard": "standard lib/*.js lib/**/*.js spec/**/*.js",
+    "standard": "standard",
     "esdoc": "esdoc -c esdoc.json"
   },
   "contributors": [
@@ -55,9 +55,18 @@
       "advanceClock",
       "atom",
       "beforeEach",
+      "afterEach",
       "expect",
       "describe",
+      "fdescribe",
+      "ffdescribe",
+      "fffdescribe",
+      "xdescribe",
       "it",
+      "xit",
+      "fit",
+      "ffit",
+      "fffit",
       "jasmine",
       "MouseEvent",
       "runs",

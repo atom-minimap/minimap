@@ -1,7 +1,6 @@
 'use babel'
 
 import fs from 'fs-plus'
-import path from 'path'
 import Minimap from '../lib/minimap'
 import MinimapElement from '../lib/minimap-element'
 import {stylesheet} from './helpers/workspace'
@@ -17,10 +16,6 @@ function realOffsetLeft (o) {
   // transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   // o.offsetLeft + transform.m41
   return o.offsetLeft
-}
-
-function isVisible (node) {
-  return node.offsetWidth > 0 || node.offsetHeight > 0
 }
 
 function sleep (duration) {
@@ -87,15 +82,14 @@ describe('MinimapElement', () => {
   //    ##     ##    ##       ##    ##     ##  ######  ##     ##
 
   describe('when attached to the text editor element', () => {
-    let [noAnimationFrame, nextAnimationFrame, lastFn, canvas, visibleArea] = []
+    let [noAnimationFrame, nextAnimationFrame, requestAnimationFrameSafe, canvas, visibleArea] = []
 
     beforeEach(() => {
       noAnimationFrame = () => { throw new Error('No animation frame requested') }
       nextAnimationFrame = noAnimationFrame
 
-      let requestAnimationFrameSafe = window.requestAnimationFrame
-      spyOn(window, 'requestAnimationFrame').andCallFake(function(fn) {
-        lastFn = fn
+      requestAnimationFrameSafe = window.requestAnimationFrame
+      spyOn(window, 'requestAnimationFrame').andCallFake((fn) => {
         nextAnimationFrame = () => {
           nextAnimationFrame = noAnimationFrame
           fn()
@@ -113,7 +107,10 @@ describe('MinimapElement', () => {
       minimapElement.attach()
     })
 
-    afterEach(() => { minimap.destroy() })
+    afterEach(() => {
+      window.requestAnimationFrame = requestAnimationFrameSafe
+      minimap.destroy()
+    })
 
     it('takes the height of the editor', () => {
       expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
@@ -181,7 +178,7 @@ describe('MinimapElement', () => {
             ${stylesheet}
 
             .editor {
-              color: rgba(255,0,0,0);
+              color: rgba(255, 0, 0, 0);
               -webkit-filter: hue-rotate(180deg);
             }
           `
@@ -198,7 +195,6 @@ describe('MinimapElement', () => {
         })
       })
     })
-
 
     //    ##     ## ########  ########     ###    ######## ########
     //    ##     ## ##     ## ##     ##   ## ##      ##    ##
@@ -248,9 +244,9 @@ describe('MinimapElement', () => {
       it('renders the visible line decorations', () => {
         spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1,0], [1,10]]), {type: 'line', color: '#0000FF'})
-        minimap.decorateMarker(editor.markBufferRange([[10,0], [10,10]]), {type: 'line', color: '#0000FF'})
-        minimap.decorateMarker(editor.markBufferRange([[100,0], [100,10]]), {type: 'line', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'line', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), {type: 'line', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), {type: 'line', color: '#0000FF'})
 
         editorElement.setScrollTop(0)
 
@@ -266,9 +262,9 @@ describe('MinimapElement', () => {
       it('renders the visible highlight decorations', () => {
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1,0], [1,4]]), {type: 'highlight-under', color: '#0000FF'})
-        minimap.decorateMarker(editor.markBufferRange([[2,20], [2,30]]), {type: 'highlight-over', color: '#0000FF'})
-        minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), {type: 'highlight-under', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 4]]), {type: 'highlight-under', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[2, 20], [2, 30]]), {type: 'highlight-over', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), {type: 'highlight-under', color: '#0000FF'})
 
         editorElement.setScrollTop(0)
 
@@ -284,9 +280,9 @@ describe('MinimapElement', () => {
       it('renders the visible outline decorations', () => {
         spyOn(minimapElement, 'drawHighlightOutlineDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1,4], [3,6]]), {type: 'highlight-outline', color: '#0000ff'})
-        minimap.decorateMarker(editor.markBufferRange([[6,0], [6,7]]), {type: 'highlight-outline', color: '#0000ff'})
-        minimap.decorateMarker(editor.markBufferRange([[100,3], [100,5]]), {type: 'highlight-outline', color: '#0000ff'})
+        minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), {type: 'highlight-outline', color: '#0000ff'})
+        minimap.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), {type: 'highlight-outline', color: '#0000ff'})
+        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), {type: 'highlight-outline', color: '#0000ff'})
 
         editorElement.setScrollTop(0)
 
@@ -316,7 +312,6 @@ describe('MinimapElement', () => {
 
       describe('when the editor is resized to a greater size', () => {
         beforeEach(() => {
-          let height = editorElement.getHeight()
           editorElement.style.width = '800px'
           editorElement.style.height = '500px'
 
@@ -446,7 +441,7 @@ describe('MinimapElement', () => {
         })
 
         describe('scrolling to the middle using the middle mouse button', () => {
-          let canvasMidY = undefined
+          let canvasMidY
 
           beforeEach(() => {
             let editorMidY = editorElement.getHeight() / 2.0
@@ -478,7 +473,7 @@ describe('MinimapElement', () => {
 
           beforeEach(() => {
             scrollTo = 101 // pixels
-            scrollRatio = (scrollTo - minimap.getTextEditorScaledHeight()/2) / (minimap.getVisibleHeight() - minimap.getTextEditorScaledHeight())
+            scrollRatio = (scrollTo - minimap.getTextEditorScaledHeight() / 2) / (minimap.getVisibleHeight() - minimap.getTextEditorScaledHeight())
             scrollRatio = Math.max(0, scrollRatio)
             scrollRatio = Math.min(1, scrollRatio)
 
@@ -493,7 +488,7 @@ describe('MinimapElement', () => {
             expect(editorElement.getScrollTop()).toBeCloseTo(expectedScroll, 0)
           })
 
-          describe( 'dragging the visible area with middle mouse button ' +
+          describe('dragging the visible area with middle mouse button ' +
           'after scrolling to the arbitrary location', () => {
             let [originalTop] = []
 
@@ -509,7 +504,7 @@ describe('MinimapElement', () => {
               minimapElement.endDrag()
             })
 
-            it( 'scrolls the editor so that the visible area was moved down ' +
+            it('scrolls the editor so that the visible area was moved down ' +
             'by 40 pixels from the arbitrary location', () => {
               let {top} = visibleArea.getBoundingClientRect()
               expect(top).toBeCloseTo(originalTop + 40, -1)
@@ -521,7 +516,11 @@ describe('MinimapElement', () => {
       describe('pressing the mouse on the minimap canvas (without scroll animation)', () => {
         beforeEach(() => {
           let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => { return n = t, t += 100, n })
+          spyOn(minimapElement, 'getTime').andCallFake(() => {
+            let n = t
+            t += 100
+            return n
+          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', false)
@@ -531,22 +530,20 @@ describe('MinimapElement', () => {
         })
 
         it('scrolls the editor to the line below the mouse', () => {
-          let scrollTop
-          let {top, left, width, height} = minimapElement.getFrontCanvas().getBoundingClientRect()
-          let middle = top + height / 2
-
           // Should be 400 on stable and 480 on beta.
           // I'm still looking for a reason.
-          scrollTop =
           expect(editorElement.getScrollTop()).toBeGreaterThan(380)
         })
       })
 
       describe('pressing the mouse on the minimap canvas (with scroll animation)', () => {
         beforeEach(() => {
-
           let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => { return n = t, t += 100, n })
+          spyOn(minimapElement, 'getTime').andCallFake(() => {
+            let n = t
+            t += 100
+            return n
+          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', true)
@@ -695,8 +692,6 @@ describe('MinimapElement', () => {
           runs(() => { nextAnimationFrame() })
         })
 
-
-
         describe('dragging the visible area', () => {
           let [originalTop, visibleArea] = []
 
@@ -796,7 +791,11 @@ describe('MinimapElement', () => {
           jasmineContent.appendChild(minimapElement)
 
           let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => { return n = t, t += 100, n })
+          spyOn(minimapElement, 'getTime').andCallFake(() => {
+            let n = t
+            t += 100
+            return n
+          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', false)
@@ -982,10 +981,7 @@ describe('MinimapElement', () => {
     })
 
     describe('when minimap.adjustMinimapWidthToSoftWrap is true', () => {
-      let [minimapWidth] = []
       beforeEach(() => {
-        minimapWidth = minimapElement.offsetWidth
-
         atom.config.set('editor.softWrap', true)
         atom.config.set('editor.softWrapAtPreferredLineLength', true)
         atom.config.set('editor.preferredLineLength', 2)
@@ -1120,7 +1116,6 @@ describe('MinimapElement', () => {
 
       describe('on update', () => {
         beforeEach(() => {
-          let height = editorElement.getHeight()
           editorElement.style.height = '500px'
 
           atom.views.performDocumentPoll()
@@ -1275,7 +1270,6 @@ describe('MinimapElement', () => {
 
           it('positions the quick settings view next to the minimap', () => {
             let minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
-            let settingsBounds = quickSettingsElement.getBoundingClientRect()
 
             expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
             expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
@@ -1347,7 +1341,6 @@ describe('MinimapElement', () => {
 
             it('positions the quick settings view next to the minimap', () => {
               let minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
-              let settingsBounds = quickSettingsElement.getBoundingClientRect()
 
               expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
               expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
@@ -1445,7 +1438,6 @@ describe('MinimapElement', () => {
           })
         })
 
-
         describe('clicking on the open settings button again', () => {
           beforeEach(() => {
             mousedown(openQuickSettings)
@@ -1485,7 +1477,7 @@ describe('MinimapElement', () => {
         let [minimapPackage, pluginA, pluginB] = []
         beforeEach(() => {
           waitsForPromise(() => {
-            return atom.packages.activatePackage('minimap').then(function(pkg) {
+            return atom.packages.activatePackage('minimap').then((pkg) => {
               minimapPackage = pkg.mainModule
             })
           })
@@ -1493,9 +1485,9 @@ describe('MinimapElement', () => {
           runs(() => {
             class Plugin {
               active = false
-              activatePlugin() { this.active = true }
-              deactivatePlugin() { this.active = false }
-              isActive() { return this.active }
+              activatePlugin () { this.active = true }
+              deactivatePlugin () { this.active = false }
+              isActive () { return this.active }
             }
 
             pluginA = new Plugin()
