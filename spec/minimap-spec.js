@@ -253,6 +253,30 @@ describe('Minimap', () => {
     })
   })
 
+  describe('with scoped settings', () => {
+    beforeEach(() => {
+      waitsForPromise(() => {
+        return atom.packages.activatePackage('language-javascript')
+      })
+
+      runs(() => {
+        const opts = {scopeSelector: '.source.js'}
+
+        atom.config.set('minimap.charHeight', 8, opts)
+        atom.config.set('minimap.charWidth', 4, opts)
+        atom.config.set('minimap.interline', 2, opts)
+
+        editor.setGrammar(atom.grammars.grammarForScopeName('source.js'))
+      })
+    })
+
+    it('honors the scoped settings for the current editor new grammar', () => {
+      expect(minimap.getCharHeight()).toEqual(8)
+      expect(minimap.getCharWidth()).toEqual(4)
+      expect(minimap.getInterline()).toEqual(2)
+    })
+  })
+
   //    ########  ########  ######   #######
   //    ##     ## ##       ##    ## ##     ##
   //    ##     ## ##       ##       ##     ##
