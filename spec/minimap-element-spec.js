@@ -473,14 +473,45 @@ describe('MinimapElement', () => {
       })
 
       describe('using the mouse scrollwheel over the minimap', () => {
-        beforeEach(() => {
+        it('relays the events to the editor view', () => {
           spyOn(editorElement.component.presenter, 'setScrollTop').andCallFake(() => {})
 
           mousewheel(minimapElement, 0, 15)
+
+          expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
         })
 
-        it('relays the events to the editor view', () => {
-          expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
+        describe('when the independentMinimapScroll setting is true', () => {
+          let previousScrollTop
+
+          beforeEach(() => {
+            atom.config.set('minimap.independentMinimapScroll', true)
+            atom.config.set('minimap.scrollSensitivity', 0.5)
+
+            spyOn(editorElement.component.presenter, 'setScrollTop').andCallFake(() => {})
+
+            previousScrollTop = minimap.getScrollTop()
+
+            mousewheel(minimapElement, 0, -15)
+          })
+
+          it('does not relay the events to the editor', () => {
+            expect(editorElement.component.presenter.setScrollTop).not.toHaveBeenCalled()
+          })
+
+          it('scrolls the minimap instead', () => {
+            expect(minimap.getScrollTop()).not.toEqual(previousScrollTop)
+          })
+
+          it('clamp the minimap scroll into the legit bounds', () => {
+            mousewheel(minimapElement, 0, -100000)
+
+            expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
+
+            mousewheel(minimapElement, 0, 100000)
+
+            expect(minimap.getScrollTop()).toEqual(0)
+          })
         })
       })
 

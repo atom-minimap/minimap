@@ -78,6 +78,17 @@
     "default": true,
     "description": "Whether to offset the minimap canvas when scrolling to keep the scroll smooth. When `true` the minimap canvas will be offseted, resulting in a smoother scroll, but with the side-effect of a blurry minimap when the canvas is placed between pixels. When `false` the canvas will always stay at the same position, and will never look blurry, but the scroll will appear more jagged."
   },
+  "independentMinimapScroll": {
+    "type": "boolean",
+    "title": "Independent Minimap Scroll On Mouse Wheel Events",
+    "default": false,
+    "description": "When enabled, using the mouse wheel over the Minimap will make it scroll independently of the text editor. The Minimap will still sync with the editor whenever the editor is scrolled, but it will no longer relay the mouse wheel events to the editor."
+  },
+  "scrollSensitivity": {
+    "type": "number",
+    "default": 0.5,
+    "description": "The scrolling speed when the `Independent Minimap Scroll On Mouse Wheel Events` setting is enabled."
+  },
   "createPluginInDevMode":{
     "type":"boolean",
     "default":false

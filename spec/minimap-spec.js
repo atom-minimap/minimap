@@ -277,6 +277,33 @@ describe('Minimap', () => {
     })
   })
 
+  describe('when independentMinimapScroll is true', () => {
+    let editorScrollRatio
+    beforeEach(() => {
+      editor.setText(largeSample)
+      editorElement.setScrollTop(1000)
+      editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
+
+      atom.config.set('minimap.independentMinimapScroll', true)
+    })
+
+    it('ignores the scroll computed from the editor and return the one of the minimap instead', () => {
+      expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
+
+      minimap.setScrollTop(200)
+
+      expect(minimap.getScrollTop()).toEqual(200)
+    })
+
+    describe('scrolling the editor', () => {
+      it('changes the minimap scroll top', () => {
+        editorElement.setScrollTop(2000)
+
+        expect(minimap.getScrollTop()).not.toEqual(editorScrollRatio * minimap.getMaxScrollTop())
+      })
+    })
+  })
+
   //    ########  ########  ######   #######
   //    ##     ## ##       ##    ## ##     ##
   //    ##     ## ##       ##       ##     ##
@@ -579,6 +606,7 @@ describe('Stand alone minimap', () => {
   it('has a scroll top that is not bound to the text editor', () => {
     let scrollSpy = jasmine.createSpy('didScroll')
     minimap.onDidChangeScrollTop(scrollSpy)
+    minimap.setScreenHeightAndWidth(100, 100)
 
     editor.setText(largeSample)
     editorElement.setScrollTop(1000)
