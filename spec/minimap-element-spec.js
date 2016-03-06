@@ -1,6 +1,7 @@
 'use babel'
 
 import fs from 'fs-plus'
+import Main from '../lib/main'
 import Minimap from '../lib/minimap'
 import MinimapElement from '../lib/minimap-element'
 import {stylesheet} from './helpers/workspace'
@@ -23,6 +24,16 @@ function sleep (duration) {
   waitsFor(() => { return new Date() - t > duration })
 }
 
+function createPlugin () {
+  const plugin = {
+    active: false,
+    activatePlugin () { this.active = true },
+    deactivatePlugin () { this.active = false },
+    isActive () { return this.active }
+  }
+  return plugin
+}
+
 describe('MinimapElement', () => {
   let [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement, dir] = []
 
@@ -36,6 +47,7 @@ describe('MinimapElement', () => {
     atom.config.set('minimap.interline', 1)
     atom.config.set('minimap.textOpacity', 1)
     atom.config.set('minimap.smoothScrolling', true)
+    atom.config.set('minimap.plugins', {})
 
     MinimapElement.registerViewProvider(Minimap)
 
@@ -239,6 +251,53 @@ describe('MinimapElement', () => {
         atom.config.set('editor.invisibles', {cr: '*'})
 
         expect(() => { nextAnimationFrame() }).not.toThrow()
+      })
+
+      it('renders the decorations based on the order settings', () => {
+        atom.config.set('minimap.displayPluginsControls', true)
+
+        const pluginFoo = createPlugin()
+        const pluginBar = createPlugin()
+
+        Main.registerPlugin('foo', pluginFoo)
+        Main.registerPlugin('bar', pluginBar)
+
+        atom.config.set('minimap.plugins.fooDecorationsOrder', 1)
+
+        const calls = []
+        spyOn(minimapElement, 'drawLineDecoration').andCallFake((d) => {
+          calls.push(d.getProperties().plugin)
+        })
+        spyOn(minimapElement, 'drawHighlightDecoration').andCallFake((d) => {
+          calls.push(d.getProperties().plugin)
+        })
+
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'line', color: '#0000FF', plugin: 'bar'})
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'highlight-under', color: '#0000FF', plugin: 'foo'})
+
+        editorElement.setScrollTop(0)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(calls).toEqual(['bar', 'foo'])
+
+          atom.config.set('minimap.plugins.fooDecorationsOrder', -1)
+
+          calls.length = 0
+        })
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(calls).toEqual(['foo', 'bar'])
+
+          Main.unregisterPlugin('foo')
+          Main.unregisterPlugin('bar')
+        })
       })
 
       it('renders the visible line decorations', () => {
