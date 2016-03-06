@@ -145,6 +145,15 @@ Enable animations when scrolling the editor by clicking on the Minimap. `(defaul
 
 Duration of the scroll animation when clicking on the Minimap. `(default=300)`
 
+#### Independent Minimap Scroll On Mouse Wheel Events
+
+When enabled, using the mouse wheel over the Minimap will make it scroll independently of the text editor. The Minimap will still sync with the editor whenever the editor is scrolled, but it will no longer relay the mouse wheel events to the editor. `(default=false)`
+
+![](https://github.com/atom-minimap/minimap/blob/master/resources/independent-scroll.gif?raw=true)
+
+#### Scroll Sensitivity
+
+The scrolling speed when the `Independent Minimap Scroll On Mouse Wheel Events` setting is enabled. `(default=0.5)`
 
 #### Use Hardware Acceleration
 
