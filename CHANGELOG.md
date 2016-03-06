@@ -1,3 +1,19 @@
+<a name="v4.20.0"></a>
+# v4.20.0 (2016-03-06)
+
+## :sparkles: Features
+
+- Add independent scrolling setting when mouse wheeling over the minimap ([376b0b72](https://github.com/atom-minimap/minimap/commit/376b0b7230974aadb73d6609ee35c7897d13ce27), [#414](https://github.com/atom-minimap/minimap/issues/414))<br>This allow to browse a file quickly and pinpoint a location to jump to from the minimap.
+- Implement media query listener for device pixel ratio changes ([54780a4f](https://github.com/atom-minimap/minimap/commit/54780a4f52e16ed1e076bc162f224ac5d8e5cc8a))
+  <br>It should help in [#450](https://github.com/atom-minimap/minimap/issues/450) case.
+- Implement sorted decorations rendering ([8ad6a66f](https://github.com/atom-minimap/minimap/commit/8ad6a66f6d57030807ae9e1d163bfea70398c1ab), [#453](https://github.com/atom-minimap/minimap/issues/453))
+- Add a decoration order setting for each registered plugin ([b912132a](https://github.com/atom-minimap/minimap/commit/b912132a4ed6d11ba635e78740356c0314bcac22))
+- Add support for scoped settings for both editor and minimap settings ([92a3c663](https://github.com/atom-minimap/minimap/commit/92a3c663962b3fa0484a635da109828c235ee3ad), [#456](https://github.com/atom-minimap/minimap/issues/456))
+
+## :bug: Bug Fixes
+
+- Fix incorrect value for display style ([b58d35ae](https://github.com/atom-minimap/minimap/commit/b58d35aea91796d699451a295b583eab117163e2))
+
 <a name="v4.19.0"></a>
 # v4.19.0 (2015-12-24)
 
