@@ -262,7 +262,7 @@ describe('MinimapElement', () => {
         Main.registerPlugin('foo', pluginFoo)
         Main.registerPlugin('bar', pluginBar)
 
-        atom.config.set('minimap.plugins.fooDecorationsOrder', 1)
+        atom.config.set('minimap.plugins.fooDecorationsZIndex', 1)
 
         const calls = []
         spyOn(minimapElement, 'drawLineDecoration').andCallFake((d) => {
@@ -283,7 +283,7 @@ describe('MinimapElement', () => {
 
           expect(calls).toEqual(['bar', 'foo'])
 
-          atom.config.set('minimap.plugins.fooDecorationsOrder', -1)
+          atom.config.set('minimap.plugins.fooDecorationsZIndex', -1)
 
           calls.length = 0
         })
