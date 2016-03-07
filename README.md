@@ -282,6 +282,11 @@ To generate these comments you can use on these useful Atom packages:
 - [Minimap Titles](https://atom.io/packages/minimap-titles)
 - [Draw Package](https://atom.io/packages/draw-package)
 
+### Developers Documentation
+
+- [Developers Documentation](http://github.com/atom-minimap/minimap/docs/Developers Documentation.md)
+- [Minimap API Documentation](http://atom-minimap.github.io/minimap/)
+
 ### License
 
 [MIT](./LICENSE)
