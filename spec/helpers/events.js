@@ -25,7 +25,15 @@ function mouseEvent (type, properties) {
     }
   }
 
-  return new MouseEvent(type, properties)
+  const e = new MouseEvent(type, properties)
+
+  for (let k in properties) {
+    if (e[k] !== properties[k]) {
+      e[k] = properties[k]
+    }
+  }
+
+  return e
 }
 
 function touchEvent (type, touches) {
@@ -75,7 +83,12 @@ module.exports = {objectCenterCoordinates, mouseEvent}
 })
 
 module.exports.mousewheel = function (obj, deltaX = 0, deltaY = 0) {
-  obj.dispatchEvent(mouseEvent('mousewheel', {deltaX, deltaY}))
+  obj.dispatchEvent(mouseEvent('mousewheel', {
+    deltaX,
+    deltaY,
+    wheelDeltaX: deltaX,
+    wheelDeltaY: deltaY
+  }))
 }
 
 ;['touchstart', 'touchmove', 'touchend'].forEach((key) => {

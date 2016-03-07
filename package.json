@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./lib/main",
-  "version": "4.19.0",
+  "version": "4.20.0",
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
@@ -10,7 +10,7 @@
     "overview"
   ],
   "scripts": {
-    "standard": "standard lib/*.js lib/**/*.js spec/*.js spec/**/*.js",
+    "standard": "standard",
     "esdoc": "esdoc -c esdoc.json"
   },
   "contributors": [

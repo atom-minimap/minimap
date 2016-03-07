@@ -62,6 +62,15 @@ The Minimap package mimic the decoration API available on editors so that you ca
 
 While the interface is the same, some details such as the available decorations types change relatively to the editor's decorations API.
 
+
+#### Decorations Origin
+
+A plugin can and should set the plugin origin on the decorations it creates so that the Minimap can easily know which order to apply on the decorations. When not provided, the plugin origin will be inferred from the path of the function invoking the `decorateMarker` method. If the origin can't be inferred the order value will always be `0` for this decoration.
+
+```js
+minimapView.decorateMarker(marker, {type: 'line', color: '#ff0000', plugin: 'my-plugin-name'})
+```
+
 #### Scope And Styling
 
 The most important change is that decorations on the Minimap doesn't use a `class`, but rather a `scope`
@@ -111,4 +120,4 @@ Type|Description|Example
 `highlight-under`|Correspond to an editor `highlight` decoration that is rendered before rendering the line content.|
 `highlight-over`, `highlight`|Correspond to an editor `highlight` decoration that is rendered after having rendered the line content.|
 `highlight-outline`|Correspond to an editor `highlight` decoration that is rendered only as an outline in the Minimap.|
-`custom`|A decoration that is rendered on a per-line basis but for which you have the control over the render routine. A `custom` decoration must have a `render` function provided when created. This function will receive the `Decoration` object as first argument and a render context object with the following properties: <ul><li>`context`: The canvas context onto which draw the decoration</li><li>`canvasWidth`: the current width of the canvas</li><li>`canvasHeight`: the current height of the canvas</li><li>`lineHeight`: the line height in pixels scaled according to the current device pixel ratio</li><li>`charWidth`: the char width in pixels scaled according to the current device pixel ratio</li><li>`charHeight`: the char height in pixels scaled according to the current device pixel ratio</li><li>`row`: the index of the row being drawn relatively to the first rendered row</li><li>`yRow`: the y position of the row in pixels in the minimap scaled according to the current device pixel ratio</li><li>`screenRow`: the index of the row being drawn</li></ul>|
+`foreground-custom`, `background-custom`|Decorations that are rendered on a per-line basis but for which you have the control over the render routine. A custom decoration must have a `render` function provided when created. This function will receive the `Decoration` object as first argument and a render context object with the following properties: <ul><li>`context`: The canvas context onto which draw the decoration</li><li>`canvasWidth`: the current width of the canvas</li><li>`canvasHeight`: the current height of the canvas</li><li>`lineHeight`: the line height in pixels scaled according to the current device pixel ratio</li><li>`charWidth`: the char width in pixels scaled according to the current device pixel ratio</li><li>`charHeight`: the char height in pixels scaled according to the current device pixel ratio</li><li>`row`: the index of the row being drawn relatively to the first rendered row</li><li>`yRow`: the y position of the row in pixels in the minimap scaled according to the current device pixel ratio</li><li>`screenRow`: the index of the row being drawn</li></ul>|

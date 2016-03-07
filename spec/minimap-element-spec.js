@@ -1,6 +1,7 @@
 'use babel'
 
 import fs from 'fs-plus'
+import Main from '../lib/main'
 import Minimap from '../lib/minimap'
 import MinimapElement from '../lib/minimap-element'
 import {stylesheet} from './helpers/workspace'
@@ -23,6 +24,16 @@ function sleep (duration) {
   waitsFor(() => { return new Date() - t > duration })
 }
 
+function createPlugin () {
+  const plugin = {
+    active: false,
+    activatePlugin () { this.active = true },
+    deactivatePlugin () { this.active = false },
+    isActive () { return this.active }
+  }
+  return plugin
+}
+
 describe('MinimapElement', () => {
   let [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement, dir] = []
 
@@ -36,6 +47,7 @@ describe('MinimapElement', () => {
     atom.config.set('minimap.interline', 1)
     atom.config.set('minimap.textOpacity', 1)
     atom.config.set('minimap.smoothScrolling', true)
+    atom.config.set('minimap.plugins', {})
 
     MinimapElement.registerViewProvider(Minimap)
 
@@ -241,6 +253,53 @@ describe('MinimapElement', () => {
         expect(() => { nextAnimationFrame() }).not.toThrow()
       })
 
+      it('renders the decorations based on the order settings', () => {
+        atom.config.set('minimap.displayPluginsControls', true)
+
+        const pluginFoo = createPlugin()
+        const pluginBar = createPlugin()
+
+        Main.registerPlugin('foo', pluginFoo)
+        Main.registerPlugin('bar', pluginBar)
+
+        atom.config.set('minimap.plugins.fooDecorationsZIndex', 1)
+
+        const calls = []
+        spyOn(minimapElement, 'drawLineDecoration').andCallFake((d) => {
+          calls.push(d.getProperties().plugin)
+        })
+        spyOn(minimapElement, 'drawHighlightDecoration').andCallFake((d) => {
+          calls.push(d.getProperties().plugin)
+        })
+
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'line', color: '#0000FF', plugin: 'bar'})
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'highlight-under', color: '#0000FF', plugin: 'foo'})
+
+        editorElement.setScrollTop(0)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(calls).toEqual(['bar', 'foo'])
+
+          atom.config.set('minimap.plugins.fooDecorationsZIndex', -1)
+
+          calls.length = 0
+        })
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(calls).toEqual(['foo', 'bar'])
+
+          Main.unregisterPlugin('foo')
+          Main.unregisterPlugin('bar')
+        })
+      })
+
       it('renders the visible line decorations', () => {
         spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
 
@@ -295,13 +354,41 @@ describe('MinimapElement', () => {
         })
       })
 
-      it('renders the visible custom decorations', () => {
+      it('renders the visible custom foreground decorations', () => {
         spyOn(minimapElement, 'drawCustomDecoration').andCallThrough()
 
         const renderRoutine = jasmine.createSpy('renderRoutine')
 
         const properties = {
-          type: 'custom',
+          type: 'foreground-custom',
+          render: renderRoutine
+        }
+
+        minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
+        minimap.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), properties)
+        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), properties)
+
+        editorElement.setScrollTop(0)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+
+          expect(renderRoutine).toHaveBeenCalled()
+          expect(renderRoutine.calls.length).toEqual(4)
+        })
+      })
+
+      it('renders the visible custom background decorations', () => {
+        spyOn(minimapElement, 'drawCustomDecoration').andCallThrough()
+
+        const renderRoutine = jasmine.createSpy('renderRoutine')
+
+        const properties = {
+          type: 'background-custom',
           render: renderRoutine
         }
 
@@ -481,14 +568,45 @@ describe('MinimapElement', () => {
       })
 
       describe('using the mouse scrollwheel over the minimap', () => {
-        beforeEach(() => {
+        it('relays the events to the editor view', () => {
           spyOn(editorElement.component.presenter, 'setScrollTop').andCallFake(() => {})
 
           mousewheel(minimapElement, 0, 15)
+
+          expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
         })
 
-        it('relays the events to the editor view', () => {
-          expect(editorElement.component.presenter.setScrollTop).toHaveBeenCalled()
+        describe('when the independentMinimapScroll setting is true', () => {
+          let previousScrollTop
+
+          beforeEach(() => {
+            atom.config.set('minimap.independentMinimapScroll', true)
+            atom.config.set('minimap.scrollSensitivity', 0.5)
+
+            spyOn(editorElement.component.presenter, 'setScrollTop').andCallFake(() => {})
+
+            previousScrollTop = minimap.getScrollTop()
+
+            mousewheel(minimapElement, 0, -15)
+          })
+
+          it('does not relay the events to the editor', () => {
+            expect(editorElement.component.presenter.setScrollTop).not.toHaveBeenCalled()
+          })
+
+          it('scrolls the minimap instead', () => {
+            expect(minimap.getScrollTop()).not.toEqual(previousScrollTop)
+          })
+
+          it('clamp the minimap scroll into the legit bounds', () => {
+            mousewheel(minimapElement, 0, -100000)
+
+            expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
+
+            mousewheel(minimapElement, 0, 100000)
+
+            expect(minimap.getScrollTop()).toEqual(0)
+          })
         })
       })
 

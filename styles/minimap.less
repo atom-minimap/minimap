@@ -4,7 +4,8 @@ atom-notifications:empty {
   pointer-events: none
 }
 
-atom-text-editor::shadow .editor--private {
+atom-text-editor:not([mini])::shadow .editor--private,
+atom-text-editor:not([mini]).editor--private {
   order: 2;
   flex: 1 0 0;
 }
@@ -53,7 +54,7 @@ atom-text-editor::shadow, atom-text-editor, html {
 
       .minimap-visible-area {
         position: absolute;
-        display: 'block';
+        display: block;
         background-color: #888;
         opacity: .2;
         cursor: -webkit-grab;

@@ -147,10 +147,12 @@ describe('Minimap package', () => {
 
       it('creates a default config for the plugin', () => {
         expect(minimapPackage.config.plugins.properties.dummy).toBeDefined()
+        expect(minimapPackage.config.plugins.properties.dummyDecorationsZIndex).toBeDefined()
       })
 
       it('sets the corresponding config', () => {
         expect(atom.config.get('minimap.plugins.dummy')).toBeTruthy()
+        expect(atom.config.get('minimap.plugins.dummyDecorationsZIndex')).toEqual(0)
       })
 
       describe('triggering the corresponding plugin command', () => {
