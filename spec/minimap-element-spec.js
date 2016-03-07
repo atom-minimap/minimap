@@ -178,7 +178,7 @@ describe('MinimapElement', () => {
             ${stylesheet}
 
             .editor {
-              color: rgba(255,0,0,0);
+              color: rgba(255, 0, 0, 0);
               -webkit-filter: hue-rotate(180deg);
             }
           `
