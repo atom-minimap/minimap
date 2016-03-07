@@ -410,45 +410,6 @@ describe('MinimapElement', () => {
         })
       })
 
-      xdescribe('with overlay decorations', () => {
-        let [renderRoutine] = []
-
-        beforeEach(() => {
-          spyOn(minimapElement, 'drawOverlayDecoration').andCallThrough()
-
-          renderRoutine = jasmine.createSpy('renderRoutine').andCallFake(() => {
-            console.log(arguments)
-          })
-
-          const properties = {
-            type: 'overlay',
-            render: renderRoutine,
-            position: 'tail',
-            center: [10, 10],
-            size: [20, 20]
-          }
-
-          minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
-          minimap.decorateMarker(editor.markBufferRange([[8, 0], [9, 7]]), properties)
-          minimap.decorateMarker(editor.markBufferRange([[100, 3], [102, 5]]), properties)
-
-          editorElement.setScrollTop(0)
-
-          waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
-          runs(() => {
-            nextAnimationFrame()
-          })
-        })
-
-        it('calls the render routine once per decorations on screen', () => {
-          expect(minimapElement.drawOverlayDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawOverlayDecoration.calls.length).toEqual(2)
-
-          expect(renderRoutine).toHaveBeenCalled()
-          expect(renderRoutine.calls.length).toEqual(2)
-        })
-      })
-
       describe('when the editor is scrolled', () => {
         beforeEach(() => {
           editorElement.setScrollTop(2000)
