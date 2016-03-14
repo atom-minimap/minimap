@@ -1,3 +1,18 @@
+<a name="v4.21.0"></a>
+# v4.21.0 (2016-03-14)
+
+## :sparkles: Features
+
+- Implement asynchronous animated scrolling ([7477ed0b](https://github.com/atom-minimap/minimap/commit/7477ed0bf62069eeab37f85517b33c260e31e2bd))  <br>When both `scrollAnimation` and `independentMinimapScroll` settings are
+  enabled, the animation of the minimap no longer follow the animation of
+  the editor, preventing the minimap from jumping to the starting editor
+  scroll before moving towards the end scrolling position.
+- Add new custom decorations type. [See the decoration types documentation](https://github.com/atom-minimap/minimap/blob/master/docs/Developers%20Documentation.md#decorations-types) for details.
+
+## :bug: Bug Fixes
+
+- Fix plugin activation when displayPluginControls is disabled ([966eb298](https://github.com/atom-minimap/minimap/commit/966eb2986c85ba2caaa52718aa2a092d55cbf431), [#458](https://github.com/atom-minimap/minimap/issues/458))
+
 <a name="v4.20.0"></a>
 # v4.20.0 (2016-03-06)
 
