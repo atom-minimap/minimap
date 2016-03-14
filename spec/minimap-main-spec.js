@@ -112,126 +112,193 @@ describe('Minimap package', () => {
   describe('plugins', () => {
     let [registerHandler, unregisterHandler, plugin] = []
 
-    beforeEach(() => {
-      atom.config.set('minimap.displayPluginsControls', true)
-      atom.config.set('minimap.plugins.dummy', undefined)
-
-      plugin = {
-        active: false,
-        activatePlugin () { this.active = true },
-        deactivatePlugin () { this.active = false },
-        isActive () { return this.active }
-      }
-
-      spyOn(plugin, 'activatePlugin').andCallThrough()
-      spyOn(plugin, 'deactivatePlugin').andCallThrough()
-
-      registerHandler = jasmine.createSpy('register handler')
-      unregisterHandler = jasmine.createSpy('unregister handler')
-    })
-
-    describe('when registered', () => {
+    describe('when the displayPluginsControls setting is enabled', () => {
       beforeEach(() => {
-        minimapPackage.onDidAddPlugin(registerHandler)
-        minimapPackage.onDidRemovePlugin(unregisterHandler)
-        minimapPackage.registerPlugin('dummy', plugin)
+        atom.config.set('minimap.displayPluginsControls', true)
+        atom.config.set('minimap.plugins.dummy', undefined)
+
+        plugin = {
+          active: false,
+          activatePlugin () { this.active = true },
+          deactivatePlugin () { this.active = false },
+          isActive () { return this.active }
+        }
+
+        spyOn(plugin, 'activatePlugin').andCallThrough()
+        spyOn(plugin, 'deactivatePlugin').andCallThrough()
+
+        registerHandler = jasmine.createSpy('register handler')
+        unregisterHandler = jasmine.createSpy('unregister handler')
       })
 
-      it('makes the plugin available in the minimap', () => {
-        expect(minimapPackage.plugins['dummy']).toBe(plugin)
-      })
-
-      it('emits an event', () => {
-        expect(registerHandler).toHaveBeenCalled()
-      })
-
-      it('creates a default config for the plugin', () => {
-        expect(minimapPackage.config.plugins.properties.dummy).toBeDefined()
-        expect(minimapPackage.config.plugins.properties.dummyDecorationsZIndex).toBeDefined()
-      })
-
-      it('sets the corresponding config', () => {
-        expect(atom.config.get('minimap.plugins.dummy')).toBeTruthy()
-        expect(atom.config.get('minimap.plugins.dummyDecorationsZIndex')).toEqual(0)
-      })
-
-      describe('triggering the corresponding plugin command', () => {
+      describe('when registered', () => {
         beforeEach(() => {
-          atom.commands.dispatch(workspaceElement, 'minimap:toggle-dummy')
+          minimapPackage.onDidAddPlugin(registerHandler)
+          minimapPackage.onDidRemovePlugin(unregisterHandler)
+          minimapPackage.registerPlugin('dummy', plugin)
         })
 
-        it('receives a deactivation call', () => {
-          expect(plugin.deactivatePlugin).toHaveBeenCalled()
-        })
-      })
-
-      describe('and then unregistered', () => {
-        beforeEach(() => {
-          minimapPackage.unregisterPlugin('dummy')
-        })
-
-        it('has been unregistered', () => {
-          expect(minimapPackage.plugins['dummy']).toBeUndefined()
+        it('makes the plugin available in the minimap', () => {
+          expect(minimapPackage.plugins['dummy']).toBe(plugin)
         })
 
         it('emits an event', () => {
-          expect(unregisterHandler).toHaveBeenCalled()
+          expect(registerHandler).toHaveBeenCalled()
         })
 
-        describe('when the config is modified', () => {
+        it('creates a default config for the plugin', () => {
+          expect(minimapPackage.config.plugins.properties.dummy).toBeDefined()
+          expect(minimapPackage.config.plugins.properties.dummyDecorationsZIndex).toBeDefined()
+        })
+
+        it('sets the corresponding config', () => {
+          expect(atom.config.get('minimap.plugins.dummy')).toBeTruthy()
+          expect(atom.config.get('minimap.plugins.dummyDecorationsZIndex')).toEqual(0)
+        })
+
+        describe('triggering the corresponding plugin command', () => {
+          beforeEach(() => {
+            atom.commands.dispatch(workspaceElement, 'minimap:toggle-dummy')
+          })
+
+          it('receives a deactivation call', () => {
+            expect(plugin.deactivatePlugin).toHaveBeenCalled()
+          })
+        })
+
+        describe('and then unregistered', () => {
+          beforeEach(() => {
+            minimapPackage.unregisterPlugin('dummy')
+          })
+
+          it('has been unregistered', () => {
+            expect(minimapPackage.plugins['dummy']).toBeUndefined()
+          })
+
+          it('emits an event', () => {
+            expect(unregisterHandler).toHaveBeenCalled()
+          })
+
+          describe('when the config is modified', () => {
+            beforeEach(() => {
+              atom.config.set('minimap.plugins.dummy', false)
+            })
+
+            it('does not activates the plugin', () => {
+              expect(plugin.deactivatePlugin).not.toHaveBeenCalled()
+            })
+          })
+        })
+
+        describe('on minimap deactivation', () => {
+          beforeEach(() => {
+            expect(plugin.active).toBeTruthy()
+            minimapPackage.deactivate()
+          })
+
+          it('deactivates all the plugins', () => {
+            expect(plugin.active).toBeFalsy()
+          })
+        })
+      })
+
+      describe('when the config for it is false', () => {
+        beforeEach(() => {
+          atom.config.set('minimap.plugins.dummy', false)
+          minimapPackage.registerPlugin('dummy', plugin)
+        })
+
+        it('does not receive an activation call', () => {
+          expect(plugin.activatePlugin).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('the registered plugin', () => {
+        beforeEach(() => {
+          minimapPackage.registerPlugin('dummy', plugin)
+        })
+
+        it('receives an activation call', () => {
+          expect(plugin.activatePlugin).toHaveBeenCalled()
+        })
+
+        it('activates the plugin', () => {
+          expect(plugin.active).toBeTruthy()
+        })
+
+        describe('when the config is modified after registration', () => {
           beforeEach(() => {
             atom.config.set('minimap.plugins.dummy', false)
           })
 
-          it('does not activates the plugin', () => {
-            expect(plugin.deactivatePlugin).not.toHaveBeenCalled()
+          it('receives a deactivation call', () => {
+            expect(plugin.deactivatePlugin).toHaveBeenCalled()
           })
         })
       })
-
-      describe('on minimap deactivation', () => {
-        beforeEach(() => {
-          expect(plugin.active).toBeTruthy()
-          minimapPackage.deactivate()
-        })
-
-        it('deactivates all the plugins', () => {
-          expect(plugin.active).toBeFalsy()
-        })
-      })
     })
 
-    describe('when the config for it is false', () => {
+    describe('when the displayPluginsControls setting is disabled', () => {
       beforeEach(() => {
-        atom.config.set('minimap.plugins.dummy', false)
-        minimapPackage.registerPlugin('dummy', plugin)
+        atom.config.set('minimap.displayPluginsControls', false)
+        atom.config.set('minimap.plugins.dummy', undefined)
+
+        plugin = {
+          active: false,
+          activatePlugin () { this.active = true },
+          deactivatePlugin () { this.active = false },
+          isActive () { return this.active }
+        }
+
+        spyOn(plugin, 'activatePlugin').andCallThrough()
+        spyOn(plugin, 'deactivatePlugin').andCallThrough()
+
+        registerHandler = jasmine.createSpy('register handler')
+        unregisterHandler = jasmine.createSpy('unregister handler')
       })
 
-      it('does not receive an activation call', () => {
-        expect(plugin.activatePlugin).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('the registered plugin', () => {
-      beforeEach(() => {
-        minimapPackage.registerPlugin('dummy', plugin)
-      })
-
-      it('receives an activation call', () => {
-        expect(plugin.activatePlugin).toHaveBeenCalled()
-      })
-
-      it('activates the plugin', () => {
-        expect(plugin.active).toBeTruthy()
-      })
-
-      describe('when the config is modified after registration', () => {
+      describe('when registered', () => {
         beforeEach(() => {
-          atom.config.set('minimap.plugins.dummy', false)
+          minimapPackage.onDidAddPlugin(registerHandler)
+          minimapPackage.onDidRemovePlugin(unregisterHandler)
+          minimapPackage.registerPlugin('dummy', plugin)
         })
 
-        it('receives a deactivation call', () => {
-          expect(plugin.deactivatePlugin).toHaveBeenCalled()
+        it('makes the plugin available in the minimap', () => {
+          expect(minimapPackage.plugins['dummy']).toBe(plugin)
+        })
+
+        it('emits an event', () => {
+          expect(registerHandler).toHaveBeenCalled()
+        })
+
+        it('still activates the package', () => {
+          expect(plugin.isActive()).toBeTruthy()
+        })
+
+        describe('and then unregistered', () => {
+          beforeEach(() => {
+            minimapPackage.unregisterPlugin('dummy')
+          })
+
+          it('has been unregistered', () => {
+            expect(minimapPackage.plugins['dummy']).toBeUndefined()
+          })
+
+          it('emits an event', () => {
+            expect(unregisterHandler).toHaveBeenCalled()
+          })
+        })
+
+        describe('on minimap deactivation', () => {
+          beforeEach(() => {
+            expect(plugin.active).toBeTruthy()
+            minimapPackage.deactivate()
+          })
+
+          it('deactivates all the plugins', () => {
+            expect(plugin.active).toBeFalsy()
+          })
         })
       })
     })
