@@ -660,6 +660,8 @@ describe('MinimapElement', () => {
       })
 
       describe('pressing the mouse on the minimap canvas (without scroll animation)', () => {
+        let canvas
+
         beforeEach(() => {
           let t = 0
           spyOn(minimapElement, 'getTime').andCallFake(() => {
@@ -672,15 +674,29 @@ describe('MinimapElement', () => {
           atom.config.set('minimap.scrollAnimation', false)
 
           canvas = minimapElement.getFrontCanvas()
-          mousedown(canvas)
         })
 
         it('scrolls the editor to the line below the mouse', () => {
-          expect(editorElement.getScrollTop()).toBeGreaterThan(380)
+          mousedown(canvas)
+          expect(editorElement.getScrollTop()).toBeCloseTo(480)
+        })
+
+        describe('when independentMinimapScroll setting is enabled', () => {
+          beforeEach(() => {
+            minimap.setScrollTop(1000)
+            atom.config.set('minimap.independentMinimapScroll', true)
+          })
+
+          it('scrolls the editor to the line below the mouse', () => {
+            mousedown(canvas)
+            expect(editorElement.getScrollTop()).toBeCloseTo(480)
+          })
         })
       })
 
       describe('pressing the mouse on the minimap canvas (with scroll animation)', () => {
+        let canvas
+
         beforeEach(() => {
           let t = 0
           spyOn(minimapElement, 'getTime').andCallFake(() => {
@@ -694,27 +710,59 @@ describe('MinimapElement', () => {
           atom.config.set('minimap.scrollAnimationDuration', 300)
 
           canvas = minimapElement.getFrontCanvas()
-          mousedown(canvas)
-
-          waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
         })
 
         it('scrolls the editor gradually to the line below the mouse', () => {
+          mousedown(canvas)
+          waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
           // wait until all animations run out
           waitsFor(() => {
-            // Should be 400 on stable and 480 on beta.
-            // I'm still looking for a reason.
             nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
-            return editorElement.getScrollTop() >= 380
+            return editorElement.getScrollTop() >= 480
           })
         })
 
         it('stops the animation if the text editor is destroyed', () => {
-          editor.destroy()
+          mousedown(canvas)
+          waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
 
-          nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
+          runs(() => {
+            editor.destroy()
 
-          expect(nextAnimationFrame === noAnimationFrame)
+            nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
+
+            expect(nextAnimationFrame === noAnimationFrame)
+          })
+        })
+
+        describe('when independentMinimapScroll setting is enabled', () => {
+          beforeEach(() => {
+            minimap.setScrollTop(1000)
+            atom.config.set('minimap.independentMinimapScroll', true)
+          })
+
+          it('scrolls the editor gradually to the line below the mouse', () => {
+            mousedown(canvas)
+            waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+            // wait until all animations run out
+            waitsFor(() => {
+              nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
+              return editorElement.getScrollTop() >= 480
+            })
+          })
+
+          it('stops the animation if the text editor is destroyed', () => {
+            mousedown(canvas)
+            waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+
+            runs(() => {
+              editor.destroy()
+
+              nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
+
+              expect(nextAnimationFrame === noAnimationFrame)
+            })
+          })
         })
       })
 
