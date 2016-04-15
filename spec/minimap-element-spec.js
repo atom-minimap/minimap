@@ -318,6 +318,24 @@ describe('MinimapElement', () => {
         })
       })
 
+      it('renders the visible gutter decorations', () => {
+        spyOn(minimapElement, 'drawGutterDecoration').andCallThrough()
+
+        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), {type: 'gutter', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), {type: 'gutter', color: '#0000FF'})
+        minimap.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), {type: 'gutter', color: '#0000FF'})
+
+        editorElement.setScrollTop(0)
+
+        waitsFor(() => { return nextAnimationFrame !== noAnimationFrame })
+        runs(() => {
+          nextAnimationFrame()
+
+          expect(minimapElement.drawGutterDecoration).toHaveBeenCalled()
+          expect(minimapElement.drawGutterDecoration.calls.length).toEqual(2)
+        })
+      })
+
       it('renders the visible highlight decorations', () => {
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
 
