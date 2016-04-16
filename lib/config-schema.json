@@ -97,5 +97,10 @@
     "type":"boolean",
     "default":false,
     "description":"When enabled the text editor content will be able to flow below the minimap."
+  },
+  "ignoreWhitespacesInTokens": {
+    "type":"boolean",
+    "default":false,
+    "description":"When enabled, text editor tokens are rendered as plain blocks, with no regards to the whitespaces they contains."
   }
 }
