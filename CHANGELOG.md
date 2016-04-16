@@ -1,3 +1,16 @@
+<a name="v4.22.0"></a>
+# v4.22.0 (2016-04-16)
+
+## :sparkles: Features
+
+- Add ignore whitespaces in tokens setting ([68c9826e](https://github.com/atom-minimap/minimap/commit/68c9826e92ddca6f35600a4f12aa1a56c30b1aaf), [#465](https://github.com/atom-minimap/minimap/issues/465))
+- Add a gutter decoration type ([5ac833ed](https://github.com/atom-minimap/minimap/commit/5ac833ed1f9b02fff2cd51c376e2ceacd3aedd1f))
+
+## :bug: Bug Fixes
+
+- Fix minimap size in absolute mode with adjustMinimapToSoftWrap enabled ([c7fb8acc](https://github.com/atom-minimap/minimap/commit/c7fb8acc62c306ca6841e7fdb311d6b81555874c))
+
+
 <a name="v4.21.0"></a>
 # v4.21.0 (2016-03-14)
 
