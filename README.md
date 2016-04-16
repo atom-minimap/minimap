@@ -101,6 +101,14 @@ The opacity used to render the line text in the Minimap. `(default=0.6)`
 ---|---
 ![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-default.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/text-opacity-1.png?raw=true)
 
+#### Ignore Whitespaces In Tokens
+
+When enabled, text editor tokens are rendered as plain blocks, with no regards to the whitespaces they contains. `(default=false)`
+
+`false`|`true`
+---|---
+![](https://github.com/atom-minimap/minimap/blob/master/resources/with-whitespaces.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/without-whitespaces.png?raw=true)
+
 ### Display Plugins Controls
 
 If checked, the Minimap plugins can be activated/deactivated from the Minimap settings view and a quick settings dropdown will be available on the top right corner of the Minimap. `(default=true)`

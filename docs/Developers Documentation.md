@@ -117,6 +117,7 @@ Another non-trivial change is the list of available decoration's type. At the ti
 Type|Description|Example
 ---|---|---
 `line`|Same as the editor one, it colors the line background with a color extracted from the decoration scope.|![](https://github.com/atom-minimap/minimap/blob/master/resources/line-decorations.png?raw=true)
+`gutter`|It draws a thin line on the left side of the minimap with a color extracted from the decoration scope.|![](https://github.com/atom-minimap/minimap/blob/master/resources/gutter-decorations.png?raw=true)
 `highlight-under`|Correspond to an editor `highlight` decoration that is rendered before rendering the line content.|![](https://github.com/atom-minimap/minimap/blob/master/resources/highlight-under-decorations.png?raw=true)
 `highlight-over`, `highlight`|Correspond to an editor `highlight` decoration that is rendered after having rendered the line content.|![](https://github.com/atom-minimap/minimap/blob/master/resources/highlight-over-decorations.png?raw=true)
 `highlight-outline`|Correspond to an editor `highlight` decoration that is rendered only as an outline in the Minimap.|![](https://github.com/atom-minimap/minimap/blob/master/resources/outline-decorations.png?raw=true)
