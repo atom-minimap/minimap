@@ -1,3 +1,10 @@
+<a name="v4.22.1"></a>
+# v4.22.1 (2016-04-16)
+
+## :bug: Bug Fixes
+
+- Fix requesting a repaint when the minimap is not attached yet ([07dbde8c](https://github.com/atom-minimap/minimap/commit/07dbde8c83163f6cc0e1f5af99ac292792a7c5f3))
+
 <a name="v4.22.0"></a>
 # v4.22.0 (2016-04-16)
 
