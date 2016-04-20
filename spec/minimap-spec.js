@@ -120,7 +120,7 @@ describe('Minimap', () => {
     it('adjust the scrolling ratio', () => {
       editorElement.setScrollTop(editorElement.getScrollHeight())
 
-      let maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.displayBuffer.getLineHeightInPixels())
+      let maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
 
       expect(minimap.getTextEditorScrollRatio()).toEqual(editorElement.getScrollTop() / maxScrollTop)
     })
