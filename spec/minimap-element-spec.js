@@ -518,7 +518,7 @@ describe('MinimapElement', () => {
 
             expect(minimapElement.drawLines).toHaveBeenCalled()
             expect(minimapElement.drawLines.argsForCall[0][0]).toEqual(100)
-            expect(minimapElement.drawLines.argsForCall[0][1]).toEqual(101)
+            expect(minimapElement.drawLines.argsForCall[0][1]).toEqual(102)
           })
         })
       })
