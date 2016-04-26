@@ -1866,7 +1866,7 @@ describe('MinimapElement', () => {
         })
 
         it('creates one list item for each registered plugin', () => {
-          expect(quickSettingsElement.querySelectorAll('li').length).toEqual(5)
+          expect(quickSettingsElement.querySelectorAll('li').length).toEqual(6)
         })
 
         it('selects the first item of the list', () => {
@@ -1920,6 +1920,22 @@ describe('MinimapElement', () => {
               expect(atom.config.get('minimap.absoluteMode')).toEqual(!initial)
             })
           })
+
+          describe('on the adjust absolute mode height item', () => {
+            let [initial] = []
+            beforeEach(() => {
+              initial = atom.config.get('minimap.adjustAbsoluteModeHeight')
+              atom.commands.dispatch(quickSettingsElement, 'core:move-down')
+              atom.commands.dispatch(quickSettingsElement, 'core:move-down')
+              atom.commands.dispatch(quickSettingsElement, 'core:move-down')
+              atom.commands.dispatch(quickSettingsElement, 'core:move-down')
+              atom.commands.dispatch(quickSettingsElement, 'core:confirm')
+            })
+
+            it('toggles the code highlights on the minimap element', () => {
+              expect(atom.config.get('minimap.adjustAbsoluteModeHeight')).toEqual(!initial)
+            })
+          })
         })
 
         describe('core:move-down', () => {
@@ -1963,6 +1979,7 @@ describe('MinimapElement', () => {
 
           describe('reaching a separator', () => {
             beforeEach(() => {
+              atom.commands.dispatch(quickSettingsElement, 'core:move-up')
               atom.commands.dispatch(quickSettingsElement, 'core:move-up')
               atom.commands.dispatch(quickSettingsElement, 'core:move-up')
             })
