@@ -1,3 +1,12 @@
+<a name="v4.23.0"></a>
+# v4.23.0 (2016-04-26)
+
+## :sparkles: Features
+
+- Add a quick setting control to switch the adjust absolute mode height setting ([94d3be1a](https://github.com/atom-minimap/minimap/commit/94d3be1aaf52f85b587e8082d49542a0ce08b11c))
+- Add a news setting to adjust the height of canvases in absolute mode ([17e02f42](https://github.com/atom-minimap/minimap/commit/17e02f427cc36c010b9c87febbb776fcbeffa0ca), [#344](https://github.com/atom-minimap/minimap/issues/344))
+- Add support for incoming display layer feature in Atom ([ae7b9bc8](https://github.com/atom-minimap/minimap/commit/ae7b9bc88eb1785a564181eafa46f361244d979c), [#474](https://github.com/atom-minimap/minimap/pull/474))
+
 <a name="v4.22.1"></a>
 # v4.22.1 (2016-04-16)
 
