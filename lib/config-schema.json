@@ -98,6 +98,11 @@
     "default":false,
     "description":"When enabled the text editor content will be able to flow below the minimap."
   },
+  "adjustAbsoluteModeHeight":{
+    "type":"boolean",
+    "default":false,
+    "description":"When enabled and `Absolute Mode` is also enabled, the minimap height will be adjusted to only take the space required by the text editor content, leaving the space below triggering mouse events on the text editor. **Be aware this can have some impact on performances as the minimap canvases will be resized every time a change in the editor make its height change.**"
+  },
   "ignoreWhitespacesInTokens": {
     "type":"boolean",
     "default":false,

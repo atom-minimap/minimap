@@ -1495,6 +1495,44 @@ describe('MinimapElement', () => {
           expect(minimapElement.classList.contains('left')).toBeTruthy()
         })
       })
+
+      describe('when minimap.adjustAbsoluteModeHeight setting is true', () => {
+        beforeEach(() => {
+          atom.config.set('minimap.adjustAbsoluteModeHeight', true)
+        })
+        describe('when the content of the minimap is smaller that the editor height', () => {
+          beforeEach(() => {
+            editor.setText(smallSample)
+            editorElement.setHeight(400)
+            minimapElement.measureHeightAndWidth()
+
+            waitsFor('a new animation frame request', () => {
+              return nextAnimationFrame !== noAnimationFrame
+            })
+
+            runs(() => nextAnimationFrame())
+          })
+          it('adjusts the canvas height to the minimap height', () => {
+            expect(minimapElement.shadowRoot.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
+          })
+
+          describe('when the content is modified', () => {
+            beforeEach(() => {
+              editor.insertText('foo\n\nbar\n')
+
+              waitsFor('a new animation frame request', () => {
+                return nextAnimationFrame !== noAnimationFrame
+              })
+
+              runs(() => nextAnimationFrame())
+            })
+
+            it('adjusts the canvas height to the new minimap height', () => {
+              expect(minimapElement.shadowRoot.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
+            })
+          })
+        })
+      })
     })
 
     describe('when the smoothScrolling setting is disabled', () => {
