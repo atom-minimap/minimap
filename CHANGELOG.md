@@ -1,3 +1,10 @@
+<a name="v4.23.2"></a>
+# v4.23.2 (2016-04-27)
+
+## :bug: Bug Fixes
+
+- Fix decoration event emitted when the text editor is destroyed ([e6aa7433](https://github.com/atom-minimap/minimap/commit/e6aa74339e2da1b90778bc0cc3fb7489e4509fb6), [#477](https://github.com/atom-minimap/minimap/issues/477))
+
 <a name="v4.23.1"></a>
 # v4.23.1 (2016-04-26)
 
