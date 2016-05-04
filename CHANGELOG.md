@@ -1,3 +1,8 @@
+<a name="v4.23.3"></a>
+# v4.23.3 (2016-05-04)
+
+Little refactor to support upcoming Atom text editor feature.
+
 <a name="v4.23.2"></a>
 # v4.23.2 (2016-04-27)
 
