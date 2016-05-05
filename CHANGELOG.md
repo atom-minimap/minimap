@@ -1,3 +1,10 @@
+<a name="v4.23.4"></a>
+# v4.23.4 (2016-05-05)
+
+## :bug: Bug Fixes
+
+- Fix invisible characters improperly matched ([fee318ad](https://github.com/atom-minimap/minimap/commit/fee318ade62f9800a188621531b82b4331855cfc))
+
 <a name="v4.23.3"></a>
 # v4.23.3 (2016-05-04)
 
