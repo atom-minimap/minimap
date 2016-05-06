@@ -517,8 +517,10 @@ describe('MinimapElement', () => {
             nextAnimationFrame()
 
             expect(minimapElement.drawLines).toHaveBeenCalled()
-            expect(minimapElement.drawLines.argsForCall[0][0]).toEqual(100)
-            expect(minimapElement.drawLines.argsForCall[0][1]).toEqual(102)
+
+            const [firstLine, lastLine] = minimapElement.drawLines.argsForCall[0]
+            expect(firstLine).toEqual(100)
+            expect(lastLine === 102 || lastLine === 111).toBeTruthy()
           })
         })
       })
