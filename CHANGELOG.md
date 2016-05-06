@@ -1,3 +1,11 @@
+<a name="v4.23.5"></a>
+# v4.23.5 (2016-05-06)
+
+## :bug: Bug Fixes
+
+- Fix missing canvas scaling without smooth scrolling ([bff59ea5](https://github.com/atom-minimap/minimap/commit/bff59ea568f2d19b8739fefbd9540fe0fae5931f), [#480](https://github.com/atom-minimap/minimap/issues/480))
+- Fix regression when reading tokens from line in old API ([a10def7c](https://github.com/atom-minimap/minimap/commit/a10def7ccf773e055cfad4be0779cebe74273a66))
+
 <a name="v4.23.4"></a>
 # v4.23.4 (2016-05-05)
 
