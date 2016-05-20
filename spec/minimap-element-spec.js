@@ -125,6 +125,10 @@ describe('MinimapElement', () => {
       window.requestAnimationFrame = requestAnimationFrameSafe
     })
 
+    it('adds a with-minimap attribute on the text editor element', () => {
+      expect(editorElement.hasAttribute('with-minimap')).toBeTruthy()
+    })
+
     it('takes the height of the editor', () => {
       expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
 
@@ -142,6 +146,14 @@ describe('MinimapElement', () => {
 
     it('requests an update', () => {
       expect(minimapElement.frameRequested).toBeTruthy()
+    })
+
+    describe('when detached', () => {
+      it('removes the attribute from the editor', () => {
+        minimapElement.detach()
+
+        expect(editorElement.hasAttribute('with-minimap')).toBeFalsy()
+      })
     })
 
     //     ######   ######   ######
