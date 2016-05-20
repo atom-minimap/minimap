@@ -202,8 +202,8 @@ The Minimap package doesn't provide any default keybindings. But you can define 
 If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
 
 ```css
-atom-text-editor .vertical-scrollbar,
-atom-text-editor::shadow .vertical-scrollbar {
+atom-text-editor[with-minimap] .vertical-scrollbar,
+atom-text-editor[with-minimap]::shadow .vertical-scrollbar {
   opacity: 0;
   width: 0;
 }
