@@ -35,6 +35,11 @@
     "default":true,
     "description":"If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value."
   },
+  "adjustMinimapWidthOnlyIfSmaller": {
+    "type":"boolean",
+    "default":true,
+    "description":"If this option and `adjustMinimapWidthToSoftWrap` are enabled the minimap width will never go past the limit sets by CSS. On the other hand, when disabled the minimap will expand to honor the preferred line width."
+  },
   "devicePixelRatioRounding":{
     "type":"boolean",
     "default":true,

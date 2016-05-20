@@ -47,6 +47,7 @@ describe('MinimapElement', () => {
     atom.config.set('minimap.interline', 1)
     atom.config.set('minimap.textOpacity', 1)
     atom.config.set('minimap.smoothScrolling', true)
+    atom.config.set('minimap.adjustMinimapWidthOnlyIfSmaller', true)
     atom.config.set('minimap.plugins', {})
 
     MinimapElement.registerViewProvider(Minimap)
@@ -1409,6 +1410,25 @@ describe('MinimapElement', () => {
         it('adjusts the width of the minimap', () => {
           expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.offsetWidth / 10, -1)
           expect(minimapElement.style.width).toEqual('')
+        })
+      })
+
+      describe('when adjustMinimapWidthOnlyIfSmaller is disabled', () => {
+        describe('and when preferredLineLength >= 16384', () => {
+          beforeEach(() => {
+            atom.config.set('minimap.adjustMinimapWidthOnlyIfSmaller', false)
+            atom.config.set('editor.preferredLineLength', 16384)
+
+            waitsFor('minimap frame requested', () => {
+              return minimapElement.frameRequested
+            })
+            runs(() => { nextAnimationFrame() })
+          })
+
+          it('adjusts the width of the minimap', () => {
+            expect(minimapElement.offsetWidth).toBeCloseTo(16384 * 2)
+            expect(minimapElement.style.width).toEqual(16384 * 2 + 'px')
+          })
         })
       })
     })
