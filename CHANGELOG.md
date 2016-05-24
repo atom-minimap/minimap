@@ -1,3 +1,10 @@
+<a name="v4.24.1"></a>
+# v4.24.1 (2016-05-24)
+
+## :bug: Bug Fixes
+
+- Fix disappearing minimap on master ([9b7425f8](https://github.com/atom-minimap/minimap/commit/9b7425f88b500c9cf8ea7726a735beefbe42f560))
+
 <a name="v4.24.0"></a>
 # v4.24.0 (2016-05-21)
 
