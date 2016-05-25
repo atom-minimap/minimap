@@ -1,3 +1,11 @@
+<a name="v4.24.2"></a>
+# v4.24.2 (2016-05-25)
+
+## :bug: Bug Fixes
+
+- Set the with-minimap attribute in attached callback ([478e5ef7](https://github.com/atom-minimap/minimap/commit/478e5ef75b6652329f7696ffffb03b56d6ac4066), [#487](https://github.com/atom-minimap/minimap/issues/487))
+- Add another guard when accessing tokenLinesForScreenRows ([80fd6533](https://github.com/atom-minimap/minimap/commit/80fd65332e396b818c67b1387742c2ddeb361c21))
+
 <a name="v4.24.1"></a>
 # v4.24.1 (2016-05-24)
 
