@@ -65,12 +65,22 @@ atom-text-editor::shadow, atom-text-editor, html {
       .minimap-visible-area {
         position: absolute;
         display: block;
-        background-color: #888;
-        opacity: .2;
         cursor: -webkit-grab;
+
+        border-left: 0px solid rgba(127, 127, 127, 0.1);
 
         &:active {
           cursor: -webkit-grabbing;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(127, 127, 127, 0.2);
         }
       }
 
