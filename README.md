@@ -233,10 +233,9 @@ atom-text-editor::shadow atom-text-editor-minimap {
 ![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true)
 
 ```css
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
-  background-color: green;
-  opacity: .5;
+atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area::after,
+atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area::after {
+  background-color: rgba(0, 255, 0, 0.5);
 }
 ```
 
