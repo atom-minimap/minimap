@@ -1,3 +1,10 @@
+<a name="v4.24.3"></a>
+# v4.24.3 (2016-05-27)
+
+## :bug: Bug Fixes
+
+- Use a border to offset the visible area instead of a transform ([8e65b938](https://github.com/atom-minimap/minimap/commit/8e65b9384dd226670e6054cb45bec36a43dcb4e8), [#484](https://github.com/atom-minimap/minimap/issues/484))
+
 <a name="v4.24.2"></a>
 # v4.24.2 (2016-05-25)
 
