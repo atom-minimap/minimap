@@ -246,13 +246,15 @@ describe('MinimapElement', () => {
       })
 
       it('sets the visible area width and height', () => {
-        expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth)
+        expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth + Math.floor(minimap.getTextEditorScaledScrollLeft()))
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorScaledHeight(), 0)
       })
 
       it('sets the visible visible area offset', () => {
         expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
-        expect(realOffsetLeft(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollLeft(), 0)
+
+        expect(Math.floor(parseFloat(visibleArea.style.borderLeftWidth)))
+        .toEqual(Math.floor(minimap.getTextEditorScaledScrollLeft()))
       })
 
       it('offsets the canvas when the scroll does not match line height', () => {
@@ -480,7 +482,7 @@ describe('MinimapElement', () => {
         it('updates the visible area', () => {
           expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
 
-          expect(parseFloat(visibleArea.style.borderLeftWidth))
+          expect(Math.floor(parseFloat(visibleArea.style.borderLeftWidth)))
           .toEqual(Math.floor(minimap.getTextEditorScaledScrollLeft()))
         })
       })
