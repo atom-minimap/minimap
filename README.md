@@ -308,7 +308,7 @@ Put the following code in your user stylesheet to make your minimap look like Su
 It's more easy to view when you have code hightlight in minimap.
 
 `Default State (Hidden)`|`Hover`|`Only display Visible area when hover or click/drag event.`
----|--|:---:
+---|---|:---:
 ![](https://github.com/machinavn/minimap/blob/master/resources/on-default-minimap.png?raw=true)|![](https://github.com/machinavn/minimap/blob/master/resources/on-hover-minimap.png?raw=true)|![](https://github.com/machinavn/minimap/blob/master/resources/on-scroll-minimap.png?raw=true)
 
 ```css
