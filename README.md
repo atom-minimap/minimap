@@ -309,7 +309,7 @@ It's more easy to view when you have code hightlight in minimap.
 
 `Default State (Hidden)`|`Hover`|`Only display Visible area when hover or click/drag event.`
 ---|--|:---:
-![](https://github.com/atom-minimap/minimap/blob/master/resources/normal-mode.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/absolute-mode.png?raw=true)|![](https://github.com/atom-minimap/minimap/blob/master/resources/absolute-mode.png?raw=true)
+![](https://github.com/machinavn/minimap/blob/master/resources/on-default-minimap.png?raw=true)|![](https://github.com/machinavn/minimap/blob/master/resources/on-hover-minimap.png?raw=true)|![](https://github.com/machinavn/minimap/blob/master/resources/on-scroll-minimap.png?raw=true)
 
 ```css
 atom-text-editor,
