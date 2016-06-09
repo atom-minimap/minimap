@@ -1,3 +1,10 @@
+<a name="v4.24.4"></a>
+# v4.24.4 (2016-06-09)
+
+## :bug: Bug Fixes
+
+- Fix infinite loop in scroll top listener ([46b6f1fc](https://github.com/atom-minimap/minimap/commit/46b6f1fc894f22ec8a0c40cb93bef6df616c71b8), [#491](https://github.com/atom-minimap/minimap/issues/491))
+
 <a name="v4.24.3"></a>
 # v4.24.3 (2016-05-27)
 
