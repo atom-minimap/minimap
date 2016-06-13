@@ -333,8 +333,6 @@ html {
                     cursor: default;
                 } // Change cursor when dragging.
             }
-            
-            }
         }
         &:hover::shadow {
             .minimap-visible-area {
