@@ -1,3 +1,10 @@
+<a name="v4.24.5"></a>
+# v4.24.5 (2016-06-14)
+
+## :bug: Bug Fixes
+
+- Fix invalid invisible regexp when show invisible is disabled ([5b762a54](https://github.com/atom-minimap/minimap/commit/5b762a540bbc812df583fb67ec58c3b27432c6c7), [#502](https://github.com/atom-minimap/minimap/issues/502))
+
 <a name="v4.24.4"></a>
 # v4.24.4 (2016-06-09)
 
