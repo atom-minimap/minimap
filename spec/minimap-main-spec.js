@@ -64,7 +64,7 @@ describe('Minimap package', () => {
         expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
       })
 
-      fdescribe('and reactivated with a remaining minimap in the DOM', () => {
+      describe('and reactivated with a remaining minimap in the DOM', () => {
         beforeEach(() => {
           const m = new Minimap({textEditor: editor})
           const v = atom.views.getView(m)
