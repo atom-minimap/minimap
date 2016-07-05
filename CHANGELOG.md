@@ -1,3 +1,11 @@
+<a name="v4.24.7"></a>
+# v4.24.7 (2016-07-05)
+
+## :bug: Bug Fixes
+
+- Fix minimal width badly measured after a split pane ([1f97824e](https://github.com/atom-minimap/minimap/commit/1f97824e23706d10fb0c6e35da9000388d20ef46), [#497](https://github.com/atom-minimap/minimap/issues/497))
+- Add guard against duplicated minimap ([d782ed65](https://github.com/atom-minimap/minimap/commit/d782ed650775d82d32e3cd0c18105ca7e82acb59), [#504](https://github.com/atom-minimap/minimap/issues/504))
+
 <a name="v4.24.5"></a>
 # v4.24.5 (2016-06-14)
 
