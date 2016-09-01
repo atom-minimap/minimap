@@ -2,7 +2,6 @@
 
 import './helpers/workspace'
 import Minimap from '../lib/minimap'
-import MinimapElement from '../lib/minimap-element'
 
 describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
@@ -12,8 +11,6 @@ describe('Minimap package', () => {
 
     workspaceElement = atom.views.getView(atom.workspace)
     jasmine.attachToDOM(workspaceElement)
-
-    MinimapElement.registerViewProvider(Minimap)
 
     waitsForPromise(() => {
       return atom.workspace.open('sample.coffee')
@@ -169,8 +166,8 @@ describe('Minimap package', () => {
         })
 
         it('creates a default config for the plugin', () => {
-          expect(minimapPackage.config.plugins.properties.dummy).toBeDefined()
-          expect(minimapPackage.config.plugins.properties.dummyDecorationsZIndex).toBeDefined()
+          expect(minimapPackage.getConfigSchema().plugins.properties.dummy).toBeDefined()
+          expect(minimapPackage.getConfigSchema().plugins.properties.dummyDecorationsZIndex).toBeDefined()
         })
 
         it('sets the corresponding config', () => {

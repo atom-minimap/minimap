@@ -14,6 +14,7 @@ describe('Minimap', () => {
     atom.config.set('minimap.interline', 1)
 
     editor = atom.workspace.buildTextEditor({})
+    editor.autoHeight = false
 
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
@@ -486,6 +487,7 @@ describe('Stand alone minimap', () => {
     atom.config.set('minimap.interline', 1)
 
     editor = atom.workspace.buildTextEditor({})
+    editor.autoHeight = false
     editorElement = atom.views.getView(editor)
     jasmine.attachToDOM(editorElement)
     editorElement.setHeight(50)
