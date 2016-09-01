@@ -782,6 +782,17 @@ describe('MinimapElement', () => {
             expect(editorElement.getScrollTop()).toBeCloseTo(480)
           })
         })
+
+        describe('when moveCursorOnMinimapClick is true', () => {
+          beforeEach(() => {
+            atom.config.set('minimap.moveCursorOnMinimapClick', true)
+          })
+
+          it('moves the cursor to the corresponding line', () => {
+            mousedown(canvas)
+            expect(editor.getCursorScreenPosition()).toEqual([40, 0])
+          })
+        })
       })
 
       describe('pressing the mouse on the minimap canvas (with scroll animation)', () => {

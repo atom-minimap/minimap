@@ -117,6 +117,11 @@
       "default":300,
       "description":"The duration of scrolling animations when clicking on the minimap."
     },
+    "moveCursorOnMinimapClick": {
+      "type": "boolean",
+      "default": false,
+      "description": "Moves the cursor to the beginning of the target line when clicking on the minimap"
+    },
     "smoothScrolling": {
       "type": "boolean",
       "default": true,
