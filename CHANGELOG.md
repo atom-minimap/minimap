@@ -1,3 +1,19 @@
+<a name="v4.25.0"></a>
+# v4.25.0 (2016-09-02)
+
+## :sparkles: Features
+
+- Add option to move the cursor when clicking to scroll in the minimap ([73f84fc0](https://github.com/atom-minimap/minimap/commit/73f84fc03e0b733ce7038f0391358ec40ec31d97), [#515](https://github.com/atom-minimap/minimap/issues/515))
+- Add tern-project settings ([dec0e7bd](https://github.com/atom-minimap/minimap/commit/dec0e7bd5689cf64649037c2ef658d1ba2d05f43))
+
+## :racehorse: Performances
+
+- Lazily load remaining dependencies ([b5419c36](https://github.com/atom-minimap/minimap/commit/b5419c36a11676d645be2eb844f081654c7c7cab))
+
+## :arrow_up: Dependencies Update
+
+- Bump engine version ([b4e70206](https://github.com/atom-minimap/minimap/commit/b4e702061ecb0b77a08909c98b9a10fdce400d8e))
+
 <a name="v4.24.7"></a>
 # v4.24.7 (2016-07-05)
 
