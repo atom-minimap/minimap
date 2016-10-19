@@ -86,12 +86,12 @@ describe('MinimapElement', () => {
     expect(minimapElement.getModel()).toBe(minimap)
   })
 
-  it('has a canvas in a shadow DOM', () => {
-    expect(minimapElement.shadowRoot.querySelector('canvas')).toExist()
+  it('has a canvas in DOM', () => {
+    expect(minimapElement.querySelector('canvas')).toExist()
   })
 
   it('has a div representing the visible area', () => {
-    expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
+    expect(minimapElement.querySelector('.minimap-visible-area')).toExist()
   })
 
   //       ###    ######## ########    ###     ######  ##     ##
@@ -121,7 +121,7 @@ describe('MinimapElement', () => {
     })
 
     beforeEach(() => {
-      canvas = minimapElement.shadowRoot.querySelector('canvas')
+      canvas = minimapElement.querySelector('canvas')
       editorElement.setWidth(200)
       editorElement.setHeight(50)
 
@@ -184,7 +184,7 @@ describe('MinimapElement', () => {
           additionnalStyleNode.textContent = `
             ${stylesheet}
 
-            atom-text-editor::shadow .editor, .editor {
+            atom-text-editor .editor, .editor {
               color: red;
               -webkit-filter: hue-rotate(180deg);
             }
@@ -214,7 +214,7 @@ describe('MinimapElement', () => {
           additionnalStyleNode.textContent = `
             ${stylesheet}
 
-            atom-text-editor::shadow .editor, .editor {
+            atom-text-editor .editor, .editor {
               color: rgba(255, 0, 0, 0);
               -webkit-filter: hue-rotate(180deg);
             }
@@ -250,7 +250,7 @@ describe('MinimapElement', () => {
         })
         runs(() => {
           nextAnimationFrame()
-          visibleArea = minimapElement.shadowRoot.querySelector('.minimap-visible-area')
+          visibleArea = minimapElement.querySelector('.minimap-visible-area')
         })
       })
 
@@ -1065,7 +1065,7 @@ describe('MinimapElement', () => {
       })
 
       it('removes the controls div', () => {
-        expect(minimapElement.shadowRoot.querySelector('.minimap-controls')).toBeNull()
+        expect(minimapElement.querySelector('.minimap-controls')).toBeNull()
       })
 
       it('removes the visible area', () => {
@@ -1101,7 +1101,7 @@ describe('MinimapElement', () => {
         })
         runs(() => {
           nextAnimationFrame()
-          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toBeNull()
+          expect(minimapElement.querySelector('.minimap-scroll-indicator')).toBeNull()
         })
       })
 
@@ -1137,10 +1137,10 @@ describe('MinimapElement', () => {
         })
 
         it('recreates the destroyed elements', () => {
-          expect(minimapElement.shadowRoot.querySelector('.minimap-controls')).toExist()
-          expect(minimapElement.shadowRoot.querySelector('.minimap-visible-area')).toExist()
-          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
-          expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).toExist()
+          expect(minimapElement.querySelector('.minimap-controls')).toExist()
+          expect(minimapElement.querySelector('.minimap-visible-area')).toExist()
+          expect(minimapElement.querySelector('.minimap-scroll-indicator')).toExist()
+          expect(minimapElement.querySelector('.open-minimap-quick-settings')).toExist()
         })
       })
     })
@@ -1393,7 +1393,7 @@ describe('MinimapElement', () => {
         })
 
         it('offsets the scroll indicator by the difference', () => {
-          let indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+          let indicator = minimapElement.querySelector('.minimap-scroll-indicator')
           expect(realOffsetLeft(indicator)).toBeCloseTo(2, -1)
         })
       })
@@ -1404,7 +1404,7 @@ describe('MinimapElement', () => {
         })
 
         it('offsets the scroll indicator by the difference', () => {
-          let openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          let openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
           expect(realOffsetLeft(openQuickSettings)).not.toBeCloseTo(2, -1)
         })
       })
@@ -1475,13 +1475,13 @@ describe('MinimapElement', () => {
       })
 
       it('adds a scroll indicator in the element', () => {
-        expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).toExist()
+        expect(minimapElement.querySelector('.minimap-scroll-indicator')).toExist()
       })
 
       describe('and then deactivated', () => {
         it('removes the scroll indicator from the element', () => {
           atom.config.set('minimap.minimapScrollIndicator', false)
-          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).not.toExist()
+          expect(minimapElement.querySelector('.minimap-scroll-indicator')).not.toExist()
         })
       })
 
@@ -1498,7 +1498,7 @@ describe('MinimapElement', () => {
         })
 
         it('adjusts the size and position of the indicator', () => {
-          let indicator = minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+          let indicator = minimapElement.querySelector('.minimap-scroll-indicator')
 
           let height = editorElement.getHeight() * (editorElement.getHeight() / minimap.getHeight())
           let scroll = (editorElement.getHeight() - height) * minimap.getTextEditorScrollRatio()
@@ -1519,7 +1519,7 @@ describe('MinimapElement', () => {
         })
 
         it('removes the scroll indicator', () => {
-          expect(minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')).not.toExist()
+          expect(minimapElement.querySelector('.minimap-scroll-indicator')).not.toExist()
         })
 
         describe('and then can scroll again', () => {
@@ -1534,7 +1534,7 @@ describe('MinimapElement', () => {
 
           it('attaches the scroll indicator', () => {
             waitsFor('minimap scroll indicator', () => {
-              return minimapElement.shadowRoot.querySelector('.minimap-scroll-indicator')
+              return minimapElement.querySelector('.minimap-scroll-indicator')
             })
           })
         })
@@ -1575,7 +1575,7 @@ describe('MinimapElement', () => {
             runs(() => nextAnimationFrame())
           })
           it('adjusts the canvas height to the minimap height', () => {
-            expect(minimapElement.shadowRoot.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
+            expect(minimapElement.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
           })
 
           describe('when the content is modified', () => {
@@ -1590,7 +1590,7 @@ describe('MinimapElement', () => {
             })
 
             it('adjusts the canvas height to the new minimap height', () => {
-              expect(minimapElement.shadowRoot.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
+              expect(minimapElement.querySelector('canvas').offsetHeight).toEqual(minimap.getHeight())
             })
           })
         })
@@ -1638,7 +1638,7 @@ describe('MinimapElement', () => {
       })
 
       it('has a div to open the quick settings', () => {
-        expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).toExist()
+        expect(minimapElement.querySelector('.open-minimap-quick-settings')).toExist()
       })
 
       describe('clicking on the div', () => {
@@ -1646,7 +1646,7 @@ describe('MinimapElement', () => {
           workspaceElement = atom.views.getView(atom.workspace)
           jasmineContent.appendChild(workspaceElement)
 
-          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
           mousedown(openQuickSettings)
 
           quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
@@ -1677,7 +1677,7 @@ describe('MinimapElement', () => {
             workspaceElement = atom.views.getView(atom.workspace)
             jasmineContent.appendChild(workspaceElement)
 
-            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+            openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
             mousedown(openQuickSettings)
 
             quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
@@ -1706,8 +1706,8 @@ describe('MinimapElement', () => {
           atom.config.set('minimap.adjustMinimapWidthToSoftWrap', true)
           nextAnimationFrame()
 
-          controls = minimapElement.shadowRoot.querySelector('.minimap-controls')
-          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          controls = minimapElement.querySelector('.minimap-controls')
+          openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
 
           editorElement.style.width = '1024px'
 
@@ -1750,7 +1750,7 @@ describe('MinimapElement', () => {
               workspaceElement = atom.views.getView(atom.workspace)
               jasmineContent.appendChild(workspaceElement)
 
-              openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+              openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
               mousedown(openQuickSettings)
 
               quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
@@ -1775,7 +1775,7 @@ describe('MinimapElement', () => {
           workspaceElement = atom.views.getView(atom.workspace)
           jasmineContent.appendChild(workspaceElement)
 
-          openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+          openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
           mousedown(openQuickSettings)
 
           quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')
@@ -1890,7 +1890,7 @@ describe('MinimapElement', () => {
         })
 
         it('removes the div', () => {
-          expect(minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')).not.toExist()
+          expect(minimapElement.querySelector('.open-minimap-quick-settings')).not.toExist()
         })
       })
 
@@ -1920,7 +1920,7 @@ describe('MinimapElement', () => {
             workspaceElement = atom.views.getView(atom.workspace)
             jasmineContent.appendChild(workspaceElement)
 
-            openQuickSettings = minimapElement.shadowRoot.querySelector('.open-minimap-quick-settings')
+            openQuickSettings = minimapElement.querySelector('.open-minimap-quick-settings')
             mousedown(openQuickSettings)
 
             quickSettingsElement = workspaceElement.querySelector('minimap-quick-settings')

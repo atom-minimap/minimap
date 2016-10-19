@@ -210,8 +210,7 @@ The Minimap package doesn't provide any default keybindings. But you can define 
 If you want to hide the default editor scrollbar, edit your `style.less` (Open Your Stylesheet) and use the following snippet:
 
 ```css
-atom-text-editor[with-minimap] .vertical-scrollbar,
-atom-text-editor[with-minimap]::shadow .vertical-scrollbar {
+atom-text-editor[with-minimap] .vertical-scrollbar {
   opacity: 0;
   width: 0;
 }
@@ -222,8 +221,7 @@ atom-text-editor[with-minimap]::shadow .vertical-scrollbar {
 ![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-background.png?raw=true)
 
 ```css
-atom-text-editor atom-text-editor-minimap,
-atom-text-editor::shadow atom-text-editor-minimap {
+atom-text-editor atom-text-editor-minimap {
   background: green;
 }
 ```
@@ -233,8 +231,7 @@ atom-text-editor::shadow atom-text-editor-minimap {
 ![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-visible-area.png?raw=true)
 
 ```css
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area::after,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area::after {
+atom-text-editor atom-text-editor-minimap .minimap-visible-area::after {
   background-color: rgba(0, 255, 0, 0.5);
 }
 ```
@@ -244,8 +241,7 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area:
 ![minimap-custom-background](https://github.com/atom-minimap/minimap/blob/master/resources/minimap-custom-scroll-indicator.png?raw=true)
 
 ```css
-atom-text-editor atom-text-editor-minimap::shadow .minimap-scroll-indicator,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indicator {
+atom-text-editor atom-text-editor-minimap .minimap-scroll-indicator {
   background-color: green;
 }
 ```
@@ -255,8 +251,8 @@ atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-scroll-indica
 With both `absoluteMode` and `adjustAbsoluteModeHeight` settings are enabled, the canvases in the minimap won't necessarily takes the whole editor's height.
 
 ```css
-atom-text-editor::shadow, atom-text-editor, html {
-  atom-text-editor-minimap::shadow canvas:first-child {
+atom-text-editor, html {
+  atom-text-editor-minimap canvas:first-child {
     background: @syntax-background-color;
   }
 }
@@ -267,13 +263,11 @@ atom-text-editor::shadow, atom-text-editor, html {
 If you want to prevent to catch the mouse pointer when the `absoluteMode` setting is enabled you can use the following snippet to do so:
 
 ```css
-atom-text-editor atom-text-editor-minimap,
-atom-text-editor::shadow atom-text-editor-minimap {
+atom-text-editor atom-text-editor-minimap {
   pointer-events: none;
 }
 
-atom-text-editor atom-text-editor-minimap::shadow .minimap-visible-area,
-atom-text-editor::shadow atom-text-editor-minimap::shadow .minimap-visible-area {
+atom-text-editor atom-text-editor-minimap .minimap-visible-area {
   pointer-events: auto;
 }
 ```
@@ -286,23 +280,19 @@ You can put the following code in your user stylesheet to achieve this effect:
 
 ```css
 atom-text-editor {
-  &, &::shadow {
-    atom-text-editor-minimap {
-      display: none;
-    }
+  atom-text-editor-minimap {
+    display: none;
   }
 
   &.is-focused {
-    &, &::shadow {
-      atom-text-editor-minimap {
-        display: block;
-      }
+    atom-text-editor-minimap {
+      display: block;
     }
   }
 }
 ```
 
-#### Make Minimap Visible area display like Sublime Text 
+#### Make Minimap Visible area display like Sublime Text
 
 Put the following code in your user stylesheet to make your minimap look like Sublime text.
 It's more easy to view when you have code hightlight in minimap.
@@ -313,35 +303,32 @@ It's more easy to view when you have code hightlight in minimap.
 
 ```css
 atom-text-editor,
-atom-text-editor::shadow,
 html {
     atom-text-editor-minimap {
-        &::shadow {
-            .minimap-visible-area {
-                background-color: #7c7c7c;
-                // Color of Visible area.
-                opacity: 0;
-                // Default 0 when you not working with minimap
+        .minimap-visible-area {
+            background-color: #7c7c7c;
+            // Color of Visible area.
+            opacity: 0;
+            // Default 0 when you not working with minimap
+            cursor: default;
+            // Change cursor style to pointer.
+            transition: 0.5s opacity;
+            // Better UI.
+            &:hover {
+                opacity: 0.2;
+            } // Only display Minimap visible area when working.
+            &:active {
                 cursor: default;
-                // Change cursor style to pointer.
-                transition: 0.5s opacity;
-                // Better UI.
-                &:hover {
-                    opacity: 0.2;
-                } // Only display Minimap visible area when working.
-                &:active {
-                    cursor: default;
-                } // Change cursor when dragging.
-            }
+            } // Change cursor when dragging.
         }
-        &:hover::shadow {
+        &:hover {
             .minimap-visible-area {
                 opacity: 0.2;
                 transition: opacity 1s;
-            } // When Hover to all minimap area, visible area will display. 
+            } // When Hover to all minimap area, visible area will display.
         }
-        
-        &:active::shadow {
+
+        &:active {
             .minimap-visible-area {
                 opacity: 0.2;
                 transition: opacity 0.5s;
