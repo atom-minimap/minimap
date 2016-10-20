@@ -1,3 +1,16 @@
+<a name="v4.26.0"></a>
+# v4.26.0 (2016-10-20)
+
+This version will only supports Atom `>= 1.13.0` and drops support of shadow DOM.
+
+## :bug: Bug Fixes
+
+- Fix quick settings button always visible when hovering the workspace ([ca1a3d80](https://github.com/atom-minimap/minimap/commit/ca1a3d807f31520aff0a770abc5975a56adcc106))
+
+## :arrow_up: Dependencies Update
+
+- Bump atom engine version ([573f7f76](https://github.com/atom-minimap/minimap/commit/573f7f76164049013ca4c068da9177cb1ec29d55))
+
 <a name="v4.25.4"></a>
 # v4.25.4 (2016-10-20)
 
