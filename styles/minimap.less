@@ -4,11 +4,17 @@ atom-notifications:empty {
   pointer-events: none
 }
 
-atom-text-editor[with-minimap]::shadow .editor--private,
-atom-text-editor[with-minimap] .editor--private {
-  order: 2;
-  flex: 1 0 90%;
-  width: 90%;
+atom-text-editor[with-minimap]::shadow,
+atom-text-editor[with-minimap] {
+  .editor--private {
+    order: 2;
+    flex: 1 0 90%;
+    width: 90%;
+  }
+
+  atom-overlay {
+    margin-left: 10%;
+  }
 }
 
 atom-text-editor::shadow, atom-text-editor, html {
