@@ -1,3 +1,10 @@
+<a name="v4.25.3"></a>
+# v4.25.3 (2016-10-20)
+
+## :bug: Bug Fixes
+
+- Fix overlay margin applied even when minimap is on the right ([240e2b0b](https://github.com/atom-minimap/minimap/commit/240e2b0b1183a183f2ae1f4a8e3a423f2ed19b2e))
+
 <a name="v4.25.2"></a>
 # v4.25.2 (2016-10-20)
 
