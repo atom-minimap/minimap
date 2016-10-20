@@ -1,3 +1,10 @@
+<a name="v4.25.2"></a>
+# v4.25.2 (2016-10-20)
+
+## :bug: Bug Fixes
+
+- Fix invalid css value ([3eb581d0](https://github.com/atom-minimap/minimap/commit/3eb581d0d5d3db0c577bbb97ea2c08cdb451ac98))
+
 <a name="v4.25.1"></a>
 # v4.25.1 (2016-10-20)
 
