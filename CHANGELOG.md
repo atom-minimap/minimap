@@ -1,3 +1,10 @@
+<a name="v4.25.4"></a>
+# v4.25.4 (2016-10-20)
+
+## :bug: Bug Fixes
+
+- Fix size change handler making scrolling in the minimap impossible ([f98b54df](https://github.com/atom-minimap/minimap/commit/f98b54dfb7d0dab2315bb4825edd8eca04cb2615))
+
 <a name="v4.25.3"></a>
 # v4.25.3 (2016-10-20)
 
