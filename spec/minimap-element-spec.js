@@ -1293,6 +1293,24 @@ describe('MinimapElement', () => {
         expect(minimapElement.classList.contains('left')).toBeTruthy()
       })
 
+      fit('creates a style node with an offset for atom overlays', () => {
+        atom.config.set('minimap.displayMinimapOnLeft', true)
+
+        const node = document.querySelector('style[context="atom-text-editor-minimap"]')
+        expect(node).toExist()
+
+        expect(node.textContent).toMatch(/margin-left: \d+px;/)
+      })
+
+      describe('and then toggled off', () => {
+        it('removes the overlays style node', () => {
+          atom.config.set('minimap.displayMinimapOnLeft', true)
+          atom.config.set('minimap.displayMinimapOnLeft', false)
+
+          expect(document.querySelector('style[context="atom-text-editor-minimap"]')).not.toExist()
+        })
+      })
+
       describe('when the minimap is not attached yet', () => {
         beforeEach(() => {
           editor = atom.workspace.buildTextEditor({})

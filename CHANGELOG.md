@@ -1,3 +1,10 @@
+<a name="v4.25.1"></a>
+# v4.25.1 (2016-10-20)
+
+## :bug: Bug Fixes
+
+- Fix overlay offsets when minimap is on the left ([a0a38169](https://github.com/atom-minimap/minimap/commit/a0a38169a384e75083caea4c219fb70f35171b31))
+
 <a name="v4.25.0"></a>
 # v4.25.0 (2016-09-02)
 
