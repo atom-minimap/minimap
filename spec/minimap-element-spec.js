@@ -1293,7 +1293,7 @@ describe('MinimapElement', () => {
         expect(minimapElement.classList.contains('left')).toBeTruthy()
       })
 
-      fit('creates a style node with an offset for atom overlays', () => {
+      it('creates a style node with an offset for atom overlays', () => {
         atom.config.set('minimap.displayMinimapOnLeft', true)
 
         const node = document.querySelector('style[context="atom-text-editor-minimap"]')
