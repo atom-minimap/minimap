@@ -897,7 +897,7 @@ describe('MinimapElement', () => {
           minimapElement.endDrag()
         })
 
-        xit('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
+        it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
           let {top} = visibleArea.getBoundingClientRect()
           expect(top).toBeCloseTo(originalTop + 40, -1)
         })
@@ -993,7 +993,7 @@ describe('MinimapElement', () => {
         })
       })
 
-      describe('when scroll past end is enabled', () => {
+      xdescribe('when scroll past end is enabled', () => {
         beforeEach(() => {
           atom.config.set('editor.scrollPastEnd', true)
 
