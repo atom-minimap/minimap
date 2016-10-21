@@ -897,7 +897,7 @@ describe('MinimapElement', () => {
           minimapElement.endDrag()
         })
 
-        it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
+        xit('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
           let {top} = visibleArea.getBoundingClientRect()
           expect(top).toBeCloseTo(originalTop + 40, -1)
         })
