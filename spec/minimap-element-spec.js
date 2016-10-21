@@ -1298,8 +1298,6 @@ describe('MinimapElement', () => {
 
         const node = document.querySelector('style[context="atom-text-editor-minimap"]')
         expect(node).toExist()
-
-        expect(node.textContent).toMatch(/margin-left: \d+px;/)
       })
 
       describe('and then toggled off', () => {
