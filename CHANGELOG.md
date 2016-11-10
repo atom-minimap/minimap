@@ -1,3 +1,10 @@
+<a name="v4.26.2"></a>
+# v4.26.2 (2016-11-10)
+
+## :racehorse: Performances
+
+- Speed up token rendering a bit ([216f6a88](https://github.com/atom-minimap/minimap/commit/216f6a88f9e14332e743f71af18d004b120c9a54))
+
 <a name="v4.26.1"></a>
 # v4.26.1 (2016-10-20)
 
