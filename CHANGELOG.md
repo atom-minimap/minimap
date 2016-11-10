@@ -1,3 +1,10 @@
+<a name="v4.26.3"></a>
+# v4.26.3 (2016-11-10)
+
+## :bug: Bug Fixes
+
+- Fix reading tokens of lines after the last one ([1a018112](https://github.com/atom-minimap/minimap/commit/1a0181126af2912110b6f5b12cc339d784a98386))
+
 <a name="v4.26.2"></a>
 # v4.26.2 (2016-11-10)
 
