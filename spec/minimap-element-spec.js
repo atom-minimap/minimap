@@ -1,10 +1,10 @@
-'use babel'
+'use strict'
 
-import fs from 'fs-plus'
-import Main from '../lib/main'
-import Minimap from '../lib/minimap'
-import {stylesheet} from './helpers/workspace'
-import {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} from './helpers/events'
+const fs = require('fs-plus')
+const Main = require('../lib/main')
+const Minimap = require('../lib/minimap')
+const {stylesheet} = require('./helpers/workspace')
+const {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require('./helpers/events')
 
 function realOffsetTop (o) {
   // transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
@@ -1921,7 +1921,7 @@ describe('MinimapElement', () => {
 
           runs(() => {
             class Plugin {
-              active = false
+              constructor () { this.active = false }
               activatePlugin () { this.active = true }
               deactivatePlugin () { this.active = false }
               isActive () { return this.active }

@@ -168,13 +168,10 @@
     "underscore-plus": "1.x"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.6",
     "esdoc": "^0.4.0",
-    "esdoc-es7-plugin": "0.0.3",
     "standard": "^5.1.0"
   },
   "standard": {
-    "parser": "babel-eslint",
     "globals": [
       "advanceClock",
       "atom",

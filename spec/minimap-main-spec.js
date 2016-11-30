@@ -1,7 +1,7 @@
-'use babel'
+'use strict'
 
-import './helpers/workspace'
-import Minimap from '../lib/minimap'
+require('./helpers/workspace')
+const Minimap = require('../lib/minimap')
 
 describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []

@@ -1,5 +1,3 @@
-'use babel'
-
 function mouseEvent (type, properties) {
   let defaults = {
     bubbles: true,

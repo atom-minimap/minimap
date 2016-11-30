@@ -1,22 +1,21 @@
-'use babel'
+'use strict'
 
-import path from 'path'
+const path = require('path')
+const stylesheetPath = path.resolve(__dirname, '../../styles/minimap.less')
+const stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 
-let stylesheetPath = path.resolve(__dirname, '../../styles/minimap.less')
-let stylesheet = atom.themes.loadStylesheet(stylesheetPath)
-
-export default {stylesheet}
+module.exports = {stylesheet}
 
 beforeEach(() => {
   if (!atom.workspace.buildTextEditor) {
-    let {TextEditor} = require('atom')
+    const {TextEditor} = require('atom')
     atom.workspace.buildTextEditor = function (opts) {
       return new TextEditor(opts)
     }
   }
 
-  let jasmineContent = document.body.querySelector('#jasmine-content')
-  let styleNode = document.createElement('style')
+  const jasmineContent = document.body.querySelector('#jasmine-content')
+  const styleNode = document.createElement('style')
   styleNode.textContent = `
     ${stylesheet}
     atom-text-editor {

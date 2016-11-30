@@ -1,9 +1,9 @@
-'use babel'
+'use strict'
 
-import './helpers/workspace'
+require('./helpers/workspace')
 
-import fs from 'fs-plus'
-import Minimap from '../lib/minimap'
+const fs = require('fs-plus')
+const Minimap = require('../lib/minimap')
 
 describe('Minimap', () => {
   let [editor, editorElement, minimap, largeSample, smallSample, minimapVerticalScaleFactor, minimapHorizontalScaleFactor] = []
