@@ -1,3 +1,10 @@
+<a name="v4.25.7"></a>
+# v4.25.7 (2016-11-30)
+
+## :bug: Bug Fixes
+
+- Fix error raised when a pane is destroyed ([c5717e84](https://github.com/atom-minimap/minimap/commit/c5717e8431352bfe5c88cc206afb0d6e718d73b6), [#489](https://github.com/atom-minimap/minimap/issues/489))
+
 <a name="v4.25.5"></a>
 # v4.25.5 (2016-10-20)
 
