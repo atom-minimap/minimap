@@ -491,8 +491,8 @@ describe('MinimapElement', () => {
         it('updates the visible area', () => {
           expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
 
-          expect(Math.floor(parseFloat(visibleArea.style.borderLeftWidth)))
-          .toEqual(Math.floor(minimap.getTextEditorScaledScrollLeft()))
+          expect(parseFloat(visibleArea.style.borderLeftWidth))
+          .toEqual(Math.round(minimap.getTextEditorScaledScrollLeft()))
         })
       })
 
