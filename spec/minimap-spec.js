@@ -197,7 +197,7 @@ describe('Minimap', () => {
     })
 
     it('computes the offset to apply based on the editor scroll top', () => {
-      expect(minimap.getScrollTop()).toEqual(editorScrollRatio * minimap.getMaxScrollTop())
+      expect(minimap.getScrollTop()).toBeCloseTo(editorScrollRatio * minimap.getMaxScrollTop(), 0)
     })
 
     it('computes the first visible row in the minimap', () => {
