@@ -56,20 +56,20 @@ function objectCenterCoordinates (obj) {
 }
 
 function exists (value) {
-  return (typeof value !== 'undefined' && value !== null)
+  return value != null
 }
 
 module.exports = {objectCenterCoordinates, mouseEvent}
 
 ;['mousedown', 'mousemove', 'mouseup', 'click'].forEach((key) => {
   module.exports[key] = function (obj, {x, y, cx, cy, btn} = {}) {
-    if (!((typeof x !== 'undefined' && x !== null) && (typeof y !== 'undefined' && y !== null))) {
+    if (x == null && y == null) {
       let o = objectCenterCoordinates(obj)
       x = o.x
       y = o.y
     }
 
-    if (!((typeof cx !== 'undefined' && cx !== null) && (typeof cy !== 'undefined' && cy !== null))) {
+    if (cx == null && cy == null) {
       cx = x
       cy = y
     }

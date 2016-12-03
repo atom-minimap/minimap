@@ -3,8 +3,10 @@
 const fs = require('fs-plus')
 const Main = require('../lib/main')
 const Minimap = require('../lib/minimap')
-const {stylesheet} = require('./helpers/workspace')
+const {styles} = require('./helpers/workspace')
 const {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = require('./helpers/events')
+
+const HIDE_ELEMENTS = true
 
 function realOffsetTop (o) {
   // transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
@@ -36,10 +38,16 @@ function createPlugin () {
 describe('MinimapElement', () => {
   let [editor, minimap, largeSample, mediumSample, smallSample, jasmineContent, editorElement, minimapElement, dir] = []
 
+  const resizeEditor = (height, width) => {
+    editorElement.setHeight(height)
+    if (width) { editorElement.setWidth(width) }
+    editorElement.component.measureDimensions()
+  }
+
   beforeEach(() => {
-    // Comment after body below to leave the created text editor and minimap
-    // on DOM after the test run.
-    jasmineContent = document.body.querySelector('#jasmine-content')
+    jasmineContent = HIDE_ELEMENTS
+      ? document.body.querySelector('#jasmine-content')
+      : document.body
 
     waitsForPromise(() => atom.packages.activatePackage('minimap'))
 
@@ -63,9 +71,10 @@ describe('MinimapElement', () => {
 
       editorElement = atom.views.getView(editor)
       jasmineContent.insertBefore(editorElement, jasmineContent.firstChild)
-      editorElement.setHeight(50)
+      resizeEditor(50)
 
       minimap = new Minimap({textEditor: editor})
+      minimap.adapter.useCache = false
       dir = atom.project.getDirectories()[0]
 
       largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
@@ -75,6 +84,18 @@ describe('MinimapElement', () => {
       editor.setText(largeSample)
 
       minimapElement = atom.views.getView(minimap)
+
+      const styleNode = document.createElement('style')
+      styleNode.textContent = HIDE_ELEMENTS
+        ? styles
+        : `
+          ${styles}
+          atom-text-editor {
+            background: white;
+            z-index: 100000;
+          }
+        `
+      jasmineContent.appendChild(styleNode)
     })
   })
 
@@ -122,8 +143,7 @@ describe('MinimapElement', () => {
 
     beforeEach(() => {
       canvas = minimapElement.querySelector('canvas')
-      editorElement.setWidth(200)
-      editorElement.setHeight(50)
+      resizeEditor(50, 200)
 
       editorElement.setScrollTop(1000)
       editorElement.setScrollLeft(200)
@@ -131,7 +151,7 @@ describe('MinimapElement', () => {
     })
 
     afterEach(() => {
-      minimap.destroy()
+      if (HIDE_ELEMENTS) { minimap.destroy() }
       window.requestAnimationFrame = requestAnimationFrameSafe
     })
 
@@ -182,8 +202,6 @@ describe('MinimapElement', () => {
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
-            ${stylesheet}
-
             atom-text-editor .editor, .editor {
               color: red;
               -webkit-filter: hue-rotate(180deg);
@@ -212,8 +230,6 @@ describe('MinimapElement', () => {
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
-            ${stylesheet}
-
             atom-text-editor .editor, .editor {
               color: rgba(255, 0, 0, 0);
               -webkit-filter: hue-rotate(180deg);
@@ -597,8 +613,7 @@ describe('MinimapElement', () => {
 
     describe('mouse scroll controls', () => {
       beforeEach(() => {
-        editorElement.setWidth(400)
-        editorElement.setHeight(400)
+        resizeEditor(400, 400)
         editorElement.setScrollTop(0)
         editorElement.setScrollLeft(0)
 
@@ -665,20 +680,15 @@ describe('MinimapElement', () => {
           maxScroll = minimap.getTextEditorMaxScrollTop()
         })
 
-        it('scrolls to the top using the middle mouse button', () => {
+        it('scrolls to the top', () => {
           mousedown(canvas, {x: originalLeft + 1, y: 0, btn: 1})
           expect(editorElement.getScrollTop()).toEqual(0)
         })
 
         describe('scrolling to the middle using the middle mouse button', () => {
-          let canvasMidY
-
           beforeEach(() => {
-            let editorMidY = editorElement.getHeight() / 2.0
-            let {top, height} = canvas.getBoundingClientRect()
-            canvasMidY = top + (height / 2.0)
-            let actualMidY = Math.min(canvasMidY, editorMidY)
-            mousedown(canvas, {x: originalLeft + 1, y: actualMidY, btn: 1})
+            const midY = minimap.getTextEditorHeight() / 2
+            mousedown(canvas, {x: originalLeft + 1, y: midY, btn: 1})
           })
 
           it('scrolls the editor to the middle', () => {
@@ -695,7 +705,7 @@ describe('MinimapElement', () => {
               let {top, height} = visibleArea.getBoundingClientRect()
 
               let visibleCenterY = top + (height / 2)
-              expect(visibleCenterY).toBeCloseTo(200, 0)
+              expect(visibleCenterY).toBeCloseTo(200, -1)
             })
           })
         })
@@ -1314,8 +1324,8 @@ describe('MinimapElement', () => {
           editor = atom.workspace.buildTextEditor({})
           editor.autoHeight = false
           editorElement = atom.views.getView(editor)
-          editorElement.setHeight(50)
           editor.setLineHeightInPixels(10)
+          resizeEditor(50)
 
           minimap = new Minimap({textEditor: editor})
           minimapElement = atom.views.getView(minimap)
@@ -1581,7 +1591,7 @@ describe('MinimapElement', () => {
         describe('when the content of the minimap is smaller that the editor height', () => {
           beforeEach(() => {
             editor.setText(smallSample)
-            editorElement.setHeight(400)
+            resizeEditor(400)
             minimapElement.measureHeightAndWidth()
 
             waitsFor('a new animation frame request', () => {

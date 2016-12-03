@@ -112,7 +112,7 @@ describe('Minimap', () => {
     expect(scrollSpy).toHaveBeenCalled()
   })
 
-  describe('when scrols past end is enabled', () => {
+  describe('when scrolls past end is enabled', () => {
     beforeEach(() => {
       editor.setText(largeSample)
       atom.config.set('editor.scrollPastEnd', true)
@@ -121,7 +121,7 @@ describe('Minimap', () => {
     it('adjust the scrolling ratio', () => {
       editorElement.setScrollTop(editorElement.getScrollHeight())
 
-      let maxScrollTop = editorElement.getScrollHeight() - editorElement.getHeight() - (editorElement.getHeight() - 3 * editor.getLineHeightInPixels())
+      const maxScrollTop = editorElement.getMaxScrollTop()
 
       expect(minimap.getTextEditorScrollRatio()).toEqual(editorElement.getScrollTop() / maxScrollTop)
     })
@@ -188,7 +188,7 @@ describe('Minimap', () => {
       editorElement.setScrollLeft(200)
 
       largeLineCount = editor.getScreenLineCount()
-      editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
+      editorScrollRatio = editorElement.getScrollTop() / editorElement.getMaxScrollTop()
     })
 
     it('scales the editor scroll based on the minimap scale factor', () => {
@@ -283,7 +283,7 @@ describe('Minimap', () => {
     beforeEach(() => {
       editor.setText(largeSample)
       editorElement.setScrollTop(1000)
-      editorScrollRatio = editorElement.getScrollTop() / (editorElement.getScrollHeight() - editorElement.getHeight())
+      editorScrollRatio = editorElement.getScrollTop() / editorElement.getMaxScrollTop()
 
       atom.config.set('minimap.independentMinimapScroll', true)
     })
