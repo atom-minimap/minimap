@@ -1,3 +1,10 @@
+<a name="v4.26.5"></a>
+# v4.26.5 (2016-12-19)
+
+## :bug: Bug Fixes
+
+- Fix issue on master with destroyed decorations ([5791fb28](https://github.com/atom-minimap/minimap/commit/5791fb28d0bc9a257dc3a89852b3bb5d8e4ad432))
+
 <a name="v4.26.4"></a>
 # v4.26.4 (2016-11-30)
 
