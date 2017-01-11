@@ -8,6 +8,8 @@ const {mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove} = requi
 
 const HIDE_ELEMENTS = true
 
+window.devicePixelRatio = 1
+
 function realOffsetTop (o) {
   // transform = new WebKitCSSMatrix window.getComputedStyle(o).transform
   // o.offsetTop + transform.m42
@@ -127,6 +129,7 @@ describe('MinimapElement', () => {
     let [noAnimationFrame, nextAnimationFrame, requestAnimationFrameSafe, canvas, visibleArea] = []
 
     beforeEach(() => {
+      const stackedFrames = []
       noAnimationFrame = () => {
         throw new Error('No animation frame requested')
       }
@@ -134,10 +137,17 @@ describe('MinimapElement', () => {
 
       requestAnimationFrameSafe = window.requestAnimationFrame
       spyOn(window, 'requestAnimationFrame').andCallFake((fn) => {
-        nextAnimationFrame = () => {
-          nextAnimationFrame = noAnimationFrame
-          fn()
+        if (stackedFrames.length === 0) {
+          nextAnimationFrame = () => {
+            while (stackedFrames.length) {
+              fn = stackedFrames.shift()
+              fn()
+            }
+            nextAnimationFrame = noAnimationFrame
+          }
         }
+
+        stackedFrames.push(fn)
       })
     })
 

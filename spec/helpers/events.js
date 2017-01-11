@@ -1,5 +1,5 @@
 function mouseEvent (type, properties) {
-  let defaults = {
+  const defaults = {
     bubbles: true,
     cancelable: (type !== 'mousemove'),
     view: window,
@@ -16,8 +16,8 @@ function mouseEvent (type, properties) {
     relatedTarget: undefined
   }
 
-  for (let k in defaults) {
-    let v = defaults[k]
+  for (const k in defaults) {
+    const v = defaults[k]
     if (!(properties[k] != null)) {
       properties[k] = v
     }
@@ -25,7 +25,7 @@ function mouseEvent (type, properties) {
 
   const e = new MouseEvent(type, properties)
 
-  for (let k in properties) {
+  for (const k in properties) {
     if (e[k] !== properties[k]) {
       e[k] = properties[k]
     }
@@ -35,7 +35,7 @@ function mouseEvent (type, properties) {
 }
 
 function touchEvent (type, touches) {
-  let event = new Event(type, {
+  const event = new Event(type, {
     bubbles: true,
     cancelable: true,
     view: window,
@@ -51,7 +51,7 @@ function touchEvent (type, touches) {
 }
 
 function objectCenterCoordinates (obj) {
-  let {top, left, width, height} = obj.getBoundingClientRect()
+  const {top, left, width, height} = obj.getBoundingClientRect()
   return {x: left + width / 2, y: top + height / 2}
 }
 
@@ -64,7 +64,7 @@ module.exports = {objectCenterCoordinates, mouseEvent}
 ;['mousedown', 'mousemove', 'mouseup', 'click'].forEach((key) => {
   module.exports[key] = function (obj, {x, y, cx, cy, btn} = {}) {
     if (x == null && y == null) {
-      let o = objectCenterCoordinates(obj)
+      const o = objectCenterCoordinates(obj)
       x = o.x
       y = o.y
     }
@@ -101,7 +101,7 @@ module.exports.mousewheel = function (obj, deltaX = 0, deltaY = 0) {
       }
 
       if (!(exists(touch.pageX) && exists(touch.pageY))) {
-        let o = objectCenterCoordinates(obj)
+        const o = objectCenterCoordinates(obj)
         touch.pageX = exists(touch.x) ? touch.x : o.x
         touch.pageY = exists(touch.y) ? touch.y : o.y
       }
