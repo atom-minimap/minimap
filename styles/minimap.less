@@ -4,8 +4,9 @@ atom-notifications:empty {
   pointer-events: none
 }
 
-atom-text-editor[with-minimap]::shadow,
 atom-text-editor[with-minimap] {
+  display: flex;
+
   .editor--private {
     order: 2;
     flex: 1 0 90%;
@@ -13,7 +14,7 @@ atom-text-editor[with-minimap] {
   }
 }
 
-atom-text-editor::shadow, atom-text-editor, html {
+atom-text-editor, html {
   atom-text-editor-minimap {
     display: block;
     overflow: hidden;
@@ -37,10 +38,9 @@ atom-text-editor::shadow, atom-text-editor, html {
 
       &.adjust-absolute-height {
         pointer-events: none;
-        &::shadow {
-          canvas {
-            pointer-events: auto;
-          }
+
+        canvas {
+          pointer-events: auto;
         }
       }
 
@@ -56,75 +56,73 @@ atom-text-editor::shadow, atom-text-editor, html {
       }
     }
 
-    &::shadow {
-      canvas {
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+    }
+
+    .minimap-visible-area {
+      position: absolute;
+      display: block;
+      cursor: -webkit-grab;
+
+      border-left: 0px solid rgba(127, 127, 127, 0.1);
+
+      &:active {
+        cursor: -webkit-grabbing;
+      }
+
+      &::after {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
-        transform-origin: 0 0;
-      }
-
-      .minimap-visible-area {
-        position: absolute;
-        display: block;
-        cursor: -webkit-grab;
-
-        border-left: 0px solid rgba(127, 127, 127, 0.1);
-
-        &:active {
-          cursor: -webkit-grabbing;
-        }
-
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: rgba(127, 127, 127, 0.2);
-        }
-      }
-
-      .minimap-controls {
-        position: relative;
-        height: 100%;
-        pointer-events: none;
-      }
-
-      .minimap-scroll-indicator {
-        position: absolute;
-        display: block;
         right: 0;
-        width: 2px;
-        min-height: 2px;
-        z-index: 10;
-        background: @background-color-selected;
-      }
-
-      .open-minimap-quick-settings {
-        opacity: 0;
-        position: absolute;
-        z-index: 1;
-        cursor: pointer;
-        pointer-events: auto;
-        color: @text-color;
-        font-size: 20px;
-        text-align: center;
-        line-height: 24px;
-        width: 24px;
-        height: 24px;
-        display: block;
-        right: 8px;
-        transition: opacity 0.4s;
-
-        &:before {
-          content: '\f02f';
-          font-family: 'Octicons Regular';
-        }
+        bottom: 0;
+        background-color: rgba(127, 127, 127, 0.2);
       }
     }
-    &:hover::shadow .open-minimap-quick-settings {
+
+    .minimap-controls {
+      position: relative;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .minimap-scroll-indicator {
+      position: absolute;
+      display: block;
+      right: 0;
+      width: 2px;
+      min-height: 2px;
+      z-index: 10;
+      background: @background-color-selected;
+    }
+
+    .open-minimap-quick-settings {
+      opacity: 0;
+      position: absolute;
+      z-index: 1;
+      cursor: pointer;
+      pointer-events: auto;
+      color: @text-color;
+      font-size: 20px;
+      text-align: center;
+      line-height: 24px;
+      width: 24px;
+      height: 24px;
+      display: block;
+      right: 8px;
+      transition: opacity 0.4s;
+
+      &:before {
+        content: '\f02f';
+        font-family: 'Octicons Regular';
+      }
+    }
+    &:hover .open-minimap-quick-settings {
       opacity: 1;
       transition: opacity 0.1s;
     }

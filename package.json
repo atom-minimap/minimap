@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./lib/main",
-  "version": "4.25.7",
+  "version": "4.26.5",
   "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>",
@@ -26,7 +26,7 @@
   "repository": "https://github.com/atom-minimap/minimap",
   "license": "MIT",
   "engines": {
-    "atom": ">=1.7.0"
+    "atom": ">=1.13.0"
   },
   "providedServices": {
     "minimap": {
@@ -168,13 +168,10 @@
     "underscore-plus": "1.x"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.6",
     "esdoc": "^0.4.0",
-    "esdoc-es7-plugin": "0.0.3",
     "standard": "^5.1.0"
   },
   "standard": {
-    "parser": "babel-eslint",
     "globals": [
       "advanceClock",
       "atom",

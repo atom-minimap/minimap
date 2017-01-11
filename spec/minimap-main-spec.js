@@ -1,7 +1,7 @@
-'use babel'
+'use strict'
 
-import './helpers/workspace'
-import Minimap from '../lib/minimap'
+require('./helpers/workspace')
+const Minimap = require('../lib/minimap')
 
 describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
@@ -32,7 +32,7 @@ describe('Minimap package', () => {
     })
 
     waitsFor(() => {
-      return workspaceElement.querySelector('atom-text-editor::shadow atom-text-editor-minimap')
+      return workspaceElement.querySelector('atom-text-editor atom-text-editor-minimap')
     })
   })
 
@@ -50,7 +50,7 @@ describe('Minimap package', () => {
     })
 
     it('attaches a minimap element to the editor view', () => {
-      expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).toExist()
+      expect(editorElement.querySelector('atom-text-editor-minimap')).toExist()
     })
 
     describe('when the package is deactivated', () => {
@@ -58,19 +58,19 @@ describe('Minimap package', () => {
         atom.packages.deactivatePackage('minimap')
       })
       it('removes the minimap from their editor parent', () => {
-        expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
+        expect(editorElement.querySelector('atom-text-editor-minimap')).not.toExist()
       })
 
       describe('and reactivated with a remaining minimap in the DOM', () => {
         beforeEach(() => {
           const m = new Minimap({textEditor: editor})
           const v = atom.views.getView(m)
-          editorElement.shadowRoot.appendChild(v)
+          editorElement.appendChild(v)
           waitsForPromise(() => atom.packages.activatePackage('minimap'))
         })
 
         it('removes the remaining minimap', () => {
-          expect(editorElement.shadowRoot.querySelectorAll('atom-text-editor-minimap').length).toEqual(1)
+          expect(editorElement.querySelectorAll('atom-text-editor-minimap').length).toEqual(1)
         })
       })
     })
@@ -104,7 +104,7 @@ describe('Minimap package', () => {
     })
 
     it('destroys all the minimap elements', () => {
-      expect(editorElement.shadowRoot.querySelector('atom-text-editor-minimap')).not.toExist()
+      expect(editorElement.querySelector('atom-text-editor-minimap')).not.toExist()
     })
   })
 

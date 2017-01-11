@@ -1,3 +1,54 @@
+<a name="v4.26.5"></a>
+# v4.26.5 (2016-12-19)
+
+## :bug: Bug Fixes
+
+- Fix issue on master with destroyed decorations ([5791fb28](https://github.com/atom-minimap/minimap/commit/5791fb28d0bc9a257dc3a89852b3bb5d8e4ad432))
+
+<a name="v4.26.4"></a>
+# v4.26.4 (2016-11-30)
+
+## :bug: Bug Fixes
+
+- Fix error raised when a pane is destroyed ([cdcd2693](https://github.com/atom-minimap/minimap/commit/cdcd269353887403eac36322d5378662ce313e92), [#489](https://github.com/atom-minimap/minimap/issues/489))
+
+<a name="v4.26.3"></a>
+# v4.26.3 (2016-11-10)
+
+## :bug: Bug Fixes
+
+- Fix reading tokens of lines after the last one ([1a018112](https://github.com/atom-minimap/minimap/commit/1a0181126af2912110b6f5b12cc339d784a98386))
+
+<a name="v4.26.2"></a>
+# v4.26.2 (2016-11-10)
+
+## :racehorse: Performances
+
+- Speed up token rendering a bit ([216f6a88](https://github.com/atom-minimap/minimap/commit/216f6a88f9e14332e743f71af18d004b120c9a54))
+
+<a name="v4.26.1"></a>
+# v4.26.1 (2016-10-20)
+
+## :bug: Bug Fixes
+
+- Fix invalid overlay offset when minimap is not adjusted ([73b9917c](https://github.com/atom-minimap/minimap/commit/73b9917c11813c24209d3c14ec28cbcd8b8bb2e9))
+- Guard against destroyed editor in adapters and decorations manager ([252d4572](https://github.com/atom-minimap/minimap/commit/252d4572a150a4fb14260c6d89784f5da8459823), [#489](https://github.com/atom-minimap/minimap/issues/489))
+
+
+<a name="v4.26.0"></a>
+# v4.26.0 (2016-10-20)
+
+This version will only supports Atom `>= 1.13.0` and drops support of shadow DOM.
+
+## :bug: Bug Fixes
+
+- Fix quick settings button always visible when hovering the workspace ([ca1a3d80](https://github.com/atom-minimap/minimap/commit/ca1a3d807f31520aff0a770abc5975a56adcc106))
+
+## :arrow_up: Dependencies Update
+
+- Bump atom engine version ([573f7f76](https://github.com/atom-minimap/minimap/commit/573f7f76164049013ca4c068da9177cb1ec29d55))
+>>>>>>> d14caff3927634722a50ad3f348c676a88848ea3
+
 <a name="v4.25.7"></a>
 # v4.25.7 (2016-11-30)
 

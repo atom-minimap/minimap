@@ -1,6 +1,6 @@
-'use babel'
+'use strict'
 
-import CanvasLayer from '../lib/canvas-layer'
+const CanvasLayer = require('../lib/canvas-layer')
 
 describe('CanvasLayer', () => {
   let [layer] = []
