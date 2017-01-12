@@ -1,3 +1,10 @@
+<a name="v4.26.6"></a>
+# v4.26.6 (2017-01-12)
+
+## :bug: Bug Fixes
+
+- No longer use getScreenRange to retrieve a marker's range when destroyed
+
 <a name="v4.26.5"></a>
 # v4.26.5 (2016-12-19)
 
