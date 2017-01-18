@@ -1,3 +1,10 @@
+<a name="v4.26.7"></a>
+# v4.26.7 (2017-01-18)
+
+## :bug: Bug Fixes
+
+- Fix drag offset on 1.13+ ([93550956](https://github.com/atom-minimap/minimap/commit/93550956554dc42c547856556ce607ef64c97da8), [#551](https://github.com/atom-minimap/minimap/issues/551))
+
 <a name="v4.26.6"></a>
 # v4.26.6 (2017-01-12)
 
