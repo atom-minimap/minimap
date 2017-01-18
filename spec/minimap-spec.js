@@ -123,12 +123,12 @@ describe('Minimap', () => {
 
       const maxScrollTop = editorElement.getMaxScrollTop()
 
-      expect(minimap.getTextEditorScrollRatio()).toEqual(editorElement.getScrollTop() / maxScrollTop)
+      expect(minimap.getTextEditorScrollRatio()).toBeCloseTo(editorElement.getScrollTop() / maxScrollTop, 0)
     })
 
     it('lock the minimap scroll top to 1', () => {
       editorElement.setScrollTop(editorElement.getScrollHeight())
-      expect(minimap.getScrollTop()).toEqual(minimap.getMaxScrollTop())
+      expect(minimap.getScrollTop()).toBeCloseTo(minimap.getMaxScrollTop(), 0)
     })
 
     describe('getTextEditorScrollRatio(), when getScrollTop() and maxScrollTop both equal 0', () => {
