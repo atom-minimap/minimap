@@ -1,3 +1,14 @@
+<a name="v4.26.8"></a>
+# v4.26.8 (2017-01-31)
+
+## :sparkles: Features
+
+- Add link to the quick-highlight integration ([7d417572](https://github.com/atom-minimap/minimap/commit/7d417572c5d61d9d6c11eae97f78dd515f4c4e0c))
+
+## :bug: Bug Fixes
+
+- Fix access to a text editor without component ([c4cd1508](https://github.com/atom-minimap/minimap/commit/c4cd1508e2fd86ebd4e023a6a483361566638377), [#551](https://github.com/atom-minimap/minimap/issues/551))
+
 <a name="v4.26.7"></a>
 # v4.26.7 (2017-01-18)
 
