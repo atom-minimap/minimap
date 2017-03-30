@@ -1,3 +1,14 @@
+<a name="v4.27.0"></a>
+# v4.27.0 (2017-03-30)
+
+## :sparkles: Features
+
+- Implement configurable minimap redraw delay ([c1ec247d](https://github.com/atom-minimap/minimap/commit/c1ec247d0f94497d9bdfaaded9d2315d2767d1e0))
+
+## :racehorse: Performances
+
+- Epic performance boost for large files ([07e65ed8](https://github.com/atom-minimap/minimap/commit/07e65ed88d31a36d49749cc1b02c1fef993faa28))
+
 <a name="v4.26.8"></a>
 # v4.26.8 (2017-01-31)
 
