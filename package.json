@@ -199,7 +199,8 @@
       "devicePixelRatio",
       "requestAnimationFrame",
       "Event",
-      "MouseEvent"
+      "MouseEvent",
+      "IntersectionObserver"
     ]
   }
 }
