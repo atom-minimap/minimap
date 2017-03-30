@@ -1377,7 +1377,9 @@ describe('MinimapElement', () => {
 
       describe('the dom polling routine', () => {
         it('does not change the value', () => {
-          atom.views.performDocumentPoll()
+          if (atom.views.performDocumentPoll) {
+            atom.views.performDocumentPoll()
+          }
 
           waitsFor('a new animation frame request', () => {
             return nextAnimationFrame !== noAnimationFrame
@@ -1395,7 +1397,9 @@ describe('MinimapElement', () => {
           editorElement.style.width = '100px'
           editorElement.style.height = '100px'
 
-          atom.views.performDocumentPoll()
+          if (atom.views.performDocumentPoll) {
+            atom.views.performDocumentPoll()
+          }
 
           waitsFor('a new animation frame request', () => {
             return nextAnimationFrame !== noAnimationFrame
@@ -1525,7 +1529,9 @@ describe('MinimapElement', () => {
         beforeEach(() => {
           editorElement.style.height = '500px'
 
-          atom.views.performDocumentPoll()
+          if (atom.views.performDocumentPoll) {
+            atom.views.performDocumentPoll()
+          }
 
           waitsFor('a new animation frame request', () => {
             return nextAnimationFrame !== noAnimationFrame
@@ -1747,7 +1753,10 @@ describe('MinimapElement', () => {
 
           editorElement.style.width = '1024px'
 
-          atom.views.performDocumentPoll()
+          if (atom.views.performDocumentPoll) {
+            atom.views.performDocumentPoll()
+          }
+
           waitsFor('minimap frame requested', () => {
             return minimapElement.frameRequested
           })
