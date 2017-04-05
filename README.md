@@ -28,7 +28,7 @@ Below is the list of available plugins so far:
 
 Package|Description
 ---|---
-[Auto-Hide](https://atom.io/packages/minimap-autohide)|Hides the Minimap while editing.
+[Auto-Hider](https://atom.io/packages/minimap-autohider)|Hides the Minimap while editing.
 [Bookmarks](https://atom.io/packages/minimap-bookmarks)|Displays Atom bookmarks.
 [Code Glance](https://atom.io/packages/minimap-codeglance)|Shows the code that's under the mouse cursor when hovering the Minimap.
 [Cursor Line](https://atom.io/packages/minimap-cursorline)|Highlights the line with cursor.
