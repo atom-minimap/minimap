@@ -1,3 +1,11 @@
+<a name="v4.27.1"></a>
+# v4.27.1 (2017-04-05)
+
+## :bug: Bug Fixes
+
+- Fix flickers on retina screen with absolute mode adjustable height ([a81abbea](https://github.com/atom-minimap/minimap/commit/a81abbea715d329691272b3cb5d13317a50d3913))
+- Enable pointer events for visible area in adjusted absolute mode ([8210e1e9](https://github.com/atom-minimap/minimap/commit/8210e1e915fe94caf08066543e86293418fe7ce8), [#564](https://github.com/atom-minimap/minimap/issues/564))
+
 <a name="v4.27.0"></a>
 # v4.27.0 (2017-03-30)
 
