@@ -21,6 +21,7 @@ apm install minimap
 * Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
 * Canvas-based Rendering: Simple, fast and flexible.
 * Stand-alone Mode: Wants to display a preview of a text editor in your UIs, use a stand-alone version of the Minimap.
+* Documentation Links: Links to documentation for popular 3rd party libraries. These links are created by reading only the import statements from your current file and linking to a free repository of documentation for popular libraries hosted by (Kite)[https://kite.com/docs]. Currently for Python only.
 
 ### Available Plugins
 
@@ -339,8 +340,6 @@ html {
 }
 
 ```
-
-
 
 ### ASCII Art Comments
 
