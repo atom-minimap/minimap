@@ -1,3 +1,10 @@
+<a name="v4.28.0"></a>
+# v4.28.0 (2017-04-27)
+
+## :sparkles: Features
+
+- Kite promotion ([16c11d82](https://github.com/atom-minimap/minimap/commit/16c11d82b889ce1260342e4fa7d6d1905c0fde45))
+
 <a name="v4.27.1"></a>
 # v4.27.1 (2017-04-05)
 
