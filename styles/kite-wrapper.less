@@ -12,6 +12,21 @@ atom-text-editor, html {
     flex: 0 0 10%;
     flex-direction: column;
 
+    i.icon-remove-close {
+      position: absolute;
+      top: 10px;
+      right: 0px;
+      z-index: 2;
+
+      &::before {
+        font-size: 0.9em;
+      }
+    }
+
+    div {
+      position: relative;
+    }
+
     &.left {
       order: 1;
     }
