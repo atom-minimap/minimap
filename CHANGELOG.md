@@ -1,3 +1,10 @@
+<a name="v4.28.2"></a>
+# v4.28.2 (2017-05-02)
+
+## :bug: Bug Fixes
+
+- Fix access to deleted editor in attached callback ([03b8f952](https://github.com/atom-minimap/minimap/commit/03b8f952b63c481db466e48863033c3397a09881), [#590](https://github.com/atom-minimap/minimap/issues/590), [#591](https://github.com/atom-minimap/minimap/issues/591), [#592](https://github.com/atom-minimap/minimap/issues/592))
+
 <a name="v4.28.0"></a>
 # v4.28.0 (2017-04-27)
 
