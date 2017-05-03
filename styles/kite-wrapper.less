@@ -19,6 +19,7 @@ atom-text-editor, html {
       z-index: 2;
 
       &::before {
+        width: auto;
         font-size: 0.9em;
       }
     }
@@ -29,6 +30,14 @@ atom-text-editor, html {
 
     &.left {
       order: 1;
+
+      > div {
+        padding-left: 5px;
+
+        i.icon-remove-close::before {
+          margin-right: 0;
+        }
+      }
     }
 
     &.absolute {
