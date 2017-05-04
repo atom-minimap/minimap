@@ -6,7 +6,7 @@
 
 A preview of the full source code.
 
-![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true)
+![Minimap Screenshot](https://github.com/rgawenda/minimap-legacy/blob/master/resources/screenshot.png?raw=true)
 <small>In the screenshot above the minimap-git-diff and minimap-highlight-selected plugins are activated.</small>
 
 ### Installation
@@ -21,7 +21,7 @@ apm install minimap
 * Decoration API: Use the same API to manage `TextEditor` and `Minimap` decorations.
 * Canvas-based Rendering: Simple, fast and flexible.
 * Stand-alone Mode: Wants to display a preview of a text editor in your UIs, use a stand-alone version of the Minimap.
-* Documentation Links: Links to documentation for popular 3rd party libraries. These links are created by reading only the import statements from your current file and linking to a free repository of documentation for popular libraries hosted by [Kite](https://kite.com/docs?source=minimap). Currently for Python only.
+
 
 ### Available Plugins
 

@@ -166,10 +166,6 @@
       "default": false,
       "description": "When enabled, text editor tokens are rendered as plain blocks, with no regards to the whitespaces they contains."
     },
-    "disablePythonDocLinks": {
-      "type": "boolean",
-      "default": false
-    }
   },
   "dependencies": {
     "atom-utils": ">=0.9.2",
