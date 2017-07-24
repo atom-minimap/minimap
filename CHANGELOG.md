@@ -1,5 +1,12 @@
+<a name="v4.29.1"></a>
+# v4.29.1 (2017-07-24)
+
+## :bug: Bug Fixes
+
+- Fix call of soon to be deprecated method ([1b761f2a](https://github.com/atom-minimap/minimap/commit/1b761f2ab5242bfc25652978506749fbdb75bcf2), [#598](https://github.com/atom-minimap/minimap/issues/598))
+
 <a name="v4.29.0"></a>
-# v4.29.0 (2017-05-02)
+# v4.29.0 (2017-07-19)
 
 Remove Kite promotion.
 
