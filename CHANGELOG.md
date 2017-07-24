@@ -1,3 +1,12 @@
+<a name="v4.29.2"></a>
+# v4.29.2 (2017-07-24)
+
+## :bug: Bug Fixes
+
+- Properly fix the issue with deprecated scroll method ([0552856a](https://github.com/atom-minimap/minimap/commit/0552856ae4250557a43bcd6dd58e84df9e24545e))
+- Fix error when redispatching scroll event ([b269eb87](https://github.com/atom-minimap/minimap/commit/b269eb87949b41a84b685f0db775f083ed44566f), [#614](https://github.com/atom-minimap/minimap/issues/614))
+- Fix independent minimap no longer working on latest atom version ([29bd6b35](https://github.com/atom-minimap/minimap/commit/29bd6b35c0e1c03ceac0ae97a6c8e493a7219f92))
+
 <a name="v4.29.1"></a>
 # v4.29.1 (2017-07-24)
 
