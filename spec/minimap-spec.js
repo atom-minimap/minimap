@@ -30,7 +30,9 @@ describe('Minimap', () => {
     largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
     smallSample = fs.readFileSync(dir.resolve('sample.coffee')).toString()
 
-    waitsFor(() => editorElement.component.measurements.clientContainerHeight)
+    if (editorElement.component.measurements) {
+      waitsFor(() => editorElement.component.measurements.clientContainerHeight)
+    }
   })
 
   it('has an associated editor', () => {
@@ -507,7 +509,9 @@ describe('Stand alone minimap', () => {
     largeSample = fs.readFileSync(dir.resolve('large-file.coffee')).toString()
     smallSample = fs.readFileSync(dir.resolve('sample.coffee')).toString()
 
-    waitsFor(() => editorElement.component.measurements.clientContainerHeight)
+    if (editorElement.component.measurements) {
+      waitsFor(() => editorElement.component.measurements.clientContainerHeight)
+    }
   })
 
   it('has an associated editor', () => {
