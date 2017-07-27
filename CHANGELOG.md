@@ -1,3 +1,10 @@
+<a name="v4.29.3"></a>
+# v4.39.2 (2017-07-27)
+
+## :bug: Bug Fixes
+
+- Guard against service usage after package is disabled in the same Atom session ([2f787bc7](https://github.com/atom-minimap/minimap/commit/2f787bc7649577df3fa9976b5b833018ac4bdccc), [#605](https://github.com/atom-minimap/minimap/issues/605))
+
 <a name="v4.29.2"></a>
 # v4.29.2 (2017-07-24)
 
