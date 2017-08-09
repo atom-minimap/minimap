@@ -29,6 +29,7 @@ atom-text-editor, html {
 
       &.left {
         order: 1;
+        position: absolute;
       }
     }
 
@@ -47,7 +48,6 @@ atom-text-editor, html {
       // absolute mode do nothing when the minimap is on the left, because
       // it would conflict with the editor's gutter
       &.left {
-        position: relative;
         right: initial;
       }
 
