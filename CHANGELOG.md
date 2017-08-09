@@ -1,5 +1,12 @@
+<a name="v4.29.4"></a>
+# v4.29.4 (2017-08-09)
+
+## :bug: Bug Fixes
+
+- Fix left minimap positioning broken in Atom 1.19 ([68357079](https://github.com/atom-minimap/minimap/commit/6835707900bd52184fc81ac7d3f9b6e7c8b83ecd), [#623](https://github.com/atom-minimap/minimap/issues/623))
+
 <a name="v4.29.3"></a>
-# v4.39.2 (2017-07-27)
+# v4.29.3 (2017-07-27)
 
 ## :bug: Bug Fixes
 
