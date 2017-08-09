@@ -1,3 +1,11 @@
+<a name="v4.29.6"></a>
+# v4.29.6 (2017-08-09)
+
+## :bug: Bug Fixes
+
+- Adjust outline decoration rendering so that it doesn't leak over next lines ([8d0b51cc](https://github.com/atom-minimap/minimap/commit/8d0b51ccfb4bacab396e75cff12831daf0b6cfa3))
+- Fix issue where decorations were not properly removed from canvas ([6c856b9b](https://github.com/atom-minimap/minimap/commit/6c856b9b30653359805d8f2a587479e61b08407e))
+
 <a name="v4.29.5"></a>
 # v4.29.5 (2017-08-09)
 
