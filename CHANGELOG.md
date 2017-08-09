@@ -1,3 +1,10 @@
+<a name="v4.29.5"></a>
+# v4.29.5 (2017-08-09)
+
+## :bug: Bug Fixes
+
+- Guard against pollDocument being something other than a function ([52273e70](https://github.com/atom-minimap/minimap/commit/52273e70a9ba60bfcc44b5fdbe28748b6ed4c9bc), [#625](https://github.com/atom-minimap/minimap/issues/625))
+
 <a name="v4.29.4"></a>
 # v4.29.4 (2017-08-09)
 
