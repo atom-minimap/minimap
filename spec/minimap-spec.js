@@ -352,8 +352,8 @@ describe('Minimap', () => {
 
       it('creates a change only for the dif between the two ranges', () => {
         expect(changeSpy).toHaveBeenCalled()
-        expect(changeSpy.calls[1].args[0].start).toEqual(1)
-        expect(changeSpy.calls[1].args[0].end).toEqual(3)
+        expect(changeSpy.mostRecentCall.args[0].start).toEqual(1)
+        expect(changeSpy.mostRecentCall.args[0].end).toEqual(3)
       })
     })
 
