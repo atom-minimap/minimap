@@ -1,11 +1,26 @@
-<a name="v4.29.7"></a>
+<a name="v4.29.9"></a>
+# v4.29.9 (2018-02-23)
 
+## :bug: Bug Fixes
+
+- Fix documentation ([#646](https://github.com/atom-minimap/minimap/pull/646), [#670](https://github.com/atom-minimap/minimap/pull/670))
+
+## :sparkles: Features
+
+- Use default cursor on minimap ([#650](https://github.com/atom-minimap/minimap/pull/650))
+
+<a name="v4.29.8"></a>
 # v4.29.8 (2018-02-23)
 
 ## :bug: Bug Fixes
 
-- Fix crash when used alongside tree-sitter grammars ([#650](https://github.com/atom-minimap/minimap/pull/650))
+- Fix crash when used alongside tree-sitter grammars ([#662](https://github.com/atom-minimap/minimap/pull/662))
 
+## Others
+
+- Fix CI ([#673](https://github.com/atom-minimap/minimap/pull/673))
+
+<a name="v4.29.7"></a>
 # v4.29.7 (2017-09-18)
 
 ## :bug: Bug Fixes
