@@ -1,3 +1,10 @@
+# [4.30.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.29.9...v4.30.0) (2020-07-10)
+
+
+### Features
+
+* Release minimap-plus ([b6037c4](https://github.com/atom-ide-community/minimap-plus/commit/b6037c46d22068ced9a1d10bbbb6aa223eb8c123))
+
 <a name="v4.29.9"></a>
 # v4.29.9 (2018-09-20)
 
