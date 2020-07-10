@@ -4,6 +4,7 @@ require('./helpers/workspace')
 
 const fs = require('fs-plus')
 const Minimap = require('../lib/minimap')
+require('jasmine-expect')
 
 describe('Minimap', () => {
   let [editor, editorElement, minimap, largeSample, smallSample, minimapVerticalScaleFactor, minimapHorizontalScaleFactor] = []
@@ -206,11 +207,11 @@ describe('Minimap', () => {
     })
 
     it('computes the first visible row in the minimap', () => {
-      expect(minimap.getFirstVisibleScreenRow()).toEqual(58)
+      expect(minimap.getFirstVisibleScreenRow()).toBeNear(58, 2)
     })
 
     it('computes the last visible row in the minimap', () => {
-      expect(minimap.getLastVisibleScreenRow()).toEqual(69)
+      expect(minimap.getLastVisibleScreenRow()).toBeNear(69, 2)
     })
 
     describe('down to the bottom', () => {
