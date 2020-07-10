@@ -9,9 +9,9 @@ describe('Minimap', () => {
   let [editor, editorElement, minimap, largeSample, smallSample, minimapVerticalScaleFactor, minimapHorizontalScaleFactor] = []
 
   beforeEach(() => {
-    atom.config.set('minimap.charHeight', 4)
-    atom.config.set('minimap.charWidth', 2)
-    atom.config.set('minimap.interline', 1)
+    atom.config.set('minimap-plus.charHeight', 4)
+    atom.config.set('minimap-plus.charWidth', 2)
+    atom.config.set('minimap-plus.interline', 1)
 
     editor = atom.workspace.buildTextEditor({})
     editor.autoHeight = false
@@ -268,9 +268,9 @@ describe('Minimap', () => {
       runs(() => {
         const opts = {scopeSelector: '.source.js'}
 
-        atom.config.set('minimap.charHeight', 8, opts)
-        atom.config.set('minimap.charWidth', 4, opts)
-        atom.config.set('minimap.interline', 2, opts)
+        atom.config.set('minimap-plus.charHeight', 8, opts)
+        atom.config.set('minimap-plus.charWidth', 4, opts)
+        atom.config.set('minimap-plus.interline', 2, opts)
 
         editor.setGrammar(atom.grammars.grammarForScopeName('source.js'))
       })
@@ -290,7 +290,7 @@ describe('Minimap', () => {
       editorElement.setScrollTop(1000)
       editorScrollRatio = editorElement.getScrollTop() / editorElement.getMaxScrollTop()
 
-      atom.config.set('minimap.independentMinimapScroll', true)
+      atom.config.set('minimap-plus.independentMinimapScroll', true)
     })
 
     it('ignores the scroll computed from the editor and return the one of the minimap instead', () => {
@@ -487,9 +487,9 @@ describe('Stand alone minimap', () => {
   let [editor, editorElement, minimap, largeSample, smallSample] = []
 
   beforeEach(() => {
-    atom.config.set('minimap.charHeight', 4)
-    atom.config.set('minimap.charWidth', 2)
-    atom.config.set('minimap.interline', 1)
+    atom.config.set('minimap-plus.charHeight', 4)
+    atom.config.set('minimap-plus.charWidth', 2)
+    atom.config.set('minimap-plus.interline', 1)
 
     editor = atom.workspace.buildTextEditor({})
     editor.autoHeight = false
