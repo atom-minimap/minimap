@@ -10,8 +10,9 @@
     "overview"
   ],
   "scripts": {
-    "standard": "standard",
-    "esdoc": "esdoc -c esdoc.json"
+    "lint": "standard lib/**/*.js && standard spec/**/*.js",
+    "esdoc": "esdoc -c esdoc.json",
+    "test": "atom --test spec"
   },
   "contributors": [
     {
@@ -209,5 +210,6 @@
       "MouseEvent",
       "IntersectionObserver"
     ]
-  }
+  },
+  "package-deps": {}
 }
