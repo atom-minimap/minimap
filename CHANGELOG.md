@@ -1,3 +1,13 @@
+## [4.30.2](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.1...v4.30.2) (2020-07-10)
+
+
+### Bug Fixes
+
+* Add --fix to lint ([7ab2649](https://github.com/atom-ide-community/minimap-plus/commit/7ab26491d530480cc6c08c25eb5b1046805ab8c4))
+* bump dependencies ([40595f5](https://github.com/atom-ide-community/minimap-plus/commit/40595f5c8265a7f819d1eea1811b1d36133f60e9))
+* npm run lint ([fdfd2a5](https://github.com/atom-ide-community/minimap-plus/commit/fdfd2a52b43638cea1081a5c2f2cf44f5fd07c3f))
+* update package-lock.json ([1b0929a](https://github.com/atom-ide-community/minimap-plus/commit/1b0929ad5739ef9678ad7c3800f037b5ac4902b9))
+
 ## [4.30.1](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.0...v4.30.1) (2020-07-10)
 
 
