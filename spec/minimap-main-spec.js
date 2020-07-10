@@ -7,7 +7,7 @@ describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
 
   beforeEach(() => {
-    atom.config.set('minimap.autoToggle', true)
+    atom.config.set('minimap-plus.autoToggle', true)
 
     workspaceElement = atom.views.getView(atom.workspace)
     jasmine.attachToDOM(workspaceElement)
@@ -17,7 +17,7 @@ describe('Minimap package', () => {
     })
 
     waitsForPromise(() => {
-      return atom.packages.activatePackage('minimap').then((pkg) => {
+      return atom.packages.activatePackage('minimap-plus').then((pkg) => {
         minimapPackage = pkg.mainModule
       })
     })
@@ -66,7 +66,7 @@ describe('Minimap package', () => {
           const m = new Minimap({textEditor: editor})
           const v = atom.views.getView(m)
           editorElement.appendChild(v)
-          waitsForPromise(() => atom.packages.activatePackage('minimap'))
+          waitsForPromise(() => atom.packages.activatePackage('minimap-plus'))
         })
 
         it('removes the remaining minimap', () => {
@@ -133,8 +133,8 @@ describe('Minimap package', () => {
 
     describe('when the displayPluginsControls setting is enabled', () => {
       beforeEach(() => {
-        atom.config.set('minimap.displayPluginsControls', true)
-        atom.config.set('minimap.plugins.dummy', undefined)
+        atom.config.set('minimap-plus.displayPluginsControls', true)
+        atom.config.set('minimap-plus.plugins.dummy', undefined)
 
         plugin = {
           active: false,
@@ -171,8 +171,8 @@ describe('Minimap package', () => {
         })
 
         it('sets the corresponding config', () => {
-          expect(atom.config.get('minimap.plugins.dummy')).toBeTruthy()
-          expect(atom.config.get('minimap.plugins.dummyDecorationsZIndex')).toEqual(0)
+          expect(atom.config.get('minimap-plus.plugins.dummy')).toBeTruthy()
+          expect(atom.config.get('minimap-plus.plugins.dummyDecorationsZIndex')).toEqual(0)
         })
 
         describe('triggering the corresponding plugin command', () => {
@@ -200,7 +200,7 @@ describe('Minimap package', () => {
 
           describe('when the config is modified', () => {
             beforeEach(() => {
-              atom.config.set('minimap.plugins.dummy', false)
+              atom.config.set('minimap-plus.plugins.dummy', false)
             })
 
             it('does not activates the plugin', () => {
@@ -223,7 +223,7 @@ describe('Minimap package', () => {
 
       describe('when the config for it is false', () => {
         beforeEach(() => {
-          atom.config.set('minimap.plugins.dummy', false)
+          atom.config.set('minimap-plus.plugins.dummy', false)
           minimapPackage.registerPlugin('dummy', plugin)
         })
 
@@ -247,7 +247,7 @@ describe('Minimap package', () => {
 
         describe('when the config is modified after registration', () => {
           beforeEach(() => {
-            atom.config.set('minimap.plugins.dummy', false)
+            atom.config.set('minimap-plus.plugins.dummy', false)
           })
 
           it('receives a deactivation call', () => {
@@ -259,8 +259,8 @@ describe('Minimap package', () => {
 
     describe('when the displayPluginsControls setting is disabled', () => {
       beforeEach(() => {
-        atom.config.set('minimap.displayPluginsControls', false)
-        atom.config.set('minimap.plugins.dummy', undefined)
+        atom.config.set('minimap-plus.displayPluginsControls', false)
+        atom.config.set('minimap-plus.plugins.dummy', undefined)
 
         plugin = {
           active: false,

@@ -1,17 +1,18 @@
 {
-  "name": "minimap",
+  "name": "minimap-plus",
   "main": "./lib/main",
   "version": "4.29.9",
   "private": true,
   "description": "A preview of the full source code.",
-  "author": "Fangdun Cai <cfddream@gmail.com>",
+  "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
   "keywords": [
     "minimap",
     "overview"
   ],
   "scripts": {
-    "standard": "standard",
-    "esdoc": "esdoc -c esdoc.json"
+    "lint": "standard lib/**/*.js && standard spec/**/*.js",
+    "esdoc": "esdoc -c esdoc.json",
+    "test": "atom --test spec"
   },
   "contributors": [
     {
@@ -21,9 +22,13 @@
     {
       "name": "Cédric Néhémie",
       "email": "cedric.nehemie@gmail.com"
+    },
+    {
+      "name": "Amin Yahyaabadi",
+      "email": "aminyahyaabadi74@gmail.com"
     }
   ],
-  "repository": "https://github.com/atom-minimap/minimap",
+  "repository": "https://github.com/atom-ide-community/minimap-plus",
   "license": "MIT",
   "engines": {
     "atom": ">=1.13.0"
@@ -177,7 +182,9 @@
   },
   "devDependencies": {
     "esdoc": "^0.4.0",
-    "standard": "^5.1.0"
+    "standard": "^5.1.0",
+    "@types/jasmine": "1.3.3",
+    "jasmine-expect": "^4.0.3"
   },
   "standard": {
     "globals": [
@@ -209,5 +216,6 @@
       "MouseEvent",
       "IntersectionObserver"
     ]
-  }
+  },
+  "package-deps": {}
 }
