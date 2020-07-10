@@ -61,8 +61,7 @@ jobs:
 
   Release:
     needs: Lint # [Test, Lint]
-    if: github.ref == 'refs/heads/master' &&
-      github.event.repository.fork == false
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
