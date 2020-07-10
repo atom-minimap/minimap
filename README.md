@@ -1,4 +1,4 @@
-[![APM Version](https://img.shields.io/apm/v/minimap.svg)](https://atom.io/packages/minimap-plus)
+[![APM Version](https://img.shields.io/apm/v/minimap-plus.svg)](https://atom.io/packages/minimap-plus)
 [![APM Downloads](https://img.shields.io/apm/dm/minimap.svg)](https://atom.io/packages/minimap-plus)
 
 # Minimap-plus package
