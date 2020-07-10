@@ -20,7 +20,7 @@ describe "__PackageName__", ->
       editor.setText("This is the file content")
 
     waitsForPromise ->
-      atom.packages.activatePackage('minimap')
+      atom.packages.activatePackage('minimap-plus')
 
     waitsForPromise ->
       atom.packages.activatePackage('__package-name__')

@@ -51,7 +51,7 @@ describe('MinimapElement', () => {
       ? document.body.querySelector('#jasmine-content')
       : document.body
 
-    waitsForPromise(() => atom.packages.activatePackage('minimap'))
+    waitsForPromise(() => atom.packages.activatePackage('minimap-plus'))
 
     runs(() => {
       atom.config.set('minimap.charHeight', 4)
@@ -1949,7 +1949,7 @@ describe('MinimapElement', () => {
         let [minimapPackage, pluginA, pluginB] = []
         beforeEach(() => {
           waitsForPromise(() => {
-            return atom.packages.activatePackage('minimap').then((pkg) => {
+            return atom.packages.activatePackage('minimap-plus').then((pkg) => {
               minimapPackage = pkg.mainModule
             })
           })

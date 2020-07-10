@@ -17,7 +17,7 @@ describe('Minimap package', () => {
     })
 
     waitsForPromise(() => {
-      return atom.packages.activatePackage('minimap').then((pkg) => {
+      return atom.packages.activatePackage('minimap-plus').then((pkg) => {
         minimapPackage = pkg.mainModule
       })
     })
@@ -66,7 +66,7 @@ describe('Minimap package', () => {
           const m = new Minimap({textEditor: editor})
           const v = atom.views.getView(m)
           editorElement.appendChild(v)
-          waitsForPromise(() => atom.packages.activatePackage('minimap'))
+          waitsForPromise(() => atom.packages.activatePackage('minimap-plus'))
         })
 
         it('removes the remaining minimap', () => {

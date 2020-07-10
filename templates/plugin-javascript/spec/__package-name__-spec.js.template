@@ -15,7 +15,7 @@ describe("__PackageName__", function() {
       editor.setText("This is the file content");
     });
     waitsForPromise(function() {
-      return atom.packages.activatePackage('minimap');
+      return atom.packages.activatePackage('minimap-plus');
     });
     return waitsForPromise(function() {
       return atom.packages.activatePackage('__package-name__');
