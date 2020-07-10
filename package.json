@@ -210,5 +210,6 @@
       "MouseEvent",
       "IntersectionObserver"
     ]
-  }
+  },
+  "package-deps": {}
 }
