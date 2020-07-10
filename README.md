@@ -1,12 +1,9 @@
-[![Build Status](https://travis-ci.org/atom-minimap/minimap.svg?branch=master)](https://travis-ci.org/atom-minimap/minimap)
-[![APM Version](https://img.shields.io/apm/v/minimap.svg)](https://atom.io/packages/minimap)
-[![APM Downloads](https://img.shields.io/apm/dm/minimap.svg)](https://atom.io/packages/minimap)
+[![APM Version](https://img.shields.io/apm/v/minimap.svg)](https://atom.io/packages/minimap-plus)
+[![APM Downloads](https://img.shields.io/apm/dm/minimap.svg)](https://atom.io/packages/minimap-plus)
 
 # Minimap package
 
 A preview of the full source code.
-
-This package is sponsored and maintained by [Kite](https://kite.com/docs?source=minimap).
 
 ![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true)
 <small>In the screenshot above the minimap-git-diff and minimap-highlight-selected plugins are activated.</small>
