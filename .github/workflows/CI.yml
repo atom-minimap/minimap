@@ -1,0 +1,90 @@
+name: CI
+on:
+  - push
+  - pull_request
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Test:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: ${{ matrix.os }} - Atom ${{ matrix.atom_channel }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          # - macos-latest
+          # - windows-latest
+        atom_channel: [stable, beta]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: UziTech/action-setup-atom@v1
+        with:
+          channel: ${{ matrix.atom_channel }}
+      - name: Versions
+        run: apm -v
+      - name: Install APM dependencies
+        run: |
+          apm ci  # uses locked module. use `apm install` for non-locked
+      - name: Atom Package dependencies
+        run: |
+          npm install array-to-txt-file
+          node -e 'const pkg = require("./package.json"); deps=Array.from(pkg["package-deps"]); const arrayToTxtFile = require("array-to-txt-file"); arrayToTxtFile(deps,"deps.txt", ()=>{});'
+          cat deps.txt | \
+          while read dep; do
+              apm install $dep
+          done
+      - name: Run tests 👩🏾‍💻
+        run: npm run test
+
+  Lint:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Commit lint ✨
+        uses: wagoid/commitlint-github-action@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Install NPM dependencies
+        run: |
+          npm ci  # uses locked module. use `npm install` for non-locked
+      - name: Lint ✨
+        run: npm run lint
+
+  Release:
+    needs: Lint # [Test, Lint]
+    if: github.ref == 'refs/heads/master' &&
+      github.event.repository.fork == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: UziTech/action-setup-atom@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: NPM install
+        run: npm ci
+#      - name: Build and Commit
+#        run: npm run build-commit
+      - name: Release 🎉
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extends: |
+            @semantic-release/apm-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATOM_ACCESS_TOKEN: ${{ secrets.ATOM_ACCESS_TOKEN  }}
+  Skip:
+    if: contains(github.event.head_commit.message, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip CI 🚫
+        run: echo skip ci
