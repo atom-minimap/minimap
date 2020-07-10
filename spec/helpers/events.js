@@ -51,18 +51,18 @@ function touchEvent (type, touches) {
 }
 
 function objectCenterCoordinates (obj) {
-  const {top, left, width, height} = obj.getBoundingClientRect()
-  return {x: left + width / 2, y: top + height / 2}
+  const { top, left, width, height } = obj.getBoundingClientRect()
+  return { x: left + width / 2, y: top + height / 2 }
 }
 
 function exists (value) {
   return value != null
 }
 
-module.exports = {objectCenterCoordinates, mouseEvent}
+module.exports = { objectCenterCoordinates, mouseEvent }
 
 ;['mousedown', 'mousemove', 'mouseup', 'click'].forEach((key) => {
-  module.exports[key] = function (obj, {x, y, cx, cy, btn} = {}) {
+  module.exports[key] = function (obj, { x, y, cx, cy, btn } = {}) {
     if (x == null && y == null) {
       const o = objectCenterCoordinates(obj)
       x = o.x
