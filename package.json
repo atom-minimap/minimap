@@ -182,6 +182,7 @@
   },
   "devDependencies": {
     "esdoc": "^1.1.0",
+    "esdoc-es7-plugin": "^0.0.3",
     "standard": "^14.3.4",
     "@types/jasmine": "3.5.11",
     "jasmine-expect": "^4.0.3",
