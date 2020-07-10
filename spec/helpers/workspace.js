@@ -36,11 +36,11 @@ const styles = `
   }
 `
 
-module.exports = {stylesheet, styles}
+module.exports = { stylesheet, styles }
 
 beforeEach(() => {
   if (!atom.workspace.buildTextEditor) {
-    const {TextEditor} = require('atom')
+    const { TextEditor } = require('atom')
     atom.workspace.buildTextEditor = function (opts) {
       return new TextEditor(opts)
     }
