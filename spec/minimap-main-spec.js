@@ -16,6 +16,10 @@ describe('Minimap package', () => {
       return atom.workspace.open('sample.coffee')
     })
 
+    // Package activation will be deferred to the configured, activation hook, which is then triggered
+    // Activate activation hook
+    atom.packages.triggerDeferredActivationHooks();
+    atom.packages.triggerActivationHook("core:loaded-shell-environment");
     waitsForPromise(() => {
       return atom.packages.activatePackage('minimap').then((pkg) => {
         minimapPackage = pkg.mainModule
@@ -66,6 +70,10 @@ describe('Minimap package', () => {
           const m = new Minimap({textEditor: editor})
           const v = atom.views.getView(m)
           editorElement.appendChild(v)
+          // Package activation will be deferred to the configured, activation hook, which is then triggered
+          // Activate activation hook
+          atom.packages.triggerDeferredActivationHooks();
+          atom.packages.triggerActivationHook("core:loaded-shell-environment");
           waitsForPromise(() => atom.packages.activatePackage('minimap'))
         })
 
