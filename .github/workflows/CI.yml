@@ -60,7 +60,7 @@ jobs:
         run: npm run lint
 
   Release:
-    needs: [Test, Lint]
+    needs: Lint # [Test, Lint]
     if: github.ref == 'refs/heads/master' &&
       github.event.repository.fork == false
     runs-on: ubuntu-latest
