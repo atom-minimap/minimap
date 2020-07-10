@@ -1,3 +1,10 @@
+## [4.30.1](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.0...v4.30.1) (2020-07-10)
+
+
+### Bug Fixes
+
+* add activation hook ([2474542](https://github.com/atom-ide-community/minimap-plus/commit/24745428e202c9752e3290e5f013d0896f955437))
+
 # [4.30.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.29.9...v4.30.0) (2020-07-10)
 
 
