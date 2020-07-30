@@ -198,6 +198,12 @@
       "default": true,
       "description": "When enabled, text editor tokens are rendered as plain blocks, with no regards to the whitespaces they contains.",
       "order": 8
+    },
+    "maxTokensInOneLine": {
+      "type": "integer",
+      "default": 160,
+      "description": "The maximum number of tokens that are rendered for each line.",
+      "order": 27
     }
   },
   "dependencies": {
