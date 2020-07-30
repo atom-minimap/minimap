@@ -1,3 +1,10 @@
+# [4.31.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.2...v4.31.0) (2020-07-30)
+
+
+### Features
+
+* use optimal settings as the default ([5c1c3a6](https://github.com/atom-ide-community/minimap-plus/commit/5c1c3a6e257fbdac8c006e1af2e3ac964439b558))
+
 ## [4.30.2](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.1...v4.30.2) (2020-07-10)
 
 
