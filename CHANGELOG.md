@@ -1,3 +1,10 @@
+# [4.32.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.31.0...v4.32.0) (2020-07-30)
+
+
+### Features
+
+* limit the number of tokens that are rendered for one line ([4df4655](https://github.com/atom-ide-community/minimap-plus/commit/4df465572cc7c58f5032d54bcd262119ae574898))
+
 # [4.31.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.30.2...v4.31.0) (2020-07-30)
 
 
