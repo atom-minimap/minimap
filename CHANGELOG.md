@@ -1,3 +1,15 @@
+# [4.33.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.32.0...v4.33.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* requests flush changes if not already requested ([6d4c4d4](https://github.com/atom-ide-community/minimap-plus/commit/6d4c4d4ec9d4395283df11f4c5f8be5a34222c57))
+
+
+### Features
+
+* use requestAnimationFrame for scheduleChanges  ([a0a1c18](https://github.com/atom-ide-community/minimap-plus/commit/a0a1c189a75ec059ba01abd25b30e0c238487e9e))
+
 # [4.32.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.31.0...v4.32.0) (2020-07-30)
 
 
