@@ -1,3 +1,10 @@
+# [4.34.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.33.0...v4.34.0) (2020-10-13)
+
+
+### Features
+
+* add css containment to minimap elements ([58b9ae1](https://github.com/atom-ide-community/minimap-plus/commit/58b9ae1821be6cdfe84aa8fa40e42f2e6ddffd97))
+
 # [4.33.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.32.0...v4.33.0) (2020-10-13)
 
 
