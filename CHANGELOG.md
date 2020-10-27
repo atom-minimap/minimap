@@ -1,3 +1,10 @@
+## [4.35.1](https://github.com/atom-ide-community/minimap-plus/compare/v4.35.0...v4.35.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* use atom-utils-plus ([0e9c927](https://github.com/atom-ide-community/minimap-plus/commit/0e9c927bd2f47a4605bbfce54be35210b3befb4a))
+
 # [4.35.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.34.1...v4.35.0) (2020-10-27)
 
 
