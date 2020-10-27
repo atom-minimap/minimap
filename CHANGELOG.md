@@ -1,3 +1,10 @@
+## [4.34.1](https://github.com/atom-ide-community/minimap-plus/compare/v4.34.0...v4.34.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* prevent error when minimap squished ([8d74e83](https://github.com/atom-ide-community/minimap-plus/commit/8d74e83aa49280e06367472de705ced5fe493d54))
+
 # [4.34.0](https://github.com/atom-ide-community/minimap-plus/compare/v4.33.0...v4.34.0) (2020-10-13)
 
 
