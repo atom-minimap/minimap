@@ -89,7 +89,10 @@ describe('Minimap', () => {
 
     editor.setText('foo')
 
-    expect(changeSpy).toHaveBeenCalled()
+    // because of requestAnimation the change is relayed asynchronously. 
+    setTimeout(() => {
+      expect(changeSpy).toHaveBeenCalled()
+    }, 1000)
   })
 
   it('relays scroll top events from the editor', () => {
