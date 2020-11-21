@@ -1,3 +1,7 @@
+# v4.30.1 (2020-11-20)
+
+- :sparkles: Startup time improvement: [fix: add activation hook](https://github.com/atom-minimap/minimap/pull/712)
+
 # v4.30.0 (2020-11-20)
 
 - :sparkles: Performance improvement: [Make event listeners passive](https://github.com/atom-minimap/minimap/pull/683)
