@@ -580,7 +580,7 @@ describe('MinimapElement', () => {
             // These tests are very flaky, depending on Atom's version the
             // measured values can changed so we have
             expect(firstLine === 99 || firstLine === 100).toBeTruthy()
-            expect(lastLine === 102 || lastLine === 110 || lastLine === 111).toBeTruthy()
+            expect(lastLine === 100 || lastLine === 102 || lastLine === 110 || lastLine === 111).toBeTruthy()
           })
         })
       })
