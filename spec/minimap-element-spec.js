@@ -357,7 +357,7 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(calls).toEqual(['bar', 'foo'])
+          expect(calls).toEqual(['foo', 'bar'])
 
           Main.unregisterPlugin('foo')
           Main.unregisterPlugin('bar')
