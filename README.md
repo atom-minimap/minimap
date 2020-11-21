@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/atom-minimap/minimap.svg?branch=master)](https://travis-ci.org/atom-minimap/minimap)
+![CI](https://github.com/atom-minimap/minimap/workflows/CI/badge.svg)
 [![APM Version](https://img.shields.io/apm/v/minimap.svg)](https://atom.io/packages/minimap)
 [![APM Downloads](https://img.shields.io/apm/dm/minimap.svg)](https://atom.io/packages/minimap)
 
