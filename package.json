@@ -10,8 +10,9 @@
     "overview"
   ],
   "scripts": {
-    "standard": "standard",
-    "esdoc": "esdoc -c esdoc.json"
+    "lint": "standard lib/**/*.js && standard spec/**/*.js",
+    "esdoc": "esdoc -c esdoc.json",
+    "test": "atom --test spec"
   },
   "contributors": [
     {
@@ -177,7 +178,9 @@
   },
   "devDependencies": {
     "esdoc": "^0.4.0",
-    "standard": "^5.1.0"
+    "standard": "^5.1.0",
+    "@types/jasmine": "1.3.3",
+    "jasmine-expect": "^4.0.3"
   },
   "standard": {
     "globals": [
@@ -209,5 +212,6 @@
       "MouseEvent",
       "IntersectionObserver"
     ]
-  }
+  },
+  "package-deps": {}
 }
