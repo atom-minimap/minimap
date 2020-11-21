@@ -40,6 +40,9 @@
   "viewProviders": [
     "minimapViewProvider"
   ],
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "configSchema": {
     "plugins": {
       "type": "object",
