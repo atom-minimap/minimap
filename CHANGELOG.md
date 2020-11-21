@@ -1,3 +1,10 @@
+# [4.32.0](https://github.com/atom-minimap/minimap/compare/v4.31.1...v4.32.0) (2020-11-21)
+
+
+### Features
+
+* limit the number of tokens that are rendered for one line This will prevent the very long lines to break minimap when softwrap is not enabled. ([85a56e3](https://github.com/atom-minimap/minimap/commit/85a56e37c68d5c1520c5ccc83363053e7b868642))
+
 ## [4.31.1](https://github.com/atom-minimap/minimap/compare/v4.31.0...v4.31.1) (2020-11-21)
 
 
