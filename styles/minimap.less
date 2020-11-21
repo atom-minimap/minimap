@@ -144,7 +144,7 @@ atom-text-editor, html {
 }
 
 minimap-quick-settings {
-  contain: @contain_all;
+  contain: @contain_except_size;
   position: absolute !important;
   z-index: 5;
 
@@ -176,17 +176,17 @@ minimap-quick-settings {
   }
 
   .select-list.popover-list ol.list-group {
-    contain: @contain_all;
+    contain: @contain_except_size;
     overflow: visible;
     max-height: none;
   }
 
   .btn-group {
-    contain: @contain_all;
+    contain: @contain_except_size;
     width: 100%;
 
     .btn {
-      contain: @contain_all;
+      contain: @contain_except_size;
       width: 50%;
     }
   }
