@@ -1,3 +1,15 @@
+# [4.31.0](https://github.com/atom-minimap/minimap/compare/v4.30.2...v4.31.0) (2020-11-21)
+
+
+### Bug Fixes
+
+* move less intensive conditions forward ([6540c39](https://github.com/atom-minimap/minimap/commit/6540c39d81c2aeaa62c87f99d2cfa56fcdd69c1a))
+
+
+### Features
+
+* use optimal settings as the default ([68a7883](https://github.com/atom-minimap/minimap/commit/68a7883d3a301ebdca136982734b3bdd75bf3653))
+
 ## [4.30.2](https://github.com/atom-minimap/minimap/compare/v4.30.1...v4.30.2) (2020-11-21)
 
 
