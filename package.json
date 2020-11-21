@@ -194,6 +194,12 @@
       "default": 300,
       "description": "The duration of scrolling animations when clicking on the minimap.",
       "order": 24
+    },
+    "maxTokensInOneLine": {
+      "type": "integer",
+      "default": 160,
+      "description": "The maximum number of tokens that are rendered for each line.",
+      "order": 25
     }
   },
   "dependencies": {
