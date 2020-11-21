@@ -1,3 +1,17 @@
+## [4.30.2](https://github.com/atom-minimap/minimap/compare/v4.30.1...v4.30.2) (2020-11-21)
+
+
+### Bug Fixes
+
+* Add --fix to lint ([edbfd1e](https://github.com/atom-minimap/minimap/commit/edbfd1ed12071854b0f3ab3545063e615a7b6633))
+* bump dependencies ([2372942](https://github.com/atom-minimap/minimap/commit/2372942a4d26c9e9edaa1c78162b6ea16c6d55d0))
+* bump dependencies ([2b887ef](https://github.com/atom-minimap/minimap/commit/2b887ef35321fa030304974d3bca3ca9a9405a0b))
+* npm run lint ([4345ccf](https://github.com/atom-minimap/minimap/commit/4345ccfff7649a545f27331ad3616d2bc0962d4e))
+* run lint using standard 16 ([34e4d49](https://github.com/atom-minimap/minimap/commit/34e4d49d4fe7046c72e30334d01f06fc6dc59292))
+* use atom-utils-plus ([ffe2717](https://github.com/atom-minimap/minimap/commit/ffe27177f70facb685595a03000a54336cbad5c9))
+* use const instead of var ([6faa975](https://github.com/atom-minimap/minimap/commit/6faa975d9979a7e104e4898c181806923b1f8b50))
+* use if/else instead of complex ternary ([706a2d7](https://github.com/atom-minimap/minimap/commit/706a2d79e6153222d16a504e4a0229f675340057))
+
 ## [4.30.1](https://github.com/atom-minimap/minimap/compare/v4.30.0...v4.30.1) (2020-11-21)
 
 ### Bug Fixes
