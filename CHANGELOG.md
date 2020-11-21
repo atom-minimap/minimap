@@ -1,3 +1,11 @@
+## [4.31.1](https://github.com/atom-minimap/minimap/compare/v4.31.0...v4.31.1) (2020-11-21)
+
+
+### Bug Fixes
+
+* prevent error when minimap squished ([cfeba59](https://github.com/atom-minimap/minimap/commit/cfeba5950ce69735ca705061dc359d000a00ee8c))
+* prevent error when width = 0 ([1ec8f12](https://github.com/atom-minimap/minimap/commit/1ec8f12cfda88099697d20ccdc7a57b2c6d5ec49))
+
 # [4.31.0](https://github.com/atom-minimap/minimap/compare/v4.30.2...v4.31.0) (2020-11-21)
 
 
