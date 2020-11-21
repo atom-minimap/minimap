@@ -1,3 +1,15 @@
+# [4.35.0](https://github.com/atom-minimap/minimap/compare/v4.34.0...v4.35.0) (2020-11-21)
+
+
+### Bug Fixes
+
+* requests flush changes if not already requested ([79d6e41](https://github.com/atom-minimap/minimap/commit/79d6e4117cbe009d341b89cf221b952950fdc01b))
+
+
+### Features
+
+* use requestAnimationFrame for scheduleChanges  ([2ca5006](https://github.com/atom-minimap/minimap/commit/2ca500668239342b8d5a6d670da73fc8ea6beb6d))
+
 # [4.34.0](https://github.com/atom-minimap/minimap/compare/v4.33.0...v4.34.0) (2020-11-21)
 
 
