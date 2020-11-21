@@ -3,10 +3,6 @@ on:
   - push
   - pull_request
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
   Test:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -17,8 +13,8 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # - macos-latest
-          # - windows-latest
+          - macos-latest
+          - windows-latest
         atom_channel: [stable, beta]
     steps:
       - uses: actions/checkout@v2
