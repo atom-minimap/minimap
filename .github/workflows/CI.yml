@@ -54,7 +54,7 @@ jobs:
         run: npm run lint
 
   Release:
-    needs: Lint # [Test, Lint]
+    needs: [Test, Lint]
     if: github.ref == 'refs/heads/master' &&
       github.event.repository.fork == false
     runs-on: ubuntu-latest
@@ -68,14 +68,14 @@ jobs:
         run: npm install
       # - name: Build and Commit
       #   run: npm run build-commit
-      # - name: Release 🎉
-      #   uses: cycjimmy/semantic-release-action@v2
-      #   with:
-      #     extends: |
-      #       @semantic-release/apm-config
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     ATOM_ACCESS_TOKEN: ${{ secrets.ATOM_ACCESS_TOKEN  }}
+      - name: Release 🎉
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extends: |
+            @semantic-release/apm-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATOM_ACCESS_TOKEN: ${{ secrets.ATOM_ACCESS_TOKEN  }}
   Skip:
     if: contains(github.event.head_commit.message, '[skip ci]')
     runs-on: ubuntu-latest
