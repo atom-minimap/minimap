@@ -282,7 +282,7 @@ describe('MinimapElement', () => {
       })
 
       it('sets the visible area width and height', () => {
-        expect(visibleArea.offsetWidth).toEqual(minimapElement.clientWidth + Math.floor(minimap.getTextEditorScaledScrollLeft()))
+        expect(visibleArea.offsetWidth).toBeNear(minimapElement.clientWidth + Math.floor(minimap.getTextEditorScaledScrollLeft()), 5)
         expect(visibleArea.offsetHeight).toBeCloseTo(minimap.getTextEditorScaledHeight(), 0)
       })
 
@@ -290,7 +290,7 @@ describe('MinimapElement', () => {
         expect(realOffsetTop(visibleArea)).toBeCloseTo(minimap.getTextEditorScaledScrollTop() - minimap.getScrollTop(), 0)
 
         expect(Math.floor(parseFloat(visibleArea.style.borderLeftWidth)))
-        .toEqual(Math.floor(minimap.getTextEditorScaledScrollLeft()))
+        .toBeNear(Math.floor(minimap.getTextEditorScaledScrollLeft()), 5)
       })
 
       it('offsets the canvas when the scroll does not match line height', () => {
@@ -357,7 +357,7 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(calls).toEqual(['bar', 'foo'])
+          expect(calls).toEqual(['foo', 'bar'])
 
           Main.unregisterPlugin('foo')
           Main.unregisterPlugin('bar')
@@ -1051,7 +1051,7 @@ describe('MinimapElement', () => {
 
           it('scrolls the editor so that the visible area was moved down by 40 pixels', () => {
             let {top} = visibleArea.getBoundingClientRect()
-            expect(top).toBeCloseTo(originalTop + 26, -1)
+            expect(top).toBeNear(originalTop + 40, 15)
           })
         })
       })
