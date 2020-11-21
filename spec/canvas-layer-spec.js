@@ -31,7 +31,7 @@ describe('CanvasLayer', () => {
 
   describe('.prototype.attach', () => {
     it('attaches the onscreen canvas to the provided element', () => {
-      let jasmineContent = document.body.querySelector('#jasmine-content')
+      const jasmineContent = document.body.querySelector('#jasmine-content')
 
       layer.attach(jasmineContent)
 
