@@ -27,17 +27,10 @@ jobs:
           channel: ${{ matrix.atom_channel }}
       - name: Versions
         run: apm -v
+        
       - name: Install APM dependencies
         run: |
-          apm ci  # uses locked module. use `apm install` for non-locked
-      - name: Atom Package dependencies
-        run: |
-          npm install array-to-txt-file
-          node -e 'const pkg = require("./package.json"); deps=Array.from(pkg["package-deps"]); const arrayToTxtFile = require("array-to-txt-file"); arrayToTxtFile(deps,"deps.txt", ()=>{});'
-          cat deps.txt | \
-          while read dep; do
-              apm install $dep
-          done
+          apm install
       - name: Run tests 👩🏾‍💻
         run: npm run test
 
@@ -52,10 +45,10 @@ jobs:
         uses: wagoid/commitlint-github-action@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: "12.x"
       - name: Install NPM dependencies
         run: |
-          npm ci  # uses locked module. use `npm install` for non-locked
+          npm install
       - name: Lint ✨
         run: npm run lint
 
@@ -69,9 +62,9 @@ jobs:
       - uses: UziTech/action-setup-atom@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: "12.x"
       - name: NPM install
-        run: npm ci
+        run: npm install
       # - name: Build and Commit
       #   run: npm run build-commit
       # - name: Release 🎉
