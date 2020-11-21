@@ -1,3 +1,15 @@
+# [4.34.0](https://github.com/atom-minimap/minimap/compare/v4.33.0...v4.34.0) (2020-11-21)
+
+
+### Bug Fixes
+
+* less containment for minimap-quick-settings ([2747b7f](https://github.com/atom-minimap/minimap/commit/2747b7f31364e1ba5f73577e916027ae5ebe6c71))
+
+
+### Features
+
+* add css containment to minimap elements ([f2be7d9](https://github.com/atom-minimap/minimap/commit/f2be7d98fa5d61193c3f97ffbf658cae31fc47bb))
+
 # [4.33.0](https://github.com/atom-minimap/minimap/compare/v4.32.0...v4.33.0) (2020-11-21)
 
 
