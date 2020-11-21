@@ -2,7 +2,6 @@
   "name": "minimap",
   "main": "./lib/main",
   "version": "4.35.0",
-  "private": true,
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
   "keywords": [
@@ -23,6 +22,10 @@
     {
       "name": "Cédric Néhémie",
       "email": "cedric.nehemie@gmail.com"
+    },
+    {
+      "name": "Amin Yahyaabadi",
+      "email": "aminyahyaabadi74@gmail.com"
     }
   ],
   "repository": "https://github.com/atom-minimap/minimap",
