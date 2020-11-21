@@ -4,7 +4,7 @@
   "version": "4.29.9",
   "private": true,
   "description": "A preview of the full source code.",
-  "author": "Fangdun Cai <cfddream@gmail.com>",
+  "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
   "keywords": [
     "minimap",
     "overview"
