@@ -1,3 +1,10 @@
+# v4.30.0 (2020-11-20)
+
+- :sparkles: Performance improvement: [Make event listeners passive](https://github.com/atom-minimap/minimap/pull/683)
+- :bug: Bug fix: [Fixed issue with this.minimap.onMouseWheel() is not a function](https://github.com/atom-minimap/minimap/pull/641)
+- [Update CI and tests](https://github.com/atom-minimap/minimap/pull/710)
+
+
 <a name="v4.29.9"></a>
 # v4.29.9 (2018-09-20)
 
