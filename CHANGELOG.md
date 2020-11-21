@@ -1,3 +1,10 @@
+# [4.33.0](https://github.com/atom-minimap/minimap/compare/v4.32.0...v4.33.0) (2020-11-21)
+
+
+### Features
+
+* use desynchronized canvas ([d9c79ba](https://github.com/atom-minimap/minimap/commit/d9c79ba4dfad324c9223e63d2efa10f9de1406e8))
+
 # [4.32.0](https://github.com/atom-minimap/minimap/compare/v4.31.1...v4.32.0) (2020-11-21)
 
 
