@@ -13,7 +13,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          # - macos-latest # macos-stable seems to fail because of Atom rendering engine crashing
           - windows-latest
         atom_channel: [stable, beta]
     steps:
