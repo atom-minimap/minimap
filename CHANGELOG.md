@@ -1,13 +1,8 @@
 ## [4.30.1](https://github.com/atom-minimap/minimap/compare/v4.30.0...v4.30.1) (2020-11-21)
 
-
 ### Bug Fixes
 
-* add activation hook ([ee3e5d7](https://github.com/atom-minimap/minimap/commit/ee3e5d7f9a6820c165371f16cc5a855a51bd61cd))
-
-# v4.30.1 (2020-11-20)
-
-- :sparkles: Startup time improvement: [fix: add activation hook](https://github.com/atom-minimap/minimap/pull/712)
+*  Startup time improvement: add activation hook ([ee3e5d7](https://github.com/atom-minimap/minimap/commit/ee3e5d7f9a6820c165371f16cc5a855a51bd61cd))
 
 # v4.30.0 (2020-11-20)
 
