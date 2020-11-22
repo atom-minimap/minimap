@@ -1,3 +1,11 @@
+## [4.35.2](https://github.com/atom-minimap/minimap/compare/v4.35.1...v4.35.2) (2020-11-22)
+
+
+### Bug Fixes
+
+* add more passive:true to event listeners ([7df85b3](https://github.com/atom-minimap/minimap/commit/7df85b336bacb4c1a7e00c034475d9955eb51eba))
+* Mark atom-utils event listeners as passive ([9850bec](https://github.com/atom-minimap/minimap/commit/9850bec60f2cdab653bd4855863b599f79cb94f3))
+
 ## [4.35.1](https://github.com/atom-minimap/minimap/compare/v4.35.0...v4.35.1) (2020-11-22)
 
 
