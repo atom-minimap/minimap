@@ -1,3 +1,10 @@
+## [4.35.1](https://github.com/atom-minimap/minimap/compare/v4.35.0...v4.35.1) (2020-11-22)
+
+
+### Bug Fixes
+
+* bump atom-utils-plus ([a954c3f](https://github.com/atom-minimap/minimap/commit/a954c3fb1afbdf053fb1335727b9383247f98f16))
+
 # [4.35.0](https://github.com/atom-minimap/minimap/compare/v4.34.0...v4.35.0) (2020-11-21)
 
 
