@@ -89,7 +89,7 @@ describe('Minimap', () => {
 
     editor.setText('foo')
 
-    // because of requestAnimation the change is relayed asynchronously. 
+    // because of requestAnimation the change is relayed asynchronously.
     setTimeout(() => {
       expect(changeSpy).toHaveBeenCalled()
     }, 1000)
