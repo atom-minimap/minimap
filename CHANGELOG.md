@@ -1,3 +1,11 @@
+## [4.35.3](https://github.com/atom-minimap/minimap/compare/v4.35.2...v4.35.3) (2020-11-26)
+
+
+### Bug Fixes
+
+* decrease the width of scroll indicator ([06db644](https://github.com/atom-minimap/minimap/commit/06db6443d02f78ffa3ad610c734747297d7f5141))
+* make scroll indicator more visible ([9384703](https://github.com/atom-minimap/minimap/commit/938470352689df47c391ea214c4bfca528fb38bf))
+
 ## [4.35.2](https://github.com/atom-minimap/minimap/compare/v4.35.1...v4.35.2) (2020-11-22)
 
 
