@@ -1,3 +1,10 @@
+## [4.35.4](https://github.com/atom-minimap/minimap/compare/v4.35.3...v4.35.4) (2020-11-27)
+
+
+### Bug Fixes
+
+* Rename "Auto Toggle" to "Show Minimap on Atom Start" ([#728](https://github.com/atom-minimap/minimap/issues/728)) ([c35ab7a](https://github.com/atom-minimap/minimap/commit/c35ab7a91bdf29988c9a0f79dbbed8a923823d5c))
+
 ## [4.35.3](https://github.com/atom-minimap/minimap/compare/v4.35.2...v4.35.3) (2020-11-26)
 
 
