@@ -53,6 +53,7 @@
       "properties": {}
     },
     "autoToggle": {
+      "title": "Show Minimap On Atom Start",
       "type": "boolean",
       "default": true,
       "order": 1
