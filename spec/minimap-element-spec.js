@@ -63,7 +63,7 @@ describe('MinimapElement', () => {
       atom.config.set('minimap.charWidth', 2)
       atom.config.set('minimap.interline', 1)
       atom.config.set('minimap.textOpacity', 1)
-      atom.config.set('minimap.autoToggle', true)
+      atom.config.set('minimap.showMinimapOnAtomStart', true)
       atom.config.set('minimap.displayMinimapOnLeft', false)
       atom.config.set('minimap.displayCodeHighlights', false)
       atom.config.set('minimap.displayPluginsControls', false)
