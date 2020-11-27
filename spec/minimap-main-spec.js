@@ -7,7 +7,7 @@ describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
 
   beforeEach(() => {
-    atom.config.set('minimap.autoToggle', true)
+    atom.config.set('minimap.showMinimapOnAtomStart', true)
 
     workspaceElement = atom.views.getView(atom.workspace)
     jasmine.attachToDOM(workspaceElement)
