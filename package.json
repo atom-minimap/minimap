@@ -52,7 +52,7 @@
       "type": "object",
       "properties": {}
     },
-    "autoToggle": {
+    "showMinimapOnAtomStart": {
       "type": "boolean",
       "default": true,
       "order": 1
