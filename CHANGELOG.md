@@ -1,3 +1,10 @@
+## [4.35.6](https://github.com/atom-minimap/minimap/compare/v4.35.5...v4.35.6) (2020-12-01)
+
+
+### Bug Fixes
+
+* remove lowLatency ([4b05971](https://github.com/atom-minimap/minimap/commit/4b0597148e499e043c4cce54f6d75d907a4f1200))
+
 ## [4.35.5](https://github.com/atom-minimap/minimap/compare/v4.35.4...v4.35.5) (2020-12-01)
 
 
