@@ -48,9 +48,9 @@ Package|Description
 
 ### Settings
 
-#### Auto Toggle
+#### Show Minimap on Atom Start
 
-If checked the Minimap is toggled on at startup. `(default=true)`
+If checked the Minimap is displayed on Atom startup. `(default=true)`
 
 #### Device Pixel Ratio Rounding
 
