@@ -6,8 +6,6 @@
 
 A preview of the full source code.
 
-This package is sponsored and maintained by [Kite](https://kite.com/docs?source=minimap).
-
 ![Minimap Screenshot](https://github.com/atom-minimap/minimap/blob/master/resources/screenshot.png?raw=true)
 <small>In the screenshot above the minimap-git-diff and minimap-highlight-selected plugins are activated.</small>
 
