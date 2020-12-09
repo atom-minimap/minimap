@@ -1,3 +1,10 @@
+## [4.35.7](https://github.com/atom-minimap/minimap/compare/v4.35.6...v4.35.7) (2020-12-09)
+
+
+### Bug Fixes
+
+* add more css containment (to all selectors) ([d73aaee](https://github.com/atom-minimap/minimap/commit/d73aaee22d588935a9fb7d013490004cc6670cf2))
+
 ## [4.35.6](https://github.com/atom-minimap/minimap/compare/v4.35.5...v4.35.6) (2020-12-01)
 
 
