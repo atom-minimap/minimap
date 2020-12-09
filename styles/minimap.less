@@ -30,22 +30,26 @@ atom-text-editor, html {
     cursor: default;
 
     &:not([stand-alone]) {
+      contain: @contain_all;
       height: 100%;
       order: 3;
       width: 10%;
       flex: 0 0 10%;
 
       &.left {
+        contain: @contain_all;
         order: 1;
         position: absolute;
       }
     }
 
     &.absolute {
+      contain: @contain_all;
       position: absolute;
       right: 0;
 
       &.adjust-absolute-height {
+        contain: @contain_all;
         pointer-events: none;
 
         canvas, .minimap-visible-area {
@@ -57,10 +61,12 @@ atom-text-editor, html {
       // absolute mode do nothing when the minimap is on the left, because
       // it would conflict with the editor's gutter
       &.left {
+        contain: @contain_all;
         right: initial;
       }
 
       .open-minimap-quick-settings {
+        contain: @contain_all;
         right: 16px;
       }
     }
@@ -82,10 +88,12 @@ atom-text-editor, html {
       border-left: 0px solid rgba(127, 127, 127, 0.1);
 
       &:active {
+        contain: @contain_all;
         cursor: -webkit-grabbing;
       }
 
       &::after {
+        contain: @contain_all;
         content: '';
         position: absolute;
         top: 0;
@@ -132,11 +140,13 @@ atom-text-editor, html {
       transition: opacity 0.4s;
 
       &:before {
+        contain: @contain_all;
         content: '\f02f';
         font-family: 'Octicons Regular';
       }
     }
     &:hover .open-minimap-quick-settings {
+      contain: @contain_all;
       opacity: 1;
       transition: opacity 0.1s;
     }
@@ -162,15 +172,18 @@ minimap-quick-settings {
     margin-top: 0 !important;
 
     .separator {
+      contain: @contain_all;
       background: @background-color-highlight;
       height: 1px;
 
       &:first-child {
+        contain: @contain_all;
         display: none;
       }
     }
 
     li:hover {
+      contain: @contain_except_size;
       background: @background-color-highlight;
     }
   }
