@@ -1,6 +1,6 @@
 {
   "name": "minimap",
-  "main": "./lib/main",
+  "main": "./dist/main.js",
   "version": "4.35.7",
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
@@ -10,9 +10,28 @@
   ],
   "scripts": {
     "lint": "standard --fix lib/**/*.js spec/**/*.js",
+    "clean": "shx rm -rf dist .parcel-cache",
+    "dev": "cross-env NODE_ENV=development parcel watch --target main lib/main.js",
+    "build": "cross-env NODE_ENV=production parcel build --target main lib/main.js",
+    "build-commit": "npm run clean && build-commit -o dist",
     "esdoc": "esdoc -c esdoc.json",
     "test": "atom --test spec",
-    "bump": "ncu -u"
+    "bump": "ncu -u",
+    "prepare": "npm run build"
+  },
+  "targets": {
+    "main": {
+      "context": "node",
+      "engines": {
+        "node": ">=12.x"
+      },
+      "includeNodeModules": {
+        "atom": false,
+        "electron": false
+      },
+      "outputFormat": "commonjs",
+      "isLibrary": true
+    }
   },
   "contributors": [
     {
@@ -215,12 +234,16 @@
     "underscore-plus": "^1.7.0"
   },
   "devDependencies": {
+    "@types/jasmine": "3.6.2",
+    "build-commit": "^0.1.1",
+    "cross-env": "^7.0.3",
     "esdoc": "^1.1.0",
     "esdoc-es7-plugin": "^0.0.3",
-    "standard": "^16.0.3",
-    "@types/jasmine": "3.6.2",
     "jasmine-expect": "^5.0.0",
-    "npm-check-updates": "latest"
+    "npm-check-updates": "latest",
+    "parcel": "^2.0.0-nightly.490",
+    "shx": "^0.3.3",
+    "standard": "^16.0.3"
   },
   "standard": {
     "globals": [
