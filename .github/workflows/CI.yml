@@ -24,9 +24,10 @@ jobs:
       - name: Versions
         run: apm -v
 
-      - name: Install APM dependencies
+      - name: Install dependencies
         run: |
-          apm install
+          apm install --production
+          npm install --only=dev
 
       - name: Run Ubuntu tests
         if: ${{ contains(matrix.os, 'ubuntu') }}
