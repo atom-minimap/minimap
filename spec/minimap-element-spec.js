@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs-plus')
-const Main = require('../lib/main')
+const Main = require('../dist/main')
 const Minimap = require('../lib/minimap')
 const { styles } = require('./helpers/workspace')
 const { mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove } = require('./helpers/events')
