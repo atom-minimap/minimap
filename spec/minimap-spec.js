@@ -3,7 +3,7 @@
 require('./helpers/workspace')
 
 const fs = require('fs-plus')
-const Minimap = require('../lib/minimap')
+const { Minimap } = require('../dist/main')
 require('jasmine-expect')
 
 describe('Minimap', () => {

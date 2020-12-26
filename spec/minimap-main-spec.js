@@ -1,7 +1,7 @@
 'use strict'
 
 require('./helpers/workspace')
-const Minimap = require('../lib/minimap')
+const { Minimap } = require('../dist/main')
 
 describe('Minimap package', () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []

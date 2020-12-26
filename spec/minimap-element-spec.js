@@ -2,7 +2,7 @@
 
 const fs = require('fs-plus')
 const Main = require('../dist/main')
-const Minimap = require('../lib/minimap')
+const Minimap = Main.Minimap
 const { styles } = require('./helpers/workspace')
 const { mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove } = require('./helpers/events')
 require('jasmine-expect')
