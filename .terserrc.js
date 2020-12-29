@@ -5,7 +5,7 @@ module.exports = {
   "compress": {
     "ecma": "2018", // Change based on the target
     // "toplevel": true, // controlled by Parcel
-    "hoist_vars": true,
+    "hoist_vars": false,
     "hoist_funs": true,
     "pure_getters": true,
     "unsafe": true,
