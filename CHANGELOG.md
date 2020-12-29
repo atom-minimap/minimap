@@ -1,3 +1,31 @@
+## [4.35.8](https://github.com/atom-minimap/minimap/compare/v4.35.7...v4.35.8) (2020-12-29)
+
+
+### Bug Fixes
+
+* add deprecation warning for LegacyAdapter ([cea6197](https://github.com/atom-minimap/minimap/commit/cea6197eef6eed428cad0cc90f92feac2b3f750d))
+* add Parcel to build and optimize Minimap ([f0b001b](https://github.com/atom-minimap/minimap/commit/f0b001b155c0bc23a8d24fb70ef44574529c0c14))
+* config not being defined ([12a3050](https://github.com/atom-minimap/minimap/commit/12a305022172f56ac8ad11d1ba34438fb5e5c8e0))
+* do not export the private values and functions ([067a6d6](https://github.com/atom-minimap/minimap/commit/067a6d640a143d5580be760d862f64d62c94f80d))
+* export directly from Main to remove race conditions ([e354143](https://github.com/atom-minimap/minimap/commit/e354143d8256cf8100519eb683b7f1cf320cdb7b))
+* export directly from PluginManagement to remove race conditions ([4d9e234](https://github.com/atom-minimap/minimap/commit/4d9e234d080f87becd5ab3103c8ab81d81f2be1c))
+* export plugins (used in quick-settings) ([f276547](https://github.com/atom-minimap/minimap/commit/f27654795f5cb4dcda1374c019067b577c7ae862))
+* import missing deactivateAllPlugins ([a8c9b91](https://github.com/atom-minimap/minimap/commit/a8c9b91ec0c92920c9179604390ca8136508444d))
+* lazy load Main because of race conditions ([948f642](https://github.com/atom-minimap/minimap/commit/948f64294c17f25ee17428cf2cc831dae090d2e5))
+* lazy load MinimapPluginGeneratorElement ([392f6d9](https://github.com/atom-minimap/minimap/commit/392f6d9e546b577703e44e02df9a90213f894072))
+* make config a json file ([e14d180](https://github.com/atom-minimap/minimap/commit/e14d18048237dd71b888e15f91a29c177b420bfa))
+* MinimapServiceV1 ([1a4f3fa](https://github.com/atom-minimap/minimap/commit/1a4f3fa5002470ecc3c4eba90e6284cd3e158f25)), closes [/github.com/parcel-bundler/parcel/issues/5531#issuecomment-751897276](https://github.com//github.com/parcel-bundler/parcel/issues/5531/issues/issuecomment-751897276)
+* move plugin-management file as it is not a mixin anymore ([dac13bd](https://github.com/atom-minimap/minimap/commit/dac13bd5ae826b87c286a28c3bcade67a2377f45))
+* move provideMinimapServiceV1 to the main file ([126c62a](https://github.com/atom-minimap/minimap/commit/126c62a2d7e0e0d4391b1c84a5aecebf26d23d72))
+* only imoprt the needed functions from fs-plus ([60bd9a8](https://github.com/atom-minimap/minimap/commit/60bd9a8b96f28f93055dca112c1015564bd82352))
+* only import dasherize from underscore-plus ([f98f211](https://github.com/atom-minimap/minimap/commit/f98f211723a27b16f12eef0f61cbf4013b4616aa))
+* remove initializePlugins ([af85b54](https://github.com/atom-minimap/minimap/commit/af85b549ebba5f75ee37fd239a1eb36e614ee6e8))
+* remove lazy loading of Main ([6ad19cc](https://github.com/atom-minimap/minimap/commit/6ad19cc3cad6615d43597fd3cf5cd5c0a8af540e))
+* remove require cache removal hack ([018ae7a](https://github.com/atom-minimap/minimap/commit/018ae7a48035df8bd15cb86ba55ee5678c561bc9))
+* remove synchronous lazy loading ([927cc1e](https://github.com/atom-minimap/minimap/commit/927cc1e7abff65d17fe6a65e841e47767411efb5))
+* use export default instead of module.exports= ([c1ab6a9](https://github.com/atom-minimap/minimap/commit/c1ab6a93b83b51b43a332cdcec742b14978f9e31))
+* use imports + use Array.isArray ([a262bfb](https://github.com/atom-minimap/minimap/commit/a262bfba04971cd42611dc9e064ec8424a549117))
+
 ## [4.35.7](https://github.com/atom-minimap/minimap/compare/v4.35.6...v4.35.7) (2020-12-09)
 
 
