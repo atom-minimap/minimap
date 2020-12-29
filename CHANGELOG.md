@@ -1,3 +1,32 @@
+# [4.36.0](https://github.com/atom-minimap/minimap/compare/v4.35.8...v4.36.0) (2020-12-29)
+
+
+### Bug Fixes
+
+* add higher optimizations to Terser ([b3d00af](https://github.com/atom-minimap/minimap/commit/b3d00af688fe31f4e229471fe4cb2853291b8024))
+* don't use anonymous function when it is named ([2f9392a](https://github.com/atom-minimap/minimap/commit/2f9392a7403ae9ee596ae90a966f6a57b7cfbfda))
+* inline dragOffset and offsetTop in initial ([d44dd77](https://github.com/atom-minimap/minimap/commit/d44dd7730646f56a6acc7b9e34cfcf960c1a6183))
+* make animate a free function ([cfb681b](https://github.com/atom-minimap/minimap/commit/cfb681b12aa2adf3ba76af015edc72aa932e9c8b))
+* make applyStyles a free function ([7c5ab25](https://github.com/atom-minimap/minimap/commit/7c5ab255ca7e3094c113b91a98e48aca33810f68))
+* make extractMouseEventData a free function ([31ca2e4](https://github.com/atom-minimap/minimap/commit/31ca2e48ce6bdb2d9d38c0128ee8f92d48997565))
+* make extractTouchEventData a free function ([5ae0dcc](https://github.com/atom-minimap/minimap/commit/5ae0dcc952633444d4b90370f8af0c98ea05a469))
+* make getTime a free function ([ebf816a](https://github.com/atom-minimap/minimap/commit/ebf816aa1f12c2d8ed7ef683745918a2416b7186))
+* make makeScale a free function ([1d3ce49](https://github.com/atom-minimap/minimap/commit/1d3ce494114aff9d302d4c556c18f39b66890e37))
+* make makeTranslate a free function ([9c5dbaf](https://github.com/atom-minimap/minimap/commit/9c5dbafa92d0241e9133a6f360b0d85b44e695f1))
+* make swing a free function ([4005109](https://github.com/atom-minimap/minimap/commit/4005109763ba851744e65dfee82fc42df407bcca))
+* merge adding config observers ([b500d4f](https://github.com/atom-minimap/minimap/commit/b500d4f83040879007eb26414724c7fbe55e4684))
+* merge adding subs in attachedCallback ([474b4c1](https://github.com/atom-minimap/minimap/commit/474b4c19f4121116c10bb83ea5521356369e89d5))
+* merge adding subs in initializeContent ([d869d39](https://github.com/atom-minimap/minimap/commit/d869d39494c23d8f514d1db9a6500d72d518fdde))
+* merge adding subs in setModel ([1b1f9af](https://github.com/atom-minimap/minimap/commit/1b1f9af3a93febc5bbfc57f616dae4998f31bc54))
+* mouseEvent.which deprecation ([de81494](https://github.com/atom-minimap/minimap/commit/de814940bb73372d607ce40ac33a6814a6a3a525))
+* remove duplicate drag handlers ([73d9ec4](https://github.com/atom-minimap/minimap/commit/73d9ec4b87e968790000c004cdaeaeec65096ad8))
+* set hoits_vars to false ([4722d21](https://github.com/atom-minimap/minimap/commit/4722d213a0a8c1a2ecf953ce8a41cc6293eaa930))
+
+
+### Features
+
+* Merge pull request [#737](https://github.com/atom-minimap/minimap/issues/737) from atom-minimap/minimap-element-module ([345f5d1](https://github.com/atom-minimap/minimap/commit/345f5d1d687010bba5581daaa9ca201c6da45162))
+
 ## [4.35.8](https://github.com/atom-minimap/minimap/compare/v4.35.7...v4.35.8) (2020-12-29)
 
 
