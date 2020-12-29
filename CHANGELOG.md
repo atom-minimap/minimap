@@ -1,3 +1,10 @@
+## [4.36.1](https://github.com/atom-minimap/minimap/compare/v4.36.0...v4.36.1) (2020-12-29)
+
+
+### Bug Fixes
+
+* remove spec specific code in production build ([15c15c5](https://github.com/atom-minimap/minimap/commit/15c15c5ae8ae852b2acd9f5a9c747f1b4b080707))
+
 # [4.36.0](https://github.com/atom-minimap/minimap/compare/v4.35.8...v4.36.0) (2020-12-29)
 
 
