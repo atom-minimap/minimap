@@ -782,12 +782,6 @@ describe('MinimapElement', () => {
         let canvas
 
         beforeEach(() => {
-          let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => {
-            const n = t
-            t += 100
-            return n
-          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', false)
@@ -828,12 +822,6 @@ describe('MinimapElement', () => {
         let canvas
 
         beforeEach(() => {
-          let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => {
-            const n = t
-            t += 100
-            return n
-          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', true)
@@ -1137,13 +1125,6 @@ describe('MinimapElement', () => {
       describe('pressing the mouse on the minimap canvas', () => {
         beforeEach(() => {
           jasmineContent.appendChild(minimapElement)
-
-          let t = 0
-          spyOn(minimapElement, 'getTime').andCallFake(() => {
-            const n = t
-            t += 100
-            return n
-          })
           spyOn(minimapElement, 'requestUpdate').andCallFake(() => {})
 
           atom.config.set('minimap.scrollAnimation', false)
