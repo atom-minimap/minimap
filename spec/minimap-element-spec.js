@@ -1,8 +1,8 @@
 'use strict'
 
 const fs = require('fs-plus')
-const Main = require('../lib/main')
-const Minimap = require('../lib/minimap')
+const Main = require('../dist/main')
+const Minimap = Main.Minimap
 const { styles } = require('./helpers/workspace')
 const { mousemove, mousedown, mouseup, mousewheel, touchstart, touchmove } = require('./helpers/events')
 require('jasmine-expect')

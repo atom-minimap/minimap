@@ -1,0 +1,159 @@
+{
+  "plugins": {
+    "type": "object",
+    "properties": {}
+  },
+  "autoToggle": {
+    "title": "Show Minimap On Atom Start",
+    "type": "boolean",
+    "default": true,
+    "order": 1
+  },
+  "displayMinimapOnLeft": {
+    "type": "boolean",
+    "default": false,
+    "order": 2
+  },
+  "displayCodeHighlights": {
+    "type": "boolean",
+    "default": true,
+    "description": "Toggles the render of the buffer tokens in the minimap.",
+    "order": 3
+  },
+  "displayPluginsControls": {
+    "type": "boolean",
+    "default": true,
+    "description": "You need to restart Atom for this setting to be effective.",
+    "order": 4
+  },
+  "minimapScrollIndicator": {
+    "type": "boolean",
+    "default": true,
+    "description": "Toggles the display of a side line showing which part of the buffer is currently displayed by the minimap. This side line will only appear if the minimap is taller than the editor view height.",
+    "order": 5
+  },
+  "adjustMinimapWidthToSoftWrap": {
+    "type": "boolean",
+    "default": true,
+    "description": "If this option is enabled and Soft Wrap is checked then the Minimap max width is set to the Preferred Line Length value.",
+    "order": 6
+  },
+  "adjustMinimapWidthOnlyIfSmaller": {
+    "type": "boolean",
+    "default": true,
+    "description": "If this option and `adjustMinimapWidthToSoftWrap` are enabled the minimap width will never go past the limit sets by CSS. On the other hand, when disabled the minimap will expand to honor the preferred line width.",
+    "order": 7
+  },
+  "ignoreWhitespacesInTokens": {
+    "type": "boolean",
+    "default": false,
+    "description": "When enabled, text editor tokens are rendered as plain blocks, with no regards to the whitespaces they contains.",
+    "order": 8
+  },
+  "charWidth": {
+    "type": "number",
+    "default": 1,
+    "minimum": 0.5,
+    "order": 9
+  },
+  "charHeight": {
+    "type": "number",
+    "default": 2,
+    "minimum": 0.5,
+    "order": 10
+  },
+  "interline": {
+    "type": "number",
+    "default": 1,
+    "minimum": 0,
+    "description": "The space between lines in the minimap in pixels.",
+    "order": 11
+  },
+  "textOpacity": {
+    "type": "number",
+    "default": 0.6,
+    "minimum": 0,
+    "maximum": 1,
+    "description": "The opacity used to render the line's text in the minimap.",
+    "order": 12
+  },
+  "moveCursorOnMinimapClick": {
+    "type": "boolean",
+    "default": false,
+    "description": "Moves the cursor to the beginning of the target line when clicking on the minimap",
+    "order": 13
+  },
+  "independentMinimapScroll": {
+    "type": "boolean",
+    "title": "Independent Minimap Scroll On Mouse Wheel Events",
+    "default": false,
+    "description": "When enabled, using the mouse wheel over the Minimap will make it scroll independently of the text editor. The Minimap will still sync with the editor whenever the editor is scrolled, but it will no longer relay the mouse wheel events to the editor.",
+    "order": 14
+  },
+  "scrollSensitivity": {
+    "type": "number",
+    "default": 0.5,
+    "description": "The scrolling speed when the `Independent Minimap Scroll On Mouse Wheel Events` setting is enabled.",
+    "order": 15
+  },
+  "smoothScrolling": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether to offset the minimap canvas when scrolling to keep the scroll smooth. When `true` the minimap canvas will be offseted, resulting in a smoother scroll, but with the side-effect of a blurry minimap when the canvas is placed between pixels. When `false` the canvas will always stay at the same position, and will never look blurry, but the scroll will appear more jagged.",
+    "order": 16
+  },
+  "createPluginInDevMode": {
+    "type": "boolean",
+    "default": false,
+    "order": 17
+  },
+  "absoluteMode": {
+    "type": "boolean",
+    "default": false,
+    "description": "When enabled the text editor content will be able to flow below the minimap.",
+    "order": 18
+  },
+  "adjustAbsoluteModeHeight": {
+    "type": "boolean",
+    "default": false,
+    "description": "When enabled and `Absolute Mode` is also enabled, the minimap height will be adjusted to only take the space required by the text editor content, leaving the space below triggering mouse events on the text editor. **Be aware this can have some impact on performances as the minimap canvases will be resized every time a change in the editor make its height change.**",
+    "order": 19
+  },
+  "redrawDelay": {
+    "type": "number",
+    "default": 400,
+    "minimum": 0,
+    "maximum": 2000,
+    "description": "Controls how often (in ms) the minimap should redraw itself after changing the text editor's contents. Setting this to 100ms or higher could dramatically improve editor responsiveness when working with large files. A value of 0 will cause the minimap to redraw itself immediately on each change.",
+    "order": 20
+  },
+  "devicePixelRatioRounding": {
+    "type": "boolean",
+    "default": true,
+    "description": "Toggles the rounding of the devicePixelRatio in the minimap.",
+    "order": 21
+  },
+  "useHardwareAcceleration": {
+    "type": "boolean",
+    "default": true,
+    "order": 22
+  },
+  "scrollAnimation": {
+    "type": "boolean",
+    "default": false,
+    "description": "Enables animations when scrolling by clicking on the minimap.",
+    "order": 23
+  },
+  "scrollAnimationDuration": {
+    "type": "integer",
+    "default": 300,
+    "description": "The duration of scrolling animations when clicking on the minimap.",
+    "order": 24
+  },
+  "maxTokensInOneLine": {
+    "type": "integer",
+    "default": 160,
+    "description": "The maximum number of tokens that are rendered for each line.",
+    "order": 25
+  }
+}
