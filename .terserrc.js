@@ -1,8 +1,13 @@
 const isDev = process.env.NODE_ENV !== "production"
+const isTest = process.env.NODE_ENV === "test"
 
 module.exports = {
   // "module": false, // controlled by Parcel
   "compress": {
+    "global_defs": {
+      // remove spec specific code for production
+      "@atom.inSpecMode": !isTest ? "() => false" : "() => true"
+    },
     "ecma": "2018", // Change based on the target
     // "toplevel": true, // controlled by Parcel
     "hoist_vars": false,
