@@ -80,13 +80,6 @@ jobs:
       - name: Build and Commit
         run: npm run build-commit
 
-      - name: Run the tests on the release
-        uses: nick-invision/retry@v2
-        with:
-          timeout_minutes: 4
-          max_attempts: 6
-          command: npm run test
-
       - name: Release 🎉
         uses: cycjimmy/semantic-release-action@v2
         with:
