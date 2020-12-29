@@ -79,6 +79,7 @@
     "underscore-plus": "^1.7.0"
   },
   "devDependencies": {
+    "@types/atom": "^1.40.5",
     "@types/jasmine": "3.6.2",
     "build-commit": "^0.1.1",
     "cross-env": "^7.0.3",
