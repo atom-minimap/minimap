@@ -12,6 +12,7 @@
     "lint": "standard --fix lib/**/*.js spec/**/*.js",
     "clean": "shx rm -rf dist .parcel-cache",
     "dev": "cross-env NODE_ENV=development parcel watch --target main lib/main.js",
+    "test_build": "cross-env NODE_ENV=test parcel build --target main lib/main.js --no-minify",
     "build": "cross-env NODE_ENV=production parcel build --target main lib/main.js",
     "build-commit": "npm run clean && build-commit -o dist",
     "esdoc": "esdoc -c esdoc.json",
@@ -30,7 +31,10 @@
         "electron": false
       },
       "outputFormat": "commonjs",
-      "isLibrary": true
+      "isLibrary": true,
+      "sourceMap": {
+        "inlineSources": true
+      }
     }
   },
   "contributors": [
