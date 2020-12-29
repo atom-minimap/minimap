@@ -18,6 +18,13 @@ jobs:
         atom_channel: [stable, beta]
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        env:
+          cache-name: node_modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ matrix.atom_channel }}-${{ hashFiles('package-lock.json') }}
+
       - uses: UziTech/action-setup-atom@v1
         with:
           channel: ${{ matrix.atom_channel }}
@@ -51,7 +58,7 @@ jobs:
           node-version: "12.x"
       - name: Install NPM dependencies
         run: |
-          npm install
+          npm install --ignore-scripts
       - name: Lint ✨
         run: npm run lint
 
