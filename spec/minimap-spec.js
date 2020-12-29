@@ -412,7 +412,7 @@ describe('Minimap', () => {
       })
 
       it('removes all the previously added decorations', () => {
-        expect(minimap.decorationsById).toEqual({})
+        expect(minimap.decorationsById.size).toEqual(0)
         expect(minimap.decorationsByMarkerId).toEqual({})
       })
 
