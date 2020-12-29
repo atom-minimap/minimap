@@ -117,8 +117,10 @@ describe('Minimap package', () => {
   })
 
   describe('service', () => {
-    it('returns the minimap main module', () => {
-      expect(minimapPackage.provideMinimapServiceV1()).toEqual(minimapPackage)
+    it('returns the minimap public exports', () => {
+      const publicExports = Object.keys(minimapPackage.provideMinimapServiceV1())
+      const allExports = Object.keys(minimapPackage)
+      expect(publicExports.every((str) => { return allExports.includes(str) || console.log(str) } )).toBeTruthy()
     })
 
     it('creates standalone minimap with provided text editor', () => {
