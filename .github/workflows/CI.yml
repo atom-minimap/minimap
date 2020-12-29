@@ -66,10 +66,16 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "12.x"
+
       - name: NPM install
         run: npm install
+
       - name: Build and Commit
         run: npm run build-commit
+
+      - name: Run the tests on the release
+        run: npm run test
+
       - name: Release 🎉
         uses: cycjimmy/semantic-release-action@v2
         with:
