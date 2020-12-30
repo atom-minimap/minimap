@@ -1,7 +1,7 @@
 {
   "name": "minimap",
   "main": "./dist/main.js",
-  "version": "4.36.1",
+  "version": "4.36.2",
   "description": "A preview of the full source code.",
   "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
   "keywords": [

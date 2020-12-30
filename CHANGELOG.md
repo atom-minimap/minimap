@@ -1,3 +1,16 @@
+## [4.36.2](https://github.com/atom-minimap/minimap/compare/v4.36.1...v4.36.2) (2020-12-30)
+
+
+### Bug Fixes
+
+* map existence check: use undefined compare ([ec8480a](https://github.com/atom-minimap/minimap/commit/ec8480aadf1e8d145536e5326c8ffb5718e75f84))
+* use Map for decorationDestroyedSubscriptions ([661d190](https://github.com/atom-minimap/minimap/commit/661d1909db0431c836276b6658b49a62024b137b))
+* use Map for decorationMarkerChangedSubscriptionsValues ([6a0d612](https://github.com/atom-minimap/minimap/commit/6a0d612085dbb4ce0cdd64ed987441c19ddbe2f2))
+* use Map for decorationMarkerDestroyedSubscriptions ([f2e6515](https://github.com/atom-minimap/minimap/commit/f2e65151eda916367122b17b0e13a067b9b2c57b))
+* use Map for decorationsById ([1fc7bc8](https://github.com/atom-minimap/minimap/commit/1fc7bc84dd25e34b98cb431e2ceb66260d3f624e))
+* use Map for decorationsByMarkerId ([d0a2cbe](https://github.com/atom-minimap/minimap/commit/d0a2cbe7f0b8d24518d287ab21ce0ff0838a3062))
+* use Map for decorationUpdatedSubscriptions ([9879ab5](https://github.com/atom-minimap/minimap/commit/9879ab5cb6026bfb14f7c967c4a0c2540bcc70de))
+
 ## [4.36.1](https://github.com/atom-minimap/minimap/compare/v4.36.0...v4.36.1) (2020-12-29)
 
 
