@@ -1,3 +1,11 @@
+## [4.36.3](https://github.com/atom-minimap/minimap/compare/v4.36.2...v4.36.3) (2020-12-31)
+
+
+### Bug Fixes
+
+* use shorter version of object props ([d7ba069](https://github.com/atom-minimap/minimap/commit/d7ba06904645e75538858126cd80c3fa38083e66))
+* use strings interpolation instead of + ([012dd00](https://github.com/atom-minimap/minimap/commit/012dd00c314473ed2791a1c96f64f9b908eaa19a))
+
 ## [4.36.2](https://github.com/atom-minimap/minimap/compare/v4.36.1...v4.36.2) (2020-12-30)
 
 
