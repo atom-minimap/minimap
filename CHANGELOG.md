@@ -1,3 +1,10 @@
+## [4.36.4](https://github.com/atom-minimap/minimap/compare/v4.36.3...v4.36.4) (2020-12-31)
+
+
+### Bug Fixes
+
+* mediaQuery deprecations ([3b6a0e7](https://github.com/atom-minimap/minimap/commit/3b6a0e7c7128d99faf0ec396525c121daab69ea5))
+
 ## [4.36.3](https://github.com/atom-minimap/minimap/compare/v4.36.2...v4.36.3) (2020-12-31)
 
 
