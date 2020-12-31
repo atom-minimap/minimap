@@ -751,8 +751,7 @@ describe('MinimapElement', () => {
             expect(editorElement.getScrollTop()).toBeNear(expectedScroll, 3)
           })
 
-          describe('dragging the visible area with middle mouse button ' +
-          'after scrolling to the arbitrary location', () => {
+          describe('dragging the visible area with middle mouse button after scrolling to the arbitrary location', () => {
             let [originalTop] = []
 
             beforeEach(() => {
@@ -769,8 +768,7 @@ describe('MinimapElement', () => {
               minimapElement.endDrag()
             })
 
-            it('scrolls the editor so that the visible area was moved down ' +
-            'by 40 pixels from the arbitrary location', () => {
+            it('scrolls the editor so that the visible area was moved down by 40 pixels from the arbitrary location', () => {
               const { top } = visibleArea.getBoundingClientRect()
               expect(top).toBeCloseTo(originalTop + 40, -1)
             })
@@ -1487,7 +1485,7 @@ describe('MinimapElement', () => {
 
           it('adjusts the width of the minimap', () => {
             expect(minimapElement.offsetWidth).toBeCloseTo(16384 * 2)
-            expect(minimapElement.style.width).toEqual(16384 * 2 + 'px')
+            expect(minimapElement.style.width).toEqual(`${16384 * 2}px`)
           })
         })
       })
