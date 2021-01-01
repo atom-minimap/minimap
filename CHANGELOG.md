@@ -1,3 +1,19 @@
+## [4.36.5](https://github.com/atom-minimap/minimap/compare/v4.36.4...v4.36.5) (2021-01-01)
+
+
+### Bug Fixes
+
+* make computeIntactRanges a free function ([22f541f](https://github.com/atom-minimap/minimap/commit/22f541f2c8c9877c1c7896aa458bc8e885bc184b))
+* make computeRangesDiffs a free function ([115ae4f](https://github.com/atom-minimap/minimap/commit/115ae4fba246b3b05358e8ebafe224221723c6a9))
+* make getOriginatorPackageName a free function ([3d67d03](https://github.com/atom-minimap/minimap/commit/3d67d03e6b6c94aaf233372de19f0429abe1db2d))
+* make getPackagesDirectory a free function ([b592149](https://github.com/atom-minimap/minimap/commit/b59214991307054312366a85d432e744b65778e9))
+* make isStoredInDotAtom a free function ([d1061a2](https://github.com/atom-minimap/minimap/commit/d1061a2a2095c47396a40361d1bef6f79a506d04))
+* make linkPackage and installPackage free functions ([32987c7](https://github.com/atom-minimap/minimap/commit/32987c7da717762c89fc28a2459d5abeab4b99b9))
+* make rotateHue a free function ([1261495](https://github.com/atom-minimap/minimap/commit/126149553f0749c252aa2d362e5307b09f6d2fe4))
+* make runCommand a free function ([6ab825c](https://github.com/atom-minimap/minimap/commit/6ab825cc0fccd157c7622360134ced434f01016e))
+* make transparentize a free function ([9eb52f1](https://github.com/atom-minimap/minimap/commit/9eb52f1108b35cbeef253a9fcbd535efc5252b7f))
+* make truncateIntactRanges a free function ([058c2d1](https://github.com/atom-minimap/minimap/commit/058c2d158cfc09e27c97f11f6bf16d6c3c53ec02))
+
 ## [4.36.4](https://github.com/atom-minimap/minimap/compare/v4.36.3...v4.36.4) (2020-12-31)
 
 
