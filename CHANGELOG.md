@@ -1,3 +1,17 @@
+## [4.36.6](https://github.com/atom-minimap/minimap/compare/v4.36.5...v4.36.6) (2021-01-01)
+
+
+### Bug Fixes
+
+* add domStylesCache to DOMStylesReader's constructor ([e4e9b1f](https://github.com/atom-minimap/minimap/commit/e4e9b1fa04d1d06f8042a2ba93ace0c10e006e8a))
+* add hasTokenizedOnce to DOMStylesReader's constructor ([2641ae6](https://github.com/atom-minimap/minimap/commit/2641ae6bfedf01feeaebac536140d3d5cdf69879))
+* add targetElement to retrieveStyleFromDom API ([81f47ed](https://github.com/atom-minimap/minimap/commit/81f47edf075432be5a1ac01174fc39eca62f0858))
+* comment unused invalidateIfFirstTokenization ([346a9a3](https://github.com/atom-minimap/minimap/commit/346a9a368dc8d7c82640813082d9dbee45c94601))
+* only index cachedData once ([4e753ad](https://github.com/atom-minimap/minimap/commit/4e753adf40a798764c1290f894fbae46e1ec1f6e))
+* use a Map as the domStylesCache ([108918a](https://github.com/atom-minimap/minimap/commit/108918adeea2f303162f838ed17729c39dab1dcf))
+* use DOMStylesReader as a class in CanvasDrawer ([a598938](https://github.com/atom-minimap/minimap/commit/a5989381734dc50883a89a7a970976af01b34b75))
+* use DOMStylesReader as a class in MinimapElement ([a1c99e5](https://github.com/atom-minimap/minimap/commit/a1c99e57fd9922a3a2c0eac352e32b68f65b678b))
+
 ## [4.36.5](https://github.com/atom-minimap/minimap/compare/v4.36.4...v4.36.5) (2021-01-01)
 
 
