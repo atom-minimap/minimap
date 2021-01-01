@@ -213,7 +213,7 @@ describe('MinimapElement', () => {
       describe('when a hue-rotate filter is applied to a rgb color', () => {
         let [additionnalStyleNode] = []
         beforeEach(() => {
-          minimapElement.invalidateDOMStylesCache()
+          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
@@ -241,7 +241,7 @@ describe('MinimapElement', () => {
         let [additionnalStyleNode] = []
 
         beforeEach(() => {
-          minimapElement.invalidateDOMStylesCache()
+          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
@@ -1195,7 +1195,7 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
           spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
-          spyOn(minimapElement, 'invalidateDOMStylesCache').andCallThrough()
+          spyOn(minimapElement.DOMStylesReader, 'invalidateDOMStylesCache').andCallThrough()
 
           const styleNode = document.createElement('style')
           styleNode.textContent = 'body{ color: #233 }'
@@ -1209,7 +1209,7 @@ describe('MinimapElement', () => {
 
       it('forces a refresh with cache invalidation', () => {
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-        expect(minimapElement.invalidateDOMStylesCache).toHaveBeenCalled()
+        expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
       })
     })
 
