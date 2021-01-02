@@ -1,3 +1,19 @@
+## [4.36.9](https://github.com/atom-minimap/minimap/compare/v4.36.8...v4.36.9) (2021-01-02)
+
+
+### Bug Fixes
+
+* comment out unused functions ([1396a49](https://github.com/atom-minimap/minimap/commit/1396a49de7b862cc4d4c10d7f32bf8e4c9b83373))
+* factor out renderData from updateBackDecorationsLayer ([3b3dec1](https://github.com/atom-minimap/minimap/commit/3b3dec1181243831dee4c79c164d1c3646fb80a2))
+* factor out renderData from updateFrontDecorationsLayer ([5e94c91](https://github.com/atom-minimap/minimap/commit/5e94c91b1846620a97db269f3350f773a7c956a5))
+* inline redrawRangesOnLayer in updateTokensLayer ([5059ea3](https://github.com/atom-minimap/minimap/commit/5059ea34850b91b21bc34604213c236b73578c8e))
+* inline updateBackDecorationsLayer ([a05bca0](https://github.com/atom-minimap/minimap/commit/a05bca0d577ebc69488df0027e012f8f91529443))
+* inline updateFrontDecorationsLayer ([dacf546](https://github.com/atom-minimap/minimap/commit/dacf5465c99df96ebe61dd8b5dee86bb80688f62))
+* inline variables used once in updateCanvas ([173454b](https://github.com/atom-minimap/minimap/commit/173454be8239ef5e18b3bd9a50ab26501a2dc4c2))
+* move the consts out of updateTokensLayer ([bffd277](https://github.com/atom-minimap/minimap/commit/bffd277ee15a3697b81227dfdef6ee69f0287a06))
+* refactor the parameters of drawLines out of loop ([436f4b7](https://github.com/atom-minimap/minimap/commit/436f4b77ee6cf4a94867cf67270be64bb7d67355))
+* take the const decorations out of loop ([c3c1e5e](https://github.com/atom-minimap/minimap/commit/c3c1e5e9ff5791c7bcdac62bf9906f025186d823))
+
 ## [4.36.8](https://github.com/atom-minimap/minimap/compare/v4.36.7...v4.36.8) (2021-01-02)
 
 
