@@ -177,7 +177,7 @@ describe('MinimapElement', () => {
     it('takes the height of the editor', () => {
       expect(minimapElement.offsetHeight).toEqual(editorElement.clientHeight)
 
-      expect(minimapElement.offsetWidth).toBeCloseTo(editorElement.clientWidth / 10, 0)
+      expect(minimapElement.offsetWidth).toBeNear(editorElement.clientWidth / 10, 1)
     })
 
     it('knows when attached to a text editor', () => {
