@@ -1,3 +1,20 @@
+## [4.36.8](https://github.com/atom-minimap/minimap/compare/v4.36.7...v4.36.8) (2021-01-02)
+
+
+### Bug Fixes
+
+* cache the decoration drawer dispatchers ([8835572](https://github.com/atom-minimap/minimap/commit/8835572ce36dbe44355c700bbecd709371cbf3e7))
+* calculate decorationColor outside the decoration drawers ([90f0e65](https://github.com/atom-minimap/minimap/commit/90f0e653c22c41e98e9bd4d28589f52c52f4b5f3))
+* calculate editorElement only once outside of the drawDecorations ([2c768cb](https://github.com/atom-minimap/minimap/commit/2c768cb01472834e737db4889caed326402646e7))
+* call getTextEditorElement only once ([ad4fa0e](https://github.com/atom-minimap/minimap/commit/ad4fa0e51631ff5199b447a87a8c9645bd4828d7))
+* call getTextEditorElement only once in drawDecorations ([94a3064](https://github.com/atom-minimap/minimap/commit/94a306443d564c3abc8a3cc5b3f49d025e5697ff))
+* call getTextEditorElement() outside of getDecorationColor ([739a561](https://github.com/atom-minimap/minimap/commit/739a561579171eac635dff20bd325232af965fa9))
+* make drawCustomDecoration a free function ([4848aef](https://github.com/atom-minimap/minimap/commit/4848aefbac9766a1ca78ac3853f296788951b11c))
+* make drawGutterDecoration a free function ([30e9017](https://github.com/atom-minimap/minimap/commit/30e90178a560c5e06319889bbd6457671e63be52))
+* make drawHighlightDecoration a free function ([404393d](https://github.com/atom-minimap/minimap/commit/404393d546bfe709a33069b7b1d4863e3e01f172))
+* make drawHighlightOutlineDecoration a free function ([cd4af73](https://github.com/atom-minimap/minimap/commit/cd4af738bd477d78ccdd1750a594e74418185198))
+* make drawLineDecoration a free function ([d2b3782](https://github.com/atom-minimap/minimap/commit/d2b37823fc4f8fc5fa8f2f5b5b6e1748ac294605))
+
 ## [4.36.7](https://github.com/atom-minimap/minimap/compare/v4.36.6...v4.36.7) (2021-01-02)
 
 
