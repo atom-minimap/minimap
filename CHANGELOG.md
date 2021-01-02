@@ -1,3 +1,15 @@
+## [4.36.7](https://github.com/atom-minimap/minimap/compare/v4.36.6...v4.36.7) (2021-01-02)
+
+
+### Bug Fixes
+
+* make drawToken a free function ([ec363ea](https://github.com/atom-minimap/minimap/commit/ec363ea6fd2de23411299feae8f993c692e9a3f2))
+* make eachTokenForScreenRows a free function ([a296f48](https://github.com/atom-minimap/minimap/commit/a296f4880b54dc65abc0ece57a249ec078d1a7ee))
+* make getInvisibleRegExp a free function ([5e23805](https://github.com/atom-minimap/minimap/commit/5e23805005c3754565e51761f255a150ad99c48d))
+* move DOMStylesReader to CanvasDrawer ([6999bc5](https://github.com/atom-minimap/minimap/commit/6999bc54dfa474192273c7993a54cc8968b1e6bf))
+* move getTextEditorElement to Minimap class ([5c72224](https://github.com/atom-minimap/minimap/commit/5c72224a1ccfb3a71aa14e1f11ca8b1967f06384))
+* this.minimap.getTextEditor only once in eachTokenForScreenRows ([d3d5d6e](https://github.com/atom-minimap/minimap/commit/d3d5d6eb42cbe54842ae09eb8cf88c933ab300b3))
+
 ## [4.36.6](https://github.com/atom-minimap/minimap/compare/v4.36.5...v4.36.6) (2021-01-01)
 
 
