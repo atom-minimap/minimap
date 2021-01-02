@@ -232,7 +232,7 @@ describe('MinimapElement', () => {
           })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color'), minimapElement.getTextEditorElement()).toEqual(`rgb(0, ${0x6d}, ${0x6d})`)
+            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color'), minimapElement.minimap.getTextEditorElement()).toEqual(`rgb(0, ${0x6d}, ${0x6d})`)
           })
         })
       })
@@ -260,7 +260,7 @@ describe('MinimapElement', () => {
           })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color'), minimapElement.getTextEditorElement()).toEqual(`rgba(0, ${0x6d}, ${0x6d}, 0)`)
+            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color'), minimapElement.minimap.getTextEditorElement()).toEqual(`rgba(0, ${0x6d}, ${0x6d}, 0)`)
           })
         })
       })
