@@ -1,3 +1,12 @@
+## [4.36.10](https://github.com/atom-minimap/minimap/compare/v4.36.9...v4.36.10) (2021-01-02)
+
+
+### Bug Fixes
+
+* factor out dispatchers and lambda ([aca84c0](https://github.com/atom-minimap/minimap/commit/aca84c0a995d1f129af8f8d8b21ca54a7a7ad19e))
+* factor out getTokenColor lambda ([09771b6](https://github.com/atom-minimap/minimap/commit/09771b6fee63b03966575416c98e24482eddacf0))
+* make drawLines a free function ([bf9f598](https://github.com/atom-minimap/minimap/commit/bf9f5983a88ec12d30cc3407f2e6b728cdd8bec1))
+
 ## [4.36.9](https://github.com/atom-minimap/minimap/compare/v4.36.8...v4.36.9) (2021-01-02)
 
 
