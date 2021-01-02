@@ -1827,7 +1827,7 @@ describe('MinimapElement', () => {
           })
 
           it('toggles the code highlights on the minimap element', () => {
-            expect(minimapElement.displayCodeHighlights).toBeTruthy()
+            expect(minimapElement.CanvasDrawer.displayCodeHighlights).toBeTruthy()
           })
 
           it('requests an update', () => {
@@ -1996,14 +1996,14 @@ describe('MinimapElement', () => {
           describe('on the code highlight item', () => {
             let [initial] = []
             beforeEach(() => {
-              initial = minimapElement.displayCodeHighlights
+              initial = minimapElement.CanvasDrawer.displayCodeHighlights
               atom.commands.dispatch(quickSettingsElement, 'core:move-down')
               atom.commands.dispatch(quickSettingsElement, 'core:move-down')
               atom.commands.dispatch(quickSettingsElement, 'core:confirm')
             })
 
             it('toggles the code highlights on the minimap element', () => {
-              expect(minimapElement.displayCodeHighlights).toEqual(!initial)
+              expect(minimapElement.CanvasDrawer.displayCodeHighlights).toEqual(!initial)
             })
           })
 
