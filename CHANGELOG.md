@@ -1,3 +1,14 @@
+## [4.36.11](https://github.com/atom-minimap/minimap/compare/v4.36.10...v4.36.11) (2021-01-03)
+
+
+### Bug Fixes
+
+* factor dotRegexp out of the loop ([fdd23fa](https://github.com/atom-minimap/minimap/commit/fdd23fafaa8e78674eb520704cf6bb05503d6dbf))
+* factor editorScreenLineCount and invisibleRegExp out of the loop ([9359279](https://github.com/atom-minimap/minimap/commit/9359279c8f4384c4119c7486dd1d18420829a5a9))
+* factor emptyLineRegexp and whiteSpaceRegexp out of the loop ([8e704b0](https://github.com/atom-minimap/minimap/commit/8e704b0b063266a0ec6e3e23a7bdc329b2a453ca))
+* factor hueRegexp out of the loop ([703c75c](https://github.com/atom-minimap/minimap/commit/703c75c75b39ba75986f54450f3a2ee0584f5864))
+* factor rgbExtractRegexp out of the loop ([4585437](https://github.com/atom-minimap/minimap/commit/4585437cb876489483348bd611b9e681c4e0514f))
+
 ## [4.36.10](https://github.com/atom-minimap/minimap/compare/v4.36.9...v4.36.10) (2021-01-02)
 
 
