@@ -1,3 +1,15 @@
+## [4.36.12](https://github.com/atom-minimap/minimap/compare/v4.36.11...v4.36.12) (2021-01-03)
+
+
+### Bug Fixes
+
+* append the dummyNode only once ([8823c8f](https://github.com/atom-minimap/minimap/commit/8823c8fca33cec2f172c4d37855aab4609c24cd1))
+* combine cacheData checks + use undefined for comparison of value ([8f4a87d](https://github.com/atom-minimap/minimap/commit/8f4a87dbb05221a3ba995bc34d3882ab02c2b1f1))
+* faster transparentize by using string index instead of replace ([1801ec8](https://github.com/atom-minimap/minimap/commit/1801ec88ebc3a7a21ce7fda8a6e1b40af3af0897))
+* inline textOpacity ([2689a9a](https://github.com/atom-minimap/minimap/commit/2689a9a5ef4eef10a6ae46dd00e03a557801458a))
+* remove excess null check ([89a7756](https://github.com/atom-minimap/minimap/commit/89a775689e73e9aa12afba54a0429348cfb69914))
+* require cache param ([69c7354](https://github.com/atom-minimap/minimap/commit/69c735467be3da17fb9dcb015a6358f4abc25687))
+
 ## [4.36.11](https://github.com/atom-minimap/minimap/compare/v4.36.10...v4.36.11) (2021-01-03)
 
 
