@@ -1,3 +1,12 @@
+## [4.36.13](https://github.com/atom-minimap/minimap/compare/v4.36.12...v4.36.13) (2021-01-03)
+
+
+### Bug Fixes
+
+* inline eachTokenForScreenRows + get scopes in getTokenColor ([8ce807d](https://github.com/atom-minimap/minimap/commit/8ce807d98bfccad2611ee622a28e75cf587b6a0c))
+* make updateTokensLayer a free function ([02e3bf8](https://github.com/atom-minimap/minimap/commit/02e3bf83f65f5b3f7b4d48a3428f26d47935e501))
+* refactor whiteSpaceRegexp out of loop ([6d2ed20](https://github.com/atom-minimap/minimap/commit/6d2ed20078ff202b0c9a6e20cda8a24dbdad021f))
+
 ## [4.36.12](https://github.com/atom-minimap/minimap/compare/v4.36.11...v4.36.12) (2021-01-03)
 
 
