@@ -1,3 +1,11 @@
+# [4.37.0](https://github.com/atom-minimap/minimap/compare/v4.36.13...v4.37.0) (2021-01-07)
+
+
+### Features
+
+* observeAndWarn function ([65de0e0](https://github.com/atom-minimap/minimap/commit/65de0e071586e5263d20f5ea1e72426c494236c7))
+* warn about poor performance if treesitter is off ([67b60c8](https://github.com/atom-minimap/minimap/commit/67b60c84cd85d62296c2921c529a2aed2d465aef))
+
 ## [4.36.13](https://github.com/atom-minimap/minimap/compare/v4.36.12...v4.36.13) (2021-01-03)
 
 
