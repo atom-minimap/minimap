@@ -1,3 +1,10 @@
+## [4.37.1](https://github.com/atom-minimap/minimap/compare/v4.37.0...v4.37.1) (2021-01-07)
+
+
+### Bug Fixes
+
+* drawToken: use simple comparison instead of regex ([fe56545](https://github.com/atom-minimap/minimap/commit/fe565455cbca685c0bdc1bc7cd0292c53aa20ed7))
+
 # [4.37.0](https://github.com/atom-minimap/minimap/compare/v4.36.13...v4.37.0) (2021-01-07)
 
 
