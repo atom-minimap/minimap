@@ -11,7 +11,7 @@ export function drawToken (context: CanvasRenderingContext2D, text: string, colo
 
     return x + length
   } else {
-    let chars = 0
+    let chars: i32 = 0
     for (let j: i32 = 0, len: i32 = text.length; j < len; j++) {
       const char = text.charAt(j)
       if (whiteSpaceRegexp === char) {

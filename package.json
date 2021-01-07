@@ -14,7 +14,7 @@
     "dev": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c -w",
     "test_build": "cross-env NODE_ENV=test BABEL_KEEP_MODULES=true rollup -c",
     "build.js": "cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c ",
-    "build.wasm": "asc ./node_modules/as-bind/lib/assembly/as-bind.ts ./lib/wasm/index_wasm.ts -b ./dist/build/index_wasm.wasm --enable -O3",
+    "build.wasm": "asc ./node_modules/as2d/assembly/glue.ts ./node_modules/as-bind/lib/assembly/as-bind.ts ./lib/wasm/index_wasm.ts -b ./dist/build/index_wasm.wasm --enable -O3",
     "build": "npm run build.wasm && npm run build.js",
     "build-commit": "npm run clean && build-commit -o dist",
     "esdoc": "esdoc -c esdoc.json",
