@@ -11,31 +11,14 @@
   "scripts": {
     "lint": "standard --fix lib/**/*.js spec/**/*.js",
     "clean": "shx rm -rf dist .parcel-cache",
-    "dev": "cross-env NODE_ENV=development parcel watch --target main lib/main.js",
-    "test_build": "cross-env NODE_ENV=test parcel build --target main lib/main.js --no-minify",
-    "build": "cross-env NODE_ENV=production parcel build --target main lib/main.js",
+    "dev": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c -w",
+    "test_build": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c",
+    "build": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c ",
     "build-commit": "npm run clean && build-commit -o dist",
     "esdoc": "esdoc -c esdoc.json",
     "test": "atom --test spec",
     "bump": "ncu -u",
     "prepare": "npm run build"
-  },
-  "targets": {
-    "main": {
-      "context": "node",
-      "engines": {
-        "node": ">=12.x"
-      },
-      "includeNodeModules": {
-        "atom": false,
-        "electron": false
-      },
-      "outputFormat": "commonjs",
-      "isLibrary": true,
-      "sourceMap": {
-        "inlineSources": true
-      }
-    }
   },
   "contributors": [
     {
@@ -87,7 +70,8 @@
     "esdoc-es7-plugin": "^0.0.3",
     "jasmine-expect": "^5.0.0",
     "npm-check-updates": "latest",
-    "parcel": "^2.0.0-nightly.490",
+    "rollup": "2.36.1",
+    "rollup-plugin-atomic": "^2.0.1",
     "shx": "^0.3.3",
     "standard": "^16.0.3"
   },

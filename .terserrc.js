@@ -1,7 +1,7 @@
 const isDev = process.env.NODE_ENV !== "production"
 const isTest = process.env.NODE_ENV === "test"
 
-module.exports = {
+export default {
   // "module": false, // controlled by Parcel
   "compress": {
     "global_defs": {
