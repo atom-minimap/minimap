@@ -12,7 +12,7 @@
     "lint": "standard --fix lib/**/*.js spec/**/*.js",
     "clean": "shx rm -rf dist .parcel-cache",
     "dev": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c -w",
-    "test_build": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c",
+    "test_build": "cross-env NODE_ENV=test BABEL_KEEP_MODULES=true rollup -c",
     "build": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c ",
     "build-commit": "npm run clean && build-commit -o dist",
     "esdoc": "esdoc -c esdoc.json",
