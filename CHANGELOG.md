@@ -1,3 +1,19 @@
+# [4.38.0](https://github.com/atom-minimap/minimap/compare/v4.37.1...v4.38.0) (2021-01-11)
+
+
+### Bug Fixes
+
+* check if dummyNode is on the targetNode ([3071ef3](https://github.com/atom-minimap/minimap/commit/3071ef36a86384d6c3f6fc547adcc993ef370311))
+* do not store empty cachedData ([e181e07](https://github.com/atom-minimap/minimap/commit/e181e07fee15c0ef834b2ae28e5926ac08b61c52))
+* do not use cache if no scopes are added yet ([86ae2c4](https://github.com/atom-minimap/minimap/commit/86ae2c468a2541f95ac20510f9a36b50a533ed62))
+* remove non-existing token.scopeDescriptor ([70219c6](https://github.com/atom-minimap/minimap/commit/70219c68899ce2f6e50950c8b620745532bcc955)), closes [/github.com/atom/atom/blob/976cb9ef3a611163052f9d31c6c3685dc1e6c5b4/src/text-editor.js#L1432](https://github.com//github.com/atom/atom/blob/976cb9ef3a611163052f9d31c6c3685dc1e6c5b4/src/text-editor.js/issues/L1432)
+
+
+### Features
+
+* empty color cache if the theme changes ([5b12790](https://github.com/atom-minimap/minimap/commit/5b127908a2855ab84438f1f2fd52bad8450bc7c7))
+* reuse domStylesReader between editors ([a605d57](https://github.com/atom-minimap/minimap/commit/a605d579ba145095ea29f253d6d8474b0eab2c13))
+
 ## [4.37.1](https://github.com/atom-minimap/minimap/compare/v4.37.0...v4.37.1) (2021-01-07)
 
 
