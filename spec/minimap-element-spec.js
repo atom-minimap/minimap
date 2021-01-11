@@ -837,7 +837,7 @@ describe('MinimapElement', () => {
           // wait until all animations run out
           waitsFor(() => {
             nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
-            return editorElement.getScrollTop() >= 480
+            return editorElement.getScrollTop() >= 470 // flaky
           })
         })
 
@@ -870,7 +870,7 @@ describe('MinimapElement', () => {
             // wait until all animations run out
             waitsFor(() => {
               nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
-              return editorElement.getScrollTop() >= 480
+              return editorElement.getScrollTop() >= 470 //flaky
             })
           })
 
@@ -1198,9 +1198,7 @@ describe('MinimapElement', () => {
           spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
           spyOn(minimapElement.DOMStylesReader, 'invalidateDOMStylesCache').andCallThrough()
 
-          const styleNode = document.createElement('style')
-          styleNode.textContent = 'body{ color: #233 }'
-          atom.styles.emitter.emit('did-add-style-element', styleNode)
+          atom.themes.emitter.emit('did-change-active-themes')
         })
 
         waitsFor('minimap frame requested', () => {
