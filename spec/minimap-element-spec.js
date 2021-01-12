@@ -333,7 +333,7 @@ describe('MinimapElement', () => {
         spyOn(minimapElement.CanvasDrawer, 'drawLineDecoration').andCallFake((d) => {
           calls.push(d.getProperties().plugin)
         })
-        spyOn(minimapElement, 'drawHighlightDecoration').andCallFake((d) => {
+        spyOn(minimapElement.CanvasDrawer, 'drawHighlightDecoration').andCallFake((d) => {
           calls.push(d.getProperties().plugin)
         })
 
@@ -410,7 +410,7 @@ describe('MinimapElement', () => {
       })
 
       it('renders the visible highlight decorations', () => {
-        spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, 'drawHighlightDecoration').andCallThrough()
 
         minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 4]]), { type: 'highlight-under', color: '#0000FF' })
         minimap.decorateMarker(editor.markBufferRange([[2, 20], [2, 30]]), { type: 'highlight-over', color: '#0000FF' })
