@@ -450,7 +450,7 @@ describe('MinimapElement', () => {
       })
 
       it('renders the visible custom foreground decorations', () => {
-        spyOn(minimapElement, 'drawCustomDecoration').andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, 'drawCustomDecoration').andCallThrough()
 
         const renderRoutine = jasmine.createSpy('renderRoutine')
 
@@ -471,8 +471,8 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration.calls.length).toEqual(4)
 
           expect(renderRoutine).toHaveBeenCalled()
           expect(renderRoutine.calls.length).toEqual(4)
@@ -480,7 +480,7 @@ describe('MinimapElement', () => {
       })
 
       it('renders the visible custom background decorations', () => {
-        spyOn(minimapElement, 'drawCustomDecoration').andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, 'drawCustomDecoration').andCallThrough()
 
         const renderRoutine = jasmine.createSpy('renderRoutine')
 
@@ -501,8 +501,8 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration.calls.length).toEqual(4)
 
           expect(renderRoutine).toHaveBeenCalled()
           expect(renderRoutine.calls.length).toEqual(4)
