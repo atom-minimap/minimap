@@ -562,7 +562,7 @@ describe('MinimapElement', () => {
           runs(() => {
             nextAnimationFrame()
 
-            spyOn(minimapElement, 'drawLines').andCallThrough()
+            spyOn(minimapElement.CanvasDrawer, 'drawLines').andCallThrough()
             editor.insertText('foo')
           })
         })
@@ -574,9 +574,9 @@ describe('MinimapElement', () => {
           runs(() => {
             nextAnimationFrame()
 
-            expect(minimapElement.drawLines).toHaveBeenCalled()
+            expect(minimapElement.CanvasDrawer.drawLines).toHaveBeenCalled()
 
-            const [firstLine, lastLine] = minimapElement.drawLines.argsForCall[0]
+            const [firstLine, lastLine] = minimapElement.CanvasDrawer.drawLines.argsForCall[0]
 
             // These tests are very flaky, depending on Atom's version the
             // measured values can changed so we have
