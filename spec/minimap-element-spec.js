@@ -214,7 +214,7 @@ describe('MinimapElement', () => {
       describe('when a hue-rotate filter is applied to a rgb color', () => {
         let [additionnalStyleNode] = []
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
@@ -233,7 +233,7 @@ describe('MinimapElement', () => {
           })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color', minimapElement.minimap.getTextEditorElement(), true)).toEqual(`rgb(0, ${0x6d}, ${0x6d})`)
+            expect(minimapElement.CanvasDrawer.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color', minimapElement.minimap.getTextEditorElement(), true)).toEqual(`rgb(0, ${0x6d}, ${0x6d})`)
           })
         })
       })
@@ -242,7 +242,7 @@ describe('MinimapElement', () => {
         let [additionnalStyleNode] = []
 
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement('style')
           additionnalStyleNode.textContent = `
@@ -261,7 +261,7 @@ describe('MinimapElement', () => {
           })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color', minimapElement.minimap.getTextEditorElement(), true)).toEqual(`rgba(0, ${0x6d}, ${0x6d}, 0)`)
+            expect(minimapElement.CanvasDrawer.DOMStylesReader.retrieveStyleFromDom(['.editor'], 'color', minimapElement.minimap.getTextEditorElement(), true)).toEqual(`rgba(0, ${0x6d}, ${0x6d}, 0)`)
           })
         })
       })
@@ -1196,7 +1196,7 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
           spyOn(minimapElement, 'requestForcedUpdate').andCallThrough()
-          spyOn(minimapElement.DOMStylesReader, 'invalidateDOMStylesCache').andCallThrough()
+          spyOn(minimapElement.CanvasDrawer.DOMStylesReader, 'invalidateDOMStylesCache').andCallThrough()
 
           atom.themes.emitter.emit('did-change-active-themes')
         })
@@ -1208,7 +1208,7 @@ describe('MinimapElement', () => {
 
       it('forces a refresh with cache invalidation', () => {
         expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-        expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+        expect(minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
       })
     })
 
