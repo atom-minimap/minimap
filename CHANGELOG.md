@@ -1,3 +1,15 @@
+## [4.38.2](https://github.com/atom-minimap/minimap/compare/v4.38.1...v4.38.2) (2021-01-12)
+
+
+### Bug Fixes
+
+* make drawBackDecorationsForLines a free function ([b2e238a](https://github.com/atom-minimap/minimap/commit/b2e238af7710bb8594acdb572a6be06636a3a48e))
+* make drawDecorations a free function ([94f2a1e](https://github.com/atom-minimap/minimap/commit/94f2a1e57d8ed4100156e6464b6e77ffe36575f6))
+* make drawFrontDecorationsForLines a free function ([6b97b7a](https://github.com/atom-minimap/minimap/commit/6b97b7a37201c36eccfefc8a6dcb48c9201b5c1b))
+* make getDecorationColor free function ([e704de9](https://github.com/atom-minimap/minimap/commit/e704de91dc72bfb9b35b999d7cad31e9478f757e))
+* make updateBackDecorationsLayer a free function ([8ae5fa4](https://github.com/atom-minimap/minimap/commit/8ae5fa41bca1a7d395dfc89f7138b0b3c85377b9))
+* make updateFrontDecorationsLayer a free function ([a614182](https://github.com/atom-minimap/minimap/commit/a614182d00e28d4f98f2b56ef846fa5558320e8f))
+
 ## [4.38.1](https://github.com/atom-minimap/minimap/compare/v4.38.0...v4.38.1) (2021-01-12)
 
 
