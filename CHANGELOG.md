@@ -1,3 +1,15 @@
+## [4.38.3](https://github.com/atom-minimap/minimap/compare/v4.38.2...v4.38.3) (2021-01-12)
+
+
+### Bug Fixes
+
+* make underscore-plus a devDep ([07512f3](https://github.com/atom-minimap/minimap/commit/07512f32aca7e30a6a3f52332f62e1241d565e1a))
+* no need escape / ([2687541](https://github.com/atom-minimap/minimap/commit/2687541b53e6b8f6c2b466b4f37f365f9b506c86))
+* replace underscore-plus by custom implementation ([2ee74b9](https://github.com/atom-minimap/minimap/commit/2ee74b9c730e6836a8c3e00b64681a305598b6e6))
+* store the regexp in a const ([2a64ecb](https://github.com/atom-minimap/minimap/commit/2a64ecbd76db73bf2bb2fd3571d21b8e246308dd))
+* turn-off toplevel optimizations  ([0099863](https://github.com/atom-minimap/minimap/commit/009986300506416aa30b3f1c9a326f6160cceb19))
+* use string inerpolation ([92be9d8](https://github.com/atom-minimap/minimap/commit/92be9d8c538eb21dbc5ed4931c9aa47afa79ea92))
+
 ## [4.38.2](https://github.com/atom-minimap/minimap/compare/v4.38.1...v4.38.2) (2021-01-12)
 
 
