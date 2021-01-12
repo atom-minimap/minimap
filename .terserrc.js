@@ -10,7 +10,7 @@ export default {
       "@atom.inSpecMode": !isTest ? "() => false" : "() => true"
     },
     "ecma": "2018", // Change based on the target
-    // "toplevel": true, // controlled by Parcel
+    "toplevel": false,
     "hoist_vars": false,
     "hoist_funs": true,
     "pure_getters": true,

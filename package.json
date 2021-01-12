@@ -59,8 +59,7 @@
     "delegato": "^1.0.0",
     "element-resize-detector": "^1.2.1",
     "fs-plus": "^3.1.1",
-    "mixto": "^1.0.0",
-    "underscore-plus": "^1.7.0"
+    "mixto": "^1.0.0"
   },
   "devDependencies": {
     "@types/atom": "^1.40.5",
@@ -74,7 +73,8 @@
     "rollup": "2.36.1",
     "rollup-plugin-atomic": "^2.0.1",
     "shx": "^0.3.3",
-    "standard": "^16.0.3"
+    "standard": "^16.0.3",
+    "underscore-plus": "^1.7.0"
   },
   "standard": {
     "globals": [
