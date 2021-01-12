@@ -1,3 +1,10 @@
+## [4.38.1](https://github.com/atom-minimap/minimap/compare/v4.38.0...v4.38.1) (2021-01-12)
+
+
+### Bug Fixes
+
+* import domStylesReader ([10730c9](https://github.com/atom-minimap/minimap/commit/10730c9c167a33f6d5dc0eead62720af10afb7e4))
+
 # [4.38.0](https://github.com/atom-minimap/minimap/compare/v4.37.1...v4.38.0) (2021-01-11)
 
 
