@@ -870,7 +870,7 @@ describe('MinimapElement', () => {
             // wait until all animations run out
             waitsFor(() => {
               nextAnimationFrame !== noAnimationFrame && nextAnimationFrame()
-              return editorElement.getScrollTop() >= 470 //flaky
+              return editorElement.getScrollTop() >= 470 // flaky
             })
           })
 
