@@ -1,5 +1,6 @@
 const isDev = process.env.NODE_ENV !== "production"
 const isTest = process.env.NODE_ENV === "test"
+const isReadable = process.env.READABLE_BUILD || isDev || isTest
 
 export default {
   // "module": false, // controlled by Parcel
@@ -28,8 +29,8 @@ export default {
   "parse": {
     "ecma": 2020
   },
-  "mangle": !isDev,
+  "mangle": isReadable ? false : true,
   "format": {
-    "beautify": isDev
+    "beautify": isReadable
   },
 }

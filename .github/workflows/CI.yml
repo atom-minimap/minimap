@@ -38,13 +38,13 @@ jobs:
 
       - name: Run Ubuntu tests
         if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: npm run test_build && npm run test
+        run: npm run build.test && npm run test
 
       # One or two of the tests are flaky on Windows/MacOs
       - name: Run Windows and MacOS tests
         if: ${{ !contains(matrix.os, 'ubuntu') }}
         continue-on-error: true
-        run: npm run test_build && npm run test
+        run: npm run build.test && npm run test
 
   Lint:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
