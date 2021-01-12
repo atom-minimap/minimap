@@ -330,7 +330,7 @@ describe('MinimapElement', () => {
         atom.config.set('minimap.plugins.fooDecorationsZIndex', 1)
 
         const calls = []
-        spyOn(minimapElement, 'drawLineDecoration').andCallFake((d) => {
+        spyOn(minimapElement.CanvasDrawer, 'drawLineDecoration').andCallFake((d) => {
           calls.push(d.getProperties().plugin)
         })
         spyOn(minimapElement, 'drawHighlightDecoration').andCallFake((d) => {
@@ -370,7 +370,7 @@ describe('MinimapElement', () => {
       })
 
       it('renders the visible line decorations', () => {
-        spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, 'drawLineDecoration').andCallThrough()
 
         minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'line', color: '#0000FF' })
         minimap.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), { type: 'line', color: '#0000FF' })
@@ -384,8 +384,8 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawLineDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawLineDecoration.calls.length).toEqual(2)
+          expect(minimapElement.CanvasDrawer.drawLineDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawLineDecoration.calls.length).toEqual(2)
         })
       })
 
