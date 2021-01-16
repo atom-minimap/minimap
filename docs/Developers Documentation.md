@@ -68,7 +68,9 @@ While the interface is the same, some details such as the available decorations 
 A plugin can and should set the plugin origin on the decorations it creates so that the Minimap can easily know which order to apply on the decorations. When not provided, the plugin origin will be inferred from the path of the function invoking the `decorateMarker` method. If the origin can't be inferred the order value will always be `0` for this decoration.
 
 ```js
-minimapView.decorateMarker(marker, {type: 'line', color: '#ff0000', plugin: 'my-plugin-name'})
+const decorationManager = minimapView.getDecorationManagement()
+
+decorationManager.decorateMarker(marker, {type: 'line', color: '#ff0000', plugin: 'my-plugin-name'})
 ```
 
 #### Scope And Styling
@@ -76,14 +78,14 @@ minimapView.decorateMarker(marker, {type: 'line', color: '#ff0000', plugin: 'my-
 The most important change is that decorations on the Minimap doesn't use a `class`, but rather a `scope`
 
 ```js
-minimapView.decorateMarker(marker, {type: 'line', scope: '.scope .to .the.marker.style'})
+decorationManager.decorateMarker(marker, {type: 'line', scope: '.scope .to .the.marker.style'})
 ```
 
 It's still possible to pass a class parameter to the decoration:
 
 
 ```js
-minimapView.decorateMarker(marker, {type: 'line', class: 'the marker style'})
+decorationManager.decorateMarker(marker, {type: 'line', class: 'the marker style'})
 ```
 
 In that case, when rendering the decoration a scope will be build that will look like `.minimap .editor .the.marker.style`.
@@ -105,7 +107,9 @@ Also note that only the `background` property will be retrieved to style a decor
 A last option is to pass a css color directly in a `color` option, such as:
 
 ```js
-minimapView.decorateMarker(marker, {type: 'line', color: '#ff0000'})
+const decorationManager = minimapView.getDecorationManagement()
+
+decorationManager.decorateMarker(marker, {type: 'line', color: '#ff0000'})
 ```
 
 In that case neither the scope nor the class will be used.
