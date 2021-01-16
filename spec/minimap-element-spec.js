@@ -2126,7 +2126,7 @@ describe('MinimapElement', () => {
     })
 
     it('creates a decoration for the given marker', () => {
-      expect(minimap.decorationsByMarkerId.get(marker.id)).toBeDefined()
+      expect(minimapElement.DecorationManagement.decorationsByMarkerId.get(marker.id)).toBeDefined()
     })
 
     it('creates a change corresponding to the marker range', () => {
@@ -2157,7 +2157,7 @@ describe('MinimapElement', () => {
       })
 
       it('removes the decoration from the render view', () => {
-        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+        expect(minimapElement.DecorationManagement.decorationsByMarkerId.get(marker.id)).toBeUndefined()
       })
 
       it('creates a change corresponding to the marker range', () => {
@@ -2172,7 +2172,7 @@ describe('MinimapElement', () => {
       })
 
       it('removes the decoration from the render view', () => {
-        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+        expect(minimapElement.DecorationManagement.decorationsByMarkerId.get(marker.id)).toBeUndefined()
       })
 
       it('creates a change corresponding to the marker range', () => {
@@ -2187,7 +2187,7 @@ describe('MinimapElement', () => {
       })
 
       it('removes the decoration from the render view', () => {
-        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+        expect(minimapElement.DecorationManagement.decorationsByMarkerId.get(marker.id)).toBeUndefined()
       })
 
       it('creates a change corresponding to the marker range', () => {
@@ -2202,8 +2202,8 @@ describe('MinimapElement', () => {
       })
 
       it('removes all the previously added decorations', () => {
-        expect(minimap.decorationsById.size).toEqual(0)
-        expect(minimap.decorationsByMarkerId.size).toEqual(0)
+        expect(minimapElement.DecorationManagement.decorationsById.size).toEqual(0)
+        expect(minimapElement.DecorationManagement.decorationsByMarkerId.size).toEqual(0)
       })
 
       it('prevents the creation of new decorations', () => {
