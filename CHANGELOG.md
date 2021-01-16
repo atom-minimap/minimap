@@ -1,3 +1,32 @@
+# [4.39.0](https://github.com/atom-minimap/minimap/compare/v4.38.3...v4.39.0) (2021-01-16)
+
+
+### Bug Fixes
+
+* add destroyed  prop to DecorationManagement ([784732d](https://github.com/atom-minimap/minimap/commit/784732df2a84b88d4ac6bb76e09ecd971c5ad6a6))
+* call initializeDecorations inside setModel ([006300c](https://github.com/atom-minimap/minimap/commit/006300c89c4b0019a50c2559cf6c794583336a7c))
+* destructure data in drawGutterDecoration ([c055f0e](https://github.com/atom-minimap/minimap/commit/c055f0eaac32a173539b8ebbbf3936e3a736ac1f))
+* destructure data in drawLineDecoration ([7579528](https://github.com/atom-minimap/minimap/commit/7579528abf74823927991b4f3475050d9c7c7e3a))
+* destructure renderData in drawHighlightDecoration ([8033509](https://github.com/atom-minimap/minimap/commit/80335099d5886bd60afe0259b7d659cb11971da5))
+* destructure renderData in drawHighlightOutlineDecoration ([be58182](https://github.com/atom-minimap/minimap/commit/be5818245328f185fd87200bc8a721211928e71f))
+* duplicate functions for backward compatibility ([67d9d58](https://github.com/atom-minimap/minimap/commit/67d9d587511ce1cad8321c82ec3562983e1d2ad5))
+* empty minimapElement once minimapElement is destroyed ([c5ac30c](https://github.com/atom-minimap/minimap/commit/c5ac30ca7aa8d32dcfd5eaf23d10665693343be2))
+* fix onDidChangeDecorationRange ([b331f08](https://github.com/atom-minimap/minimap/commit/b331f08609008b8f849555e4b5fd33bd7d81f3f2))
+* make DecorationManagement a normal class ([a303916](https://github.com/atom-minimap/minimap/commit/a3039161141fa9a500efeed456b3db0117839682))
+* memoize this.DecorationManagement ([5d4c1dc](https://github.com/atom-minimap/minimap/commit/5d4c1dc1f294e1310c7f6f562189774e2062070d))
+* memoize this.emitter ([6235c2e](https://github.com/atom-minimap/minimap/commit/6235c2ef36b84d8aa69365cff9d02f1c01d0fc29))
+* set this.DecorationManagement  to undefined ([b9e351c](https://github.com/atom-minimap/minimap/commit/b9e351c9270c43b9e6c810528cf8e2a93eb8279d))
+* use this.minimap.destroyed ([38a0e3f](https://github.com/atom-minimap/minimap/commit/38a0e3f8bf908c46776a4844d42a7174fb9c6482))
+* use this.minimap.editorDestroyed ([9385892](https://github.com/atom-minimap/minimap/commit/938589282e26594c9d53a56c86eab233892e6c22))
+* use this.minimap.emitter ([f34cd85](https://github.com/atom-minimap/minimap/commit/f34cd85f37b25a2f4c1a856b33ec0bbcfca7bf36))
+* use this.minimap.get visibleRow ([ea3fc7b](https://github.com/atom-minimap/minimap/commit/ea3fc7b6455985fbd53e42a3abad9a6db9ef129a))
+
+
+### Features
+
+* add getDecorationManagement as the recommended way of using decoration API ([46080b3](https://github.com/atom-minimap/minimap/commit/46080b3481a4dc36a4cbbb734b6fa6ae9191aa6f))
+* set minimapElement  property for Minimap ([03726ed](https://github.com/atom-minimap/minimap/commit/03726ede6950bc94259473110d41ef2bf9a2e746))
+
 ## [4.38.3](https://github.com/atom-minimap/minimap/compare/v4.38.2...v4.38.3) (2021-01-12)
 
 
