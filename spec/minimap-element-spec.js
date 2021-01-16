@@ -337,8 +337,8 @@ describe('MinimapElement', () => {
           calls.push(d.getProperties().plugin)
         })
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'line', color: '#0000FF', plugin: 'bar' })
-        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'highlight-under', color: '#0000FF', plugin: 'foo' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'line', color: '#0000FF', plugin: 'bar' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'highlight-under', color: '#0000FF', plugin: 'foo' })
 
         editorElement.setScrollTop(0)
 
@@ -372,9 +372,9 @@ describe('MinimapElement', () => {
       it('renders the visible line decorations', () => {
         spyOn(minimapElement, 'drawLineDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'line', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), { type: 'line', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), { type: 'line', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'line', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), { type: 'line', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), { type: 'line', color: '#0000FF' })
 
         editorElement.setScrollTop(0)
 
@@ -392,9 +392,9 @@ describe('MinimapElement', () => {
       it('renders the visible gutter decorations', () => {
         spyOn(minimapElement, 'drawGutterDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'gutter', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), { type: 'gutter', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), { type: 'gutter', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 0], [1, 10]]), { type: 'gutter', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[10, 0], [10, 10]]), { type: 'gutter', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 0], [100, 10]]), { type: 'gutter', color: '#0000FF' })
 
         editorElement.setScrollTop(0)
 
@@ -412,9 +412,9 @@ describe('MinimapElement', () => {
       it('renders the visible highlight decorations', () => {
         spyOn(minimapElement, 'drawHighlightDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 0], [1, 4]]), { type: 'highlight-under', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[2, 20], [2, 30]]), { type: 'highlight-over', color: '#0000FF' })
-        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), { type: 'highlight-under', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 0], [1, 4]]), { type: 'highlight-under', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[2, 20], [2, 30]]), { type: 'highlight-over', color: '#0000FF' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), { type: 'highlight-under', color: '#0000FF' })
 
         editorElement.setScrollTop(0)
 
@@ -432,9 +432,9 @@ describe('MinimapElement', () => {
       it('renders the visible outline decorations', () => {
         spyOn(minimapElement, 'drawHighlightOutlineDecoration').andCallThrough()
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), { type: 'highlight-outline', color: '#0000ff' })
-        minimap.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), { type: 'highlight-outline', color: '#0000ff' })
-        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), { type: 'highlight-outline', color: '#0000ff' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), { type: 'highlight-outline', color: '#0000ff' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), { type: 'highlight-outline', color: '#0000ff' })
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), { type: 'highlight-outline', color: '#0000ff' })
 
         editorElement.setScrollTop(0)
 
@@ -459,9 +459,9 @@ describe('MinimapElement', () => {
           render: renderRoutine
         }
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
-        minimap.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), properties)
-        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), properties)
 
         editorElement.setScrollTop(0)
 
@@ -489,9 +489,9 @@ describe('MinimapElement', () => {
           render: renderRoutine
         }
 
-        minimap.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
-        minimap.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), properties)
-        minimap.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[1, 4], [3, 6]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[6, 0], [6, 7]]), properties)
+        minimapElement.DecorationManagement.decorateMarker(editor.markBufferRange([[100, 3], [100, 5]]), properties)
 
         editorElement.setScrollTop(0)
 
@@ -2101,6 +2101,162 @@ describe('MinimapElement', () => {
           })
         })
       })
+    })
+  })
+
+  //    ########  ########  ######   #######
+  //    ##     ## ##       ##    ## ##     ##
+  //    ##     ## ##       ##       ##     ##
+  //    ##     ## ######   ##       ##     ##
+  //    ##     ## ##       ##       ##     ##
+  //    ##     ## ##       ##    ## ##     ##
+  //    ########  ########  ######   #######
+
+  describe('::decorateMarker', () => {
+    let [marker, decoration, changeSpy] = []
+
+    beforeEach(() => {
+      editor.setText(largeSample)
+
+      changeSpy = jasmine.createSpy('didChange')
+      minimapElement.DecorationManagement.onDidChangeDecorationRange(changeSpy)
+
+      marker = minimap.markBufferRange([[0, 6], [1, 11]])
+      decoration = minimapElement.DecorationManagement.decorateMarker(marker, { type: 'highlight', class: 'dummy' })
+    })
+
+    it('creates a decoration for the given marker', () => {
+      expect(minimap.decorationsByMarkerId.get(marker.id)).toBeDefined()
+    })
+
+    it('creates a change corresponding to the marker range', () => {
+      expect(changeSpy).toHaveBeenCalled()
+      expect(changeSpy.calls[0].args[0].start).toEqual(0)
+      expect(changeSpy.calls[0].args[0].end).toEqual(1)
+    })
+
+    describe('when the marker range changes', () => {
+      beforeEach(() => {
+        const markerChangeSpy = jasmine.createSpy('marker-did-change')
+        marker.onDidChange(markerChangeSpy)
+        marker.setBufferRange([[0, 6], [3, 11]])
+
+        waitsFor(() => { return markerChangeSpy.calls.length > 0 })
+      })
+
+      it('creates a change only for the dif between the two ranges', () => {
+        expect(changeSpy).toHaveBeenCalled()
+        expect(changeSpy.mostRecentCall.args[0].start).toEqual(1)
+        expect(changeSpy.mostRecentCall.args[0].end).toEqual(3)
+      })
+    })
+
+    describe('destroying the marker', () => {
+      beforeEach(() => {
+        marker.destroy()
+      })
+
+      it('removes the decoration from the render view', () => {
+        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+      })
+
+      it('creates a change corresponding to the marker range', () => {
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
+      })
+    })
+
+    describe('destroying the decoration', () => {
+      beforeEach(() => {
+        decoration.destroy()
+      })
+
+      it('removes the decoration from the render view', () => {
+        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+      })
+
+      it('creates a change corresponding to the marker range', () => {
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
+      })
+    })
+
+    describe('destroying all the decorations for the marker', () => {
+      beforeEach(() => {
+        minimapElement.DecorationManagement.removeAllDecorationsForMarker(marker)
+      })
+
+      it('removes the decoration from the render view', () => {
+        expect(minimap.decorationsByMarkerId.get(marker.id)).toBeUndefined()
+      })
+
+      it('creates a change corresponding to the marker range', () => {
+        expect(changeSpy.calls[1].args[0].start).toEqual(0)
+        expect(changeSpy.calls[1].args[0].end).toEqual(1)
+      })
+    })
+
+    describe('destroying the minimap', () => {
+      beforeEach(() => {
+        minimap.destroy()
+      })
+
+      it('removes all the previously added decorations', () => {
+        expect(minimap.decorationsById.size).toEqual(0)
+        expect(minimap.decorationsByMarkerId.size).toEqual(0)
+      })
+
+      it('prevents the creation of new decorations', () => {
+        marker = editor.markBufferRange([[0, 6], [0, 11]])
+        decoration = minimapElement.DecorationManagement.decorateMarker(marker, { type: 'highlight', class: 'dummy' })
+
+        expect(decoration).toBeUndefined()
+      })
+    })
+  })
+
+  describe('::decorationsByTypeThenRows', () => {
+    let [decorations] = []
+
+    beforeEach(() => {
+      editor.setText(largeSample)
+
+      function createDecoration (type, range) {
+        const marker = minimap.markBufferRange(range)
+        minimapElement.DecorationManagement.decorateMarker(marker, { type })
+      }
+
+      createDecoration('highlight', [[6, 0], [11, 0]])
+      createDecoration('highlight', [[7, 0], [8, 0]])
+      createDecoration('highlight-over', [[1, 0], [2, 0]])
+      createDecoration('line', [[3, 0], [4, 0]])
+      createDecoration('line', [[12, 0], [12, 0]])
+      createDecoration('highlight-under', [[0, 0], [10, 1]])
+
+      decorations = minimapElement.DecorationManagement.decorationsByTypeThenRows(0, 12)
+    })
+
+    it('returns an object whose keys are the decorations types', () => {
+      expect(Object.keys(decorations).sort()).toEqual(['highlight-over', 'highlight-under', 'line'])
+    })
+
+    it('stores decorations by rows within each type objects', () => {
+      expect(Object.keys(decorations['highlight-over']).sort())
+        .toEqual('1 2 6 7 8 9 10 11'.split(' ').sort())
+
+      expect(Object.keys(decorations.line).sort())
+        .toEqual('3 4 12'.split(' ').sort())
+
+      expect(Object.keys(decorations['highlight-under']).sort())
+        .toEqual('0 1 2 3 4 5 6 7 8 9 10'.split(' ').sort())
+    })
+
+    it('stores the decorations spanning a row in the corresponding row array', () => {
+      expect(decorations['highlight-over']['7'].length).toEqual(2)
+
+      expect(decorations.line['3'].length).toEqual(1)
+
+      expect(decorations['highlight-under']['5'].length).toEqual(1)
     })
   })
 })
