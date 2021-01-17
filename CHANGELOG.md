@@ -1,3 +1,26 @@
+## [4.39.1](https://github.com/atom-minimap/minimap/compare/v4.39.0...v4.39.1) (2021-01-17)
+
+
+### Bug Fixes
+
+* add DecorationManagement.destroy ([09e64b9](https://github.com/atom-minimap/minimap/commit/09e64b9b0141dc3e7d5a76aa6a5246975c8a3de2))
+* attach to text editor explicitly ([f2c36b7](https://github.com/atom-minimap/minimap/commit/f2c36b759bf33cbd6b374ed60901452e600ac0c0))
+* clear editorsMinimaps in one take ([aa48eba](https://github.com/atom-minimap/minimap/commit/aa48eba2a0c151c194845704fe82cd79c95fa7cf))
+* compare minimap with undefined ([ad83bf6](https://github.com/atom-minimap/minimap/commit/ad83bf66448d11761b10c04799bc15fc7141fe16))
+* create a new Minimap if it is destroyed ([503c482](https://github.com/atom-minimap/minimap/commit/503c482ffc1e85cbb83a52570e4930300c893f87))
+* delete the editor from editorsMinimaps if destroyed ([defc58c](https://github.com/atom-minimap/minimap/commit/defc58ced3b29cd8a414c5e67993900c20ecc521))
+* destroy quickSettingsElement ([0eace20](https://github.com/atom-minimap/minimap/commit/0eace2096f47c59e84d93dbb72eb601fb4a154bd))
+* do not define additional subs variable ([2b665ec](https://github.com/atom-minimap/minimap/commit/2b665ec259798dd9ed3b439c375068f7538f5601))
+* hack for forcing scroller movement ([a5ac5ec](https://github.com/atom-minimap/minimap/commit/a5ac5ec950cd4ac168ff0e24a0a5c3cbd8772410))
+* merge subs.add in Minimap ([5a9ff08](https://github.com/atom-minimap/minimap/commit/5a9ff0820ddb65074e9e6e9f53589df3c090f028))
+* merge subs.add in quick settings ([4e81b4c](https://github.com/atom-minimap/minimap/commit/4e81b4c56c0767fe58b320f7059a99d4d40ee450))
+* only delete if editorsMinimaps is not null ([464a8cf](https://github.com/atom-minimap/minimap/commit/464a8cfc371524c950c875b030009dc250c981d0))
+* remove excess copy ([4fca672](https://github.com/atom-minimap/minimap/commit/4fca672d1e3e02f0203fa19b3fb7de6ed3e3eac6))
+* removeChild before appending ([1d07ed1](https://github.com/atom-minimap/minimap/commit/1d07ed154be2f1d5b864f9f972bf155845160513))
+* reuse minimapElement if already exists ([1043a29](https://github.com/atom-minimap/minimap/commit/1043a29f3721beb11871639febc1b298e6519193))
+* set minimap to null if it is truthy ([3f683d9](https://github.com/atom-minimap/minimap/commit/3f683d9305fd770f0723d0b216ecea083cadbbc5))
+* use minimapViewProvider instead of atom.views ([6fb75af](https://github.com/atom-minimap/minimap/commit/6fb75aff8feff0f7dc0c16db64ca029a0acd6e9c))
+
 # [4.39.0](https://github.com/atom-minimap/minimap/compare/v4.38.3...v4.39.0) (2021-01-16)
 
 
