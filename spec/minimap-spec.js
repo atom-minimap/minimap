@@ -519,4 +519,16 @@ describe('Stand alone minimap', () => {
     expect(minimap.getDevicePixelRatioRounding()).toEqual(false)
     expect(minimap.getDevicePixelRatio()).toEqual(1.25)
   })
+
+  it('returns an array for getDecorations', () => {
+    const decorations = minimap.getDecorations()
+
+    expect(Array.isArray(decorations)).toBe(true)
+  })
+
+  it('returns an array for decorationsForScreenRowRange', () => {
+    const decorations = minimap.decorationsForScreenRowRange(0, 1)
+
+    expect(Array.isArray(decorations)).toBe(true)
+  })
 })
