@@ -1,3 +1,11 @@
+## [4.39.2](https://github.com/atom-minimap/minimap/compare/v4.39.1...v4.39.2) (2021-01-18)
+
+
+### Bug Fixes
+
+* add minimap.destroy to minimapForEditor just in case ([40a4676](https://github.com/atom-minimap/minimap/commit/40a467623a257732f54824e7a8a99f14ade706c9))
+* dispose the editorSubscription if minimap is deactivated before destroying the editor ([7b359b3](https://github.com/atom-minimap/minimap/commit/7b359b364343fb575e46fcee41b9812a553ecfb1))
+
 ## [4.39.1](https://github.com/atom-minimap/minimap/compare/v4.39.0...v4.39.1) (2021-01-17)
 
 
