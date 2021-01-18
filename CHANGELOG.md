@@ -1,3 +1,10 @@
+## [4.39.4](https://github.com/atom-minimap/minimap/compare/v4.39.3...v4.39.4) (2021-01-18)
+
+
+### Bug Fixes
+
+* revert "fix: skip rendering empty token text" ([86767a0](https://github.com/atom-minimap/minimap/commit/86767a08dde8d7eb2d6c3931862ea8f0c4a86900))
+
 ## [4.39.3](https://github.com/atom-minimap/minimap/compare/v4.39.2...v4.39.3) (2021-01-18)
 
 
