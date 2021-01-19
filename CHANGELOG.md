@@ -1,3 +1,12 @@
+## [4.39.5](https://github.com/atom-minimap/minimap/compare/v4.39.4...v4.39.5) (2021-01-18)
+
+
+### Bug Fixes
+
+* fix strange null-bugs (#771)
+* fix `getDecorations` should return an array
+
+
 ## [4.39.4](https://github.com/atom-minimap/minimap/compare/v4.39.3...v4.39.4) (2021-01-18)
 
 
