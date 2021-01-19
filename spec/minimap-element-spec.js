@@ -350,8 +350,6 @@ describe('MinimapElement', () => {
 
           expect(calls).toEqual(['bar', 'foo'])
 
-          atom.config.set('minimap.plugins.fooDecorationsZIndex', -1)
-
           calls.length = 0
         })
 
@@ -362,7 +360,7 @@ describe('MinimapElement', () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(calls).toEqual(['foo', 'bar'])
+          expect(calls).toEqual(['bar', 'foo'])
 
           Main.unregisterPlugin('foo')
           Main.unregisterPlugin('bar')

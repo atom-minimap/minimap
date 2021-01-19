@@ -136,8 +136,6 @@ When several plugins create decorations for the same layer, the general rule is 
 - On the foreground layer, the `highlight-over` decorations are rendered before the `highlight-outine` decorations.
 - When two plugins adds the same type of decorations at the same place, the decorations are rendered in the order they have been created.
 
-But fortunately, it's possible to reorder decorations on their specific layer using these settings. These settings works as a `z-index` in CSS, the higher the value, the higher the decorations will be in the render stack, for instance, a plugin's decorations with an order value of `1` will appear above decorations from a plugin with an order value of `0`.
-
 #### Smooth Scrolling
 
 Whether to offset the minimap canvas when scrolling to keep the scroll smooth. When `true` the minimap canvas will be offseted, resulting in a smoother scroll, but with the side-effect of a blurry minimap when the canvas is placed between pixels. When `false` the canvas will always stay at the same position, and will never look blurry, but the scroll will appear more jagged. `(default=true)`
