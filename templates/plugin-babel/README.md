@@ -1,4 +1,4 @@
-# __package-name__ package
+# **package-name** package
 
 A short description of your package.
 

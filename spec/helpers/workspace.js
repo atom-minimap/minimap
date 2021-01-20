@@ -1,7 +1,7 @@
-'use strict'
+"use strict"
 
-const path = require('path')
-const stylesheetPath = path.resolve(__dirname, '../../styles/minimap.less')
+const path = require("path")
+const stylesheetPath = path.resolve(__dirname, "../../styles/minimap.less")
 const stylesheet = atom.themes.loadStylesheet(stylesheetPath)
 const styles = `
   ${stylesheet}
@@ -40,14 +40,14 @@ module.exports = { stylesheet, styles }
 
 beforeEach(() => {
   if (!atom.workspace.buildTextEditor) {
-    const { TextEditor } = require('atom')
+    const { TextEditor } = require("atom")
     atom.workspace.buildTextEditor = function (opts) {
       return new TextEditor(opts)
     }
   }
 
-  const jasmineContent = document.body.querySelector('#jasmine-content')
-  const styleNode = document.createElement('style')
+  const jasmineContent = document.body.querySelector("#jasmine-content")
+  const styleNode = document.createElement("style")
   styleNode.textContent = styles
 
   jasmineContent.appendChild(styleNode)
