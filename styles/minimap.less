@@ -1,7 +1,7 @@
 @import "ui-variables";
 
 atom-notifications:empty {
-  pointer-events: none
+  pointer-events: none;
 }
 
 atom-text-editor[with-minimap] {
@@ -20,7 +20,8 @@ atom-text-editor[with-minimap] {
 @contain_all: size layout paint style;
 @contain_except_size: layout paint style;
 
-atom-text-editor, html {
+atom-text-editor,
+html {
   atom-text-editor-minimap {
     contain: @contain_all;
     display: block;
@@ -52,7 +53,8 @@ atom-text-editor, html {
         contain: @contain_all;
         pointer-events: none;
 
-        canvas, .minimap-visible-area {
+        canvas,
+        .minimap-visible-area {
           contain: @contain_except_size;
           pointer-events: auto;
         }
@@ -94,7 +96,7 @@ atom-text-editor, html {
 
       &::after {
         contain: @contain_all;
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -141,8 +143,8 @@ atom-text-editor, html {
 
       &:before {
         contain: @contain_all;
-        content: '\f02f';
-        font-family: 'Octicons Regular';
+        content: "\f02f";
+        font-family: "Octicons Regular";
       }
     }
     &:hover .open-minimap-quick-settings {

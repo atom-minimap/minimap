@@ -16,7 +16,7 @@ export default [
         dir: "dist",
         format: "cjs",
         sourcemap: true,
-        preferConst: true
+        preferConst: true,
       },
     ],
     // loaded externally

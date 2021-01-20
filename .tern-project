@@ -1,8 +1,6 @@
 {
   "ecmaVersion": 7,
-  "libs": [
-    "jquery"
-  ],
+  "libs": ["jquery"],
   "plugins": {
     "complete_strings": {
       "maxLength": 15
