@@ -1,4 +1,8 @@
 {
   "extends": "eslint-config-atomic",
-  "ignorePatterns": ["dist/", "node_modules/", "spec/fixtures"]
+  "ignorePatterns": ["dist/", "node_modules/", "spec/fixtures"],
+  "rules": {
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
 }
