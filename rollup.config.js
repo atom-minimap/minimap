@@ -2,6 +2,7 @@ import { createPlugins } from "rollup-plugin-atomic"
 import terserOptions from "./.terserrc.js"
 
 const plugins = createPlugins([
+  "ts",
   "js",
   "json",
   ["terser", terserOptions],
@@ -10,7 +11,7 @@ const plugins = createPlugins([
 
 export default [
   {
-    input: "lib/main.js",
+    input: "lib/main.ts",
     output: [
       {
         dir: "dist",
