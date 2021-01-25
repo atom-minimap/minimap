@@ -5,3 +5,4 @@ node_modules
 pages
 dist
 .parcel-cache
+package-lock.json
