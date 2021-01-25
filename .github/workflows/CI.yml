@@ -36,14 +36,7 @@ jobs:
           apm install --production
           npm install --only=dev
 
-      - name: Run Ubuntu tests
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: npm run build.test && npm run test
-
-      # One or two of the tests are flaky on Windows/MacOs
-      - name: Run Windows and MacOS tests
-        if: ${{ !contains(matrix.os, 'ubuntu') }}
-        continue-on-error: true
+      - name: Run tests
         run: npm run build.test && npm run test
 
   Lint:
