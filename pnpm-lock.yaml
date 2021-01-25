@@ -5446,7 +5446,7 @@ specifiers:
   '@types/atom': ^1.40.5
   '@types/jasmine': 3.6.2
   atom-utils-plus: ^0.11.0
-  build-commit: ^0.1.1
+  build-commit: ^0.1.4
   cross-env: ^7.0.3
   delegato: ^1.0.0
   element-resize-detector: ^1.2.1
