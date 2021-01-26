@@ -113,7 +113,7 @@ describe("Minimap package", () => {
     })
 
     it("destroys all the minimap models", () => {
-      expect(minimapPackage.editorsMinimaps).toBeUndefined()
+      expect(minimapPackage.editorsMinimaps.size).toBe(0)
     })
 
     it("destroys all the minimap elements", () => {
