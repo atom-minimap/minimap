@@ -1,3 +1,8 @@
+## [4.39.6](https://github.com/atom-minimap/minimap/compare/v4.39.5...v4.39.6) (2021-01-30)
+
+### Bug fixes
+- fix: do not null set the values in destroy (#779): solves some of the null bugs.
+
 ## [4.39.5](https://github.com/atom-minimap/minimap/compare/v4.39.4...v4.39.5) (2021-01-18)
 
 
