@@ -2,7 +2,7 @@
 process.env.NODE_ENV = "test"
 
 require("./helpers/workspace")
-const { Minimap } = require("../dist/main")
+const { Minimap, MinimapElement } = require("../dist/main")
 
 describe("Minimap package", () => {
   let [editor, minimap, editorElement, minimapElement, workspaceElement, minimapPackage] = []
@@ -47,6 +47,16 @@ describe("Minimap package", () => {
     minimapElement = atom.views.getView(minimap)
 
     expect(minimapElement).toExist()
+  })
+
+  it("provider returns minimap.minimapElement", () => {
+    const textEditor = atom.workspace.buildTextEditor({})
+    minimap = new Minimap({ textEditor })
+    minimapElement = new MinimapElement()
+    minimapElement.setModel(minimap)
+    const minimapView = atom.views.getView(minimap)
+
+    expect(minimapView).toBe(minimapElement)
   })
 
   describe("when an editor is opened", () => {
