@@ -1,3 +1,10 @@
+## [4.39.7](https://github.com/atom-minimap/minimap/compare/v4.39.6...v4.39.7) (2021-02-02)
+
+
+### Bug Fixes
+
+* view provider returns correct minimap element ([#781](https://github.com/atom-minimap/minimap/issues/781)) ([358d781](https://github.com/atom-minimap/minimap/commit/358d781114d85f5214cfdf46433dba9d33a6b5c2))
+
 ## [4.39.6](https://github.com/atom-minimap/minimap/compare/v4.39.5...v4.39.6) (2021-01-30)
 
 ### Bug fixes
