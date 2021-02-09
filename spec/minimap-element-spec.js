@@ -1503,11 +1503,11 @@ describe("MinimapElement", () => {
         expect(minimapElement.classList.contains("left")).toBeTruthy()
       })
 
-      it("creates a style node with an offset for atom overlays", () => {
+      it("changes with-minimap attribute value to direction", () => {
         atom.config.set("minimap.displayMinimapOnLeft", true)
-
-        const node = document.querySelector('style[context="atom-text-editor-minimap"]')
-        expect(node).toExist()
+        expect(editorElement.getAttribute("with-minimap")).toBe("left")
+        atom.config.set("minimap.displayMinimapOnLeft", false)
+        expect(editorElement.getAttribute("with-minimap")).toBe("right")
       })
 
       describe("and then toggled off", () => {
