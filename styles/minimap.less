@@ -7,16 +7,11 @@ atom-notifications:empty {
 atom-text-editor[with-minimap] {
   display: flex;
 
-  .editor--private {
+  > div {
     order: 2;
     flex: 1 0 90%;
     width: 90%;
   }
-}
-
-atom-text-editor[with-minimap="left"].editor > div,
-atom-text-editor[with-minimap="left"] > div {
-  margin-left: 10%;
 }
 
 // css containment to improve performance
@@ -43,9 +38,7 @@ html {
       flex: 0 0 10%;
 
       &.left {
-        contain: @contain_all;
         order: 1;
-        position: absolute;
       }
     }
 
