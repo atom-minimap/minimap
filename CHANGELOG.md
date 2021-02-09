@@ -1,3 +1,10 @@
+## [4.39.8](https://github.com/atom-minimap/minimap/compare/v4.39.7...v4.39.8) (2021-02-09)
+
+
+### Bug Fixes
+
+* fix minimap on left calculate width ([4133274](https://github.com/atom-minimap/minimap/commit/4133274b8f011971a6ec8c08a4f8d71d5a9a0f07))
+
 ## [4.39.7](https://github.com/atom-minimap/minimap/compare/v4.39.6...v4.39.7) (2021-02-02)
 
 
