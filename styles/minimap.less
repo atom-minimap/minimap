@@ -31,7 +31,6 @@ html {
     cursor: default;
 
     &:not([stand-alone]) {
-      contain: @contain_all;
       height: 100%;
       order: 3;
       width: 10%;
@@ -42,13 +41,13 @@ html {
       }
     }
 
-    &.absolute {
-      contain: @contain_all;
+    // ignore absolute mode the minimap is on the left, because
+    // it would conflict with the editor's gutter
+    &.absolute:not(.left) {
       position: absolute;
       right: 0;
 
       &.adjust-absolute-height {
-        contain: @contain_all;
         pointer-events: none;
 
         canvas,
@@ -56,13 +55,6 @@ html {
           contain: @contain_except_size;
           pointer-events: auto;
         }
-      }
-
-      // absolute mode do nothing when the minimap is on the left, because
-      // it would conflict with the editor's gutter
-      &.left {
-        contain: @contain_all;
-        right: initial;
       }
 
       .open-minimap-quick-settings {
@@ -88,7 +80,6 @@ html {
       border-left: 0px solid rgba(127, 127, 127, 0.1);
 
       &:active {
-        contain: @contain_all;
         cursor: -webkit-grabbing;
       }
 
@@ -177,7 +168,6 @@ minimap-quick-settings {
       height: 1px;
 
       &:first-child {
-        contain: @contain_all;
         display: none;
       }
     }
