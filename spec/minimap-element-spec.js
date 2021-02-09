@@ -1503,6 +1503,13 @@ describe("MinimapElement", () => {
         expect(minimapElement.classList.contains("left")).toBeTruthy()
       })
 
+      it("changes with-minimap attribute value to direction", () => {
+        atom.config.set("minimap.displayMinimapOnLeft", true)
+        expect(editorElement.getAttribute("with-minimap")).toBe("left")
+        atom.config.set("minimap.displayMinimapOnLeft", false)
+        expect(editorElement.getAttribute("with-minimap")).toBe("right")
+      })
+
       describe("and then toggled off", () => {
         it("removes the overlays style node", () => {
           atom.config.set("minimap.displayMinimapOnLeft", true)
