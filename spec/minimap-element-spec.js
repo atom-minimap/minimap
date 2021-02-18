@@ -1380,26 +1380,75 @@ describe("MinimapElement", () => {
     //     ######   #######  ##    ## ##       ####  ######
 
     describe("when the atom styles are changed", () => {
+      let styleElement;
       beforeEach(() => {
+        styleElement = document.createElement("style");
+        atom.styles.addStyleElement(styleElement);
+
         waitsFor("a new animation frame request", () => {
           return nextAnimationFrame !== noAnimationFrame
         })
+
         runs(() => {
           nextAnimationFrame()
           spyOn(minimapElement, "requestForcedUpdate").andCallThrough()
           spyOn(minimapElement.DOMStylesReader, "invalidateDOMStylesCache").andCallThrough()
-
-          atom.themes.emitter.emit("did-change-active-themes")
         })
+      })
+
+      it("forces a refresh with theme change", () => {
+
+        atom.themes.emitter.emit("did-change-active-themes")
 
         waitsFor("minimap frame requested", () => {
           return minimapElement.frameRequested
         })
+
+        runs(() => {
+          expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+        })
       })
 
-      it("forces a refresh with cache invalidation", () => {
-        expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-        expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+      it("forces a refresh with style update", () => {
+        atom.styles.emitter.emit("did-update-style-element", styleElement)
+
+        waitsFor("minimap frame requested", () => {
+          return minimapElement.frameRequested
+        })
+
+        runs(() => {
+          expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+        })
+      })
+
+      it("forces a refresh with style add", () => {
+
+        atom.styles.emitter.emit("did-add-style-element", styleElement)
+
+        waitsFor("minimap frame requested", () => {
+          return minimapElement.frameRequested
+        })
+
+        runs(() => {
+          expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+        })
+      })
+
+      it("forces a refresh with style remove", () => {
+
+        atom.styles.emitter.emit("did-remove-style-element", styleElement)
+
+        waitsFor("minimap frame requested", () => {
+          return minimapElement.frameRequested
+        })
+
+        runs(() => {
+          expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
+          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+        })
       })
     })
 
