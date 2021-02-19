@@ -10,8 +10,9 @@
   ],
   "scripts": {
     "format": "prettier --write .",
-    "lint": "eslint --fix .",
-    "test:lint": "eslint .",
+    "test.format": "prettier . --check",
+    "lint": "eslint . --fix",
+    "test.lint": "eslint .",
     "clean": "shx rm -rf dist .parcel-cache",
     "dev": "cross-env NODE_ENV=development BABEL_KEEP_MODULES=true rollup -c -w",
     "build.test": "cross-env NODE_ENV=test BABEL_KEEP_MODULES=true rollup -c",
