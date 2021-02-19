@@ -1,3 +1,10 @@
+## [4.39.9](https://github.com/atom-minimap/minimap/compare/v4.39.8...v4.39.9) (2021-02-19)
+
+
+### Bug Fixes
+
+* invalidate styles cache on styles update ([12b1b07](https://github.com/atom-minimap/minimap/commit/12b1b07a25a1ae12ae34f109d089e4ea8fb3cb03))
+
 ## [4.39.8](https://github.com/atom-minimap/minimap/compare/v4.39.7...v4.39.8) (2021-02-09)
 
 
