@@ -1380,11 +1380,11 @@ describe("MinimapElement", () => {
     //     ######   #######  ##    ## ##       ####  ######
 
     describe("when the atom styles are changed", () => {
-      let styleElement, DEBOUNCE_TIMEOUT;
+      let styleElement, DEBOUNCE_TIMEOUT
       beforeEach(() => {
-        DEBOUNCE_TIMEOUT = 300;
-        styleElement = document.createElement("style");
-        atom.styles.addStyleElement(styleElement);
+        DEBOUNCE_TIMEOUT = 300
+        styleElement = document.createElement("style")
+        atom.styles.addStyleElement(styleElement)
 
         waitsFor("a new animation frame request", () => {
           return nextAnimationFrame !== noAnimationFrame
@@ -1398,9 +1398,8 @@ describe("MinimapElement", () => {
       })
 
       it("forces a refresh with theme change", () => {
-
         atom.themes.emitter.emit("did-change-active-themes")
-        advanceClock(DEBOUNCE_TIMEOUT);
+        advanceClock(DEBOUNCE_TIMEOUT)
 
         waitsFor("minimap frame requested", () => {
           return minimapElement.frameRequested
@@ -1414,7 +1413,7 @@ describe("MinimapElement", () => {
 
       it("forces a refresh with style update", () => {
         atom.styles.emitter.emit("did-update-style-element", styleElement)
-        advanceClock(DEBOUNCE_TIMEOUT);
+        advanceClock(DEBOUNCE_TIMEOUT)
 
         waitsFor("minimap frame requested", () => {
           return minimapElement.frameRequested
@@ -1427,9 +1426,8 @@ describe("MinimapElement", () => {
       })
 
       it("forces a refresh with style add", () => {
-
         atom.styles.emitter.emit("did-add-style-element", styleElement)
-        advanceClock(DEBOUNCE_TIMEOUT);
+        advanceClock(DEBOUNCE_TIMEOUT)
 
         waitsFor("minimap frame requested", () => {
           return minimapElement.frameRequested
@@ -1442,9 +1440,8 @@ describe("MinimapElement", () => {
       })
 
       it("forces a refresh with style remove", () => {
-
         atom.styles.emitter.emit("did-remove-style-element", styleElement)
-        advanceClock(DEBOUNCE_TIMEOUT);
+        advanceClock(DEBOUNCE_TIMEOUT)
 
         waitsFor("minimap frame requested", () => {
           return minimapElement.frameRequested
