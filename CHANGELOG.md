@@ -1,3 +1,10 @@
+## [4.39.10](https://github.com/atom-minimap/minimap/compare/v4.39.9...v4.39.10) (2021-03-12)
+
+
+### Bug Fixes
+
+* disable desynchronized canvas ([8059189](https://github.com/atom-minimap/minimap/commit/8059189e862f440d7a6bc5377e60d66b0b49a632))
+
 ## [4.39.9](https://github.com/atom-minimap/minimap/compare/v4.39.8...v4.39.9) (2021-02-19)
 
 
