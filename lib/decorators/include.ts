@@ -1,5 +1,4 @@
 "use strict"
-
 /**
  * Generates a decorator function to includes many `mixto` mixins into a class.
  *
@@ -12,6 +11,7 @@
  *   // ...
  * }
  */
+
 export default function include(cls, ...mixins) {
   mixins.forEach((mixin) => {
     includeMixin(cls, mixin)
@@ -27,7 +27,6 @@ function includeMixin(target, source) {
     const descriptor = Object.getOwnPropertyDescriptor(source, k)
     Object.defineProperty(target, k, descriptor)
   })
-
   Object.getOwnPropertyNames(source.prototype).forEach((k) => {
     if (k === "constructor") {
       return

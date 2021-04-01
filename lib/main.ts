@@ -8,7 +8,6 @@ import * as PluginManagement from "./plugin-management"
 import { treeSitterWarning } from "./performance-monitor"
 import DOMStylesReader from "./dom-styles-reader"
 import { debounce } from "./deps/underscore-plus"
-
 export { default as config } from "./config.json"
 export * from "./plugin-management"
 export { default as Minimap } from "./minimap"
@@ -28,6 +27,7 @@ export { default as MinimapElement } from "./minimap-element"
  * @access private
  */
 let active: boolean = false
+
 /**
  * The toggle state of the package.
  *
@@ -35,6 +35,7 @@ let active: boolean = false
  * @access private
  */
 let toggled: boolean = false
+
 /**
  * The `Map` where Minimap instances are stored with the text editor they
  * target as key.
@@ -43,6 +44,7 @@ let toggled: boolean = false
  * @access private
  */
 export let editorsMinimaps = null
+
 /**
  * The composite disposable that stores the package's subscriptions.
  *
@@ -50,6 +52,7 @@ export let editorsMinimaps = null
  * @access private
  */
 let subscriptions: CompositeDisposable = null
+
 /**
  * The disposable that stores the package's commands subscription.
  *
@@ -93,10 +96,8 @@ export function activate() {
       await generatePlugin("babel")
     },
   })
-
   editorsMinimaps = new Map()
   domStylesReader = new DOMStylesReader()
-
   subscriptions = new CompositeDisposable()
   active = true
 
@@ -114,10 +115,12 @@ export function activate() {
 export function minimapViewProvider(model) {
   if (model instanceof Minimap) {
     let element = model.getMinimapElement()
+
     if (!element) {
       element = new MinimapElement()
       element.setModel(model)
     }
+
     return element
   }
 }
@@ -145,7 +148,6 @@ export function deactivate() {
   toggled = false
   active = false
 }
-
 export function getConfigSchema() {
   return config || atom.packages.getLoadedPackage("minimap").metadata.configSchema
 }
@@ -167,12 +169,13 @@ export function toggle() {
       })
       editorsMinimaps.clear()
     }
-    subscriptions.dispose()
 
+    subscriptions.dispose()
     // HACK: this hack forces rerendering editor size which moves the scrollbar to the right once minimap is removed
     const wasMaximized = atom.isMaximized()
     const { width, height } = atom.getSize()
     atom.setSize(width, height)
+
     if (wasMaximized) {
       atom.maximize()
     }
@@ -180,6 +183,7 @@ export function toggle() {
     toggled = true
     initSubscriptions()
   }
+
   domStylesReader.invalidateDOMStylesCache()
 }
 
@@ -302,6 +306,7 @@ export function minimapForEditorElement(editorElement) {
   if (!editorElement) {
     return
   }
+
   return minimapForEditor(editorElement.getModel())
 }
 
@@ -316,6 +321,7 @@ export function minimapForEditor(textEditor) {
   if (!textEditor) {
     return
   }
+
   if (!editorsMinimaps) {
     return
   }
@@ -323,17 +329,20 @@ export function minimapForEditor(textEditor) {
   let minimap = editorsMinimaps.get(textEditor)
 
   if (minimap === undefined || minimap.destroyed) {
-    minimap = new Minimap({ textEditor })
+    minimap = new Minimap({
+      textEditor,
+    })
     editorsMinimaps.set(textEditor, minimap)
-
     const editorSubscription = textEditor.onDidDestroy(() => {
       if (editorsMinimaps) {
         editorsMinimaps.delete(textEditor)
       }
+
       if (minimap) {
         // just in case
         minimap.destroy()
       }
+
       editorSubscription.dispose()
     })
     // dispose the editorSubscription if minimap is deactivated before destroying the editor
@@ -388,6 +397,7 @@ export function observeMinimaps(iterator) {
       iterator(minimap)
     })
   }
+
   return onDidCreateMinimap((minimap) => {
     iterator(minimap)
   })
@@ -404,11 +414,9 @@ function initSubscriptions() {
     atom.workspace.observeTextEditors((textEditor) => {
       const minimap = minimapForEditor(textEditor)
       const minimapElement = minimapViewProvider(minimap)
-
       emitter.emit("did-create-minimap", minimap)
       minimapElement.attach(textEditor.getElement())
-    }),
-    // empty color cache if the theme changes
+    }), // empty color cache if the theme changes
     atom.themes.onDidChangeActiveThemes(debounceUpdateStyles),
     atom.styles.onDidUpdateStyleElement(debounceUpdateStyles),
     atom.styles.onDidAddStyleElement(debounceUpdateStyles),

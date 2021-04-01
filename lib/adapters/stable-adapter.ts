@@ -1,8 +1,8 @@
 "use strict"
-
 /**
  * @access private
  */
+
 export default class StableAdapter {
   constructor(textEditor) {
     this.textEditor = textEditor
@@ -38,8 +38,10 @@ export default class StableAdapter {
       if (!this.heightCache) {
         this.heightCache = this.textEditorElement.getHeight()
       }
+
       return this.heightCache
     }
+
     return this.textEditorElement.getHeight()
   }
 
@@ -52,8 +54,10 @@ export default class StableAdapter {
       if (!this.scrollTopCache) {
         this.scrollTopCache = this.computeScrollTop()
       }
+
       return this.scrollTopCache
     }
+
     return this.computeScrollTop()
   }
 
@@ -100,8 +104,10 @@ export default class StableAdapter {
       if (!this.scrollLeftCache) {
         this.scrollLeftCache = this.textEditorElement.getScrollLeft()
       }
+
       return this.scrollLeftCache
     }
+
     return this.textEditorElement.getScrollLeft()
   }
 
@@ -115,6 +121,7 @@ export default class StableAdapter {
     }
 
     let maxScrollTop
+
     if (this.textEditorElement.getMaxScrollTop) {
       maxScrollTop = this.textEditorElement.getMaxScrollTop()
 

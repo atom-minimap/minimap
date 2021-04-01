@@ -1,17 +1,17 @@
 "use strict"
 
 import { Emitter } from "atom"
-
 let idCounter = 0
+
 const nextId = function () {
   return idCounter++
 }
-
 /**
  * The `Decoration` class represents a decoration in the Minimap.
  *
  * It has the same API than the `Decoration` class of a text editor.
  */
+
 export default class Decoration {
   /**
    * Returns `true` if the passed-in decoration properties matches the
@@ -26,6 +26,7 @@ export default class Decoration {
       if (decorationProperties.type.indexOf(type) >= 0) {
         return true
       }
+
       return false
     } else {
       return type === decorationProperties.type
@@ -45,35 +46,40 @@ export default class Decoration {
      * @access private
      */
     this.marker = marker
+
     /**
      * @access private
      */
     this.minimap = minimap
+
     /**
      * @access private
      */
     this.emitter = new Emitter()
+
     /**
      * @access private
      */
     this.id = nextId()
+
     /**
      * @access private
      */
     this.properties = null
     this.setProperties(properties)
     this.properties.id = this.id
+
     /**
      * @access private
      */
     this.destroyed = false
+
     /**
      * @access private
      */
     this.markerDestroyDisposable = this.marker.onDidDestroy(() => {
       this.destroy()
     })
-
     this.screenRange = marker.getScreenRange()
   }
 
@@ -182,7 +188,9 @@ export default class Decoration {
     const oldProperties = this.properties
     this.properties = newProperties
     this.properties.id = this.id
-
-    this.emitter.emit("did-change-properties", { oldProperties, newProperties })
+    this.emitter.emit("did-change-properties", {
+      oldProperties,
+      newProperties,
+    })
   }
 }

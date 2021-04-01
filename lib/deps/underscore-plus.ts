@@ -6,7 +6,6 @@ export function escapeRegExp(string) {
     return ""
   }
 }
-
 const regexDaherize = /([A-Z])|(_)/g
 export function dasherize(string) {
   if (!string) {
@@ -22,7 +21,6 @@ export function dasherize(string) {
     }
   })
 }
-
 export function debounce(callback, wait) {
   let timeoutId = null
   return (...args) => {

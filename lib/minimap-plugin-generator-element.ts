@@ -5,10 +5,10 @@ import { getHomeDirectory, existsSync } from "fs-plus"
 import path from "path"
 import { BufferedProcess } from "atom"
 import element from "./decorators/element"
-
 /**
  * @access private
  */
+
 class MinimapPluginGeneratorElement {
   static initClass() {
     this.registerCommands()
@@ -20,6 +20,7 @@ class MinimapPluginGeneratorElement {
       "core:confirm"() {
         this.confirm()
       },
+
       "core:cancel"() {
         this.detach()
       },
@@ -29,27 +30,22 @@ class MinimapPluginGeneratorElement {
   createdCallback() {
     this.previouslyFocusedElement = null
     this.mode = null
-
     this.modal = document.createElement("atom-panel")
-
     this.modal.classList.add("minimap-plugin-generator")
     this.modal.classList.add("modal")
     this.modal.classList.add("overlay")
     this.modal.classList.add("from-top")
-
-    this.editor = atom.workspace.buildTextEditor({ mini: true })
+    this.editor = atom.workspace.buildTextEditor({
+      mini: true,
+    })
     this.editorElement = atom.views.getView(this.editor)
-
     this.error = document.createElement("div")
     this.error.classList.add("error")
-
     this.message = document.createElement("div")
     this.message.classList.add("message")
-
     this.modal.appendChild(this.editorElement)
     this.modal.appendChild(this.error)
     this.modal.appendChild(this.message)
-
     this.appendChild(this.modal)
   }
 
@@ -70,12 +66,9 @@ class MinimapPluginGeneratorElement {
     }
 
     const packagesDirectory = getPackagesDirectory()
-
     this.editor.setText(path.join(packagesDirectory, placeholderName))
-
     const pathLength = this.editor.getText().length
     const endOfDirectoryIndex = pathLength - placeholderName.length
-
     this.editor.setSelectedBufferRange([
       [0, endOfDirectoryIndex + rangeToSelect[0]],
       [0, endOfDirectoryIndex + rangeToSelect[1]],
@@ -101,13 +94,13 @@ class MinimapPluginGeneratorElement {
         <span class='loading loading-spinner-tiny inline-block'></span>
         Generate plugin at <span class="text-primary">${this.getPackagePath()}</span>
       `
-
       this.createPackageFiles(() => {
         const packagePath = this.getPackagePath()
-        atom.open({ pathsToOpen: [packagePath], devMode: atom.config.get("minimap.createPluginInDevMode") })
-
+        atom.open({
+          pathsToOpen: [packagePath],
+          devMode: atom.config.get("minimap.createPluginInDevMode"),
+        })
         this.message.innerHTML = '<span class="text-success">Plugin successfully generated, opening it now...</span>'
-
         setTimeout(() => {
           this.detach()
         }, 2000)
@@ -118,7 +111,6 @@ class MinimapPluginGeneratorElement {
   getPackagePath() {
     const packagePath = this.editor.getText()
     const packageName = dasherize(path.basename(packagePath))
-
     return path.join(path.dirname(packagePath), packageName)
   }
 
@@ -159,18 +151,20 @@ export default minimapPluginGeneratorElement
 
 function linkPackage(packagePath, callback) {
   const args = ["link"]
+
   if (atom.config.get("minimap.createPluginInDevMode")) {
     args.push("--dev")
   }
-  args.push(packagePath.toString())
 
+  args.push(packagePath.toString())
   runCommand(atom.packages.getApmPath(), args, callback)
 }
 
 function installPackage(packagePath, callback) {
   const args = ["install"]
-
-  runCommand(atom.packages.getApmPath(), args, callback, { cwd: packagePath })
+  runCommand(atom.packages.getApmPath(), args, callback, {
+    cwd: packagePath,
+  })
 }
 
 function getPackagesDirectory() {
@@ -179,15 +173,20 @@ function getPackagesDirectory() {
 
 function isStoredInDotAtom(packagePath) {
   const packagesPath = path.join(atom.getConfigDirPath(), "packages", path.sep)
+
   if (packagePath.indexOf(packagesPath) === 0) {
     return true
   }
 
   const devPackagesPath = path.join(atom.getConfigDirPath(), "dev", "packages", path.sep)
-
   return packagePath.indexOf(devPackagesPath) === 0
 }
 
 function runCommand(command, args, exit, options = {}) {
-  return new BufferedProcess({ command, args, exit, options })
+  return new BufferedProcess({
+    command,
+    args,
+    exit,
+    options,
+  })
 }

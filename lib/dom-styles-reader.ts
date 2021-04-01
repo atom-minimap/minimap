@@ -1,5 +1,4 @@
 "use strict"
-
 /**
  * This class is used by the `CanvasDrawer` in `MinimapElement` to
  * read the styles informations (color and background-color) from the DOM to use when rendering
@@ -8,6 +7,7 @@
  * It attaches a dummyNode to the targetNode, renders them, and finds the computed style back.
  * TODO: find a better way to get the token colors
  */
+
 export default class DOMStylesReader {
   constructor() {
     /**
@@ -20,10 +20,8 @@ export default class DOMStylesReader {
      * @access private
      */
     this.dummyNode = undefined
-
     // used to check if the dummyNode is on the current targetNode
     this.targetNode = undefined
-
     /**
      * Set to true once tokenized
      * @access private
@@ -50,7 +48,9 @@ export default class DOMStylesReader {
   retrieveStyleFromDom(scopes: Array<string>, property: string, targetNode: Node, getFromCache: boolean): string {
     if (!scopes.length) {
       return ""
-    } // no scopes
+    }
+
+    // no scopes
     const key = scopes.join(" ")
     let cachedData = this.domStylesCache.get(key)
 
@@ -58,6 +58,7 @@ export default class DOMStylesReader {
       if (getFromCache) {
         // if should get the value from the cache
         const value = cachedData[property]
+
         if (value !== undefined) {
           // value exists
           return value
@@ -69,21 +70,22 @@ export default class DOMStylesReader {
     }
 
     this.ensureDummyNodeExistence(targetNode)
-
     let parent = this.dummyNode
+
     for (let i = 0, len = scopes.length; i < len; i++) {
       const scope = scopes[i]
       const node = document.createElement("span")
       node.className = scope.replace(dotRegexp, " ") // TODO why replace is needed?
+
       parent.appendChild(node)
       parent = node
     }
 
     const style = window.getComputedStyle(parent)
     let value = style.getPropertyValue(property)
-
     // rotate hue if webkit-filter available
     const filter = style.getPropertyValue("-webkit-filter")
+
     if (filter.indexOf("hue-rotate") > -1) {
       value = rotateHue(value, filter)
     }
@@ -108,7 +110,6 @@ export default class DOMStylesReader {
     if (this.targetNode !== targetNode || this.dummyNode === undefined) {
       this.dummyNode = document.createElement("span")
       this.dummyNode.style.visibility = "hidden"
-
       // attach to the target node
       targetNode.appendChild(this.dummyNode)
       this.targetNode = targetNode
@@ -122,13 +123,13 @@ export default class DOMStylesReader {
   invalidateDOMStylesCache() {
     this.domStylesCache.clear()
   }
-
   /**
    * Invalidates the cache only for the first tokenization event.
    *
    * @access private
    * unused
    */
+
   /*
   invalidateIfFirstTokenization () {
     if (this.hasTokenizedOnce) { return }
@@ -136,9 +137,7 @@ export default class DOMStylesReader {
     this.hasTokenizedOnce = true
   }
   */
-}
-
-//    ##     ## ######## ##       ########  ######## ########   ######
+} //    ##     ## ######## ##       ########  ######## ########   ######
 //    ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
 //    ##     ## ##       ##       ##     ## ##       ##     ## ##
 //    ######### ######   ##       ########  ######   ########   ######
@@ -162,9 +161,7 @@ const hueRegexp = /hue-rotate\((\d+)deg\)/
 function rotateHue(value: string, filter: string): string {
   const match = value.match(rgbExtractRegexp)
   let [, , r, g, b, , a] = match
-
   let [, hue] = filter.match(hueRegexp)
-
   ;[r, g, b, a, hue] = [r, g, b, a, hue].map(Number)
   ;[r, g, b] = rotate(r, g, b, hue)
 
@@ -196,7 +193,6 @@ function rotate(r: number, g: number, b: number, angle: number): Array<number> {
   const hueRotateB = 0.283
   const cos = Math.cos((angle * Math.PI) / 180)
   const sin = Math.sin((angle * Math.PI) / 180)
-
   matrix[0] = lumR + (1 - lumR) * cos - lumR * sin
   matrix[1] = lumG - lumG * cos - lumG * sin
   matrix[2] = lumB - lumB * cos + (1 - lumB) * sin
@@ -206,7 +202,6 @@ function rotate(r: number, g: number, b: number, angle: number): Array<number> {
   matrix[6] = lumR - lumR * cos - (1 - lumR) * sin
   matrix[7] = lumG - lumG * cos + lumG * sin
   matrix[8] = lumB + (1 - lumB) * cos + lumB * sin
-
   return [
     clamp(matrix[0] * r + matrix[1] * g + matrix[2] * b),
     clamp(matrix[3] * r + matrix[4] * g + matrix[5] * b),

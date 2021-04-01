@@ -1,9 +1,9 @@
 /** @babel */
 "use strict"
-
 /**
  * @access private
  */
+
 export default class CanvasLayer {
   constructor() {
     /**
@@ -11,14 +11,15 @@ export default class CanvasLayer {
      * @type {HTMLCanvasElement}
      */
     this.canvas = document.createElement("canvas")
-
     const desynchronized = false // TODO Electron 9 has color issues #786
 
     /**
      * The onscreen canvas context.
      * @type {CanvasRenderingContext2D}
      */
-    this.context = this.canvas.getContext("2d", { desynchronized })
+    this.context = this.canvas.getContext("2d", {
+      desynchronized,
+    })
     this.canvas.webkitImageSmoothingEnabled = false
     this.context.imageSmoothingEnabled = false
 
@@ -28,12 +29,15 @@ export default class CanvasLayer {
      * @access private
      */
     this.offscreenCanvas = document.createElement("canvas")
+
     /**
      * The offscreen canvas context.
      * @type {CanvasRenderingContext2D}
      * @access private
      */
-    this.offscreenContext = this.offscreenCanvas.getContext("2d", { desynchronized })
+    this.offscreenContext = this.offscreenCanvas.getContext("2d", {
+      desynchronized,
+    })
     this.offscreenCanvas.webkitImageSmoothingEnabled = false
     this.offscreenContext.imageSmoothingEnabled = false
   }

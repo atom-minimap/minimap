@@ -2,14 +2,13 @@
 
 import { CompositeDisposable, Emitter } from "atom"
 import { EventsDelegation, SpacePenDSL } from "atom-utils-plus"
-
 import * as Main from "./main"
 import element from "./decorators/element"
 import include from "./decorators/include"
-
 /**
  * @access private
  */
+
 class MinimapQuickSettingsElement {
   static initClass() {
     include(this, EventsDelegation, SpacePenDSL.Babel)
@@ -17,22 +16,72 @@ class MinimapQuickSettingsElement {
   }
 
   static content() {
-    this.div({ class: "select-list popover-list minimap-quick-settings" }, () => {
-      this.input({ type: "text", class: "hidden-input", outlet: "hiddenInput" })
-      this.ol({ class: "list-group mark-active", outlet: "list" }, () => {
-        this.li({ class: "separator", outlet: "separator" })
-        this.li({ class: "code-highlights", outlet: "codeHighlights" }, "code-highlights")
-        this.li({ class: "absolute-mode", outlet: "absoluteMode" }, "absolute-mode")
-        this.li(
-          { class: "adjust-absolute-mode-height", outlet: "adjustAbsoluteModeHeight" },
-          "adjust-absolute-mode-height"
+    this.div(
+      {
+        class: "select-list popover-list minimap-quick-settings",
+      },
+      () => {
+        this.input({
+          type: "text",
+          class: "hidden-input",
+          outlet: "hiddenInput",
+        })
+        this.ol(
+          {
+            class: "list-group mark-active",
+            outlet: "list",
+          },
+          () => {
+            this.li({
+              class: "separator",
+              outlet: "separator",
+            })
+            this.li(
+              {
+                class: "code-highlights",
+                outlet: "codeHighlights",
+              },
+              "code-highlights"
+            )
+            this.li(
+              {
+                class: "absolute-mode",
+                outlet: "absoluteMode",
+              },
+              "absolute-mode"
+            )
+            this.li(
+              {
+                class: "adjust-absolute-mode-height",
+                outlet: "adjustAbsoluteModeHeight",
+              },
+              "adjust-absolute-mode-height"
+            )
+          }
         )
-      })
-      this.div({ class: "btn-group" }, () => {
-        this.button({ class: "btn btn-default", outlet: "onLeftButton" }, "On Left")
-        this.button({ class: "btn btn-default", outlet: "onRightButton" }, "On Right")
-      })
-    })
+        this.div(
+          {
+            class: "btn-group",
+          },
+          () => {
+            this.button(
+              {
+                class: "btn btn-default",
+                outlet: "onLeftButton",
+              },
+              "On Left"
+            )
+            this.button(
+              {
+                class: "btn btn-default",
+                outlet: "onRightButton",
+              },
+              "On Right"
+            )
+          }
+        )
+      }
+    )
   }
 
   createdCallback() {
@@ -46,21 +95,16 @@ class MinimapQuickSettingsElement {
     this.subscriptions = new CompositeDisposable()
     this.plugins = {}
     this.itemsActions = new WeakMap()
-
     this.codeHighlights.classList.toggle("active", this.minimap.displayCodeHighlights)
-
     this.itemsActions.set(this.codeHighlights, () => {
       atom.config.set("minimap.displayCodeHighlights", !this.minimap.displayCodeHighlights)
     })
-
     this.itemsActions.set(this.absoluteMode, () => {
       atom.config.set("minimap.absoluteMode", !atom.config.get("minimap.absoluteMode"))
     })
-
     this.itemsActions.set(this.adjustAbsoluteModeHeight, () => {
       atom.config.set("minimap.adjustAbsoluteModeHeight", !atom.config.get("minimap.adjustAbsoluteModeHeight"))
     })
-
     this.subscriptions.add(
       Main.onDidAddPlugin(({ name, plugin }) => {
         return this.addItemFor(name, plugin)
@@ -74,7 +118,6 @@ class MinimapQuickSettingsElement {
       Main.onDidDeactivatePlugin(({ name, plugin }) => {
         return this.deactivateItem(name, plugin)
       }),
-
       atom.commands.add("minimap-quick-settings", {
         "core:move-up": () => {
           this.selectPreviousItem()
@@ -95,28 +138,24 @@ class MinimapQuickSettingsElement {
           this.toggleSelectedItem()
         },
       }),
-
       this.subscribeTo(this.codeHighlights, {
         mousedown: (e) => {
           e.preventDefault()
           atom.config.set("minimap.displayCodeHighlights", !this.minimap.displayCodeHighlights)
         },
       }),
-
       this.subscribeTo(this.absoluteMode, {
         mousedown: (e) => {
           e.preventDefault()
           atom.config.set("minimap.absoluteMode", !atom.config.get("minimap.absoluteMode"))
         },
       }),
-
       this.subscribeTo(this.adjustAbsoluteModeHeight, {
         mousedown: (e) => {
           e.preventDefault()
           atom.config.set("minimap.adjustAbsoluteModeHeight", !atom.config.get("minimap.adjustAbsoluteModeHeight"))
         },
       }),
-
       this.subscribeTo(
         this.hiddenInput,
         {
@@ -124,41 +163,36 @@ class MinimapQuickSettingsElement {
             this.destroy()
           },
         },
-        { passive: true }
+        {
+          passive: true,
+        }
       ),
-
       this.subscribeTo(this.onLeftButton, {
         mousedown: (e) => {
           e.preventDefault()
           atom.config.set("minimap.displayMinimapOnLeft", true)
         },
       }),
-
       this.subscribeTo(this.onRightButton, {
         mousedown: (e) => {
           e.preventDefault()
           atom.config.set("minimap.displayMinimapOnLeft", false)
         },
       }),
-
       atom.config.observe("minimap.displayCodeHighlights", (bool) => {
         this.codeHighlights.classList.toggle("active", bool)
       }),
-
       atom.config.observe("minimap.absoluteMode", (bool) => {
         this.absoluteMode.classList.toggle("active", bool)
       }),
-
       atom.config.observe("minimap.adjustAbsoluteModeHeight", (bool) => {
         this.adjustAbsoluteModeHeight.classList.toggle("active", bool)
       }),
-
       atom.config.observe("minimap.displayMinimapOnLeft", (bool) => {
         this.onLeftButton.classList.toggle("selected", bool)
         this.onRightButton.classList.toggle("selected", !bool)
       })
     )
-
     this.initList()
   }
 
@@ -180,6 +214,7 @@ class MinimapQuickSettingsElement {
 
   initList() {
     this.itemsDisposables = new WeakMap()
+
     for (const name in Main.plugins) {
       this.addItemFor(name, Main.plugins[name])
     }
@@ -187,6 +222,7 @@ class MinimapQuickSettingsElement {
 
   toggleSelectedItem() {
     const fn = this.itemsActions.get(this.selectedItem)
+
     if (typeof fn === "function") {
       fn()
     }
@@ -194,32 +230,39 @@ class MinimapQuickSettingsElement {
 
   selectNextItem() {
     this.selectedItem.classList.remove("selected")
+
     if (this.selectedItem.nextSibling != null) {
       this.selectedItem = this.selectedItem.nextSibling
+
       if (this.selectedItem.matches(".separator")) {
         this.selectedItem = this.selectedItem.nextSibling
       }
     } else {
       this.selectedItem = this.list.firstChild
     }
+
     this.selectedItem.classList.add("selected")
   }
 
   selectPreviousItem() {
     this.selectedItem.classList.remove("selected")
+
     if (this.selectedItem.previousSibling != null) {
       this.selectedItem = this.selectedItem.previousSibling
+
       if (this.selectedItem.matches(".separator")) {
         this.selectedItem = this.selectedItem.previousSibling
       }
     } else {
       this.selectedItem = this.list.lastChild
     }
+
     this.selectedItem.classList.add("selected")
   }
 
   addItemFor(name, plugin) {
     const item = document.createElement("li")
+
     const action = () => {
       Main.togglePluginActivation(name)
     }
@@ -229,7 +272,6 @@ class MinimapQuickSettingsElement {
     }
 
     item.textContent = name
-
     this.itemsActions.set(item, action)
     this.itemsDisposables.set(
       item,
@@ -238,7 +280,6 @@ class MinimapQuickSettingsElement {
         action()
       })
     )
-
     this.plugins[name] = item
     this.list.insertBefore(item, this.separator)
 

@@ -2,15 +2,12 @@
 
 import { escapeRegExp } from "../deps/underscore-plus"
 import Mixin from "mixto"
-
 import * as Main from "../main"
 import { domStylesReader } from "../main"
 import CanvasLayer from "../canvas-layer"
-
 const SPEC_MODE = atom.inSpecMode()
 // an instance of MinimapElement used for testing and calling spies
 let thisSpec
-
 /**
  * The `CanvasDrawer` mixin is responsible for the rendering of a `Minimap`
  * in a `canvas` element.
@@ -18,6 +15,7 @@ let thisSpec
  * This mixin is injected in the `MinimapElement` prototype, so all these
  * methods  are available on any `MinimapElement` instance.
  */
+
 export default class CanvasDrawer extends Mixin {
   /**
    * Initializes the canvas elements needed to perform the `Minimap` rendering.
@@ -26,8 +24,12 @@ export default class CanvasDrawer extends Mixin {
     if (SPEC_MODE) {
       // class methods only used for spying the calls
       this.drawLines = (firstLine, lastLine) => {
-        console.log({ firstLine, lastLine })
+        console.log({
+          firstLine,
+          lastLine,
+        })
       }
+
       this.drawLineDecoration = drawLineDecoration
       this.drawGutterDecoration = drawGutterDecoration
       this.drawHighlightDecoration = drawHighlightDecoration
@@ -42,11 +44,13 @@ export default class CanvasDrawer extends Mixin {
      * @type {CanvasLayer}
      */
     this.tokensLayer = new CanvasLayer()
+
     /**
      * The canvas layer for decorations below the text.
      * @type {CanvasLayer}
      */
     this.backLayer = new CanvasLayer()
+
     /**
      * The canvas layer for decorations above the text.
      * @type {CanvasLayer}
@@ -125,7 +129,6 @@ export default class CanvasDrawer extends Mixin {
   updateCanvas() {
     const firstRow = this.minimap.getFirstVisibleScreenRow()
     const lastRow = this.minimap.getLastVisibleScreenRow()
-
     const devicePixelRatio = this.minimap.getDevicePixelRatio()
     const lineHeight = this.minimap.getLineHeight() * devicePixelRatio
     const charHeight = this.minimap.getCharHeight() * devicePixelRatio
@@ -133,12 +136,10 @@ export default class CanvasDrawer extends Mixin {
     const { width: canvasWidth, height: canvasHeight } = this.tokensLayer.getSize()
     const editor = this.minimap.getTextEditor()
     const editorElement = this.minimap.getTextEditorElement()
-
     // TODO avoid closure: https://stackoverflow.com/a/46256398/7910299
     const getTokenColorClosure = this.displayCodeHighlights
       ? (scopes) => getTokenColor(scopes, editorElement, this.textOpacity)
       : () => getDefaultColor(editorElement, this.textOpacity)
-
     updateTokensLayer(
       this.tokensLayer,
       firstRow,
@@ -164,7 +165,6 @@ export default class CanvasDrawer extends Mixin {
     }
 
     const decorations = this.DecorationManagement.decorationsByTypeThenRows(firstRow, lastRow)
-
     const renderData = {
       context: this.backLayer.context,
       canvasWidth,
@@ -177,9 +177,9 @@ export default class CanvasDrawer extends Mixin {
 
     const drawCustomDecorationLambda = (decoration, data, decorationColor) =>
       drawCustomDecoration(decoration, data, decorationColor, editorElement)
+
     backgroundDecorationDispatcher["background-custom"] = drawCustomDecorationLambda
     frontDecorationDispatcher["foreground-custom"] = drawCustomDecorationLambda
-
     updateBackDecorationsLayer(
       this.backLayer,
       firstRow,
@@ -192,9 +192,7 @@ export default class CanvasDrawer extends Mixin {
       editorElement,
       decorations
     )
-
     renderData.context = this.frontLayer.context
-
     updateFrontDecorationsLayer(
       this.frontLayer,
       firstRow,
@@ -207,7 +205,6 @@ export default class CanvasDrawer extends Mixin {
       editorElement,
       decorations
     )
-
     this.pendingChanges = []
     this.pendingBackDecorationChanges = []
     this.pendingFrontDecorationChanges = []
@@ -218,15 +215,14 @@ export default class CanvasDrawer extends Mixin {
      * @access private
      */
     this.offscreenFirstRow = firstRow
+
     /**
      * The last row in the last render of the offscreen canvas.
      * @type {number}
      * @access private
      */
     this.offscreenLastRow = lastRow
-  }
-
-  //    ########  ########     ###    ##      ##
+  } //    ########  ########     ###    ##      ##
   //    ##     ## ##     ##   ## ##   ##  ##  ##
   //    ##     ## ##     ##  ##   ##  ##  ##  ##
   //    ##     ## ########  ##     ## ##  ##  ##
@@ -294,9 +290,7 @@ export default class CanvasDrawer extends Mixin {
   //     method.call(this, currentRow, lastRow, currentRow - firstRow)
   //   }
   // }
-}
-
-//    ########  ########     ###    ##      ##
+} //    ########  ########     ###    ##      ##
 //    ##     ## ##     ##   ## ##   ##  ##  ##
 //    ##     ## ##     ##  ##   ##  ##  ##  ##
 //    ##     ## ########  ##     ## ##  ##  ##
@@ -323,6 +317,7 @@ export default class CanvasDrawer extends Mixin {
  * @param {number} maxTokensInOneLine this.maxTokensInOneLine
  * @access private
  */
+
 function updateTokensLayer(
   tokensLayer: CanvasLayer,
   firstRow: number,
@@ -342,12 +337,9 @@ function updateTokensLayer(
   maxTokensInOneLine: number
 ) {
   // NOTE: this method is the hot function of Minimap. Do not refactor. The code is inlined delibarately.
-
   const intactRanges = computeIntactRanges(firstRow, lastRow, pendingChanges, offscreenFirstRow, offscreenLastRow)
-
   // redrawRangesOnLayer
   const context = tokensLayer.context
-
   tokensLayer.clearCanvas()
 
   if (intactRanges.length === 0) {
@@ -370,18 +362,18 @@ function updateTokensLayer(
   } else {
     for (let j = 0, len = intactRanges.length; j < len; j++) {
       const intact = intactRanges[j]
-
       tokensLayer.copyPartFromOffscreen(
         intact.offscreenRow * lineHeight,
         (intact.start - firstRow) * lineHeight,
         (intact.end - intact.start) * lineHeight
       )
     }
+
     // drawLinesForRanges
     let currentRow = firstRow
+
     for (let i = 0, len = intactRanges.length; i < len; i++) {
       const range = intactRanges[i]
-
       drawLines(
         currentRow,
         range.start,
@@ -398,9 +390,9 @@ function updateTokensLayer(
         ignoreWhitespacesInTokens,
         maxTokensInOneLine
       )
-
       currentRow = range.end
     }
+
     if (currentRow <= lastRow) {
       drawLines(
         currentRow,
@@ -448,7 +440,7 @@ function updateBackDecorationsLayer(
   offscreenFirstRow: number,
   offscreenLastRow: number,
   pendingBackDecorationChanges: Array<>,
-  renderData: Object,
+  renderData: Record<string, any>,
   lineHeight: number,
   editorElement: TextEditorElement,
   decorations: Array<Decoration>
@@ -460,11 +452,8 @@ function updateBackDecorationsLayer(
     offscreenFirstRow,
     offscreenLastRow
   )
-
   // NOTE: this method is the hot function of Minimap. Do not refactor. The code is inlined delibarately.
-
   // redrawRangesOnLayer
-
   backLayer.clearCanvas()
 
   if (intactRanges.length === 0) {
@@ -472,18 +461,18 @@ function updateBackDecorationsLayer(
   } else {
     for (let j = 0, len = intactRanges.length; j < len; j++) {
       const intact = intactRanges[j]
-
       backLayer.copyPartFromOffscreen(
         intact.offscreenRow * lineHeight,
         (intact.start - firstRow) * lineHeight,
         (intact.end - intact.start) * lineHeight
       )
     }
+
     // drawLinesForRanges
     let currentRow = firstRow
+
     for (let i = 0, len = intactRanges.length; i < len; i++) {
       const range = intactRanges[i]
-
       drawBackDecorationsForLines(
         currentRow,
         range.start,
@@ -493,9 +482,9 @@ function updateBackDecorationsLayer(
         editorElement,
         decorations
       )
-
       currentRow = range.end
     }
+
     if (currentRow <= lastRow) {
       drawBackDecorationsForLines(
         currentRow,
@@ -537,7 +526,7 @@ function updateFrontDecorationsLayer(
   offscreenFirstRow: number,
   offscreenLastRow: number,
   pendingFrontDecorationChanges: Array<>,
-  renderData: Object,
+  renderData: Record<string, any>,
   lineHeight: number,
   editorElement: TextEditorElement,
   decorations: Array<Decoration>
@@ -549,11 +538,8 @@ function updateFrontDecorationsLayer(
     offscreenFirstRow,
     offscreenLastRow
   )
-
   // NOTE: this method is the hot function of Minimap. Do not refactor. The code is inlined delibarately.
-
   // redrawRangesOnLayer
-
   frontLayer.clearCanvas()
 
   if (intactRanges.length === 0) {
@@ -561,18 +547,18 @@ function updateFrontDecorationsLayer(
   } else {
     for (let j = 0, len = intactRanges.length; j < len; j++) {
       const intact = intactRanges[j]
-
       frontLayer.copyPartFromOffscreen(
         intact.offscreenRow * lineHeight,
         (intact.start - firstRow) * lineHeight,
         (intact.end - intact.start) * lineHeight
       )
     }
+
     // drawLinesForRanges
     let currentRow = firstRow
+
     for (let i = 0, len = intactRanges.length; i < len; i++) {
       const range = intactRanges[i]
-
       drawFrontDecorationsForLines(
         currentRow,
         range.start,
@@ -582,9 +568,9 @@ function updateFrontDecorationsLayer(
         editorElement,
         decorations
       )
-
       currentRow = range.end
     }
+
     if (currentRow <= lastRow) {
       drawFrontDecorationsForLines(
         currentRow,
@@ -633,25 +619,30 @@ function drawToken(
   if (ignoreWhitespacesInTokens) {
     const length = text.length * charWidth
     context.fillRect(x, y, length, charHeight)
-
     return x + length
   } else {
     let chars = 0
+
     for (let j = 0, len = text.length; j < len; j++) {
       const char = text[j]
+
       if (char === " ") {
         if (chars > 0) {
           context.fillRect(x - chars * charWidth, y, chars * charWidth, charHeight)
         }
+
         chars = 0
       } else {
         chars++
       }
+
       x += charWidth
     }
+
     if (chars > 0) {
       context.fillRect(x - chars * charWidth, y, chars * charWidth, charHeight)
     }
+
     return x
   }
 }
@@ -696,14 +687,12 @@ function drawLines(
   maxTokensInOneLine: number
 ) {
   // NOTE: this method is the hot function of Minimap. Do not refactor. The code is inlined delibarately.
-
   if (firstRow > lastRow) {
     return
   }
 
   let lastLine, x
   let y = offsetRow * lineHeight - lineHeight
-
   // eachTokenForScreenRows
   lastRow = Math.min(lastRow, editorScreenLineCount)
 
@@ -711,6 +700,7 @@ function drawLines(
     const editorTokensForScreenRow = editor.tokensForScreenRow(line)
     const numToken = editorTokensForScreenRow.length
     const numTokenToRender = Math.min(numToken, maxTokensInOneLine)
+
     for (let iToken = 0; iToken < numTokenToRender; iToken++) {
       const token = editorTokensForScreenRow[iToken]
       const tokenText = token.text.replace(invisibleRegExp, " ")
@@ -722,6 +712,7 @@ function drawLines(
         lastLine = line
         context.clearRect(x, y, canvasWidth, lineHeight)
       }
+
       if (x > canvasWidth) {
         continue
       }
@@ -756,15 +747,19 @@ function drawLines(
 function getInvisibleRegExp(editor: TextEditor): RegExp {
   const invisibles = editor.getInvisibles()
   const regexp = []
+
   if (invisibles.cr != null) {
     regexp.push(invisibles.cr)
   }
+
   if (invisibles.eol != null) {
     regexp.push(invisibles.eol)
   }
+
   if (invisibles.space != null) {
     regexp.push(invisibles.space)
   }
+
   if (invisibles.tab != null) {
     regexp.push(invisibles.tab)
   }
@@ -815,7 +810,6 @@ const frontDecorationDispatcher = {
  */
 function drawLineDecoration(decoration: Decoration, data: {}, decorationColor: string) {
   const { context, lineHeight, canvasWidth, yRow } = data
-
   context.fillStyle = decorationColor
   context.fillRect(0, yRow, canvasWidth, lineHeight)
 }
@@ -830,7 +824,6 @@ function drawLineDecoration(decoration: Decoration, data: {}, decorationColor: s
  */
 function drawGutterDecoration(decoration: Decoration, data: {}, decorationColor: string) {
   const { context, lineHeight, yRow } = data
-
   context.fillStyle = decorationColor
   context.fillRect(0, yRow, 1, lineHeight)
 }
@@ -848,10 +841,8 @@ function drawGutterDecoration(decoration: Decoration, data: {}, decorationColor:
  */
 function drawHighlightDecoration(decoration: Decoration, data: {}, decorationColor: string) {
   const { context, lineHeight, charWidth, canvasWidth, screenRow, yRow } = data
-
   const range = decoration.getMarker().getScreenRange()
   const rowSpan = range.end.row - range.start.row
-
   context.fillStyle = decorationColor
 
   if (rowSpan === 0) {
@@ -880,13 +871,11 @@ function drawHighlightDecoration(decoration: Decoration, data: {}, decorationCol
  */
 function drawHighlightOutlineDecoration(decoration: Decoration, data: {}, decorationColor: string) {
   const { context, lineHeight, charWidth, canvasWidth, screenRow, yRow } = data
-
   let bottomWidth, colSpan, width, xBottomStart, xEnd, xStart
   const range = decoration.getMarker().getScreenRange()
   const rowSpan = range.end.row - range.start.row
   const yStart = yRow
   const yEnd = yStart + lineHeight
-
   context.fillStyle = decorationColor
 
   if (rowSpan === 0) {
@@ -894,7 +883,6 @@ function drawHighlightOutlineDecoration(decoration: Decoration, data: {}, decora
     width = colSpan * charWidth
     xStart = range.start.column * charWidth
     xEnd = xStart + width
-
     context.fillRect(xStart, yStart, width, 1)
     context.fillRect(xStart, yEnd - 1, width, 1)
     context.fillRect(xStart, yStart, 1, lineHeight)
@@ -907,7 +895,6 @@ function drawHighlightOutlineDecoration(decoration: Decoration, data: {}, decora
       width = canvasWidth - xStart
       xBottomStart = Math.max(xStart, xEnd)
       bottomWidth = canvasWidth - xBottomStart
-
       context.fillRect(xStart, yStart, width, 1)
       context.fillRect(xBottomStart, yEnd - 1, bottomWidth, 1)
       context.fillRect(xStart, yStart, 1, lineHeight)
@@ -915,7 +902,6 @@ function drawHighlightOutlineDecoration(decoration: Decoration, data: {}, decora
     } else {
       width = canvasWidth - xStart
       bottomWidth = canvasWidth - xEnd
-
       context.fillRect(0, yStart, xStart, 1)
       context.fillRect(0, yEnd - 1, xEnd, 1)
       context.fillRect(0, yStart, 1, lineHeight)
@@ -924,24 +910,25 @@ function drawHighlightOutlineDecoration(decoration: Decoration, data: {}, decora
   } else {
     xStart = range.start.column * charWidth
     xEnd = range.end.column * charWidth
+
     if (screenRow === range.start.row) {
       width = canvasWidth - xStart
-
       context.fillRect(xStart, yStart, width, 1)
       context.fillRect(xStart, yStart, 1, lineHeight)
       context.fillRect(canvasWidth - 1, yStart, 1, lineHeight)
     } else if (screenRow === range.end.row) {
       width = canvasWidth - xStart
-
       context.fillRect(0, yEnd - 1, xEnd, 1)
       context.fillRect(0, yStart, 1, lineHeight)
       context.fillRect(xEnd, yStart, 1, lineHeight)
     } else {
       context.fillRect(0, yStart, 1, lineHeight)
       context.fillRect(canvasWidth - 1, yStart, 1, lineHeight)
+
       if (screenRow === range.start.row + 1) {
         context.fillRect(0, yStart, xStart, 1)
       }
+
       if (screenRow === range.end.row - 1) {
         context.fillRect(xEnd, yEnd - 1, canvasWidth - xEnd, 1)
       }
@@ -998,7 +985,6 @@ function drawDecorations(
   editorElement: TextEditorElement
 ) {
   let decorationsToRender = []
-
   renderData.context.clearRect(0, renderData.yRow, renderData.canvasWidth, renderData.lineHeight)
 
   for (const i in types) {
@@ -1013,8 +999,14 @@ function drawDecorations(
     for (let i = 0, len = decorationsToRender.length; i < len; i++) {
       const decoration = decorationsToRender[i]
       const decorationDrawer = types[decoration.properties.type]
+
       if (!SPEC_MODE) {
-        decorationDrawer(decoration, renderData, /* decorationColor */ getDecorationColor(decoration, editorElement))
+        decorationDrawer(
+          decoration,
+          renderData,
+          /* decorationColor */
+          getDecorationColor(decoration, editorElement)
+        )
       } else {
         // get the real function name from the mangeld Parcel names
         const functionName = decorationDrawer.name.split("$").pop().replace("Lambda", "")
@@ -1022,7 +1014,8 @@ function drawDecorations(
         thisSpec[functionName](
           decoration,
           renderData,
-          /* decorationColor */ getDecorationColor(decoration, editorElement)
+          /* decorationColor */
+          getDecorationColor(decoration, editorElement)
         )
       }
     }
@@ -1063,7 +1056,6 @@ function drawFrontDecorationsForLines(
     renderData.row = offsetRow + (screenRow - firstRow)
     renderData.yRow = renderData.row * lineHeight
     renderData.screenRow = screenRow
-
     drawDecorations(screenRow, decorations, renderData, frontDecorationDispatcher, editorElement)
   }
 
@@ -1104,7 +1096,6 @@ function drawBackDecorationsForLines(
     renderData.row = offsetRow + (screenRow - firstRow)
     renderData.yRow = renderData.row * lineHeight
     renderData.screenRow = screenRow
-
     drawDecorations(screenRow, decorations, renderData, backgroundDecorationDispatcher, editorElement)
   }
 
@@ -1153,7 +1144,6 @@ function getDefaultColor(editorElement: TextEditorElement, textOpacity: number):
  */
 function getTokenColor(scopes: Array<string>, editorElement: TextEditorElement, textOpacity: number): string {
   const color = domStylesReader.retrieveStyleFromDom(scopes, "color", editorElement, true)
-
   return transparentize(color, textOpacity)
 }
 
@@ -1184,6 +1174,7 @@ function transparentize(color: string, opacity: number): string {
  */
 function getDecorationColor(decoration: Decoration, editorElement: TextEditorElement): string {
   const properties = decoration.getProperties()
+
   if (properties.color) {
     return properties.color
   }
@@ -1264,6 +1255,7 @@ function computeIntactRanges(
             offscreenRow: range.offscreenRow,
           })
         }
+
         if (change.end < range.end) {
           // The change ends within the range
           if (change.bufferDelta !== 0) {
@@ -1295,6 +1287,7 @@ function computeIntactRanges(
         }
       }
     }
+
     intactRanges = newIntactRanges
   }
 
@@ -1313,6 +1306,7 @@ function computeIntactRanges(
  */
 function truncateIntactRanges(intactRanges: Array<{}>, firstRow: number, lastRow: number): Array<{}> {
   let i = 0
+
   while (i < intactRanges.length) {
     const range = intactRanges[i]
 

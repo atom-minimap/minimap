@@ -1,5 +1,4 @@
 // Functions used to recommend the configurations required for the best performance of Minimap
-
 export function treeSitterWarning() {
   return observeAndWarn(
     "core.useTreeSitterParsers",
@@ -18,19 +17,21 @@ function observeAndWarn(configName, recommendedValue, warningTitle, warningDescr
       const today = new Date()
       const previousWarning = window.localStorage.getItem(storageName)
       let previousWarningDay = null
+
       if (previousWarning) {
         previousWarningDay = new Date(Date.parse(previousWarning)).getDay()
       }
+
       // throw the warning once a day
       if (!previousWarningDay || (typeof previousWarningDay === "number" && previousWarningDay - today.getDay() >= 1)) {
         window.localStorage.setItem(storageName, today)
-
         const notification = atom.notifications.addWarning(warningTitle, {
           description: warningDescription,
           dismissable: true,
           buttons: [
             {
               text: `Set to ${recommendedValue} and restart Atom`,
+
               onDidClick() {
                 atom.config.set(configName, true)
                 notification.dismiss()
