@@ -24,6 +24,7 @@
     "bump": "ncu -u",
     "prepare": "npm run build"
   },
+  "prettier": "prettier-config-atomic",
   "contributors": [
     {
       "name": "Fangdun Cai",
@@ -60,24 +61,24 @@
   "dependencies": {
     "atom-utils-plus": "^0.11.0",
     "delegato": "^1.0.0",
-    "element-resize-detector": "^1.2.1",
+    "element-resize-detector": "^1.2.2",
     "fs-plus": "^3.1.1",
     "mixto": "^1.0.0"
   },
   "devDependencies": {
-    "@types/atom": "^1.40.5",
-    "@types/jasmine": "3.6.2",
+    "@types/atom": "^1.40.10",
+    "@types/jasmine": "3.6.9",
     "build-commit": "^0.1.4",
     "cross-env": "^7.0.3",
     "esdoc": "^1.1.0",
     "esdoc-es7-plugin": "^0.0.3",
-    "eslint": "^7.13.0",
-    "eslint-config-atomic": "^1.5.1",
+    "eslint": "^7.23.0",
+    "eslint-config-atomic": "^1.12.5",
     "jasmine-expect": "^5.0.0",
     "npm-check-updates": "latest",
-    "prettier": "^2.2.1",
-    "rollup": "2.37.0",
-    "rollup-plugin-atomic": "^2.0.1",
+    "prettier-config-atomic": "^1.0.1",
+    "rollup": "2.44.0",
+    "rollup-plugin-atomic": "^2.1.2",
     "shx": "^0.3.3",
     "underscore-plus": "^1.7.0"
   },
