@@ -36,36 +36,40 @@ jobs:
           apm install --production
           npm install --only=dev
 
-      - name: Run Ubuntu tests
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: npm run build.test && npm run test
-
-      # One or two of the tests are flaky on Windows/MacOs
-      - name: Run Windows and MacOS tests
-        if: ${{ !contains(matrix.os, 'ubuntu') }}
-        continue-on-error: true
+      - name: Run tests
         run: npm run build.test && npm run test
 
   Lint:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - name: Commit lint ✨
+        uses: wagoid/commitlint-github-action@v2
+
+      - uses: UziTech/action-setup-atom@v1
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v1.2.1
         with:
-          node-version: "12.x"
-      - name: Install NPM dependencies
-        run: |
-          npm install --ignore-scripts
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Format ✨
+        run: pnpm test.format
+
       - name: Lint ✨
-        run: npm run lint
+        run: pnpm test.lint
 
   Release:
     needs: [Test, Lint]
     if: github.ref == 'refs/heads/master' &&
-      github.event.repository.fork == false
+      github.event.repository.fork == false && !contains(github.event.head_commit.message, '[skip release]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

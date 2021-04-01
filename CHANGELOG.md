@@ -1,3 +1,131 @@
+## [4.39.10](https://github.com/atom-minimap/minimap/compare/v4.39.9...v4.39.10) (2021-03-12)
+
+
+### Bug Fixes
+
+* disable desynchronized canvas ([8059189](https://github.com/atom-minimap/minimap/commit/8059189e862f440d7a6bc5377e60d66b0b49a632))
+
+## [4.39.9](https://github.com/atom-minimap/minimap/compare/v4.39.8...v4.39.9) (2021-02-19)
+
+
+### Bug Fixes
+
+* invalidate styles cache on styles update ([12b1b07](https://github.com/atom-minimap/minimap/commit/12b1b07a25a1ae12ae34f109d089e4ea8fb3cb03))
+
+## [4.39.8](https://github.com/atom-minimap/minimap/compare/v4.39.7...v4.39.8) (2021-02-09)
+
+
+### Bug Fixes
+
+* fix minimap on left calculate width ([4133274](https://github.com/atom-minimap/minimap/commit/4133274b8f011971a6ec8c08a4f8d71d5a9a0f07))
+
+## [4.39.7](https://github.com/atom-minimap/minimap/compare/v4.39.6...v4.39.7) (2021-02-02)
+
+
+### Bug Fixes
+
+* view provider returns correct minimap element ([#781](https://github.com/atom-minimap/minimap/issues/781)) ([358d781](https://github.com/atom-minimap/minimap/commit/358d781114d85f5214cfdf46433dba9d33a6b5c2))
+
+## [4.39.6](https://github.com/atom-minimap/minimap/compare/v4.39.5...v4.39.6) (2021-01-30)
+
+### Bug fixes
+- fix: do not null set the values in destroy (#779): solves some of the null bugs.
+
+## [4.39.5](https://github.com/atom-minimap/minimap/compare/v4.39.4...v4.39.5) (2021-01-18)
+
+
+### Bug Fixes
+
+* fix strange null-bugs (#771)
+* fix `getDecorations` should return an array
+
+
+## [4.39.4](https://github.com/atom-minimap/minimap/compare/v4.39.3...v4.39.4) (2021-01-18)
+
+
+### Bug Fixes
+
+* revert "fix: skip rendering empty token text" ([86767a0](https://github.com/atom-minimap/minimap/commit/86767a08dde8d7eb2d6c3931862ea8f0c4a86900))
+
+## [4.39.3](https://github.com/atom-minimap/minimap/compare/v4.39.2...v4.39.3) (2021-01-18)
+
+
+### Bug Fixes
+
+* skip rendering empty token text ([6bd1921](https://github.com/atom-minimap/minimap/commit/6bd1921213b7bce935f21340a0aee42b909a78ab))
+
+## [4.39.2](https://github.com/atom-minimap/minimap/compare/v4.39.1...v4.39.2) (2021-01-18)
+
+
+### Bug Fixes
+
+* add minimap.destroy to minimapForEditor just in case ([40a4676](https://github.com/atom-minimap/minimap/commit/40a467623a257732f54824e7a8a99f14ade706c9))
+* dispose the editorSubscription if minimap is deactivated before destroying the editor ([7b359b3](https://github.com/atom-minimap/minimap/commit/7b359b364343fb575e46fcee41b9812a553ecfb1))
+
+## [4.39.1](https://github.com/atom-minimap/minimap/compare/v4.39.0...v4.39.1) (2021-01-17)
+
+
+### Bug Fixes
+
+* add DecorationManagement.destroy ([09e64b9](https://github.com/atom-minimap/minimap/commit/09e64b9b0141dc3e7d5a76aa6a5246975c8a3de2))
+* attach to text editor explicitly ([f2c36b7](https://github.com/atom-minimap/minimap/commit/f2c36b759bf33cbd6b374ed60901452e600ac0c0))
+* clear editorsMinimaps in one take ([aa48eba](https://github.com/atom-minimap/minimap/commit/aa48eba2a0c151c194845704fe82cd79c95fa7cf))
+* compare minimap with undefined ([ad83bf6](https://github.com/atom-minimap/minimap/commit/ad83bf66448d11761b10c04799bc15fc7141fe16))
+* create a new Minimap if it is destroyed ([503c482](https://github.com/atom-minimap/minimap/commit/503c482ffc1e85cbb83a52570e4930300c893f87))
+* delete the editor from editorsMinimaps if destroyed ([defc58c](https://github.com/atom-minimap/minimap/commit/defc58ced3b29cd8a414c5e67993900c20ecc521))
+* destroy quickSettingsElement ([0eace20](https://github.com/atom-minimap/minimap/commit/0eace2096f47c59e84d93dbb72eb601fb4a154bd))
+* do not define additional subs variable ([2b665ec](https://github.com/atom-minimap/minimap/commit/2b665ec259798dd9ed3b439c375068f7538f5601))
+* hack for forcing scroller movement ([a5ac5ec](https://github.com/atom-minimap/minimap/commit/a5ac5ec950cd4ac168ff0e24a0a5c3cbd8772410))
+* merge subs.add in Minimap ([5a9ff08](https://github.com/atom-minimap/minimap/commit/5a9ff0820ddb65074e9e6e9f53589df3c090f028))
+* merge subs.add in quick settings ([4e81b4c](https://github.com/atom-minimap/minimap/commit/4e81b4c56c0767fe58b320f7059a99d4d40ee450))
+* only delete if editorsMinimaps is not null ([464a8cf](https://github.com/atom-minimap/minimap/commit/464a8cfc371524c950c875b030009dc250c981d0))
+* remove excess copy ([4fca672](https://github.com/atom-minimap/minimap/commit/4fca672d1e3e02f0203fa19b3fb7de6ed3e3eac6))
+* removeChild before appending ([1d07ed1](https://github.com/atom-minimap/minimap/commit/1d07ed154be2f1d5b864f9f972bf155845160513))
+* reuse minimapElement if already exists ([1043a29](https://github.com/atom-minimap/minimap/commit/1043a29f3721beb11871639febc1b298e6519193))
+* set minimap to null if it is truthy ([3f683d9](https://github.com/atom-minimap/minimap/commit/3f683d9305fd770f0723d0b216ecea083cadbbc5))
+* use minimapViewProvider instead of atom.views ([6fb75af](https://github.com/atom-minimap/minimap/commit/6fb75aff8feff0f7dc0c16db64ca029a0acd6e9c))
+
+# [4.39.0](https://github.com/atom-minimap/minimap/compare/v4.38.3...v4.39.0) (2021-01-16)
+
+
+### Bug Fixes
+
+* add destroyed  prop to DecorationManagement ([784732d](https://github.com/atom-minimap/minimap/commit/784732df2a84b88d4ac6bb76e09ecd971c5ad6a6))
+* call initializeDecorations inside setModel ([006300c](https://github.com/atom-minimap/minimap/commit/006300c89c4b0019a50c2559cf6c794583336a7c))
+* destructure data in drawGutterDecoration ([c055f0e](https://github.com/atom-minimap/minimap/commit/c055f0eaac32a173539b8ebbbf3936e3a736ac1f))
+* destructure data in drawLineDecoration ([7579528](https://github.com/atom-minimap/minimap/commit/7579528abf74823927991b4f3475050d9c7c7e3a))
+* destructure renderData in drawHighlightDecoration ([8033509](https://github.com/atom-minimap/minimap/commit/80335099d5886bd60afe0259b7d659cb11971da5))
+* destructure renderData in drawHighlightOutlineDecoration ([be58182](https://github.com/atom-minimap/minimap/commit/be5818245328f185fd87200bc8a721211928e71f))
+* duplicate functions for backward compatibility ([67d9d58](https://github.com/atom-minimap/minimap/commit/67d9d587511ce1cad8321c82ec3562983e1d2ad5))
+* empty minimapElement once minimapElement is destroyed ([c5ac30c](https://github.com/atom-minimap/minimap/commit/c5ac30ca7aa8d32dcfd5eaf23d10665693343be2))
+* fix onDidChangeDecorationRange ([b331f08](https://github.com/atom-minimap/minimap/commit/b331f08609008b8f849555e4b5fd33bd7d81f3f2))
+* make DecorationManagement a normal class ([a303916](https://github.com/atom-minimap/minimap/commit/a3039161141fa9a500efeed456b3db0117839682))
+* memoize this.DecorationManagement ([5d4c1dc](https://github.com/atom-minimap/minimap/commit/5d4c1dc1f294e1310c7f6f562189774e2062070d))
+* memoize this.emitter ([6235c2e](https://github.com/atom-minimap/minimap/commit/6235c2ef36b84d8aa69365cff9d02f1c01d0fc29))
+* set this.DecorationManagement  to undefined ([b9e351c](https://github.com/atom-minimap/minimap/commit/b9e351c9270c43b9e6c810528cf8e2a93eb8279d))
+* use this.minimap.destroyed ([38a0e3f](https://github.com/atom-minimap/minimap/commit/38a0e3f8bf908c46776a4844d42a7174fb9c6482))
+* use this.minimap.editorDestroyed ([9385892](https://github.com/atom-minimap/minimap/commit/938589282e26594c9d53a56c86eab233892e6c22))
+* use this.minimap.emitter ([f34cd85](https://github.com/atom-minimap/minimap/commit/f34cd85f37b25a2f4c1a856b33ec0bbcfca7bf36))
+* use this.minimap.get visibleRow ([ea3fc7b](https://github.com/atom-minimap/minimap/commit/ea3fc7b6455985fbd53e42a3abad9a6db9ef129a))
+
+
+### Features
+
+* add getDecorationManagement as the recommended way of using decoration API ([46080b3](https://github.com/atom-minimap/minimap/commit/46080b3481a4dc36a4cbbb734b6fa6ae9191aa6f))
+* set minimapElement  property for Minimap ([03726ed](https://github.com/atom-minimap/minimap/commit/03726ede6950bc94259473110d41ef2bf9a2e746))
+
+## [4.38.3](https://github.com/atom-minimap/minimap/compare/v4.38.2...v4.38.3) (2021-01-12)
+
+
+### Bug Fixes
+
+* make underscore-plus a devDep ([07512f3](https://github.com/atom-minimap/minimap/commit/07512f32aca7e30a6a3f52332f62e1241d565e1a))
+* no need escape / ([2687541](https://github.com/atom-minimap/minimap/commit/2687541b53e6b8f6c2b466b4f37f365f9b506c86))
+* replace underscore-plus by custom implementation ([2ee74b9](https://github.com/atom-minimap/minimap/commit/2ee74b9c730e6836a8c3e00b64681a305598b6e6))
+* store the regexp in a const ([2a64ecb](https://github.com/atom-minimap/minimap/commit/2a64ecbd76db73bf2bb2fd3571d21b8e246308dd))
+* turn-off toplevel optimizations  ([0099863](https://github.com/atom-minimap/minimap/commit/009986300506416aa30b3f1c9a326f6160cceb19))
+* use string inerpolation ([92be9d8](https://github.com/atom-minimap/minimap/commit/92be9d8c538eb21dbc5ed4931c9aa47afa79ea92))
+
 ## [4.38.2](https://github.com/atom-minimap/minimap/compare/v4.38.1...v4.38.2) (2021-01-12)
 
 

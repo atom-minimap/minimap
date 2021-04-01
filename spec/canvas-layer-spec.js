@@ -1,9 +1,9 @@
-'use strict'
-process.env.NODE_ENV = 'test'
+"use strict"
+process.env.NODE_ENV = "test"
 
-const CanvasLayer = require('../lib/canvas-layer')
+const CanvasLayer = require("../lib/canvas-layer")
 
-describe('CanvasLayer', () => {
+describe("CanvasLayer", () => {
   let [layer] = []
 
   beforeEach(() => {
@@ -12,17 +12,17 @@ describe('CanvasLayer', () => {
     layer.setSize(100, 300)
   })
 
-  it('has two canvas', () => {
+  it("has two canvas", () => {
     expect(layer.canvas).toBeDefined()
     expect(layer.offscreenCanvas).toBeDefined()
   })
 
-  it('has a context for each canvas', () => {
+  it("has a context for each canvas", () => {
     expect(layer.context).toBeDefined()
     expect(layer.offscreenContext).toBeDefined()
   })
 
-  it('disables the smoothing for the canvas', () => {
+  it("disables the smoothing for the canvas", () => {
     expect(layer.canvas.webkitImageSmoothingEnabled).toBeFalsy()
     expect(layer.offscreenCanvas.webkitImageSmoothingEnabled).toBeFalsy()
 
@@ -30,18 +30,18 @@ describe('CanvasLayer', () => {
     expect(layer.offscreenContext.imageSmoothingEnabled).toBeFalsy()
   })
 
-  describe('.prototype.attach', () => {
-    it('attaches the onscreen canvas to the provided element', () => {
-      const jasmineContent = document.body.querySelector('#jasmine-content')
+  describe(".prototype.attach", () => {
+    it("attaches the onscreen canvas to the provided element", () => {
+      const jasmineContent = document.body.querySelector("#jasmine-content")
 
       layer.attach(jasmineContent)
 
-      expect(jasmineContent.querySelector('canvas')).toExist()
+      expect(jasmineContent.querySelector("canvas")).toExist()
     })
   })
 
-  describe('.prototype.resetOffscreenSize', () => {
-    it('sets the width of the offscreen canvas to the ', () => {
+  describe(".prototype.resetOffscreenSize", () => {
+    it("sets the width of the offscreen canvas to the ", () => {
       layer.canvas.width = 500
       layer.canvas.height = 400
 
@@ -55,9 +55,9 @@ describe('CanvasLayer', () => {
     })
   })
 
-  describe('.prototype.copyToOffscreen', () => {
-    it('copies the onscreen bitmap onto the offscreen canvas', () => {
-      spyOn(layer.offscreenContext, 'drawImage')
+  describe(".prototype.copyToOffscreen", () => {
+    it("copies the onscreen bitmap onto the offscreen canvas", () => {
+      spyOn(layer.offscreenContext, "drawImage")
 
       layer.copyToOffscreen()
 
@@ -65,9 +65,9 @@ describe('CanvasLayer', () => {
     })
   })
 
-  describe('.prototype.copyFromOffscreen', () => {
-    it('copies the offscreen bitmap onto the onscreen canvas', () => {
-      spyOn(layer.context, 'drawImage')
+  describe(".prototype.copyFromOffscreen", () => {
+    it("copies the offscreen bitmap onto the onscreen canvas", () => {
+      spyOn(layer.context, "drawImage")
 
       layer.copyFromOffscreen()
 
@@ -75,23 +75,19 @@ describe('CanvasLayer', () => {
     })
   })
 
-  describe('.prototype.copyPartFromOffscren', () => {
-    it('copies to the onscreen canvas the region that were specified', () => {
-      spyOn(layer.context, 'drawImage')
+  describe(".prototype.copyPartFromOffscren", () => {
+    it("copies to the onscreen canvas the region that were specified", () => {
+      spyOn(layer.context, "drawImage")
 
       layer.copyPartFromOffscreen(50, 100, 150)
 
-      expect(layer.context.drawImage).toHaveBeenCalledWith(
-        layer.offscreenCanvas,
-        0, 50, 100, 150,
-        0, 100, 100, 150
-      )
+      expect(layer.context.drawImage).toHaveBeenCalledWith(layer.offscreenCanvas, 0, 50, 100, 150, 0, 100, 100, 150)
     })
   })
 
-  describe('.prototype.clearCanvas', () => {
-    it('clears the whole canvas region', () => {
-      spyOn(layer.context, 'clearRect')
+  describe(".prototype.clearCanvas", () => {
+    it("clears the whole canvas region", () => {
+      spyOn(layer.context, "clearRect")
 
       layer.clearCanvas()
 

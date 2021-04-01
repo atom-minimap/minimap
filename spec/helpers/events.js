@@ -1,7 +1,7 @@
-function mouseEvent (type, properties) {
+function mouseEvent(type, properties) {
   const defaults = {
     bubbles: true,
-    cancelable: (type !== 'mousemove'),
+    cancelable: type !== "mousemove",
     view: window,
     detail: 0,
     pageX: 0,
@@ -13,7 +13,7 @@ function mouseEvent (type, properties) {
     shiftKey: false,
     metaKey: false,
     button: 0,
-    relatedTarget: undefined
+    relatedTarget: undefined,
   }
 
   for (const k in defaults) {
@@ -34,7 +34,7 @@ function mouseEvent (type, properties) {
   return e
 }
 
-function touchEvent (type, touches) {
+function touchEvent(type, touches) {
   const event = new Event(type, {
     bubbles: true,
     cancelable: true,
@@ -43,25 +43,24 @@ function touchEvent (type, touches) {
     altKey: false,
     shiftKey: false,
     metaKey: false,
-    relatedTarget: undefined
+    relatedTarget: undefined,
   })
   event.touches = event.changedTouches = event.targetTouches = touches
 
   return event
 }
 
-function objectCenterCoordinates (obj) {
+function objectCenterCoordinates(obj) {
   const { top, left, width, height } = obj.getBoundingClientRect()
   return { x: left + width / 2, y: top + height / 2 }
 }
 
-function exists (value) {
+function exists(value) {
   return value != null
 }
 
 module.exports = { objectCenterCoordinates, mouseEvent }
-
-;['mousedown', 'mousemove', 'mouseup', 'click'].forEach((key) => {
+;["mousedown", "mousemove", "mouseup", "click"].forEach((key) => {
   module.exports[key] = function (obj, { x, y, cx, cy, btn } = {}) {
     if (x == null && y == null) {
       const o = objectCenterCoordinates(obj)
@@ -74,22 +73,29 @@ module.exports = { objectCenterCoordinates, mouseEvent }
       cy = y
     }
 
-    obj.dispatchEvent(mouseEvent(key, {
-      pageX: x, pageY: y, clientX: cx, clientY: cy, button: btn
-    }))
+    obj.dispatchEvent(
+      mouseEvent(key, {
+        pageX: x,
+        pageY: y,
+        clientX: cx,
+        clientY: cy,
+        button: btn,
+      })
+    )
   }
 })
 
 module.exports.mousewheel = function (obj, deltaX = 0, deltaY = 0) {
-  obj.dispatchEvent(mouseEvent('mousewheel', {
-    deltaX,
-    deltaY,
-    wheelDeltaX: deltaX,
-    wheelDeltaY: deltaY
-  }))
+  obj.dispatchEvent(
+    mouseEvent("mousewheel", {
+      deltaX,
+      deltaY,
+      wheelDeltaX: deltaX,
+      wheelDeltaY: deltaY,
+    })
+  )
 }
-
-;['touchstart', 'touchmove', 'touchend'].forEach((key) => {
+;["touchstart", "touchmove", "touchend"].forEach((key) => {
   module.exports[key] = function (obj, touches) {
     if (!Array.isArray(touches)) {
       touches = [touches]

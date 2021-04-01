@@ -5,4 +5,4 @@ notifications:
     on_success: never
     on_failure: change
 
-script: 'curl -s https://raw.githubusercontent.com/fundon/atom-minimap/master/ci/build-package.sh | sh'
+script: "curl -s https://raw.githubusercontent.com/fundon/atom-minimap/master/ci/build-package.sh | sh"
