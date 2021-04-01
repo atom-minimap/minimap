@@ -24,6 +24,7 @@
     "bump": "ncu -u",
     "prepare": "npm run build"
   },
+  "prettier": "prettier-config-atomic",
   "contributors": [
     {
       "name": "Fangdun Cai",
@@ -75,7 +76,7 @@
     "eslint-config-atomic": "^1.12.4",
     "jasmine-expect": "^5.0.0",
     "npm-check-updates": "latest",
-    "prettier": "^2.2.1",
+    "prettier-config-atomic": "^1.0.1",
     "rollup": "2.44.0",
     "rollup-plugin-atomic": "^2.1.2",
     "shx": "^0.3.3",
