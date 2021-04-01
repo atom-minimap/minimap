@@ -4,7 +4,6 @@ import { Emitter } from "atom"
 import { escapeRegExp } from "./deps/underscore-plus"
 import path from "path"
 import Decoration from "./decoration"
-
 /**
  * The mixin that provides the decorations API to the minimap editor
  * view.
@@ -12,6 +11,7 @@ import Decoration from "./decoration"
  * This mixin is injected into the `Minimap` prototype, so every methods defined
  * in this file will be available on any `Minimap` instance.
  */
+
 export default class DecorationManagement {
   /**
    * Initializes the decorations related properties.
@@ -36,12 +36,14 @@ export default class DecorationManagement {
      * @access private
      */
     this.decorationsById = new Map()
+
     /**
      * The decorations stored in an array indexed with their marker id.
      * @type {Object}
      * @access private
      */
     this.decorationsByMarkerId = new Map()
+
     /**
      * The subscriptions to the markers `did-change` event indexed using the
      * marker id.
@@ -49,6 +51,7 @@ export default class DecorationManagement {
      * @access private
      */
     this.decorationMarkerChangedSubscriptions = new Map()
+
     /**
      * The subscriptions to the markers `did-destroy` event indexed using the
      * marker id.
@@ -56,6 +59,7 @@ export default class DecorationManagement {
      * @access private
      */
     this.decorationMarkerDestroyedSubscriptions = new Map()
+
     /**
      * The subscriptions to the decorations `did-change-properties` event
      * indexed using the decoration id.
@@ -63,6 +67,7 @@ export default class DecorationManagement {
      * @access private
      */
     this.decorationUpdatedSubscriptions = new Map()
+
     /**
      * The subscriptions to the decorations `did-destroy` event indexed using
      * the decoration id.
@@ -70,7 +75,6 @@ export default class DecorationManagement {
      * @access private
      */
     this.decorationDestroyedSubscriptions = new Map()
-
     // is set to true when a minimapElement is destroyed
     this.destroyed = false
   }
@@ -80,7 +84,7 @@ export default class DecorationManagement {
    *
    * @return {Array<Decoration>} all the decorations in this `Minimap`
    */
-  getDecorations() {
+  getDecorations(): Array<Decoration> {
     return [...this.decorationsById.values()]
   }
 
@@ -96,7 +100,7 @@ export default class DecorationManagement {
    * - decoration: the decoration object that was created
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidAddDecoration(callback) {
+  onDidAddDecoration(callback: (event: Record<string, any>) => void): Disposable {
     return this.emitter.on("did-add-decoration", callback)
   }
 
@@ -112,7 +116,7 @@ export default class DecorationManagement {
    * - decoration: the decoration object that was created
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidRemoveDecoration(callback) {
+  onDidRemoveDecoration(callback: (event: Record<string, any>) => void): Disposable {
     return this.emitter.on("did-remove-decoration", callback)
   }
 
@@ -131,7 +135,7 @@ export default class DecorationManagement {
    * - decoration: the decoration object that was created
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeDecoration(callback) {
+  onDidChangeDecoration(callback: (event: Record<string, any>) => void): Disposable {
     return this.emitter.on("did-change-decoration", callback)
   }
 
@@ -150,7 +154,7 @@ export default class DecorationManagement {
    * - decoration: the decoration object that was created
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeDecorationRange(callback) {
+  onDidChangeDecorationRange(callback: (event: Record<string, any>) => void): Disposable {
     return this.emitter.on("did-change-decoration-range", callback)
   }
 
@@ -164,7 +168,7 @@ export default class DecorationManagement {
    *                                                         triggered
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidUpdateDecoration(callback) {
+  onDidUpdateDecoration(callback: (decoration: Decoration) => void): Disposable {
     return this.emitter.on("did-update-decoration", callback)
   }
 
@@ -174,7 +178,7 @@ export default class DecorationManagement {
    * @param  {number} id the decoration id
    * @return {Decoration} the decoration with the given id
    */
-  decorationForId(id) {
+  decorationForId(id: number): Decoration {
     return this.decorationsById.get(id)
   }
 
@@ -186,7 +190,7 @@ export default class DecorationManagement {
    * @return {Record<string, Decoration>} the decorations that intersect the passed-in
    *                             range
    */
-  decorationsForScreenRowRange(startScreenRow, endScreenRow) {
+  decorationsForScreenRowRange(startScreenRow: number, endScreenRow: number): Record<string, Decoration> {
     const decorationsByMarkerId = {}
     const markers = this.findMarkers({
       intersectsScreenRowRange: [startScreenRow, endScreenRow],
@@ -231,14 +235,14 @@ export default class DecorationManagement {
    *                                    highlight-outine decorations at a given
    *                                    row
    */
-  decorationsByTypeThenRows() {
+  decorationsByTypeThenRows(): {} {
     if (this.decorationsByTypeThenRowsCache != null) {
       return this.decorationsByTypeThenRowsCache
     }
 
     const cache = {}
-
     const decorations = this.decorationsById.values()
+
     for (const decoration of decorations) {
       const range = decoration.marker.getScreenRange()
       const type = decoration.getProperties().type
@@ -319,7 +323,7 @@ export default class DecorationManagement {
    *                                            omitted the Minimap will attempt
    *                                            to infer the plugin origin from
    *                                            the path of the caller function.
-   * @param  {function} [decorationParams.render] the render routine for custom
+   * @param  {Function} [decorationParams.render] the render routine for custom
    *                                              decorations. The function
    *                                              receives the decoration and
    *                                              the render data for the
@@ -328,7 +332,17 @@ export default class DecorationManagement {
    * @emits  {did-add-decoration} when the decoration is created successfully
    * @emits  {did-change} when the decoration is created successfully
    */
-  decorateMarker(marker, decorationParams) {
+  decorateMarker(
+    marker: Marker,
+    decorationParams: {
+      class: string
+      color: string
+      plugin: string
+      render: (...args: Array<any>) => any
+      scope: string
+      type: string
+    }
+  ): Decoration {
     if (this.destroyed || this.minimap.destroyed || marker == null) {
       return
     }
@@ -365,7 +379,6 @@ export default class DecorationManagement {
         marker.onDidChange((event) => {
           const decorations = this.decorationsByMarkerId.get(id)
           const screenRange = marker.getScreenRange()
-
           this.invalidateDecorationForScreenRowsCache()
 
           if (decorations !== undefined) {
@@ -377,10 +390,10 @@ export default class DecorationManagement {
                 event,
               })
               this.emitDecorationChanges(decoration.type, decoration)
-
               decoration.screenRange = screenRange
             }
           }
+
           let oldStart = event.oldTailScreenPosition
           let oldEnd = event.oldHeadScreenPosition
           let newStart = event.newTailScreenPosition
@@ -389,6 +402,7 @@ export default class DecorationManagement {
           if (oldStart.row > oldEnd.row) {
             ;[oldStart, oldEnd] = [oldEnd, oldStart]
           }
+
           if (newStart.row > newEnd.row) {
             ;[newStart, newEnd] = [newEnd, newStart]
           }
@@ -434,13 +448,11 @@ export default class DecorationManagement {
         this.removeDecoration(decoration)
       })
     )
-
     this.emitDecorationChanges(type, decoration)
     this.emitter.emit("did-add-decoration", {
       marker,
       decoration,
     })
-
     return decoration
   }
 
@@ -452,14 +464,14 @@ export default class DecorationManagement {
    * @param  {Decoration} decoration the decoration for which emitting an event
    * @access private
    */
-  emitDecorationChanges(type, decoration) {
+  emitDecorationChanges(type: string, decoration: Decoration) {
     if (this.destroyed || this.minimap.editorDestroyed()) {
       return
     }
 
     this.invalidateDecorationForScreenRowsCache()
-
     const range = decoration.screenRange
+
     if (!range.start || !range.end) {
       return
     }
@@ -476,7 +488,7 @@ export default class DecorationManagement {
    *                                change object
    * @access private
    */
-  emitRangeChanges(type, range, screenDelta) {
+  emitRangeChanges(type: string, range: {}, screenDelta: number) {
     const startScreenRow = range.start.row
     const endScreenRow = range.end.row
     const lastRenderedScreenRow = this.minimap.getLastVisibleScreenRow()
@@ -492,7 +504,6 @@ export default class DecorationManagement {
       screenDelta,
       type,
     }
-
     this.emitter.emit("did-change-decoration-range", changeEvent)
   }
 
@@ -503,40 +514,39 @@ export default class DecorationManagement {
    * @emits  {did-change} when the decoration is removed
    * @emits  {did-remove-decoration} when the decoration is removed
    */
-  removeDecoration(decoration) {
+  removeDecoration(decoration: Decoration) {
     if (decoration == null) {
       return
     }
 
     const marker = decoration.marker
     let subscription
-
     this.decorationsById.delete(decoration.id)
-
     subscription = this.decorationUpdatedSubscriptions.get(decoration.id)
+
     if (subscription !== undefined) {
       subscription.dispose()
     }
 
     subscription = this.decorationDestroyedSubscriptions.get(decoration.id)
+
     if (subscription !== undefined) {
       subscription.dispose()
     }
 
     this.decorationUpdatedSubscriptions.delete(decoration.id)
     this.decorationDestroyedSubscriptions.delete(decoration.id)
-
     const decorations = this.decorationsByMarkerId.get(marker.id)
+
     if (decorations === undefined) {
       return
     }
 
     this.emitDecorationChanges(decoration.getProperties().type, decoration)
-
     const index = decorations.indexOf(decoration)
+
     if (index > -1) {
       decorations.splice(index, 1)
-
       this.emitter.emit("did-remove-decoration", {
         marker,
         decoration,
@@ -555,12 +565,13 @@ export default class DecorationManagement {
    * @emits  {did-change} when a decoration have been removed
    * @emits  {did-remove-decoration} when a decoration have been removed
    */
-  removeAllDecorationsForMarker(marker) {
+  removeAllDecorationsForMarker(marker: Marker) {
     if (marker == null) {
       return
     }
 
     const decorations = this.decorationsByMarkerId.get(marker.id)
+
     if (decorations === undefined) {
       return
     }
@@ -571,6 +582,7 @@ export default class DecorationManagement {
       if (!this.destroyed && !this.minimap.editorDestroyed()) {
         this.emitDecorationChanges(decoration.getProperties().type, decoration)
       }
+
       this.emitter.emit("did-remove-decoration", {
         marker,
         decoration,
@@ -586,14 +598,13 @@ export default class DecorationManagement {
    * @param  {Marker} marker the marker for which removing decorations
    * @access private
    */
-  removedAllMarkerDecorations(marker) {
+  removedAllMarkerDecorations(marker: Marker) {
     if (marker == null) {
       return
     }
 
     this.decorationMarkerChangedSubscriptions.get(marker.id).dispose()
     this.decorationMarkerDestroyedSubscriptions.get(marker.id).dispose()
-
     this.decorationsByMarkerId.delete(marker.id)
     this.decorationMarkerChangedSubscriptions.delete(marker.id)
     this.decorationMarkerDestroyedSubscriptions.delete(marker.id)
@@ -604,26 +615,31 @@ export default class DecorationManagement {
    */
   removeAllDecorations() {
     const decorationMarkerChangedSubscriptionsValues = this.decorationMarkerChangedSubscriptions.values()
+
     for (const decoration of decorationMarkerChangedSubscriptionsValues) {
       decoration.dispose()
     }
 
     const decorationMarkerDestroyedSubscriptionsValues = this.decorationMarkerDestroyedSubscriptions.values()
+
     for (const decoration of decorationMarkerDestroyedSubscriptionsValues) {
       decoration.dispose()
     }
 
     const decorationUpdatedSubscriptionsValues = this.decorationUpdatedSubscriptions.values()
+
     for (const decoration of decorationUpdatedSubscriptionsValues) {
       decoration.dispose()
     }
 
     const decorationDestroyedSubscriptionsValues = this.decorationDestroyedSubscriptions.values()
+
     for (const decoration of decorationDestroyedSubscriptionsValues) {
       decoration.dispose()
     }
 
     const decorationsByIdValues = this.decorationsById.values()
+
     for (const decoration of decorationsByIdValues) {
       decoration.destroy()
     }
@@ -666,7 +682,7 @@ function getOriginatorPackageName() {
  * @return {Array<Object>} the array of diff ranges
  * @access private
  */
-function computeRangesDiffs(oldStart, oldEnd, newStart, newEnd) {
+function computeRangesDiffs(oldStart: number, oldEnd: number, newStart: number, newEnd: number): Array<{}> {
   const diffs = []
 
   if (oldStart.isLessThan(newStart)) {

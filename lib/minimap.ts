@@ -3,9 +3,7 @@
 import { Emitter, CompositeDisposable } from "atom"
 import StableAdapter from "./adapters/stable-adapter"
 import { editorsMinimaps } from "./main"
-
 let nextModelId = 1
-
 /**
  * The Minimap class is the underlying model of a <MinimapElement>.
  * Most manipulations of the minimap is done through the model.
@@ -14,6 +12,7 @@ let nextModelId = 1
  * Their lifecycle follow the one of their target `TextEditor`, so they are
  * destroyed whenever their `TextEditor` is destroyed.
  */
+
 export default class Minimap {
   /**
    * Creates a new Minimap instance for the given `TextEditor`.
@@ -27,7 +26,14 @@ export default class Minimap {
    * @param  {number} [options.height] the minimap height in pixels
    * @throws {Error} Cannot create a minimap without an editor
    */
-  constructor(options = {}) {
+  constructor(
+    options: {
+      height: number
+      standAlone: boolean
+      textEditor: TextEditor
+      width: number
+    } = {}
+  ) {
     if (!options.textEditor) {
       throw new Error("Cannot create a minimap without an editor")
     }
@@ -39,7 +45,6 @@ export default class Minimap {
      * @access private
      */
     this.minimapElement = undefined
-
     // local cache of this.minimapElement.DecorationManagement
     this.DecorationManagement = undefined
 
@@ -64,6 +69,7 @@ export default class Minimap {
      * @access private
      */
     this.standAlone = options.standAlone
+
     /**
      * The width of the current Minimap.
      *
@@ -71,6 +77,7 @@ export default class Minimap {
      * @access private
      */
     this.width = options.width
+
     /**
      * The height of the current Minimap.
      *
@@ -78,6 +85,7 @@ export default class Minimap {
      * @access private
      */
     this.height = options.height
+
     /**
      * The id of the current Minimap.
      *
@@ -85,6 +93,7 @@ export default class Minimap {
      * @access private
      */
     this.id = nextModelId++
+
     /**
      * The events emitter of the current Minimap.
      *
@@ -92,6 +101,7 @@ export default class Minimap {
      * @access private
      */
     this.emitter = new Emitter()
+
     /**
      * The Minimap's subscriptions.
      *
@@ -99,6 +109,7 @@ export default class Minimap {
      * @access private
      */
     this.subscriptions = new CompositeDisposable()
+
     /**
      * The adapter object leverage the access to several properties from
      * the `TextEditor`/`TextEditorElement` to support the different APIs
@@ -108,6 +119,7 @@ export default class Minimap {
      * @access private
      */
     this.adapter = null
+
     /**
      * The char height of the current Minimap, will be `undefined` unless
      * `setCharWidth` is called.
@@ -116,6 +128,7 @@ export default class Minimap {
      * @access private
      */
     this.charHeight = null
+
     /**
      * The char height from the package's configuration. Will be overriden
      * by the instance value.
@@ -124,6 +137,7 @@ export default class Minimap {
      * @access private
      */
     this.configCharHeight = null
+
     /**
      * The char width of the current Minimap, will be `undefined` unless
      * `setCharWidth` is called.
@@ -132,6 +146,7 @@ export default class Minimap {
      * @access private
      */
     this.charWidth = null
+
     /**
      * The char width from the package's configuration. Will be overriden
      * by the instance value.
@@ -140,6 +155,7 @@ export default class Minimap {
      * @access private
      */
     this.configCharWidth = null
+
     /**
      * The interline of the current Minimap, will be `undefined` unless
      * `setCharWidth` is called.
@@ -148,6 +164,7 @@ export default class Minimap {
      * @access private
      */
     this.interline = null
+
     /**
      * The interline from the package's configuration. Will be overriden
      * by the instance value.
@@ -156,6 +173,7 @@ export default class Minimap {
      * @access private
      */
     this.configInterline = null
+
     /**
      * The devicePixelRatioRounding of the current Minimap, will be
      * `undefined` unless `setDevicePixelRatioRounding` is called.
@@ -164,6 +182,7 @@ export default class Minimap {
      * @access private
      */
     this.devicePixelRatioRounding = null
+
     /**
      * The devicePixelRatioRounding from the package's configuration.
      * Will be overriden by the instance value.
@@ -172,6 +191,7 @@ export default class Minimap {
      * @access private
      */
     this.configDevicePixelRatioRounding = null
+
     /**
      * A number of milliseconds which determines how often the minimap should redraw itself after
      * detecting changes in the text editor. A value of 0 will cause the minimap to redraw
@@ -181,6 +201,7 @@ export default class Minimap {
      * @access private
      */
     this.redrawDelay = 0
+
     /**
      * A boolean value to store whether this Minimap have been destroyed or not.
      *
@@ -188,6 +209,7 @@ export default class Minimap {
      * @access private
      */
     this.destroyed = false
+
     /**
      * A boolean value to store whether the `scrollPastEnd` setting is enabled
      * or not.
@@ -221,7 +243,9 @@ export default class Minimap {
       atom.notifications.addWarning(
         "LegacyAdapter of Minimap is deprecated and will be removed in the next major version. Please upgrade Atom to the latest version."
       )
+
       const LegacyAdapter = require("./adapters/legacy-adapter")
+
       this.adapter = new LegacyAdapter(this.textEditor)
     }
 
@@ -233,20 +257,15 @@ export default class Minimap {
      * @access private
      */
     this.scrollTop = 0
-
     let configSubscription = this.subscribeToConfig()
-
     this.subscriptions.add(
       configSubscription,
-
       this.textEditor.onDidChangeGrammar(() => {
         this.subscriptions.remove(configSubscription)
         configSubscription.dispose()
-
         configSubscription = this.subscribeToConfig()
         this.subscriptions.add(configSubscription)
       }),
-
       this.adapter.onDidChangeScrollTop(() => {
         if (!this.standAlone && !this.ignoreTextEditorScroll && !this.inChangeScrollTop) {
           this.inChangeScrollTop = true
@@ -259,31 +278,28 @@ export default class Minimap {
           this.ignoreTextEditorScroll = false
         }
       }),
-
       this.adapter.onDidChangeScrollLeft(() => {
         if (!this.standAlone) {
           this.emitter.emit("did-change-scroll-left", this)
         }
       }),
-
       this.textEditor.onDidChange((changes) => {
         this.scheduleChanges(changes)
       }),
-
       this.textEditor.onDidDestroy(() => {
         if (editorsMinimaps) {
           editorsMinimaps.delete(this.textEditor)
         }
+
         this.destroy()
       }),
-
       /*
-      FIXME Some changes occuring during the tokenization produces
-      ranges that deceive the canvas rendering by making some
-      lines at the end of the buffer intact while they are in fact not,
-      resulting in extra lines appearing at the end of the minimap.
-      Forcing a whole repaint to fix that bug is suboptimal but works.
-      */
+    FIXME Some changes occuring during the tokenization produces
+    ranges that deceive the canvas rendering by making some
+    lines at the end of the buffer intact while they are in fact not,
+    resulting in extra lines appearing at the end of the minimap.
+    Forcing a whole repaint to fix that bug is suboptimal but works.
+    */
       this.textEditor.onDidTokenize(() => {
         this.emitter.emit("did-change-config")
       })
@@ -311,7 +327,7 @@ export default class Minimap {
    *
    * @return {boolean} whether this Minimap has been destroyed or not
    */
-  isDestroyed() {
+  isDestroyed(): boolean {
     return this.destroyed
   }
 
@@ -322,7 +338,7 @@ export default class Minimap {
    * @return void
    * @access private
    */
-  scheduleChanges(changes) {
+  scheduleChanges(changes: Array) {
     this.pendingChangeEvents = this.pendingChangeEvents.concat(changes)
 
     // Optimisation: If the redraw delay is set to 0, do not even schedule a timer
@@ -362,6 +378,7 @@ export default class Minimap {
     if (!this.requestedFlushChanges) {
       this.requestedFlushChanges = requestAnimationFrame(() => {
         this.flushChanges()
+
         if (this.requestedFlushChanges) {
           cancelAnimationFrame(this.requestedFlushChanges)
           this.requestedFlushChanges = null
@@ -384,7 +401,7 @@ export default class Minimap {
    *   after the change
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChange(callback) {
+  onDidChange(callback: (event: Record<string, any>) => void): Disposable {
     return this.emitter.on("did-change", callback)
   }
 
@@ -395,7 +412,7 @@ export default class Minimap {
    *                                    is triggered.
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeConfig(callback) {
+  onDidChangeConfig(callback: () => void): Disposable {
     return this.emitter.on("did-change-config", callback)
   }
 
@@ -413,7 +430,7 @@ export default class Minimap {
    *                                                   the callback.
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeScrollTop(callback) {
+  onDidChangeScrollTop(callback: (minimap: Minimap) => void): Disposable {
     return this.emitter.on("did-change-scroll-top", callback)
   }
 
@@ -427,7 +444,7 @@ export default class Minimap {
    *                                                   the callback.
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeScrollLeft(callback) {
+  onDidChangeScrollLeft(callback: (minimap: Minimap) => void): Disposable {
     return this.emitter.on("did-change-scroll-left", callback)
   }
 
@@ -444,7 +461,7 @@ export default class Minimap {
    *                                                   the callback.
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeStandAlone(callback) {
+  onDidChangeStandAlone(callback: (minimap: Minimap) => void): Disposable {
     return this.emitter.on("did-change-stand-alone", callback)
   }
 
@@ -459,7 +476,7 @@ export default class Minimap {
    *                                    is triggered.
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidDestroy(callback) {
+  onDidDestroy(callback: () => void): Disposable {
     return this.emitter.on("did-destroy", callback)
   }
 
@@ -469,56 +486,48 @@ export default class Minimap {
    * @return {Disposable} the disposable to dispose all the registered events
    * @access private
    */
-  subscribeToConfig() {
+  subscribeToConfig(): Disposable {
     const subs = new CompositeDisposable()
-    const opts = { scope: this.textEditor.getRootScopeDescriptor() }
-
+    const opts = {
+      scope: this.textEditor.getRootScopeDescriptor(),
+    }
     subs.add(
       atom.config.observe("editor.scrollPastEnd", opts, (scrollPastEnd) => {
         this.scrollPastEnd = scrollPastEnd
         this.adapter.scrollPastEnd = this.scrollPastEnd
         this.emitter.emit("did-change-config")
       }),
-
       atom.config.observe("minimap.charHeight", opts, (configCharHeight) => {
         this.configCharHeight = configCharHeight
         this.updateScrollTop()
         this.emitter.emit("did-change-config")
       }),
-
       atom.config.observe("minimap.charWidth", opts, (configCharWidth) => {
         this.configCharWidth = configCharWidth
         this.updateScrollTop()
         this.emitter.emit("did-change-config")
       }),
-
       atom.config.observe("minimap.interline", opts, (configInterline) => {
         this.configInterline = configInterline
         this.updateScrollTop()
         this.emitter.emit("did-change-config")
       }),
-
       atom.config.observe("minimap.independentMinimapScroll", opts, (independentMinimapScroll) => {
         this.independentMinimapScroll = independentMinimapScroll
         this.updateScrollTop()
       }),
-
       atom.config.observe("minimap.scrollSensitivity", opts, (scrollSensitivity) => {
         this.scrollSensitivity = scrollSensitivity
       }),
-
       atom.config.observe("minimap.redrawDelay", opts, (redrawDelay) => {
         this.redrawDelay = redrawDelay
-      }),
-      // cdprr is shorthand for configDevicePixelRatioRounding
-
+      }), // cdprr is shorthand for configDevicePixelRatioRounding
       atom.config.observe("minimap.devicePixelRatioRounding", opts, (cdprr) => {
         this.configDevicePixelRatioRounding = cdprr
         this.updateScrollTop()
         this.emitter.emit("did-change-config")
       })
     )
-
     return subs
   }
 
@@ -527,7 +536,7 @@ export default class Minimap {
    *
    * @return {boolean} whether this Minimap is in stand-alone mode or not.
    */
-  isStandAlone() {
+  isStandAlone(): boolean {
     return this.standAlone
   }
 
@@ -539,7 +548,7 @@ export default class Minimap {
    * @emits {did-change-stand-alone} if the stand-alone mode have been toggled
    *        on or off by the call
    */
-  setStandAlone(standAlone) {
+  setStandAlone(standAlone: boolean) {
     if (standAlone !== this.standAlone) {
       this.standAlone = standAlone
       this.emitter.emit("did-change-stand-alone", this)
@@ -549,7 +558,7 @@ export default class Minimap {
   /**
    * @return {MinimapElement} returns the current minimapElement
    */
-  getMinimapElement() {
+  getMinimapElement(): MinimapElement {
     return this.minimapElement
   }
 
@@ -558,7 +567,7 @@ export default class Minimap {
    *
    * @return {TextEditor} this Minimap's text editor
    */
-  getTextEditor() {
+  getTextEditor(): TextEditor {
     return this.textEditor
   }
 
@@ -567,7 +576,7 @@ export default class Minimap {
    *
    * @return {TextEditorElement} the minimap's text editor element
    */
-  getTextEditorElement() {
+  getTextEditorElement(): TextEditorElement {
     if (this.editorElement) {
       return this.editorElement
     }
@@ -581,7 +590,7 @@ export default class Minimap {
    *
    * @return {number} the scaled height of the text editor
    */
-  getTextEditorScaledHeight() {
+  getTextEditorScaledHeight(): number {
     return this.adapter.getHeight() * this.getVerticalScaleFactor()
   }
 
@@ -590,7 +599,7 @@ export default class Minimap {
    *
    * @return {number} the scaled scroll top of the text editor
    */
-  getTextEditorScaledScrollTop() {
+  getTextEditorScaledScrollTop(): number {
     return this.adapter.getScrollTop() * this.getVerticalScaleFactor()
   }
 
@@ -599,7 +608,7 @@ export default class Minimap {
    *
    * @return {number} the scaled scroll left of the text editor
    */
-  getTextEditorScaledScrollLeft() {
+  getTextEditorScaledScrollLeft(): number {
     return this.adapter.getScrollLeft() * this.getHorizontalScaleFactor()
   }
 
@@ -612,7 +621,7 @@ export default class Minimap {
    *
    * @return {number} the maximum scroll top of the text editor
    */
-  getTextEditorMaxScrollTop() {
+  getTextEditorMaxScrollTop(): number {
     return this.adapter.getMaxScrollTop()
   }
 
@@ -621,7 +630,7 @@ export default class Minimap {
    *
    * @return {number} the scroll top of the text editor
    */
-  getTextEditorScrollTop() {
+  getTextEditorScrollTop(): number {
     return this.adapter.getScrollTop()
   }
 
@@ -630,7 +639,7 @@ export default class Minimap {
    *
    * @param {number} scrollTop the new scroll top value
    */
-  setTextEditorScrollTop(scrollTop, ignoreTextEditorScroll = false) {
+  setTextEditorScrollTop(scrollTop: number, ignoreTextEditorScroll = false) {
     this.ignoreTextEditorScroll = ignoreTextEditorScroll
     this.adapter.setScrollTop(scrollTop)
   }
@@ -640,7 +649,7 @@ export default class Minimap {
    *
    * @return {number} the scroll left of the text editor
    */
-  getTextEditorScrollLeft() {
+  getTextEditorScrollLeft(): number {
     return this.adapter.getScrollLeft()
   }
 
@@ -649,7 +658,7 @@ export default class Minimap {
    *
    * @return {number} the height of the text editor
    */
-  getTextEditorHeight() {
+  getTextEditorHeight(): number {
     return this.adapter.getHeight()
   }
 
@@ -663,7 +672,7 @@ export default class Minimap {
    *
    * @return {number} the scroll ratio of the text editor
    */
-  getTextEditorScrollRatio() {
+  getTextEditorScrollRatio(): number {
     return this.adapter.getScrollTop() / (this.getTextEditorMaxScrollTop() || 1)
   }
 
@@ -675,7 +684,7 @@ export default class Minimap {
    * @return {number} the scroll ratio of the text editor strictly between
    *                  0 and 1
    */
-  getCapedTextEditorScrollRatio() {
+  getCapedTextEditorScrollRatio(): number {
     return Math.min(1, this.getTextEditorScrollRatio())
   }
 
@@ -685,7 +694,7 @@ export default class Minimap {
    *
    * @return {number} the height of the minimap
    */
-  getHeight() {
+  getHeight(): number {
     return this.textEditor.getScreenLineCount() * this.getLineHeight()
   }
 
@@ -695,7 +704,7 @@ export default class Minimap {
    *
    * @return {number} the width of the minimap
    */
-  getWidth() {
+  getWidth(): number {
     return this.textEditor.getMaxScreenLineLength() * this.getCharWidth()
   }
 
@@ -707,7 +716,7 @@ export default class Minimap {
    *
    * @return {number} the visible height of the Minimap
    */
-  getVisibleHeight() {
+  getVisibleHeight(): number {
     return Math.min(this.getScreenHeight(), this.getHeight())
   }
 
@@ -718,7 +727,7 @@ export default class Minimap {
    *
    * @return {number} the total height of the Minimap
    */
-  getScreenHeight() {
+  getScreenHeight(): number {
     if (this.isStandAlone()) {
       if (this.height != null) {
         return this.height
@@ -735,7 +744,7 @@ export default class Minimap {
    *
    * @return {number} the width of the Minimap when displayed
    */
-  getVisibleWidth() {
+  getVisibleWidth(): number {
     return Math.min(this.getScreenWidth(), this.getWidth())
   }
 
@@ -746,7 +755,7 @@ export default class Minimap {
    *
    * @return {number} the Minimap screen width
    */
-  getScreenWidth() {
+  getScreenWidth(): number {
     if (this.isStandAlone() && this.width != null) {
       return this.width
     } else {
@@ -763,7 +772,7 @@ export default class Minimap {
    * @param {number} height the new height of the Minimap
    * @param {number} width the new width of the Minimap
    */
-  setScreenHeightAndWidth(height, width) {
+  setScreenHeightAndWidth(height: number, width: number) {
     if (this.width !== width || this.height !== height) {
       this.height = height
       this.width = width
@@ -777,7 +786,7 @@ export default class Minimap {
    *
    * @return {number} the Minimap vertical scaling factor
    */
-  getVerticalScaleFactor() {
+  getVerticalScaleFactor(): number {
     return this.getLineHeight() / this.textEditor.getLineHeightInPixels()
   }
 
@@ -787,7 +796,7 @@ export default class Minimap {
    *
    * @return {number} the Minimap horizontal scaling factor
    */
-  getHorizontalScaleFactor() {
+  getHorizontalScaleFactor(): number {
     return this.getCharWidth() / this.textEditor.getDefaultCharWidth()
   }
 
@@ -796,7 +805,7 @@ export default class Minimap {
    *
    * @return {number} a line's height in the Minimap
    */
-  getLineHeight() {
+  getLineHeight(): number {
     return this.getCharHeight() + this.getInterline()
   }
 
@@ -805,7 +814,7 @@ export default class Minimap {
    *
    * @return {number} a character's width in the Minimap
    */
-  getCharWidth() {
+  getCharWidth(): number {
     if (this.charWidth != null) {
       return this.charWidth
     } else {
@@ -821,7 +830,7 @@ export default class Minimap {
    * @param {number} charWidth the new width of a char in the Minimap
    * @emits {did-change-config} when the value is changed
    */
-  setCharWidth(charWidth) {
+  setCharWidth(charWidth: number) {
     this.charWidth = Math.floor(charWidth)
     this.emitter.emit("did-change-config")
   }
@@ -831,7 +840,7 @@ export default class Minimap {
    *
    * @return {number} a character's height in the Minimap
    */
-  getCharHeight() {
+  getCharHeight(): number {
     if (this.charHeight != null) {
       return this.charHeight
     } else {
@@ -847,7 +856,7 @@ export default class Minimap {
    * @param {number} charHeight the new height of a char in the Minimap
    * @emits {did-change-config} when the value is changed
    */
-  setCharHeight(charHeight) {
+  setCharHeight(charHeight: number) {
     this.charHeight = Math.floor(charHeight)
     this.emitter.emit("did-change-config")
   }
@@ -857,7 +866,7 @@ export default class Minimap {
    *
    * @return {number} the interline's height in the Minimap
    */
-  getInterline() {
+  getInterline(): number {
     if (this.interline != null) {
       return this.interline
     } else {
@@ -873,7 +882,7 @@ export default class Minimap {
    * @param {number} interline the new height of an interline in the Minimap
    * @emits {did-change-config} when the value is changed
    */
-  setInterline(interline) {
+  setInterline(interline: number) {
     this.interline = Math.floor(interline)
     this.emitter.emit("did-change-config")
   }
@@ -883,7 +892,7 @@ export default class Minimap {
    *
    * @return {boolean} the devicePixelRatioRounding status in the Minimap
    */
-  getDevicePixelRatioRounding() {
+  getDevicePixelRatioRounding(): boolean {
     if (this.devicePixelRatioRounding != null) {
       return this.devicePixelRatioRounding
     } else {
@@ -901,7 +910,7 @@ export default class Minimap {
    *                                           in the Minimap
    * @emits {did-change-config} when the value is changed
    */
-  setDevicePixelRatioRounding(devicePixelRatioRounding) {
+  setDevicePixelRatioRounding(devicePixelRatioRounding: boolean) {
     this.devicePixelRatioRounding = devicePixelRatioRounding
     this.emitter.emit("did-change-config")
   }
@@ -911,7 +920,7 @@ export default class Minimap {
    *
    * @return {number} the devicePixelRatio in the Minimap
    */
-  getDevicePixelRatio() {
+  getDevicePixelRatio(): number {
     return this.getDevicePixelRatioRounding() ? Math.floor(devicePixelRatio) : devicePixelRatio
   }
 
@@ -920,7 +929,7 @@ export default class Minimap {
    *
    * @return {number} the index of the first visible row
    */
-  getFirstVisibleScreenRow() {
+  getFirstVisibleScreenRow(): number {
     return Math.floor(this.getScrollTop() / this.getLineHeight())
   }
 
@@ -929,7 +938,7 @@ export default class Minimap {
    *
    * @return {number} the index of the last visible row
    */
-  getLastVisibleScreenRow() {
+  getLastVisibleScreenRow(): number {
     return Math.ceil((this.getScrollTop() + this.getScreenHeight()) / this.getLineHeight())
   }
 
@@ -938,7 +947,7 @@ export default class Minimap {
    *
    * @return {boolean} whether the minimap can scroll independently
    */
-  scrollIndependentlyOnMouseWheel() {
+  scrollIndependentlyOnMouseWheel(): boolean {
     return this.independentMinimapScroll
   }
 
@@ -950,7 +959,7 @@ export default class Minimap {
    *
    * @return {number} the scroll top of the Minimap
    */
-  getScrollTop() {
+  getScrollTop(): number {
     return this.standAlone || this.independentMinimapScroll ? this.scrollTop : this.getScrollTopFromEditor()
   }
 
@@ -960,7 +969,7 @@ export default class Minimap {
    * @param {number} scrollTop the new scroll top for the Minimap
    * @emits {did-change-scroll-top} if the Minimap's stand-alone mode is enabled
    */
-  setScrollTop(scrollTop) {
+  setScrollTop(scrollTop: number) {
     this.scrollTop = Math.max(0, Math.min(this.getMaxScrollTop(), scrollTop))
 
     if (this.standAlone || this.independentMinimapScroll) {
@@ -973,7 +982,7 @@ export default class Minimap {
    *
    * @return {number} the minimap scroll ratio
    */
-  getScrollRatio() {
+  getScrollRatio(): number {
     return this.getScrollTop() / this.getMaxScrollTop()
   }
 
@@ -988,6 +997,7 @@ export default class Minimap {
       try {
         this.setScrollTop(this.getScrollTopFromEditor())
       } catch (err) {}
+
       this.emitter.emit("did-change-scroll-top", this)
     }
   }
@@ -997,7 +1007,7 @@ export default class Minimap {
    *
    * @return {number} the computed scroll top value
    */
-  getScrollTopFromEditor() {
+  getScrollTopFromEditor(): number {
     return Math.abs(this.getCapedTextEditorScrollRatio() * this.getMaxScrollTop())
   }
 
@@ -1006,7 +1016,7 @@ export default class Minimap {
    *
    * @return {number} the maximum scroll top for the Minimap
    */
-  getMaxScrollTop() {
+  getMaxScrollTop(): number {
     return Math.max(0, this.getHeight() - this.getScreenHeight())
   }
 
@@ -1015,7 +1025,7 @@ export default class Minimap {
    *
    * @return {boolean} whether this Minimap can scroll or not
    */
-  canScroll() {
+  canScroll(): boolean {
     return this.getMaxScrollTop() > 0
   }
 
@@ -1026,7 +1036,7 @@ export default class Minimap {
    * @param  {MouseEvent} event the mouse wheel event
    * @access private
    */
-  onMouseWheel(event) {
+  onMouseWheel(event: MouseEvent) {
     if (this.scrollIndependentlyOnMouseWheel()) {
       event.stopPropagation()
 
@@ -1037,7 +1047,6 @@ export default class Minimap {
       const { wheelDeltaY } = event
       const previousScrollTop = this.getScrollTop()
       const updatedScrollTop = previousScrollTop - Math.round(wheelDeltaY * this.scrollSensitivity)
-
       event.preventDefault()
       this.setScrollTop(updatedScrollTop)
     }
@@ -1080,7 +1089,7 @@ export default class Minimap {
    * @param  {Object} changes a change to dispatch
    * @access private
    */
-  emitChanges(changes) {
+  emitChanges(changes: {}) {
     this.emitter.emit("did-change", changes)
   }
 
@@ -1111,7 +1120,7 @@ export default class Minimap {
    *  get the DecorationManagement API for the current minimapElement
    * @return {DecorationManagement}
    */
-  getDecorationManagement() {
+  getDecorationManagement(): DecorationManagement {
     if (!this.DecorationManagement) {
       if (this.minimapElement) {
         this.DecorationManagement = this.minimapElement.DecorationManagement
@@ -1125,6 +1134,7 @@ export default class Minimap {
      `)
       }
     }
+
     return this.DecorationManagement
   }
 
@@ -1132,36 +1142,47 @@ export default class Minimap {
   getDecorations() {
     return this.getDecorationManagement().getDecorations()
   }
+
   onDidAddDecoration(...args) {
     return this.getDecorationManagement().onDidAddDecoration(...args)
   }
+
   onDidRemoveDecoration(...args) {
     return this.getDecorationManagement().onDidRemoveDecoration(...args)
   }
+
   onDidChangeDecorationRange(...args) {
     return this.getDecorationManagement().onDidChangeDecorationRange(...args)
   }
+
   onDidUpdateDecoration(...args) {
     return this.getDecorationManagement().onDidUpdateDecoration(...args)
   }
+
   decorationForId(...args) {
     return this.getDecorationManagement().decorationForId(...args)
   }
+
   decorationsForScreenRowRange(...args) {
     return this.getDecorationManagement().decorationsForScreenRowRange(...args)
   }
+
   decorationsByTypeThenRows() {
     return this.getDecorationManagement().decorationsByTypeThenRows()
   }
+
   decorateMarker(...args) {
     return this.getDecorationManagement().decorateMarker(...args)
   }
+
   removeDecoration(...args) {
     return this.getDecorationManagement().removeDecoration(...args)
   }
+
   removeAllDecorationsForMarker(...args) {
     return this.getDecorationManagement().removeAllDecorationsForMarker(...args)
   }
+
   removeAllDecorations() {
     return this.getDecorationManagement().removeAllDecorations()
   }

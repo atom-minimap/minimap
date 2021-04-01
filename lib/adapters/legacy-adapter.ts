@@ -1,8 +1,8 @@
 "use strict"
-
 /**
  * @access private
  */
+
 export default class LegacyAdapter {
   constructor(textEditor) {
     this.textEditor = textEditor
@@ -33,8 +33,10 @@ export default class LegacyAdapter {
       if (!this.heightCache) {
         this.heightCache = this.textEditor.getHeight()
       }
+
       return this.heightCache
     }
+
     return this.textEditor.getHeight()
   }
 
@@ -43,8 +45,10 @@ export default class LegacyAdapter {
       if (!this.scrollTopCache) {
         this.scrollTopCache = this.textEditor.getScrollTop()
       }
+
       return this.scrollTopCache
     }
+
     return this.textEditor.getScrollTop()
   }
 
@@ -57,6 +61,7 @@ export default class LegacyAdapter {
       if (!this.scrollLeftCache) {
         this.scrollLeftCache = this.textEditor.getScrollLeft()
       }
+
       return this.scrollLeftCache
     }
 
@@ -67,15 +72,18 @@ export default class LegacyAdapter {
     if (this.maxScrollTopCache != null && this.useCache) {
       return this.maxScrollTopCache
     }
+
     let maxScrollTop = this.textEditor.displayBuffer.getMaxScrollTop()
     const lineHeight = this.textEditor.getLineHeightInPixels()
 
     if (this.scrollPastEnd) {
       maxScrollTop -= this.getHeight() - 3 * lineHeight
     }
+
     if (this.useCache) {
       this.maxScrollTopCache = maxScrollTop
     }
+
     return maxScrollTop
   }
 

@@ -1,17 +1,17 @@
 "use strict"
 
 import { Emitter } from "atom"
-
 let idCounter = 0
+
 const nextId = function () {
   return idCounter++
 }
-
 /**
  * The `Decoration` class represents a decoration in the Minimap.
  *
  * It has the same API than the `Decoration` class of a text editor.
  */
+
 export default class Decoration {
   /**
    * Returns `true` if the passed-in decoration properties matches the
@@ -21,11 +21,12 @@ export default class Decoration {
    * @param  {string} type the decoration type to match
    * @return {boolean} whether the decoration properties match the type
    */
-  static isType(decorationProperties, type) {
+  static isType(decorationProperties: {}, type: string): boolean {
     if (Array.isArray(decorationProperties.type)) {
       if (decorationProperties.type.indexOf(type) >= 0) {
         return true
       }
+
       return false
     } else {
       return type === decorationProperties.type
@@ -40,40 +41,45 @@ export default class Decoration {
    *                           be displayed
    * @param  {Object} properties the decoration's properties
    */
-  constructor(marker, minimap, properties) {
+  constructor(marker: Marker, minimap: Minimap, properties: {}) {
     /**
      * @access private
      */
     this.marker = marker
+
     /**
      * @access private
      */
     this.minimap = minimap
+
     /**
      * @access private
      */
     this.emitter = new Emitter()
+
     /**
      * @access private
      */
     this.id = nextId()
+
     /**
      * @access private
      */
     this.properties = null
     this.setProperties(properties)
     this.properties.id = this.id
+
     /**
      * @access private
      */
     this.destroyed = false
+
     /**
      * @access private
      */
     this.markerDestroyDisposable = this.marker.onDidDestroy(() => {
       this.destroy()
     })
-
     this.screenRange = marker.getScreenRange()
   }
 
@@ -100,7 +106,7 @@ export default class Decoration {
    *
    * @return {boolean} whether this decoration is destroyed or not
    */
-  isDestroyed() {
+  isDestroyed(): boolean {
     return this.destroyed
   }
 
@@ -113,7 +119,7 @@ export default class Decoration {
    *                                        when the event is triggered
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidChangeProperties(callback) {
+  onDidChangeProperties(callback: (change: {}) => void): Disposable {
     return this.emitter.on("did-change-properties", callback)
   }
 
@@ -124,7 +130,7 @@ export default class Decoration {
    *                                    is triggered
    * @return {Disposable} a disposable to stop listening to the event
    */
-  onDidDestroy(callback) {
+  onDidDestroy(callback: () => void): Disposable {
     return this.emitter.on("did-destroy", callback)
   }
 
@@ -133,7 +139,7 @@ export default class Decoration {
    *
    * @return {number} the decoration id
    */
-  getId() {
+  getId(): number {
     return this.id
   }
 
@@ -142,7 +148,7 @@ export default class Decoration {
    *
    * @return {Marker} the decoration's marker
    */
-  getMarker() {
+  getMarker(): Marker {
     return this.marker
   }
 
@@ -155,7 +161,7 @@ export default class Decoration {
    *                             matches any in the array.
    * @return {boolean} whether this decoration match the passed-in type
    */
-  isType(type) {
+  isType(type: string | Array): boolean {
     return Decoration.isType(this.properties, type)
   }
 
@@ -164,7 +170,7 @@ export default class Decoration {
    *
    * @return {Object} the decoration's properties
    */
-  getProperties() {
+  getProperties(): {} {
     return this.properties
   }
 
@@ -174,7 +180,7 @@ export default class Decoration {
    *
    * @param {Object} newProperties the new properties for the decoration
    */
-  setProperties(newProperties) {
+  setProperties(newProperties: {}) {
     if (this.destroyed) {
       return
     }
@@ -182,7 +188,9 @@ export default class Decoration {
     const oldProperties = this.properties
     this.properties = newProperties
     this.properties.id = this.id
-
-    this.emitter.emit("did-change-properties", { oldProperties, newProperties })
+    this.emitter.emit("did-change-properties", {
+      oldProperties,
+      newProperties,
+    })
   }
 }

@@ -18,7 +18,6 @@ import { emitter, getConfigSchema } from "./main"
  *
  * @access public
  */
-
 // Initialize the properties for plugin management.
 
 /**
@@ -28,13 +27,14 @@ import { emitter, getConfigSchema } from "./main"
  * @access private
  */
 export const plugins = {}
+
 /**
  * The plugins' subscriptions stored using the plugin names as keys.
  *
  * @type {Object}
  * @access private
  */
-const pluginsSubscriptions = {}
+const pluginsSubscriptions: {} = {}
 
 /**
  * A map that stores the display order for each plugin
@@ -42,7 +42,7 @@ const pluginsSubscriptions = {}
  * @type {Object}
  * @access private
  */
-const pluginsOrderMap = {}
+const pluginsOrderMap: {} = {}
 
 /**
  * Registers a minimap `plugin` with the given `name`.
@@ -58,8 +58,10 @@ const pluginsOrderMap = {}
 export function registerPlugin(name, plugin) {
   plugins[name] = plugin
   pluginsSubscriptions[name] = new CompositeDisposable()
-
-  const event = { name, plugin }
+  const event = {
+    name,
+    plugin,
+  }
   emitter.emit("did-add-plugin", event)
 
   if (atom.config.get("minimap.displayPluginsControls")) {
@@ -84,8 +86,10 @@ export function unregisterPlugin(name) {
   }
 
   delete plugins[name]
-
-  const event = { name, plugin }
+  const event = {
+    name,
+    plugin,
+  }
   emitter.emit("did-remove-plugin", event)
 }
 
@@ -120,7 +124,10 @@ export function togglePluginActivation(name, boolean) {
 export function deactivateAllPlugins() {
   for (const [name, plugin] of eachPlugin()) {
     plugin.deactivatePlugin()
-    emitter.emit("did-deactivate-plugin", { name, plugin })
+    emitter.emit("did-deactivate-plugin", {
+      name,
+      plugin,
+    })
   }
 }
 
@@ -144,7 +151,7 @@ function* eachPlugin() {
  * @emits {did-deactivate-plugin} if the plugin was deactivated by the call.
  * @access private
  */
-function updatesPluginActivationState(name) {
+function updatesPluginActivationState(name: string) {
   const plugin = plugins[name]
   const pluginActive = plugin.isActive()
   const settingActive = atom.config.get(`minimap.plugins.${name}`)
@@ -165,15 +172,18 @@ function updatesPluginActivationState(name) {
 }
 
 export function activatePlugin(name, plugin) {
-  const event = { name, plugin }
-
+  const event = {
+    name,
+    plugin,
+  }
   plugin.activatePlugin()
   emitter.emit("did-activate-plugin", event)
 }
-
 export function deactivatePlugin(name, plugin) {
-  const event = { name, plugin }
-
+  const event = {
+    name,
+    plugin,
+  }
   plugin.deactivatePlugin()
   emitter.emit("did-deactivate-plugin", event)
 }
@@ -192,19 +202,16 @@ export function deactivatePlugin(name, plugin) {
  *          to toggle the plugin state.
  * @access private
  */
-function registerPluginControls(name, plugin) {
+function registerPluginControls(name: string, plugin: MinimapPlugin) {
   const settingsKey = `minimap.plugins.${name}`
   const orderSettingsKey = `minimap.plugins.${name}DecorationsZIndex`
-
   const config = getConfigSchema()
-
   config.plugins.properties[name] = {
     type: "boolean",
     title: name,
     description: `Whether the ${name} plugin is activated and displayed in the Minimap.`,
     default: true,
   }
-
   config.plugins.properties[`${name}DecorationsZIndex`] = {
     type: "integer",
     title: `${name} decorations order`,
@@ -225,15 +232,17 @@ function registerPluginControls(name, plugin) {
       updatesPluginActivationState(name)
     })
   )
-
   pluginsSubscriptions[name].add(
     atom.config.observe(orderSettingsKey, (order) => {
       updatePluginsOrderMap(name)
-      const event = { name, plugin, order }
+      const event = {
+        name,
+        plugin,
+        order,
+      }
       emitter.emit("did-change-plugin-order", event)
     })
   )
-
   pluginsSubscriptions[name].add(
     atom.commands.add("atom-workspace", {
       [`minimap:toggle-${name}`]: () => {
@@ -241,7 +250,6 @@ function registerPluginControls(name, plugin) {
       },
     })
   )
-
   updatePluginsOrderMap(name)
 }
 
@@ -251,9 +259,8 @@ function registerPluginControls(name, plugin) {
  * @param  {string} name the name of the plugin to update
  * @access private
  */
-function updatePluginsOrderMap(name) {
+function updatePluginsOrderMap(name: string) {
   const orderSettingsKey = `minimap.plugins.${name}DecorationsZIndex`
-
   pluginsOrderMap[name] = atom.config.get(orderSettingsKey)
 }
 
@@ -274,7 +281,7 @@ export function getPluginsOrder() {
  * @param {string} name The identifying name of the plugin.
  * @access private
  */
-function unregisterPluginControls(name) {
+function unregisterPluginControls(name: string) {
   pluginsSubscriptions[name].dispose()
   delete pluginsSubscriptions[name]
   delete getConfigSchema().plugins.properties[name]

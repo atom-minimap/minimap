@@ -1,7 +1,6 @@
 "use strict"
 
 import { registerOrUpdateElement } from "atom-utils-plus"
-
 /**
  * Generates a decorator function to convert a class into a custom element
  * through the `registerOrUpdateElement` method from `atom-utils-plus`.
@@ -34,6 +33,9 @@ import { registerOrUpdateElement } from "atom-utils-plus"
  *   // ...
  * }
  */
+
 export default function element(cls, elementName) {
-  return registerOrUpdateElement(elementName, { class: cls })
+  return registerOrUpdateElement(elementName, {
+    class: cls,
+  })
 }
