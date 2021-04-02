@@ -1,3 +1,10 @@
+## [4.39.12](https://github.com/atom-minimap/minimap/compare/v4.39.11...v4.39.12) (2021-04-02)
+
+
+### Bug Fixes
+
+* remove preventDefault from onMouseWheel for independent scroll ([02527ff](https://github.com/atom-minimap/minimap/commit/02527ff47584f332a46fd45f8e215c4aeedc3b64))
+
 ## [4.39.11](https://github.com/atom-minimap/minimap/compare/v4.39.10...v4.39.11) (2021-04-01)
 
 
