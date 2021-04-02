@@ -533,7 +533,7 @@ describe("MinimapElement", () => {
       })
 
       it("renders the visible outline decorations", () => {
-        spyOn(minimapElement, "drawHighlightOutlineDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawHighlightOutlineDecoration").andCallThrough()
 
         minimapElement.DecorationManagement.decorateMarker(
           editor.markBufferRange([
@@ -565,8 +565,8 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawHighlightOutlineDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawHighlightOutlineDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawHighlightOutlineDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawHighlightOutlineDecoration.calls.length).toEqual(4)
         })
       })
 
