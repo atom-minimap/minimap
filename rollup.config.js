@@ -1,14 +1,14 @@
 import { createPlugins } from "rollup-plugin-atomic"
-import terserOptions from "./.terserrc.js"
+import TerserOptions from "./.terserrc.js"
 
 const plugins = createPlugins([
   "js",
   "json",
-  ["terser", terserOptions],
+  ["terser", TerserOptions],
   // "visualizer",
 ])
 
-export default [
+const RollupConfig = [
   {
     input: "lib/main.js",
     output: [
@@ -21,6 +21,7 @@ export default [
     ],
     // loaded externally
     external: ["atom", "electron"],
-    plugins: plugins,
+    plugins,
   },
 ]
+export default RollupConfig

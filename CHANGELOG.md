@@ -1,3 +1,10 @@
+## [4.39.11](https://github.com/atom-minimap/minimap/compare/v4.39.10...v4.39.11) (2021-04-01)
+
+
+### Bug Fixes
+
+* update dependencies ([5b7c457](https://github.com/atom-minimap/minimap/commit/5b7c45703d40388f3c3696cec1b8202b040e284c))
+
 ## [4.39.10](https://github.com/atom-minimap/minimap/compare/v4.39.9...v4.39.10) (2021-03-12)
 
 
