@@ -1,3 +1,10 @@
+## [4.39.13](https://github.com/atom-minimap/minimap/compare/v4.39.12...v4.39.13) (2021-04-14)
+
+
+### Bug Fixes
+
+* rotateHue accepts negative hue values in DOMStylesReader ([2e6f047](https://github.com/atom-minimap/minimap/commit/2e6f04778870ee9d8820d41cf5c45184b6ecb4c4))
+
 ## [4.39.12](https://github.com/atom-minimap/minimap/compare/v4.39.11...v4.39.12) (2021-04-02)
 
 
