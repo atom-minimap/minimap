@@ -1,0 +1,6 @@
+{
+  "presets": ["babel-preset-atomic"],
+  "plugins": [],
+  "exclude": "node_modules/**",
+  "sourceMap": "inline"
+}

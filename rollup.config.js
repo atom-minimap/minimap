@@ -3,6 +3,7 @@ import TerserOptions from "./.terserrc.js"
 
 const plugins = createPlugins([
   "js",
+  "babel",
   "json",
   ["terser", TerserOptions],
   // "visualizer",
