@@ -78,8 +78,7 @@
     "jasmine-expect": "^5.0.0",
     "npm-check-updates": "latest",
     "prettier-config-atomic": "^1.0.1",
-    "rollup": "2.44.0",
-    "rollup-plugin-atomic": "^2.1.2",
+    "rollup-plugin-atomic": "^2.3.1",
     "shx": "^0.3.3",
     "underscore-plus": "^1.7.0"
   },
