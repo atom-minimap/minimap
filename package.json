@@ -68,6 +68,7 @@
   "devDependencies": {
     "@types/atom": "^1.40.10",
     "@types/jasmine": "3.6.9",
+    "babel-preset-atomic": "^4.1.0",
     "build-commit": "^0.1.4",
     "cross-env": "^7.0.3",
     "esdoc": "^1.1.0",
@@ -77,8 +78,7 @@
     "jasmine-expect": "^5.0.0",
     "npm-check-updates": "latest",
     "prettier-config-atomic": "^1.0.1",
-    "rollup": "2.44.0",
-    "rollup-plugin-atomic": "^2.1.2",
+    "rollup-plugin-atomic": "^2.3.1",
     "shx": "^0.3.3",
     "underscore-plus": "^1.7.0"
   },
