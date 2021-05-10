@@ -1,3 +1,15 @@
+## [4.39.14](https://github.com/atom-minimap/minimap/compare/v4.39.13...v4.39.14) (2021-05-10)
+
+
+### Bug Fixes
+
+* don't destory the dummty decoration ([fd61554](https://github.com/atom-minimap/minimap/commit/fd615543502a54334c6a9d94e370d4c5b4cee263))
+* don't emit if the decoration is already destroyed ([30ad2d6](https://github.com/atom-minimap/minimap/commit/30ad2d606fe42a20ee151319757e4894ab605006))
+* make the old decorations API type-safe ([a94020a](https://github.com/atom-minimap/minimap/commit/a94020a160161fdd309188591e0f50bbc4383494))
+* remove excess return null ([930ba15](https://github.com/atom-minimap/minimap/commit/930ba15b4868daa08926d62d57ebe2b13f8c30b2))
+* return a real destroyed decoration ([473d82c](https://github.com/atom-minimap/minimap/commit/473d82c9d746e81289a4dda1a21394e79b3be920))
+* return destoryed decoration and disposable on fallback ([bd4eb25](https://github.com/atom-minimap/minimap/commit/bd4eb25df94234b10901bb115671f8b954d09bf2))
+
 ## [4.39.13](https://github.com/atom-minimap/minimap/compare/v4.39.12...v4.39.13) (2021-04-14)
 
 
