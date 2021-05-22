@@ -227,7 +227,7 @@ describe("MinimapElement", () => {
       describe("when a hue-rotate filter is applied to a rgb color", () => {
         let [additionnalStyleNode] = []
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement("style")
           additionnalStyleNode.textContent = `
@@ -247,7 +247,7 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
             expect(
-              minimapElement.DOMStylesReader.retrieveStyleFromDom(
+              minimapElement.CanvasDrawer.DOMStylesReader.retrieveStyleFromDom(
                 [".editor"],
                 "color",
                 minimapElement.minimap.getTextEditorElement(),
@@ -262,7 +262,7 @@ describe("MinimapElement", () => {
         let [additionnalStyleNode] = []
 
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement("style")
           additionnalStyleNode.textContent = `
@@ -282,7 +282,7 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
             expect(
-              minimapElement.DOMStylesReader.retrieveStyleFromDom(
+              minimapElement.CanvasDrawer.DOMStylesReader.retrieveStyleFromDom(
                 [".editor"],
                 "color",
                 minimapElement.minimap.getTextEditorElement(),
@@ -367,10 +367,10 @@ describe("MinimapElement", () => {
         atom.config.set("minimap.plugins.fooDecorationsZIndex", 1)
 
         const calls = []
-        spyOn(minimapElement, "drawLineDecoration").andCallFake((d) => {
+        spyOn(minimapElement.CanvasDrawer, "drawLineDecoration").andCallFake((d) => {
           calls.push(d.getProperties().plugin)
         })
-        spyOn(minimapElement, "drawHighlightDecoration").andCallFake((d) => {
+        spyOn(minimapElement.CanvasDrawer, "drawHighlightDecoration").andCallFake((d) => {
           calls.push(d.getProperties().plugin)
         })
 
@@ -419,7 +419,7 @@ describe("MinimapElement", () => {
       })
 
       it("renders the visible line decorations", () => {
-        spyOn(minimapElement, "drawLineDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawLineDecoration").andCallThrough()
 
         minimapElement.DecorationManagement.decorateMarker(
           editor.markBufferRange([
@@ -451,13 +451,13 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawLineDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawLineDecoration.calls.length).toEqual(2)
+          expect(minimapElement.CanvasDrawer.drawLineDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawLineDecoration.calls.length).toEqual(2)
         })
       })
 
       it("renders the visible gutter decorations", () => {
-        spyOn(minimapElement, "drawGutterDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawGutterDecoration").andCallThrough()
 
         minimapElement.DecorationManagement.decorateMarker(
           editor.markBufferRange([
@@ -489,13 +489,13 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawGutterDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawGutterDecoration.calls.length).toEqual(2)
+          expect(minimapElement.CanvasDrawer.drawGutterDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawGutterDecoration.calls.length).toEqual(2)
         })
       })
 
       it("renders the visible highlight decorations", () => {
-        spyOn(minimapElement, "drawHighlightDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawHighlightDecoration").andCallThrough()
 
         minimapElement.DecorationManagement.decorateMarker(
           editor.markBufferRange([
@@ -527,13 +527,13 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawHighlightDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawHighlightDecoration.calls.length).toEqual(2)
+          expect(minimapElement.CanvasDrawer.drawHighlightDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawHighlightDecoration.calls.length).toEqual(2)
         })
       })
 
       it("renders the visible outline decorations", () => {
-        spyOn(minimapElement, "drawHighlightOutlineDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawHighlightOutlineDecoration").andCallThrough()
 
         minimapElement.DecorationManagement.decorateMarker(
           editor.markBufferRange([
@@ -565,13 +565,13 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawHighlightOutlineDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawHighlightOutlineDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawHighlightOutlineDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawHighlightOutlineDecoration.calls.length).toEqual(4)
         })
       })
 
       it("renders the visible custom foreground decorations", () => {
-        spyOn(minimapElement, "drawCustomDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawCustomDecoration").andCallThrough()
 
         const renderRoutine = jasmine.createSpy("renderRoutine")
 
@@ -610,8 +610,8 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration.calls.length).toEqual(4)
 
           expect(renderRoutine).toHaveBeenCalled()
           expect(renderRoutine.calls.length).toEqual(4)
@@ -619,7 +619,7 @@ describe("MinimapElement", () => {
       })
 
       it("renders the visible custom background decorations", () => {
-        spyOn(minimapElement, "drawCustomDecoration").andCallThrough()
+        spyOn(minimapElement.CanvasDrawer, "drawCustomDecoration").andCallThrough()
 
         const renderRoutine = jasmine.createSpy("renderRoutine")
 
@@ -658,8 +658,8 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
 
-          expect(minimapElement.drawCustomDecoration).toHaveBeenCalled()
-          expect(minimapElement.drawCustomDecoration.calls.length).toEqual(4)
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.drawCustomDecoration.calls.length).toEqual(4)
 
           expect(renderRoutine).toHaveBeenCalled()
           expect(renderRoutine.calls.length).toEqual(4)
@@ -733,7 +733,7 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
 
-            spyOn(minimapElement, "drawLines").andCallThrough()
+            spyOn(minimapElement.CanvasDrawer, "drawLines").andCallThrough()
             editor.insertText("foo")
           })
         })
@@ -745,9 +745,9 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
 
-            expect(minimapElement.drawLines).toHaveBeenCalled()
+            expect(minimapElement.CanvasDrawer.drawLines).toHaveBeenCalled()
 
-            const [firstLine, lastLine] = minimapElement.drawLines.argsForCall[0]
+            const [firstLine, lastLine] = minimapElement.CanvasDrawer.drawLines.argsForCall[0]
 
             // These tests are very flaky, depending on Atom's version the
             // measured values can changed so we have
@@ -759,8 +759,8 @@ describe("MinimapElement", () => {
 
       describe("when the editor visibility change", () => {
         it("does not modify the size of the canvas", () => {
-          const canvasWidth = minimapElement.getFrontCanvas().width
-          const canvasHeight = minimapElement.getFrontCanvas().height
+          const canvasWidth = minimapElement.CanvasDrawer.getFrontCanvas().width
+          const canvasHeight = minimapElement.CanvasDrawer.getFrontCanvas().height
           editorElement.style.display = "none"
 
           minimapElement.measureHeightAndWidth()
@@ -771,8 +771,8 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
 
-            expect(minimapElement.getFrontCanvas().width).toEqual(canvasWidth)
-            expect(minimapElement.getFrontCanvas().height).toEqual(canvasHeight)
+            expect(minimapElement.CanvasDrawer.getFrontCanvas().width).toEqual(canvasWidth)
+            expect(minimapElement.CanvasDrawer.getFrontCanvas().height).toEqual(canvasHeight)
           })
         })
 
@@ -867,7 +867,7 @@ describe("MinimapElement", () => {
         let [canvas, visibleArea, originalLeft, maxScroll] = []
 
         beforeEach(() => {
-          canvas = minimapElement.getFrontCanvas()
+          canvas = minimapElement.CanvasDrawer.getFrontCanvas()
           visibleArea = minimapElement.visibleArea
           originalLeft = visibleArea.getBoundingClientRect().left
           maxScroll = minimap.getTextEditorMaxScrollTop()
@@ -964,7 +964,7 @@ describe("MinimapElement", () => {
 
           atom.config.set("minimap.scrollAnimation", false)
 
-          canvas = minimapElement.getFrontCanvas()
+          canvas = minimapElement.CanvasDrawer.getFrontCanvas()
         })
 
         it("scrolls the editor to the line below the mouse", () => {
@@ -1005,7 +1005,7 @@ describe("MinimapElement", () => {
           atom.config.set("minimap.scrollAnimation", true)
           atom.config.set("minimap.scrollAnimationDuration", 300)
 
-          canvas = minimapElement.getFrontCanvas()
+          canvas = minimapElement.CanvasDrawer.getFrontCanvas()
         })
 
         it("scrolls the editor gradually to the line below the mouse", () => {
@@ -1317,7 +1317,7 @@ describe("MinimapElement", () => {
 
           atom.config.set("minimap.scrollAnimation", false)
 
-          canvas = minimapElement.getFrontCanvas()
+          canvas = minimapElement.CanvasDrawer.getFrontCanvas()
           mousedown(canvas)
         })
 
@@ -1393,7 +1393,7 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
           spyOn(minimapElement, "requestForcedUpdate").andCallThrough()
-          spyOn(minimapElement.DOMStylesReader, "invalidateDOMStylesCache").andCallThrough()
+          spyOn(minimapElement.CanvasDrawer.DOMStylesReader, "invalidateDOMStylesCache").andCallThrough()
         })
       })
 
@@ -1407,7 +1407,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1421,7 +1421,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1435,7 +1435,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1449,7 +1449,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.CanvasDrawer.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
     })
@@ -1612,7 +1612,7 @@ describe("MinimapElement", () => {
       })
 
       it("adjusts the width of the minimap canvas", () => {
-        expect(minimapElement.getFrontCanvas().width / devicePixelRatio).toEqual(4)
+        expect(minimapElement.CanvasDrawer.getFrontCanvas().width / devicePixelRatio).toEqual(4)
       })
 
       it("offsets the minimap by the difference", () => {
@@ -1631,7 +1631,7 @@ describe("MinimapElement", () => {
           })
           runs(() => {
             nextAnimationFrame()
-            expect(minimapElement.getFrontCanvas().width / devicePixelRatio).toEqual(4)
+            expect(minimapElement.CanvasDrawer.getFrontCanvas().width / devicePixelRatio).toEqual(4)
           })
         })
       })
@@ -1967,7 +1967,7 @@ describe("MinimapElement", () => {
         })
 
         it("positions the quick settings view next to the minimap", () => {
-          const minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
+          const minimapBounds = minimapElement.CanvasDrawer.getFrontCanvas().getBoundingClientRect()
           const settingsBounds = quickSettingsElement.getBoundingClientRect()
 
           expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
@@ -1994,7 +1994,7 @@ describe("MinimapElement", () => {
           })
 
           it("positions the quick settings view next to the minimap", () => {
-            const minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
+            const minimapBounds = minimapElement.CanvasDrawer.getFrontCanvas().getBoundingClientRect()
 
             expect(realOffsetTop(quickSettingsElement)).toBeCloseTo(minimapBounds.top, 0)
             expect(realOffsetLeft(quickSettingsElement)).toBeCloseTo(minimapBounds.right, 0)
@@ -2030,12 +2030,14 @@ describe("MinimapElement", () => {
         })
 
         it("adjusts the size of the control div to fit in the minimap", () => {
-          expect(controls.clientWidth).toEqual(minimapElement.getFrontCanvas().clientWidth / devicePixelRatio)
+          expect(controls.clientWidth).toEqual(
+            minimapElement.CanvasDrawer.getFrontCanvas().clientWidth / devicePixelRatio
+          )
         })
 
         it("positions the controls div over the canvas", () => {
           const controlsRect = controls.getBoundingClientRect()
-          const canvasRect = minimapElement.getFrontCanvas().getBoundingClientRect()
+          const canvasRect = minimapElement.CanvasDrawer.getFrontCanvas().getBoundingClientRect()
           expect(controlsRect.left).toEqual(canvasRect.left)
           expect(controlsRect.right).toEqual(canvasRect.right)
         })
@@ -2046,12 +2048,14 @@ describe("MinimapElement", () => {
           })
 
           it("adjusts the size of the control div to fit in the minimap", () => {
-            expect(controls.clientWidth).toEqual(minimapElement.getFrontCanvas().clientWidth / devicePixelRatio)
+            expect(controls.clientWidth).toEqual(
+              minimapElement.CanvasDrawer.getFrontCanvas().clientWidth / devicePixelRatio
+            )
           })
 
           it("positions the controls div over the canvas", () => {
             const controlsRect = controls.getBoundingClientRect()
-            const canvasRect = minimapElement.getFrontCanvas().getBoundingClientRect()
+            const canvasRect = minimapElement.CanvasDrawer.getFrontCanvas().getBoundingClientRect()
             expect(controlsRect.left).toEqual(canvasRect.left)
             expect(controlsRect.right).toEqual(canvasRect.right)
           })
@@ -2072,7 +2076,7 @@ describe("MinimapElement", () => {
             })
 
             it("positions the quick settings view next to the minimap", () => {
-              const minimapBounds = minimapElement.getFrontCanvas().getBoundingClientRect()
+              const minimapBounds = minimapElement.CanvasDrawer.getFrontCanvas().getBoundingClientRect()
 
               expect(realOffsetTop(quickSettingsElement)).toBeNear(minimapBounds.top, 1)
               expect(realOffsetLeft(quickSettingsElement)).toBeNear(minimapBounds.right, 1)
@@ -2103,7 +2107,7 @@ describe("MinimapElement", () => {
           })
 
           it("toggles the code highlights on the minimap element", () => {
-            expect(minimapElement.displayCodeHighlights).toBeTruthy()
+            expect(minimapElement.CanvasDrawer.displayCodeHighlights).toBeTruthy()
           })
 
           it("requests an update", () => {
@@ -2280,14 +2284,14 @@ describe("MinimapElement", () => {
           describe("on the code highlight item", () => {
             let [initial] = []
             beforeEach(() => {
-              initial = minimapElement.displayCodeHighlights
+              initial = minimapElement.CanvasDrawer.displayCodeHighlights
               atom.commands.dispatch(quickSettingsElement, "core:move-down")
               atom.commands.dispatch(quickSettingsElement, "core:move-down")
               atom.commands.dispatch(quickSettingsElement, "core:confirm")
             })
 
             it("toggles the code highlights on the minimap element", () => {
-              expect(minimapElement.displayCodeHighlights).toEqual(!initial)
+              expect(minimapElement.CanvasDrawer.displayCodeHighlights).toEqual(!initial)
             })
           })
 
