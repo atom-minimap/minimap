@@ -1,11 +1,10 @@
 import { createPlugins } from "rollup-plugin-atomic"
-import TerserOptions from "./.terserrc.js"
 
 const plugins = createPlugins([
   "js",
   "babel",
   "json",
-  ["terser", TerserOptions],
+  ["terser", require("./.terserrc.js")],
   // "visualizer",
 ])
 
