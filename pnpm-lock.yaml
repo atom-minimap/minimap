@@ -9,7 +9,7 @@ specifiers:
   build-commit: ^0.1.4
   cross-env: ^7.0.3
   delegato: ^1.0.0
-  element-resize-detector: ^1.2.2
+  element-resize-detector: ^1.2.3
   esdoc: ^1.1.0
   esdoc-es7-plugin: ^0.0.3
   eslint: ^7.29.0
@@ -21,14 +21,14 @@ specifiers:
   prettier-config-atomic: ^2.0.5
   rollup-plugin-atomic: ^2.3.2
   shx: ^0.3.3
-  terser-config-atomic: ^0.1.0
+  terser-config-atomic: ^0.1.1
   underscore-plus: ^1.7.0
 
 dependencies:
   atom-ide-base: 3.2.0
   atom-utils-plus: 0.11.0
   delegato: 1.0.0
-  element-resize-detector: 1.2.2
+  element-resize-detector: 1.2.3
   fs-plus: 3.1.1
   mixto: 1.0.0
 
@@ -47,7 +47,7 @@ devDependencies:
   prettier-config-atomic: 2.0.5
   rollup-plugin-atomic: 2.3.2
   shx: 0.3.3
-  terser-config-atomic: 0.1.0
+  terser-config-atomic: 0.1.1
   underscore-plus: 1.7.0
 
 packages:
@@ -3253,8 +3253,8 @@ packages:
     resolution: {integrity: sha512-Mfz4FIB4FSvEwBpDfdipRIrwd6uo8gUDoRDF4QEYb4h4tSuI3ov594OrjU6on042UlFHouIJpClDODGkPcBSbg==}
     dev: true
 
-  /element-resize-detector/1.2.2:
-    resolution: {integrity: sha512-+LOXRkCJc4I5WhEJxIDjhmE3raF8jtOMBDqSCgZTMz2TX3oXAX5pE2+MDeopJlGdXzP7KzPbBJaUGfNaP9HG4A==}
+  /element-resize-detector/1.2.3:
+    resolution: {integrity: sha512-+dhNzUgLpq9ol5tyhoG7YLoXL3ssjfFW+0gpszXPwRU6NjGr1fVHMEAF8fVzIiRJq57Nre0RFeIjJwI8Nh2NmQ==}
     dependencies:
       batch-processor: 1.0.0
     dev: false
@@ -7273,8 +7273,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /terser-config-atomic/0.1.0:
-    resolution: {integrity: sha512-M+E/ej8HnfbY/LKrPiKfdvz+XVQn0q2VX+xkb6IvFdakDX5WIxb0+T+8xL2/e5ByFBn/0mqkNMwAIUcfvB36/w==}
+  /terser-config-atomic/0.1.1:
+    resolution: {integrity: sha512-HRAHqjCFq990eFbLpy54joStSsUMZQoD73XMk2/Akquqm7vI0AOggfO9GMvSFGEucRRNZUfLQdDjotGGsZxCtA==}
     dev: true
 
   /terser/5.5.1:

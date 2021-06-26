@@ -61,7 +61,7 @@
     "atom-ide-base": "^3.2.0",
     "atom-utils-plus": "^0.11.0",
     "delegato": "^1.0.0",
-    "element-resize-detector": "^1.2.2",
+    "element-resize-detector": "^1.2.3",
     "fs-plus": "^3.1.1",
     "mixto": "^1.0.0"
   },
@@ -80,7 +80,7 @@
     "prettier-config-atomic": "^2.0.5",
     "rollup-plugin-atomic": "^2.3.2",
     "shx": "^0.3.3",
-    "terser-config-atomic": "^0.1.0",
+    "terser-config-atomic": "^0.1.1",
     "underscore-plus": "^1.7.0"
   },
   "standard": {
