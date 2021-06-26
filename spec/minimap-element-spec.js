@@ -227,7 +227,7 @@ describe("MinimapElement", () => {
       describe("when a hue-rotate filter is applied to a rgb color", () => {
         let [additionnalStyleNode] = []
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.StyleReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement("style")
           additionnalStyleNode.textContent = `
@@ -247,7 +247,7 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
             expect(
-              minimapElement.DOMStylesReader.retrieveStyleFromDom(
+              minimapElement.StyleReader.retrieveStyleFromDom(
                 [".editor"],
                 "color",
                 minimapElement.minimap.getTextEditorElement(),
@@ -262,7 +262,7 @@ describe("MinimapElement", () => {
         let [additionnalStyleNode] = []
 
         beforeEach(() => {
-          minimapElement.DOMStylesReader.invalidateDOMStylesCache()
+          minimapElement.StyleReader.invalidateDOMStylesCache()
 
           additionnalStyleNode = document.createElement("style")
           additionnalStyleNode.textContent = `
@@ -282,7 +282,7 @@ describe("MinimapElement", () => {
           runs(() => {
             nextAnimationFrame()
             expect(
-              minimapElement.DOMStylesReader.retrieveStyleFromDom(
+              minimapElement.StyleReader.retrieveStyleFromDom(
                 [".editor"],
                 "color",
                 minimapElement.minimap.getTextEditorElement(),
@@ -1393,7 +1393,7 @@ describe("MinimapElement", () => {
         runs(() => {
           nextAnimationFrame()
           spyOn(minimapElement, "requestForcedUpdate").andCallThrough()
-          spyOn(minimapElement.DOMStylesReader, "invalidateDOMStylesCache").andCallThrough()
+          spyOn(minimapElement.StyleReader, "invalidateDOMStylesCache").andCallThrough()
         })
       })
 
@@ -1407,7 +1407,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.StyleReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1421,7 +1421,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.StyleReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1435,7 +1435,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.StyleReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
 
@@ -1449,7 +1449,7 @@ describe("MinimapElement", () => {
 
         runs(() => {
           expect(minimapElement.requestForcedUpdate).toHaveBeenCalled()
-          expect(minimapElement.DOMStylesReader.invalidateDOMStylesCache).toHaveBeenCalled()
+          expect(minimapElement.StyleReader.invalidateDOMStylesCache).toHaveBeenCalled()
         })
       })
     })

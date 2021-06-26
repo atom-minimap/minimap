@@ -58,6 +58,7 @@
     "core:loaded-shell-environment"
   ],
   "dependencies": {
+    "atom-ide-base": "^3.2.0",
     "atom-utils-plus": "^0.11.0",
     "delegato": "^1.0.0",
     "element-resize-detector": "^1.2.2",
