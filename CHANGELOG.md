@@ -1,3 +1,13 @@
+## [4.40.0](https://github.com/atom-minimap/minimap/compare/v4.39.14...v4.40.0) (2021-07-13)
+
+### Bug fixes and Improvements
+
+- getDevicePixelRatio will return 0 on Linux resulting in no minimap (#799)
+- remove LegacyAdapter - Drop support for Atom versions older than 1.52. (#798)
+- use StyleReader from atom-ide-base (#798)
+- improve debounce function (#798)
+- update dependencies
+
 ## [4.39.14](https://github.com/atom-minimap/minimap/compare/v4.39.13...v4.39.14) (2021-05-10)
 
 
