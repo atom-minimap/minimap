@@ -512,13 +512,28 @@ describe("Stand alone minimap", () => {
     expect(changeSpy.callCount).toEqual(3)
   })
 
-  it("returns the rounding number of devicePixelRatio", () => {
-    window.devicePixelRatio = 1.25
+  describe("returns the rounding number of devicePixelRatio", () => {
+    it("1.25", () => {
+      window.devicePixelRatio = 1.25
+      minimap.setDevicePixelRatioRounding(true)
 
-    minimap.setDevicePixelRatioRounding(true)
+      expect(minimap.getDevicePixelRatioRounding()).toEqual(true)
+      expect(minimap.getDevicePixelRatio()).toEqual(1)
+    })
+    it("0.811", () => {
+      window.devicePixelRatio = 0.811
+      minimap.setDevicePixelRatioRounding(true)
 
-    expect(minimap.getDevicePixelRatioRounding()).toEqual(true)
-    expect(minimap.getDevicePixelRatio()).toEqual(1)
+      expect(minimap.getDevicePixelRatioRounding()).toEqual(true)
+      expect(minimap.getDevicePixelRatio()).toEqual(0.8)
+    })
+    it("0.05", () => {
+      window.devicePixelRatio = 0.051
+      minimap.setDevicePixelRatioRounding(true)
+
+      expect(minimap.getDevicePixelRatioRounding()).toEqual(true)
+      expect(minimap.getDevicePixelRatio()).toEqual(0.1)
+    })
   })
 
   it("prevents the rounding number of devicePixelRatio", () => {
