@@ -2,8 +2,9 @@
 
 ### Bug fixes and Improvements
 
-- getDevicePixelRatio will return 0 on Linux resulting in no minimap (#799)
-- remove LegacyAdapter - Drop support for Atom versions older than 1.52. (#798)
+- getDevicePixelRatio will return 0 on Linux resulting in no minimap (#799 and #795)
+- Require Electron 6 - Drop support for Atom versions older than 1.52. (#798)
+- remove the deprecated LegacyAdapter (#798)
 - use StyleReader from atom-ide-base (#798)
 - improve debounce function (#798)
 - update dependencies
