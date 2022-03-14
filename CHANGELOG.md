@@ -1,3 +1,11 @@
+## [4.40.1](https://github.com/atom-minimap/minimap/compare/v4.40.0...v4.40.1) (2022-03-14)
+
+
+### Bug Fixes
+
+* update deps ([a3de139](https://github.com/atom-minimap/minimap/commit/a3de139d98f788be14e8d922829c80bc5eff5e03))
+* use customElement.define ([3f9f1a5](https://github.com/atom-minimap/minimap/commit/3f9f1a537bb18aaf0b917205fe343fb14e8aec7c))
+
 ## [4.40.0](https://github.com/atom-minimap/minimap/compare/v4.39.14...v4.40.0) (2021-07-13)
 
 ### Bug fixes and Improvements

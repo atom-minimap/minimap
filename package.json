@@ -1,6 +1,6 @@
 {
   "name": "minimap",
-  "version": "4.40.0",
+  "version": "4.40.1",
   "description": "A preview of the full source code.",
   "repository": "https://github.com/atom-minimap/minimap",
   "license": "MIT",
