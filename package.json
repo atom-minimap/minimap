@@ -1,29 +1,10 @@
 {
   "name": "minimap",
-  "main": "./dist/main.js",
   "version": "4.40.0",
   "description": "A preview of the full source code.",
+  "repository": "https://github.com/atom-minimap/minimap",
+  "license": "MIT",
   "author": "Fangdun Cai <cfddream@gmail.com>, Amin Yahyaabadi <aminyahyaabadi74@gmail.com>",
-  "keywords": [
-    "minimap",
-    "overview"
-  ],
-  "scripts": {
-    "format": "prettier --write .",
-    "test.format": "prettier . --check",
-    "lint": "eslint . --fix",
-    "test.lint": "eslint .",
-    "clean": "shx rm -rf dist .parcel-cache",
-    "dev": "cross-env NODE_ENV=development parcel watch --target main ./lib/main.js",
-    "build.test": "npm run clean && cross-env NODE_ENV=test parcel build --target main ./lib/main.js",
-    "build": "cross-env NODE_ENV=production parcel build --target main ./lib/main.js",
-    "build-commit": "npm run clean && build-commit -o dist",
-    "esdoc": "esdoc -c esdoc.json",
-    "test": "atom --test spec",
-    "bump": "ncu -u",
-    "prepare": "npm run build"
-  },
-  "prettier": "prettier-config-atomic",
   "contributors": [
     {
       "name": "Fangdun Cai",
@@ -38,12 +19,59 @@
       "email": "aminyahyaabadi74@gmail.com"
     }
   ],
-  "repository": "https://github.com/atom-minimap/minimap",
-  "license": "MIT",
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production parcel build --target main ./lib/main.js",
+    "build-commit": "npm run clean && build-commit -o dist",
+    "build.test": "npm run clean && cross-env NODE_ENV=test parcel build --target main ./lib/main.js",
+    "bump": "ncu -u",
+    "clean": "shx rm -rf dist .parcel-cache",
+    "dev": "cross-env NODE_ENV=development parcel watch --target main ./lib/main.js",
+    "esdoc": "esdoc -c esdoc.json",
+    "format": "prettier --write .",
+    "lint": "eslint . --fix",
+    "prepare": "npm run build",
+    "test": "atom --test spec",
+    "test.format": "prettier . --check",
+    "test.lint": "eslint ."
+  },
+  "prettier": "prettier-config-atomic",
+  "dependencies": {
+    "atom-ide-base": "^3.3.0",
+    "atom-utils-plus": "^0.11.0",
+    "delegato": "^1.0.0",
+    "element-resize-detector": "^1.2.4",
+    "fs-plus": "^3.1.1",
+    "mixto": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/atom": "^1.40.11",
+    "@types/jasmine": "3.10.3",
+    "build-commit": "^0.1.4",
+    "cross-env": "^7.0.3",
+    "esdoc": "^1.1.0",
+    "esdoc-es7-plugin": "^0.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-atomic": "^1.17.0",
+    "jasmine-expect": "^5.0.0",
+    "npm-check-updates": "latest",
+    "parcel": "2.0.0-nightly.760",
+    "prettier-config-atomic": "^3.0.5",
+    "shx": "^0.3.4",
+    "terser-config-atomic": "^0.1.1",
+    "underscore-plus": "^1.7.0"
+  },
   "engines": {
     "atom": ">=1.52.0",
     "electron": ">=6.0.0"
   },
+  "keywords": [
+    "minimap",
+    "overview"
+  ],
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "providedServices": {
     "minimap": {
       "description": "Exposes the minimap API to other packages",
@@ -51,37 +79,6 @@
         "1.0.0": "provideMinimapServiceV1"
       }
     }
-  },
-  "viewProviders": [
-    "minimapViewProvider"
-  ],
-  "activationHooks": [
-    "core:loaded-shell-environment"
-  ],
-  "dependencies": {
-    "atom-ide-base": "^3.2.0",
-    "atom-utils-plus": "^0.11.0",
-    "delegato": "^1.0.0",
-    "element-resize-detector": "^1.2.3",
-    "fs-plus": "^3.1.1",
-    "mixto": "^1.0.0"
-  },
-  "devDependencies": {
-    "@types/atom": "^1.40.10",
-    "@types/jasmine": "3.7.7",
-    "build-commit": "^0.1.4",
-    "cross-env": "^7.0.3",
-    "esdoc": "^1.1.0",
-    "esdoc-es7-plugin": "^0.0.3",
-    "eslint": "^7.29.0",
-    "eslint-config-atomic": "^1.16.1",
-    "jasmine-expect": "^5.0.0",
-    "npm-check-updates": "latest",
-    "parcel": "2.0.0-nightly.760",
-    "prettier-config-atomic": "^2.0.5",
-    "shx": "^0.3.3",
-    "terser-config-atomic": "^0.1.1",
-    "underscore-plus": "^1.7.0"
   },
   "targets": {
     "main": {
@@ -94,5 +91,8 @@
       "outputFormat": "commonjs",
       "isLibrary": true
     }
-  }
+  },
+  "viewProviders": [
+    "minimapViewProvider"
+  ]
 }
